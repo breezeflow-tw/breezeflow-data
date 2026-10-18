@@ -1,2 +1,5 @@
 __pycache__/
 *.pyc
+# 資料庫在執行時由 data/history/ 重建，不提交
+data/etf.db
+web/data/etf.db
