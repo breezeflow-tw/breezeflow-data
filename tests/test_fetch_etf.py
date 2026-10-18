@@ -587,6 +587,9 @@ class ReturnsTest(unittest.TestCase):
         self.assertEqual((miss["total"]["1m"] is None, miss["total"]["3m"], miss["price"]["3m"] is None), (False, None, False))
         # 配息金額不符也一樣
         self.assertIsNone(returns.compute(h["0050"], "2026-10-16", 52.35, [("2026-07-21", 1.2)])["total"]["6m"])
+        # 分割前的配息：Yahoo 依分割比例調整過金額（1 拆 7），整數倍視為同一筆
+        self.assertTrue(returns.listed_in_yahoo([("2022-04-20", 1.455714)], "2022-04-20", 10.19))
+        self.assertFalse(returns.listed_in_yahoo([("2022-07-18", 0.22)], "2022-07-18", 0.3))
         # 上市不到 3 年就不算 3 年、5 年報酬
         b = returns.compute(h["00679B"], "2026-10-16", 28.0)
         self.assertEqual((b["price"]["3y"], b["total"]["5y"]), (None, None))

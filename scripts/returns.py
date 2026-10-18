@@ -59,11 +59,16 @@ def parse_history(payloads: dict) -> dict[str, dict]:
 
 
 def listed_in_yahoo(yahoo_divs: list, ex_date: str, cash: float | None) -> bool:
-    """資料庫的一筆配息在 Yahoo 找得到：除息日相差 3 天內，金額相差 1% 或 0.002 元以內。"""
+    """資料庫的一筆配息在 Yahoo 找得到：除息日相差 3 天內，金額相差 1% 或 0.002 元以內。
+    ETF 分割後，Yahoo 會把分割前的配息除以分割比例（例如 1 拆 7 時 10.19 元變 1.4557 元），
+    所以金額剛好是整數倍（誤差 1% 內）也算同一筆。"""
     d0 = date.fromisoformat(ex_date)
     for d, amount in yahoo_divs:
         if abs((date.fromisoformat(d) - d0).days) <= 3:
-            return cash is None or amount is None or abs(amount - cash) <= max(0.002, abs(cash) * 0.01)
+            if cash is None or amount is None or abs(amount - cash) <= max(0.002, abs(cash) * 0.01):
+                return True
+            ratio = cash / amount if amount > 0 else 0
+            return round(ratio) >= 2 and abs(ratio - round(ratio)) <= round(ratio) * 0.01
     return False
 
 
