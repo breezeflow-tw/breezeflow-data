@@ -742,6 +742,54 @@ class JpmorganTest(unittest.TestCase):
             self.assertEqual(con.execute("SELECT DISTINCT date FROM holding WHERE code='00989A'").fetchall(), [("2026-10-15",)])
             con.close()
 
+class BlackrockTest(unittest.TestCase):
+    def read(self, name: str) -> str:
+        return (FIX / "blackrock" / name).read_text("utf-8-sig")
+
+    def test_parse(self):
+        from issuers import blackrock as b
+        funds = b.parse_screener(json.loads(self.read("screener.json")))
+        self.assertEqual(sorted((x["code"], x["nav_date"]) for x in funds),
+                         [("009813", "2026-10-15"), ("009826", "2026-10-15"), ("00985D", "2026-10-15"), ("00991B", "2026-10-15")])
+        p = b.parse_product(self.read("product_00991B.html"))
+        self.assertEqual((p["aum_twd"], p["units"], p["units_change"], p["pcf_date"], p["list_date"]),
+                         (5950326637.0, 400328000.0, 34500000.0, "2026-10-15", "2026-08-03"))
+        self.assertEqual(p["index_name"], "ICE TIP 10年期以上A級成熟市場美元公司債指數")
+        self.assertTrue(p["holdings_url"].startswith("/tw/products/351827/fund/"))
+        s = b.parse_product(self.read("product_009813.html"))["stats"]
+        self.assertEqual((s["date"], s["pe"], s["pb"]), ("2026-10-15", 32.73, 8.33))
+        day, rows = b.parse_holdings(self.read("holdings_00991B.csv"))
+        # 債券代號用「Ticker 票面利率 到期日」；現金不是成分
+        self.assertEqual((day, rows[0]["asset_code"], rows[0]["qty"], rows[0]["kind"]), ("2026-10-16", "TXEDCI 7.53 2048-11-30", 5400000.0, "債券"))
+        self.assertNotIn("現金", {r["kind"] for r in rows})
+        _, stock = b.parse_holdings(self.read("holdings_009813.csv"))
+        self.assertIn({"asset_code": "HWAZ6", "asset_name": "MICRO EMINI S&P 500 DEC 26", "kind": "期貨", "weight": 0.0, "qty": 8.0}, stock)
+        self.assertEqual(b.parse_dividends(self.read("dividends.html"))["00985D"][0],
+                         {"code": "00985D", "ex_date": "2026-09-17", "pay_date": "2026-10-20", "cash": 0.061})
+        self.assertTrue(b.blocked_page("<HTML><HEAD>\n<TITLE>Access Denied</TITLE>\n</HEAD><BODY>"))
+        # 債券 ETF 持有的 ETF（資產類別也是 Fixed Income）依產業欄歸為基金；現金、保證金、其他衍生性商品不收
+        _, bond = b.parse_holdings(self.read("holdings_00985D.csv"))
+        self.assertEqual(bond[0], {"asset_code": "TLTW", "asset_name": "iShares TLT Prem Income+ ETF COM", "kind": "基金",
+                                   "weight": 19.9, "qty": 354782.0})
+        self.assertEqual([r["kind"] for r in bond], ["基金", "債券", "期貨", "債券", "債券"])
+        # 重複的代號：債券加上名稱、股票加上市場，仍重複的再加序號
+        dup = ('x,1\n\nTicker,Name,Asset Class,Weight (%),Shares,Par Value,Coupon (%),Maturity,Location\n'
+               'PPL,PPL ELECTRIC,Fixed Income,1,10,10,5.85,2055年8月15日,美國\nPPL,PPL CAPITAL,Fixed Income,1,10,10,5.85,2055年8月15日,美國\n'
+               'MRK,MERCK & CO INC,指數股票型,1,5,,,,美國\nMRK,MERCK KGAA,指數股票型,1,5,,,,德國\nX,X1,指數股票型,1,5,,,,\nX,X2,指數股票型,1,5,,,,\n')
+        self.assertEqual([r["asset_code"] for r in b.parse_holdings(dup)[1]],
+                         ["PPL 5.85 2055-08-15 PPL ELECTRIC", "PPL 5.85 2055-08-15 PPL CAPITAL", "MRK 美國", "MRK 德國", "X", "X #2"])
+
+    def test_fetch(self):
+        from issuers import blackrock as b
+        recs = b.fetch(fixtures=FIX / "blackrock")
+        # 產品頁抓不到的 ETF 仍保留篩選器的正式淨值與配息紀錄
+        self.assertEqual(sorted(recs), ["009813", "009826", "00985D", "00991B"])
+        d = recs["00985D"]
+        self.assertEqual((d["nav_official"], d["aum"], d["holdings"]), (9.7947, None, []))
+        self.assertTrue(d["dividends"])
+        a = recs["00991B"]
+        self.assertEqual((a["aum"], a["units_change"], a["pcf_date"], a["holdings_date"], len(a["holdings"])), (59.5, 34500000.0, "2026-10-15", "2026-10-16", 12))
+
 class ReturnsTest(unittest.TestCase):
     def history(self):
         import returns
