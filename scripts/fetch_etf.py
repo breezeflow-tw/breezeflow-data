@@ -96,6 +96,12 @@ def clean_name(name: str) -> str:
     return re.sub(r"(ETF)?證券投資信託基金$", "", name).strip()
 
 
+def ymd(value) -> str | None:
+    """'20261016' → '2026-10-16'。"""
+    m = re.fullmatch(r"(\d{4})(\d{2})(\d{2})", str(value or "").strip())
+    return "-".join(m.groups()) if m else None
+
+
 def parse_nav(payload) -> dict[str, dict]:
     """all_etf.txt 格式：{"a1": [{"msgArray": [{a: 代號, b: 名稱, e: 市價, f: 預估淨值,
     g: 預估折溢價 %, h: 前一營業日淨值, i: 日期, j: 時間}, ...]}, ...]}，每個 a1 元素是一家投信。"""
@@ -117,6 +123,7 @@ def parse_nav(payload) -> dict[str, dict]:
                 "nav": nav,
                 "premium": premium,
                 "nav_prev": num(row.get("h")),
+                "date": ymd(row.get("i")),
                 "source_date": str(row.get("i", "")).strip(),
                 "source_time": str(row.get("j", "")).strip(),
             }
@@ -214,11 +221,23 @@ def load_meta(path: Path = META_PATH) -> dict[str, dict]:
 
 # ---------- 合併 ----------
 
-def merge(nav: dict, quotes: dict, meta: dict) -> list[dict]:
+def trade_date(nav: dict, quotes: dict, now: datetime) -> str:
+    """以收盤行情的日期為準（取最多檔的那天）；沒有行情時用淨值資料的日期。"""
+    for source, key in ((quotes, "date"), (nav, "date")):
+        dates = [v[key] for v in source.values() if v.get(key)]
+        if dates:
+            return max(set(dates), key=dates.count)
+    return now.strftime("%Y-%m-%d")
+
+
+def merge(nav: dict, quotes: dict, meta: dict, date: str) -> list[dict]:
     items = []
     empty = {"name": "", "price": None, "nav": None, "premium": None, "nav_prev": None, "source_date": "", "source_time": ""}
     for code in sorted(set(nav) | set(quotes)):
         n = nav.get(code, empty)
+        if n.get("date") and n["date"] != date:
+            # 早上開盤前：收盤行情還是昨天，淨值資料可能已換成今天，兩者不能混算
+            n = {**empty, "name": n["name"]}
         q = quotes.get(code, {})
         m = meta.get(code, {})
         name = n["name"] or q.get("name", "")
@@ -241,30 +260,23 @@ def merge(nav: dict, quotes: dict, meta: dict) -> list[dict]:
             "fee": num(m.get("fee")),
             "aum": num(m.get("aum")),
             "source_time": f"{n['source_date']} {n['source_time']}".strip(),
-            "quote_date": q.get("date"),
         })
     items.sort(key=lambda x: x["code"])
     return items
 
 
-def trade_date(items: list[dict], now: datetime) -> str:
-    dates = [it["quote_date"] for it in items if it.get("quote_date")]
-    if dates:
-        return max(set(dates), key=dates.count)
-    for it in items:
-        m = re.match(r"(\d{4})(\d{2})(\d{2})", it["source_time"].replace("/", "").replace("-", ""))
-        if m:
-            return "-".join(m.groups())
-    return now.strftime("%Y-%m-%d")
-
-
 # ---------- 儲存 ----------
 
-def save_db(items: list[dict], date: str, db_path: Path = DB_PATH) -> None:
+def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | None = None) -> None:
     db_path.parent.mkdir(parents=True, exist_ok=True)
     con = sqlite3.connect(db_path)
     try:
         con.executescript(SCHEMA_PATH.read_text("utf-8"))
+        # 舊資料庫補上新欄位
+        have = {r[1] for r in con.execute("PRAGMA table_info(daily)")}
+        for col in ("nav_official", "premium_official"):
+            if col not in have:
+                con.execute(f"ALTER TABLE daily ADD COLUMN {col} REAL")
         now = datetime.now(TW).isoformat(timespec="seconds")
         con.executemany(
             """INSERT INTO etf(code, name, issuer, category, market, fee, aum, updated_at)
@@ -289,6 +301,7 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH) -> None:
                  source_time=COALESCE(NULLIF(excluded.source_time, ''), daily.source_time)""",
             [{**it, "date": date} for it in items],
         )
+        save_official_nav(con, nav or {})
         con.commit()
         # 讓輸出的 JSON 與資料庫一致
         cols = ["price", "change_pct", "nav", "nav_prev", "premium", "volume_lots", "source_time"]
@@ -298,6 +311,25 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH) -> None:
                 it.update(zip(cols, stored[it["code"]]))
     finally:
         con.close()
+
+
+def save_official_nav(con: sqlite3.Connection, nav: dict) -> None:
+    """MIS 的「前一營業日淨值」是投信公告的正式淨值，寫回資料庫中前一個交易日那一列，
+    並用當天收盤價算出正式折溢價。早上 08:50 那次排程主要就是為了補這個。"""
+    by_date: dict[str, list] = {}
+    for n in nav.values():
+        if n.get("date") and n.get("nav_prev"):
+            by_date.setdefault(n["date"], []).append(n)
+    for mis_date, rows in by_date.items():
+        prev = con.execute("SELECT MAX(date) FROM daily WHERE date < ?", (mis_date,)).fetchone()[0]
+        if not prev:
+            continue
+        con.executemany(
+            """UPDATE daily SET nav_official = :nav,
+                 premium_official = CASE WHEN price IS NOT NULL THEN (price - :nav) / :nav * 100 END
+               WHERE date = :date AND code = :code""",
+            [{"nav": n["nav_prev"], "date": prev, "code": n["code"]} for n in rows],
+        )
 
 
 def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, has_nav: bool = True) -> None:
@@ -328,10 +360,10 @@ def main(argv=None) -> int:
         return 1
     if not nav:
         print("警告：沒有淨值資料，本次只更新價格與成交量。", file=sys.stderr)
-    items = merge(nav, quotes, load_meta())
-    date = trade_date(items, datetime.now(TW))
+    date = trade_date(nav, quotes, datetime.now(TW))
+    items = merge(nav, quotes, load_meta(), date)
 
-    save_db(items, date, args.db)
+    save_db(items, date, args.db, nav)
     save_json(items, date, "fixture" if args.fixtures else "live", args.out,
               has_nav=any(it["nav"] is not None for it in items))
     flagged = sum(1 for it in items if it["premium"] is not None and abs(it["premium"]) >= 1)

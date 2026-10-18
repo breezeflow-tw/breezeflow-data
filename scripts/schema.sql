@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS daily (
   premium      REAL,              -- 折溢價（%），正數為溢價
   volume_lots  INTEGER,           -- 成交量（張）
   source_time  TEXT,              -- 淨值資料時間
+  nav_official     REAL,          -- 投信公告的正式淨值（隔天才會有）
+  premium_official REAL,          -- 收盤價對正式淨值的折溢價（%）
   PRIMARY KEY (date, code)
 );
 

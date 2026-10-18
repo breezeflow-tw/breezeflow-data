@@ -2,8 +2,9 @@ name: 每日更新 ETF 資料
 
 on:
   schedule:
-    # 台灣時間週一到週五 14:47（收盤後），GitHub 排程用 UTC
-    - cron: "47 6 * * 1-5"
+    # GitHub 排程用 UTC（台灣時間減 8 小時），週一到週五
+    - cron: "50 0 * * 1-5"   # 台灣 08:50：補上前一交易日的正式淨值
+    - cron: "0 10 * * 1-5"   # 台灣 18:00：當天收盤價、預估淨值與折溢價
   workflow_dispatch:
 
 permissions:

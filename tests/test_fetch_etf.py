@@ -56,7 +56,7 @@ class ParseTest(unittest.TestCase):
 
     def test_merge_without_nav(self):
         quotes = f.parse_quotes(json.loads((FIX / "twse.json").read_text("utf-8")), "上市")
-        items = f.merge({}, quotes, {})
+        items = f.merge({}, quotes, {}, "2026-10-16")
         self.assertEqual(len(items), 4)
         it = next(i for i in items if i["code"] == "0050")
         self.assertEqual(it["name"], "元大台灣50")
@@ -109,6 +109,36 @@ class PipelineTest(unittest.TestCase):
             con.close()
             items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
             self.assertEqual(items["0050"]["nav"], 52.25)
+
+    def test_morning_run_records_official_nav(self):
+        """早上開盤前：淨值資料已換成下個交易日，收盤行情還是前一天。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            self.assertEqual(f.main(["--fixtures", str(FIX), "--db", str(db), "--out", str(out)]), 0)
+
+            morning = Path(tmp) / "morning"
+            morning.mkdir()
+            nav = json.loads((FIX / "nav.json").read_text("utf-8"))
+            for block in nav["a1"]:
+                for row in block["msgArray"]:
+                    row.update({"i": "20261019", "j": "08:50:00", "e": "-", "g": "-", "f": "99.99"})
+            nav["a1"][0]["msgArray"][0]["h"] = "52.20"  # 0050 在 10/16 的正式淨值
+            (morning / "nav.json").write_text(json.dumps(nav), "utf-8")
+            twse = json.loads((FIX / "twse.json").read_text("utf-8"))
+            for row in twse:
+                row["Date"] = "1151016"
+            (morning / "twse.json").write_text(json.dumps(twse), "utf-8")
+            (morning / "tpex.json").write_bytes((FIX / "tpex.json").read_bytes())
+            self.assertEqual(f.main(["--fixtures", str(morning), "--db", str(db), "--out", str(out)]), 0)
+
+            con = sqlite3.connect(db)
+            self.assertEqual(con.execute("SELECT COUNT(DISTINCT date) FROM daily").fetchone()[0], 1)
+            nav_est, nav_off, prem_off = con.execute(
+                "SELECT nav, nav_official, premium_official FROM daily WHERE code='0050'").fetchone()
+            con.close()
+            self.assertEqual(nav_est, 52.25)  # 前一天的預估淨值沒被今天的資料蓋掉
+            self.assertEqual(nav_off, 52.20)
+            self.assertAlmostEqual(prem_off, (52.35 - 52.20) / 52.20 * 100)
 
 
 if __name__ == "__main__":

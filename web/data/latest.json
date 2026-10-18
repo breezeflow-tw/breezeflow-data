@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-18T12:54:22+08:00",
+ "generated_at": "2026-10-18T12:57:15+08:00",
  "trade_date": "2026-10-16",
  "source": "live",
  "has_nav": true,
@@ -19,8 +19,7 @@
    "volume_lots": 27595,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00401A",
@@ -36,8 +35,7 @@
    "volume_lots": 7616,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00402A",
@@ -53,8 +51,7 @@
    "volume_lots": 895,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00403A",
@@ -70,8 +67,7 @@
    "volume_lots": 116689,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00404A",
@@ -87,8 +83,7 @@
    "volume_lots": 6926,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:43",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:43"
   },
   {
    "code": "00405A",
@@ -104,8 +99,7 @@
    "volume_lots": 44263,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00406A",
@@ -121,8 +115,7 @@
    "volume_lots": 792218,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 15:57:30",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 15:57:30"
   },
   {
    "code": "00407A",
@@ -138,8 +131,7 @@
    "volume_lots": 21296,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "00408A",
@@ -155,8 +147,7 @@
    "volume_lots": 2196,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:48",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:48"
   },
   {
    "code": "00409A",
@@ -172,8 +163,7 @@
    "volume_lots": 10998,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00410A",
@@ -189,8 +179,7 @@
    "volume_lots": 18653,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:59:53"
   },
   {
    "code": "00411A",
@@ -206,8 +195,7 @@
    "volume_lots": 13504,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:58",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:58"
   },
   {
    "code": "00412A",
@@ -223,8 +211,7 @@
    "volume_lots": 58417,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 14:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 14:59:45"
   },
   {
    "code": "0050",
@@ -240,8 +227,7 @@
    "volume_lots": 122161,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:31:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:31:00"
   },
   {
    "code": "0051",
@@ -257,8 +243,7 @@
    "volume_lots": 52,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:31:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:31:00"
   },
   {
    "code": "0052",
@@ -274,8 +259,7 @@
    "volume_lots": 17095,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "0053",
@@ -291,8 +275,7 @@
    "volume_lots": 992,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:31:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:31:00"
   },
   {
    "code": "0055",
@@ -308,8 +291,7 @@
    "volume_lots": 1076,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:31:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:31:00"
   },
   {
    "code": "0056",
@@ -325,8 +307,7 @@
    "volume_lots": 45404,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:31:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:31:00"
   },
   {
    "code": "0057",
@@ -342,8 +323,7 @@
    "volume_lots": 30,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "0061",
@@ -359,8 +339,7 @@
    "volume_lots": 113,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "006201",
@@ -376,8 +355,7 @@
    "volume_lots": 307,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:31:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:31:00"
   },
   {
    "code": "006203",
@@ -393,8 +371,7 @@
    "volume_lots": 4,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:31:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:31:00"
   },
   {
    "code": "006204",
@@ -410,8 +387,7 @@
    "volume_lots": 51,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:59:52",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:59:52"
   },
   {
    "code": "006205",
@@ -427,8 +403,7 @@
    "volume_lots": 386,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "006206",
@@ -444,8 +419,7 @@
    "volume_lots": 44,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "006207",
@@ -461,8 +435,7 @@
    "volume_lots": 180,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "006208",
@@ -478,8 +451,7 @@
    "volume_lots": 2590,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00625K",
@@ -495,8 +467,7 @@
    "volume_lots": 1,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00631L",
@@ -512,8 +483,7 @@
    "volume_lots": 175188,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:31:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:31:00"
   },
   {
    "code": "00632R",
@@ -529,8 +499,7 @@
    "volume_lots": 106564,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:31:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:31:00"
   },
   {
    "code": "00633L",
@@ -546,8 +515,7 @@
    "volume_lots": 2182,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00634R",
@@ -563,8 +531,7 @@
    "volume_lots": 226,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00635U",
@@ -580,8 +547,7 @@
    "volume_lots": 1968,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00636",
@@ -597,8 +563,7 @@
    "volume_lots": 402,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00636K",
@@ -614,8 +579,7 @@
    "volume_lots": 1,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00637L",
@@ -631,8 +595,7 @@
    "volume_lots": 23001,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00638R",
@@ -648,8 +611,7 @@
    "volume_lots": 457,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00639",
@@ -665,8 +627,7 @@
    "volume_lots": 481,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00640L",
@@ -682,8 +643,7 @@
    "volume_lots": 109,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00641R",
@@ -699,8 +659,7 @@
    "volume_lots": 433,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00642U",
@@ -716,8 +675,7 @@
    "volume_lots": 1603,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00643",
@@ -733,8 +691,7 @@
    "volume_lots": 3091,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00643K",
@@ -750,8 +707,7 @@
    "volume_lots": 5,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00645",
@@ -767,8 +723,7 @@
    "volume_lots": 69,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00646",
@@ -784,8 +739,7 @@
    "volume_lots": 3447,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00647L",
@@ -801,8 +755,7 @@
    "volume_lots": 18,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00648R",
@@ -818,8 +771,7 @@
    "volume_lots": 287,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00650L",
@@ -835,8 +787,7 @@
    "volume_lots": 1351,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00651R",
@@ -852,8 +803,7 @@
    "volume_lots": 177,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00652",
@@ -869,8 +819,7 @@
    "volume_lots": 333,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00653L",
@@ -886,8 +835,7 @@
    "volume_lots": 177,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00654R",
@@ -903,8 +851,7 @@
    "volume_lots": 69,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00655L",
@@ -920,8 +867,7 @@
    "volume_lots": 1738,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00656R",
@@ -937,8 +883,7 @@
    "volume_lots": 9,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00657",
@@ -954,8 +899,7 @@
    "volume_lots": 94,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00657K",
@@ -971,8 +915,7 @@
    "volume_lots": 0,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00660",
@@ -988,8 +931,7 @@
    "volume_lots": 5,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00661",
@@ -1005,8 +947,7 @@
    "volume_lots": 79,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00662",
@@ -1022,8 +963,7 @@
    "volume_lots": 3122,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00663L",
@@ -1039,8 +979,7 @@
    "volume_lots": 4876,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00664R",
@@ -1056,8 +995,7 @@
    "volume_lots": 11730,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00665L",
@@ -1073,8 +1011,7 @@
    "volume_lots": 8613,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00666R",
@@ -1090,8 +1027,7 @@
    "volume_lots": 20,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00668",
@@ -1107,8 +1043,7 @@
    "volume_lots": 115,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00668K",
@@ -1124,8 +1059,7 @@
    "volume_lots": 0,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00669R",
@@ -1141,8 +1075,7 @@
    "volume_lots": 418,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00670L",
@@ -1158,8 +1091,7 @@
    "volume_lots": 488,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00671R",
@@ -1175,8 +1107,7 @@
    "volume_lots": 3491,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00673R",
@@ -1192,8 +1123,7 @@
    "volume_lots": 42561,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00674R",
@@ -1209,8 +1139,7 @@
    "volume_lots": 22,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00675L",
@@ -1226,8 +1155,7 @@
    "volume_lots": 1167,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00676R",
@@ -1243,8 +1171,7 @@
    "volume_lots": 5241,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00678",
@@ -1260,8 +1187,7 @@
    "volume_lots": 617,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00679B",
@@ -1277,8 +1203,7 @@
    "volume_lots": 27260,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00680L",
@@ -1294,8 +1219,7 @@
    "volume_lots": 20233,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00681R",
@@ -1311,8 +1235,7 @@
    "volume_lots": 288,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00682U",
@@ -1328,8 +1251,7 @@
    "volume_lots": 1,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00683L",
@@ -1345,8 +1267,7 @@
    "volume_lots": 154,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00684R",
@@ -1362,8 +1283,7 @@
    "volume_lots": 51,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00685L",
@@ -1379,8 +1299,7 @@
    "volume_lots": 214237,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 15:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 15:00:00"
   },
   {
    "code": "00686R",
@@ -1396,8 +1315,7 @@
    "volume_lots": 9286,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 15:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 15:00:00"
   },
   {
    "code": "00687B",
@@ -1413,8 +1331,7 @@
    "volume_lots": 19369,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00687C",
@@ -1430,8 +1347,7 @@
    "volume_lots": 36,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00688L",
@@ -1447,8 +1363,7 @@
    "volume_lots": 10166,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00689R",
@@ -1464,8 +1379,7 @@
    "volume_lots": 102,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00690",
@@ -1481,8 +1395,7 @@
    "volume_lots": 228,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:47",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:47"
   },
   {
    "code": "00692",
@@ -1498,8 +1411,7 @@
    "volume_lots": 1037,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00693U",
@@ -1515,8 +1427,7 @@
    "volume_lots": 1059,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:01:15",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:01:15"
   },
   {
    "code": "00694B",
@@ -1532,8 +1443,7 @@
    "volume_lots": 195,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00695B",
@@ -1549,8 +1459,7 @@
    "volume_lots": 541,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00696B",
@@ -1566,8 +1475,7 @@
    "volume_lots": 2014,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00697B",
@@ -1583,8 +1491,7 @@
    "volume_lots": 312,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00700",
@@ -1600,8 +1507,7 @@
    "volume_lots": 173,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00701",
@@ -1617,8 +1523,7 @@
    "volume_lots": 286,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00702",
@@ -1634,8 +1539,7 @@
    "volume_lots": 214,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00703",
@@ -1651,8 +1555,7 @@
    "volume_lots": 50,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00706L",
@@ -1668,8 +1571,7 @@
    "volume_lots": 184,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00707R",
@@ -1685,8 +1587,7 @@
    "volume_lots": 1,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00708L",
@@ -1702,8 +1603,7 @@
    "volume_lots": 2633,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00709",
@@ -1719,8 +1619,7 @@
    "volume_lots": 65,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00710B",
@@ -1736,8 +1635,7 @@
    "volume_lots": 337,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00711B",
@@ -1753,8 +1651,7 @@
    "volume_lots": 139,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00712",
@@ -1770,8 +1667,7 @@
    "volume_lots": 34128,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00713",
@@ -1787,8 +1683,7 @@
    "volume_lots": 11843,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:31:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:31:00"
   },
   {
    "code": "00714",
@@ -1804,8 +1699,7 @@
    "volume_lots": 210,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00715L",
@@ -1821,8 +1715,7 @@
    "volume_lots": 1758,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:01:15",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:01:15"
   },
   {
    "code": "00717",
@@ -1838,8 +1731,7 @@
    "volume_lots": 122,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00719B",
@@ -1855,8 +1747,7 @@
    "volume_lots": 2548,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00720B",
@@ -1872,8 +1763,7 @@
    "volume_lots": 6168,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00722B",
@@ -1889,8 +1779,7 @@
    "volume_lots": 2654,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00723B",
@@ -1906,8 +1795,7 @@
    "volume_lots": 559,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00724B",
@@ -1923,8 +1811,7 @@
    "volume_lots": 3719,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00725B",
@@ -1940,8 +1827,7 @@
    "volume_lots": 11449,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00726B",
@@ -1957,8 +1843,7 @@
    "volume_lots": 352,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00727B",
@@ -1974,8 +1859,7 @@
    "volume_lots": 204,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00728",
@@ -1991,8 +1875,7 @@
    "volume_lots": 153,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:48",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:48"
   },
   {
    "code": "00730",
@@ -2008,8 +1891,7 @@
    "volume_lots": 179,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00731",
@@ -2025,8 +1907,7 @@
    "volume_lots": 299,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00733",
@@ -2042,8 +1923,7 @@
    "volume_lots": 579,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00734B",
@@ -2059,8 +1939,7 @@
    "volume_lots": 217,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00735",
@@ -2076,8 +1955,7 @@
    "volume_lots": 2099,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00736",
@@ -2093,8 +1971,7 @@
    "volume_lots": 103,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00737",
@@ -2110,8 +1987,7 @@
    "volume_lots": 89,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00738U",
@@ -2127,8 +2003,7 @@
    "volume_lots": 2624,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00739",
@@ -2144,8 +2019,7 @@
    "volume_lots": 139,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00740B",
@@ -2161,8 +2035,7 @@
    "volume_lots": 3350,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00741B",
@@ -2178,8 +2051,7 @@
    "volume_lots": 130,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00746B",
@@ -2195,8 +2067,7 @@
    "volume_lots": 184,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00749B",
@@ -2212,8 +2083,7 @@
    "volume_lots": 57102,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "00750B",
@@ -2229,8 +2099,7 @@
    "volume_lots": 100,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "00751B",
@@ -2246,8 +2115,7 @@
    "volume_lots": 83883,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00752",
@@ -2263,8 +2131,7 @@
    "volume_lots": 1488,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00753L",
@@ -2280,8 +2147,7 @@
    "volume_lots": 11788,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00754B",
@@ -2297,8 +2163,7 @@
    "volume_lots": 56691,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00755B",
@@ -2314,8 +2179,7 @@
    "volume_lots": 161,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00756B",
@@ -2331,8 +2195,7 @@
    "volume_lots": 50192,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00757",
@@ -2348,8 +2211,7 @@
    "volume_lots": 684,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:52",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:52"
   },
   {
    "code": "00758B",
@@ -2365,8 +2227,7 @@
    "volume_lots": 102,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00759B",
@@ -2382,8 +2243,7 @@
    "volume_lots": 103,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00760B",
@@ -2399,8 +2259,7 @@
    "volume_lots": 107,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00761B",
@@ -2416,8 +2275,7 @@
    "volume_lots": 388,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00762",
@@ -2433,8 +2291,7 @@
    "volume_lots": 464,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00763U",
@@ -2450,8 +2307,7 @@
    "volume_lots": 359,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:01:15",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:01:15"
   },
   {
    "code": "00764B",
@@ -2467,8 +2323,7 @@
    "volume_lots": 4906,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00768B",
@@ -2484,8 +2339,7 @@
    "volume_lots": 518,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00770",
@@ -2501,8 +2355,7 @@
    "volume_lots": 349,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00771",
@@ -2518,8 +2371,7 @@
    "volume_lots": 26,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00772B",
@@ -2535,8 +2387,7 @@
    "volume_lots": 4254,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00773B",
@@ -2552,8 +2403,7 @@
    "volume_lots": 1333,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00775B",
@@ -2569,8 +2419,7 @@
    "volume_lots": 81,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00777B",
@@ -2586,8 +2435,7 @@
    "volume_lots": 120,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "00778B",
@@ -2603,8 +2451,7 @@
    "volume_lots": 120,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "00779B",
@@ -2620,8 +2467,7 @@
    "volume_lots": 338,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "00780B",
@@ -2637,8 +2483,7 @@
    "volume_lots": 177,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00781B",
@@ -2654,8 +2499,7 @@
    "volume_lots": 153,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00782B",
@@ -2671,8 +2515,7 @@
    "volume_lots": 162,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00783",
@@ -2688,8 +2531,7 @@
    "volume_lots": 179,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00785B",
@@ -2705,8 +2547,7 @@
    "volume_lots": 89,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00786B",
@@ -2722,8 +2563,7 @@
    "volume_lots": 45,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00787B",
@@ -2739,8 +2579,7 @@
    "volume_lots": 13,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00788B",
@@ -2756,8 +2595,7 @@
    "volume_lots": 58,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00789B",
@@ -2773,8 +2611,7 @@
    "volume_lots": 107,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00791B",
@@ -2790,8 +2627,7 @@
    "volume_lots": 199,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00792B",
@@ -2807,8 +2643,7 @@
    "volume_lots": 41139,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00795B",
@@ -2824,8 +2659,7 @@
    "volume_lots": 8712,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00799B",
@@ -2841,8 +2675,7 @@
    "volume_lots": 324,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00830",
@@ -2858,8 +2691,7 @@
    "volume_lots": 15140,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00834B",
@@ -2875,8 +2707,7 @@
    "volume_lots": 110,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:48",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:48"
   },
   {
    "code": "00836B",
@@ -2892,8 +2723,7 @@
    "volume_lots": 9,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:28:04",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:28:04"
   },
   {
    "code": "00840B",
@@ -2909,8 +2739,7 @@
    "volume_lots": 100,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "00841B",
@@ -2926,8 +2755,7 @@
    "volume_lots": 100,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "00842B",
@@ -2943,8 +2771,7 @@
    "volume_lots": 241,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00844B",
@@ -2960,8 +2787,7 @@
    "volume_lots": 80,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00845B",
@@ -2977,8 +2803,7 @@
    "volume_lots": 102,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00846B",
@@ -2994,8 +2819,7 @@
    "volume_lots": 110,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00847B",
@@ -3011,8 +2835,7 @@
    "volume_lots": null,
    "fee": null,
    "aum": null,
-   "source_time": "20261006 09:35:31",
-   "quote_date": null
+   "source_time": "20261006 09:35:31"
   },
   {
    "code": "00848B",
@@ -3028,8 +2851,7 @@
    "volume_lots": 201,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00849B",
@@ -3045,8 +2867,7 @@
    "volume_lots": 207,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00850",
@@ -3062,8 +2883,7 @@
    "volume_lots": 531,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:31:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:31:00"
   },
   {
    "code": "00851",
@@ -3079,8 +2899,7 @@
    "volume_lots": 54,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00852L",
@@ -3096,8 +2915,7 @@
    "volume_lots": 312,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00853B",
@@ -3113,8 +2931,7 @@
    "volume_lots": 1050,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:49",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:49"
   },
   {
    "code": "00856B",
@@ -3130,8 +2947,7 @@
    "volume_lots": 4,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:28:04",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:28:04"
   },
   {
    "code": "00857B",
@@ -3147,8 +2963,7 @@
    "volume_lots": 88867,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:28:04",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:28:04"
   },
   {
    "code": "00858",
@@ -3164,8 +2979,7 @@
    "volume_lots": 242,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:28:04",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:28:04"
   },
   {
    "code": "00859B",
@@ -3181,8 +2995,7 @@
    "volume_lots": 3591,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00860B",
@@ -3198,8 +3011,7 @@
    "volume_lots": 152,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00861",
@@ -3215,8 +3027,7 @@
    "volume_lots": 70,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00862B",
@@ -3232,8 +3043,7 @@
    "volume_lots": 241,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00863B",
@@ -3249,8 +3059,7 @@
    "volume_lots": 257,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00864B",
@@ -3266,8 +3075,7 @@
    "volume_lots": 1310,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00865B",
@@ -3283,8 +3091,7 @@
    "volume_lots": 5758,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00867B",
@@ -3300,8 +3107,7 @@
    "volume_lots": 430,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00870B",
@@ -3317,8 +3123,7 @@
    "volume_lots": 1,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00875",
@@ -3334,8 +3139,7 @@
    "volume_lots": 200,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00876",
@@ -3351,8 +3155,7 @@
    "volume_lots": 125,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00877",
@@ -3368,8 +3171,7 @@
    "volume_lots": 2157,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00878",
@@ -3385,8 +3187,7 @@
    "volume_lots": 24855,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00881",
@@ -3402,8 +3203,7 @@
    "volume_lots": 10431,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00882",
@@ -3419,8 +3219,7 @@
    "volume_lots": 7648,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:57:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:57:00"
   },
   {
    "code": "00884B",
@@ -3436,8 +3235,7 @@
    "volume_lots": 214,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00885",
@@ -3453,8 +3251,7 @@
    "volume_lots": 1793,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00886",
@@ -3470,8 +3267,7 @@
    "volume_lots": 72,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:28:04",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:28:04"
   },
   {
    "code": "00887",
@@ -3487,8 +3283,7 @@
    "volume_lots": 5956,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:28:04",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:28:04"
   },
   {
    "code": "00888",
@@ -3504,8 +3299,7 @@
    "volume_lots": 10334,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:59:53"
   },
   {
    "code": "00890B",
@@ -3521,8 +3315,7 @@
    "volume_lots": 146,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "00891",
@@ -3538,8 +3331,7 @@
    "volume_lots": 21020,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 15:48:15",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 15:48:15"
   },
   {
    "code": "00892",
@@ -3555,8 +3347,7 @@
    "volume_lots": 3976,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00893",
@@ -3572,8 +3363,7 @@
    "volume_lots": 1251,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00894",
@@ -3589,8 +3379,7 @@
    "volume_lots": 1554,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 15:34:30",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 15:34:30"
   },
   {
    "code": "00895",
@@ -3606,8 +3395,7 @@
    "volume_lots": 311,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00896",
@@ -3623,8 +3411,7 @@
    "volume_lots": 4016,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 15:34:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 15:34:00"
   },
   {
    "code": "00897",
@@ -3640,8 +3427,7 @@
    "volume_lots": 2771,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00898",
@@ -3657,8 +3443,7 @@
    "volume_lots": 956,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00899",
@@ -3674,8 +3459,7 @@
    "volume_lots": 49,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00900",
@@ -3691,8 +3475,7 @@
    "volume_lots": 7581,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00901",
@@ -3708,8 +3491,7 @@
    "volume_lots": 575,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:59:53"
   },
   {
    "code": "00902",
@@ -3725,8 +3507,7 @@
    "volume_lots": 444,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00903",
@@ -3742,8 +3523,7 @@
    "volume_lots": 209,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00904",
@@ -3759,8 +3539,7 @@
    "volume_lots": 5295,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00905",
@@ -3776,8 +3555,7 @@
    "volume_lots": 1058,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00907",
@@ -3793,8 +3571,7 @@
    "volume_lots": 1935,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:59:53"
   },
   {
    "code": "00908",
@@ -3810,8 +3587,7 @@
    "volume_lots": 69,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00909",
@@ -3827,8 +3603,7 @@
    "volume_lots": 1467,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00910",
@@ -3844,8 +3619,7 @@
    "volume_lots": 612,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:48",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:48"
   },
   {
    "code": "00911",
@@ -3861,8 +3635,7 @@
    "volume_lots": 87,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:47",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:47"
   },
   {
    "code": "00912",
@@ -3878,8 +3651,7 @@
    "volume_lots": 2721,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 15:50:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 15:50:45"
   },
   {
    "code": "00913",
@@ -3895,8 +3667,7 @@
    "volume_lots": 1129,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:47",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:47"
   },
   {
    "code": "00915",
@@ -3912,8 +3683,7 @@
    "volume_lots": 2819,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "00916",
@@ -3929,8 +3699,7 @@
    "volume_lots": 1496,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00917",
@@ -3946,8 +3715,7 @@
    "volume_lots": 852,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00918",
@@ -3963,8 +3731,7 @@
    "volume_lots": 35985,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:51",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:51"
   },
   {
    "code": "00919",
@@ -3980,8 +3747,7 @@
    "volume_lots": 106328,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 15:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 15:00:00"
   },
   {
    "code": "00920",
@@ -3997,8 +3763,7 @@
    "volume_lots": 279,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00921",
@@ -4014,8 +3779,7 @@
    "volume_lots": 179,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:47",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:47"
   },
   {
    "code": "00922",
@@ -4031,8 +3795,7 @@
    "volume_lots": 14871,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00923",
@@ -4048,8 +3811,7 @@
    "volume_lots": 2027,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 15:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 15:00:00"
   },
   {
    "code": "00924",
@@ -4065,8 +3827,7 @@
    "volume_lots": 933,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00926",
@@ -4082,8 +3843,7 @@
    "volume_lots": 135,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "00927",
@@ -4099,8 +3859,7 @@
    "volume_lots": 112249,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 15:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 15:00:00"
   },
   {
    "code": "00928",
@@ -4116,8 +3875,7 @@
    "volume_lots": 496,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 15:50:30",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 15:50:30"
   },
   {
    "code": "00929",
@@ -4133,8 +3891,7 @@
    "volume_lots": 41360,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00930",
@@ -4150,8 +3907,7 @@
    "volume_lots": 761,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:59:53"
   },
   {
    "code": "00931B",
@@ -4167,8 +3923,7 @@
    "volume_lots": 3902,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:48",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:48"
   },
   {
    "code": "00932",
@@ -4184,8 +3939,7 @@
    "volume_lots": 997,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:47",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:47"
   },
   {
    "code": "00933B",
@@ -4201,8 +3955,7 @@
    "volume_lots": 13156,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00934",
@@ -4218,8 +3971,7 @@
    "volume_lots": 8211,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 14:38:31",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 14:38:31"
   },
   {
    "code": "00935",
@@ -4235,8 +3987,7 @@
    "volume_lots": 10033,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:09:36",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:09:36"
   },
   {
    "code": "00936",
@@ -4252,8 +4003,7 @@
    "volume_lots": 595,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00937B",
@@ -4269,8 +4019,7 @@
    "volume_lots": 65650,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00938",
@@ -4286,8 +4035,7 @@
    "volume_lots": 2985,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "00939",
@@ -4303,8 +4051,7 @@
    "volume_lots": 3677,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00940",
@@ -4320,8 +4067,7 @@
    "volume_lots": 11425,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 13:31:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 13:31:00"
   },
   {
    "code": "00941",
@@ -4337,8 +4083,7 @@
    "volume_lots": 688,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00942B",
@@ -4354,8 +4099,7 @@
    "volume_lots": 1766,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00943",
@@ -4371,8 +4115,7 @@
    "volume_lots": 2681,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:47",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:47"
   },
   {
    "code": "00944",
@@ -4388,8 +4131,7 @@
    "volume_lots": 203,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:09:36",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:09:36"
   },
   {
    "code": "00945B",
@@ -4405,8 +4147,7 @@
    "volume_lots": 8557,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "00946",
@@ -4422,8 +4163,7 @@
    "volume_lots": 2024,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 15:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 15:00:00"
   },
   {
    "code": "00947",
@@ -4439,8 +4179,7 @@
    "volume_lots": 15208,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00948B",
@@ -4456,8 +4195,7 @@
    "volume_lots": 60025,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00949",
@@ -4473,8 +4211,7 @@
    "volume_lots": 270,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00950B",
@@ -4490,8 +4227,7 @@
    "volume_lots": 7042,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "00951",
@@ -4507,8 +4243,7 @@
    "volume_lots": 2394,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00952",
@@ -4524,8 +4259,7 @@
    "volume_lots": 1708,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "00953B",
@@ -4541,8 +4275,7 @@
    "volume_lots": 74257,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00954",
@@ -4558,8 +4291,7 @@
    "volume_lots": 3265,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00955",
@@ -4575,8 +4307,7 @@
    "volume_lots": 5543,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00956",
@@ -4592,8 +4323,7 @@
    "volume_lots": 350,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00957B",
@@ -4609,8 +4339,7 @@
    "volume_lots": 196,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:47",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:47"
   },
   {
    "code": "00958B",
@@ -4626,8 +4355,7 @@
    "volume_lots": 106,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:28:04",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:28:04"
   },
   {
    "code": "00959B",
@@ -4643,8 +4371,7 @@
    "volume_lots": 2127,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:50",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:50"
   },
   {
    "code": "00960",
@@ -4660,8 +4387,7 @@
    "volume_lots": 407,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:09:36",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:09:36"
   },
   {
    "code": "00961",
@@ -4677,8 +4403,7 @@
    "volume_lots": 28042,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00962",
@@ -4694,8 +4419,7 @@
    "volume_lots": 7361,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00963",
@@ -4711,8 +4435,7 @@
    "volume_lots": 2006,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00964",
@@ -4728,8 +4451,7 @@
    "volume_lots": 2576,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00965",
@@ -4745,8 +4467,7 @@
    "volume_lots": 2847,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00966B",
@@ -4762,8 +4483,7 @@
    "volume_lots": 939,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00967B",
@@ -4779,8 +4499,7 @@
    "volume_lots": 655,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00968B",
@@ -4796,8 +4515,7 @@
    "volume_lots": 2907,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00969B",
@@ -4813,8 +4531,7 @@
    "volume_lots": 3148,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00970B",
@@ -4830,8 +4547,7 @@
    "volume_lots": 2637,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00971",
@@ -4847,8 +4563,7 @@
    "volume_lots": 58,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:09:36",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:09:36"
   },
   {
    "code": "00972",
@@ -4864,8 +4579,7 @@
    "volume_lots": 194,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:09:36",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:09:36"
   },
   {
    "code": "009800",
@@ -4881,8 +4595,7 @@
    "volume_lots": 1237,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "009801",
@@ -4898,8 +4611,7 @@
    "volume_lots": 554,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "009802",
@@ -4915,8 +4627,7 @@
    "volume_lots": 1624,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "009803",
@@ -4932,8 +4643,7 @@
    "volume_lots": 4918,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "009804",
@@ -4949,8 +4659,7 @@
    "volume_lots": 1016,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:05",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:05"
   },
   {
    "code": "009805",
@@ -4966,8 +4675,7 @@
    "volume_lots": 4773,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "009806",
@@ -4983,8 +4691,7 @@
    "volume_lots": 10,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "009807",
@@ -5000,8 +4707,7 @@
    "volume_lots": 146,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "009808",
@@ -5017,8 +4723,7 @@
    "volume_lots": 208,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 15:40:15",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 15:40:15"
   },
   {
    "code": "009809",
@@ -5034,8 +4739,7 @@
    "volume_lots": 338,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00980A",
@@ -5051,8 +4755,7 @@
    "volume_lots": 5905,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:09:36",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:09:36"
   },
   {
    "code": "00980B",
@@ -5068,8 +4771,7 @@
    "volume_lots": 783,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00980D",
@@ -5085,8 +4787,7 @@
    "volume_lots": 622,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:37",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:37"
   },
   {
    "code": "00980T",
@@ -5102,8 +4803,7 @@
    "volume_lots": 112,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "009810",
@@ -5119,8 +4819,7 @@
    "volume_lots": 29,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "009811",
@@ -5136,8 +4835,7 @@
    "volume_lots": 861,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:55",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:55"
   },
   {
    "code": "009812",
@@ -5153,8 +4851,7 @@
    "volume_lots": 372,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:09:36",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:09:36"
   },
   {
    "code": "009813",
@@ -5170,8 +4867,7 @@
    "volume_lots": 641,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:09:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:09:45"
   },
   {
    "code": "009814",
@@ -5187,8 +4883,7 @@
    "volume_lots": 521,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "009815",
@@ -5204,8 +4899,7 @@
    "volume_lots": 2322,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:50",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:50"
   },
   {
    "code": "009816",
@@ -5221,8 +4915,7 @@
    "volume_lots": 127504,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "009817",
@@ -5238,8 +4931,7 @@
    "volume_lots": 372,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "009818",
@@ -5255,8 +4947,7 @@
    "volume_lots": 101,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "009819",
@@ -5272,8 +4963,7 @@
    "volume_lots": 2669,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00981A",
@@ -5289,8 +4979,7 @@
    "volume_lots": 119905,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:57",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:57"
   },
   {
    "code": "00981B",
@@ -5306,8 +4995,7 @@
    "volume_lots": 13144,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:48",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:48"
   },
   {
    "code": "00981D",
@@ -5323,8 +5011,7 @@
    "volume_lots": 2544,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00981T",
@@ -5340,8 +5027,7 @@
    "volume_lots": 2095,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:02",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:02"
   },
   {
    "code": "009820",
@@ -5357,8 +5043,7 @@
    "volume_lots": 3541,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "009821",
@@ -5374,8 +5059,7 @@
    "volume_lots": 6987,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:09:36",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:09:36"
   },
   {
    "code": "009822",
@@ -5391,8 +5075,7 @@
    "volume_lots": 325,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "009823",
@@ -5408,8 +5091,7 @@
    "volume_lots": 2797,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "009824",
@@ -5425,8 +5107,7 @@
    "volume_lots": 2242,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "009825",
@@ -5442,8 +5123,7 @@
    "volume_lots": 280,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:05",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:05"
   },
   {
    "code": "009826",
@@ -5459,8 +5139,7 @@
    "volume_lots": 6057,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:09:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:09:45"
   },
   {
    "code": "009827",
@@ -5476,8 +5155,7 @@
    "volume_lots": 3176,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "009828",
@@ -5493,8 +5171,7 @@
    "volume_lots": 46933,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "009829",
@@ -5510,8 +5187,7 @@
    "volume_lots": 30820,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:50",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:50"
   },
   {
    "code": "00982A",
@@ -5527,8 +5203,7 @@
    "volume_lots": 14375,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 15:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 15:00:00"
   },
   {
    "code": "00982B",
@@ -5544,8 +5219,7 @@
    "volume_lots": 28,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00982D",
@@ -5561,8 +5235,7 @@
    "volume_lots": 223,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00982T",
@@ -5578,8 +5251,7 @@
    "volume_lots": 70,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:47",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:47"
   },
   {
    "code": "00983A",
@@ -5595,8 +5267,7 @@
    "volume_lots": 800,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:01",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:01"
   },
   {
    "code": "00983B",
@@ -5612,8 +5283,7 @@
    "volume_lots": 145,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:50",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:50"
   },
   {
    "code": "00983D",
@@ -5629,8 +5299,7 @@
    "volume_lots": 621,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:05:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:05:00"
   },
   {
    "code": "00984A",
@@ -5646,8 +5315,7 @@
    "volume_lots": 9707,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00984B",
@@ -5663,8 +5331,7 @@
    "volume_lots": 807,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:50",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:50"
   },
   {
    "code": "00984D",
@@ -5680,8 +5347,7 @@
    "volume_lots": 14980,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:42",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:42"
   },
   {
    "code": "00985A",
@@ -5697,8 +5363,7 @@
    "volume_lots": 157048,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:09:36",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:09:36"
   },
   {
    "code": "00985B",
@@ -5714,8 +5379,7 @@
    "volume_lots": 10102,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00985D",
@@ -5731,8 +5395,7 @@
    "volume_lots": 2164,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:09:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:09:45"
   },
   {
    "code": "00986A",
@@ -5748,8 +5411,7 @@
    "volume_lots": 358,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00986B",
@@ -5765,8 +5427,7 @@
    "volume_lots": 42,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00986D",
@@ -5782,8 +5443,7 @@
    "volume_lots": 878,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00987A",
@@ -5799,8 +5459,7 @@
    "volume_lots": 1538,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00987B",
@@ -5816,8 +5475,7 @@
    "volume_lots": 1032,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:09:36",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:09:36"
   },
   {
    "code": "00987D",
@@ -5833,8 +5491,7 @@
    "volume_lots": 1241,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:47",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:47"
   },
   {
    "code": "00988A",
@@ -5850,8 +5507,7 @@
    "volume_lots": 18800,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:53",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:53"
   },
   {
    "code": "00988B",
@@ -5867,8 +5523,7 @@
    "volume_lots": 1744,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00989A",
@@ -5884,8 +5539,7 @@
    "volume_lots": 316,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00989B",
@@ -5901,8 +5555,7 @@
    "volume_lots": 2496,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00990A",
@@ -5918,8 +5571,7 @@
    "volume_lots": 7448,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00990B",
@@ -5935,8 +5587,7 @@
    "volume_lots": 3742,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:46",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:46"
   },
   {
    "code": "00991A",
@@ -5952,8 +5603,7 @@
    "volume_lots": 44384,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00991B",
@@ -5969,8 +5619,7 @@
    "volume_lots": 1041,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:09:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:09:45"
   },
   {
    "code": "00992A",
@@ -5986,8 +5635,7 @@
    "volume_lots": 61552,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 15:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 15:00:00"
   },
   {
    "code": "00992B",
@@ -6003,8 +5651,7 @@
    "volume_lots": 890,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:01:15",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:01:15"
   },
   {
    "code": "00993A",
@@ -6020,8 +5667,7 @@
    "volume_lots": 3022,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:45",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:45"
   },
   {
    "code": "00994A",
@@ -6037,8 +5683,7 @@
    "volume_lots": 1692,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:48",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:48"
   },
   {
    "code": "00995A",
@@ -6054,8 +5699,7 @@
    "volume_lots": 4515,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 15:26:15",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 15:26:15"
   },
   {
    "code": "00996A",
@@ -6071,8 +5715,7 @@
    "volume_lots": 22270,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:47",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:47"
   },
   {
    "code": "00997A",
@@ -6088,8 +5731,7 @@
    "volume_lots": 4700,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:00:00",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:00:00"
   },
   {
    "code": "00998A",
@@ -6105,8 +5747,7 @@
    "volume_lots": 8850,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 16:59:54",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 16:59:54"
   },
   {
    "code": "00999A",
@@ -6122,8 +5763,7 @@
    "volume_lots": 8613,
    "fee": null,
    "aum": null,
-   "source_time": "20261016 17:09:36",
-   "quote_date": "2026-10-16"
+   "source_time": "20261016 17:09:36"
   }
  ]
 }
