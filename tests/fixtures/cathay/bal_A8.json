@@ -1,0 +1,17 @@
+{
+ "returnCode": "2000",
+ "success": true,
+ "returnMessage": "成功",
+ "result": [
+  {
+   "item": "附買回債券",
+   "amount": "(TWD) $ 100,000,000",
+   "ntMkval": null
+  },
+  {
+   "item": "債券",
+   "amount": "NT$118,000,000,000",
+   "ntMkval": "98.3%"
+  }
+ ]
+}

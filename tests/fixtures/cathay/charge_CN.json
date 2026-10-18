@@ -1,0 +1,10 @@
+{
+ "returnCode": "2000",
+ "success": true,
+ "returnMessage": "成功",
+ "result": {
+  "managerCharge": "基金規模新台幣五十億元（含）以下：0.30%；五十億以上：0.25%",
+  "storageCharge": "0.03%",
+  "securitiesTransactionsTax": "1‰"
+ }
+}

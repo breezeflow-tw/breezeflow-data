@@ -1,0 +1,15 @@
+{
+ "returnCode": "2000",
+ "success": true,
+ "returnMessage": "成功",
+ "result": {
+  "etfTypeName": "國內ETF",
+  "born": "2020/07/10",
+  "listedDate": "2020/07/20",
+  "allotType": "季配",
+  "manager": "測試經理人甲",
+  "valuationType": "單一幣別",
+  "vMoneyType": "新台幣",
+  "bank": "測試銀行"
+ }
+}

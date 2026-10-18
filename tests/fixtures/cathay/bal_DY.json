@@ -1,0 +1,12 @@
+{
+ "returnCode": "2000",
+ "success": true,
+ "returnMessage": "成功",
+ "result": [
+  {
+   "item": "現金",
+   "amount": "(USD) $ 1,000",
+   "ntMkval": null
+  }
+ ]
+}

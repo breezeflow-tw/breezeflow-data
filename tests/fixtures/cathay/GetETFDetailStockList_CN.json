@@ -1,0 +1,19 @@
+{
+ "returnCode": "2000",
+ "success": true,
+ "returnMessage": "成功",
+ "result": [
+  {
+   "stockCode": "2330",
+   "stockName": "台積電",
+   "volumn": "100,000,000",
+   "weights": "9.50"
+  },
+  {
+   "stockCode": "2891",
+   "stockName": "中信金",
+   "volumn": "900,000,000",
+   "weights": "10.20"
+  }
+ ]
+}

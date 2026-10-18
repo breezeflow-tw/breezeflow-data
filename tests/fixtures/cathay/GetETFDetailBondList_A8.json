@@ -1,0 +1,14 @@
+{
+ "returnCode": "2000",
+ "success": true,
+ "returnMessage": "成功",
+ "result": [
+  {
+   "bondNo": "BBGTEST00001",
+   "bondName": "US TREASURY N/B 4.75-2055/05/15",
+   "parValue": "100,000,000",
+   "mkval": "95,000,000",
+   "ntMkval": "4.50"
+  }
+ ]
+}

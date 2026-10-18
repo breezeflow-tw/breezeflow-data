@@ -1,0 +1,48 @@
+{
+ "totalCount": 3,
+ "totalPage": 1,
+ "returnCode": "2000",
+ "success": true,
+ "returnMessage": "成功",
+ "result": [
+  {
+   "fundSn": null,
+   "fundCode": "CN",
+   "stockCode": "00878",
+   "stockShortNameFix": "國泰永續高股息",
+   "fundSName": "國泰永續高股息",
+   "fundTypeName": "ETF",
+   "etfTypeName": "國內ETF",
+   "currency": "新台幣",
+   "riskLevel": "RR4",
+   "isETF": true,
+   "isListedTrade": true
+  },
+  {
+   "fundSn": null,
+   "fundCode": "A8",
+   "stockCode": "00687B",
+   "stockShortNameFix": "國泰20年美債",
+   "fundSName": "國泰20年美債",
+   "fundTypeName": "ETF",
+   "etfTypeName": "債券ETF",
+   "currency": "新台幣",
+   "riskLevel": "RR2",
+   "isETF": true,
+   "isListedTrade": true
+  },
+  {
+   "fundSn": null,
+   "fundCode": "DY",
+   "stockCode": "00687C",
+   "stockShortNameFix": "國泰20年美債+櫃U-美元",
+   "fundSName": "國泰20年美債+櫃U-美元",
+   "fundTypeName": "ETF",
+   "etfTypeName": "債券ETF",
+   "currency": "美元",
+   "riskLevel": "RR2",
+   "isETF": true,
+   "isListedTrade": true
+  }
+ ]
+}

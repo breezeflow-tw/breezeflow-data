@@ -1,0 +1,12 @@
+{
+ "returnCode": "2000",
+ "success": true,
+ "returnMessage": "成功",
+ "result": {
+  "etfTypeName": "債券ETF",
+  "born": "2017/03/31",
+  "listedDate": "2017/04/13",
+  "manager": "測試經理人乙",
+  "vMoneyType": "新台幣"
+ }
+}

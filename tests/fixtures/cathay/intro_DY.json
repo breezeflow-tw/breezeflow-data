@@ -1,0 +1,11 @@
+{
+ "returnCode": "2000",
+ "success": true,
+ "returnMessage": "成功",
+ "result": {
+  "etfTypeName": "債券ETF",
+  "listedDate": "2021/03/11",
+  "manager": "測試經理人乙",
+  "vMoneyType": "美元"
+ }
+}
