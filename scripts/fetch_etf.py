@@ -503,7 +503,8 @@ def known_markets(db_path: Path) -> dict[str, str]:
 
 def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | None = None,
             dividends: list[dict] | None = None, diffs: list[dict] | None = None,
-            issuer: dict[str, dict] | None = None, fund_dividends: list[dict] | None = None) -> None:
+            issuer: dict[str, dict] | None = None, fund_dividends: list[dict] | None = None,
+            fund_nav: dict[str, float] | None = None) -> None:
     con = store.open_db(db_path, None)
     try:
         now = datetime.now(TW).isoformat(timespec="seconds")
@@ -558,6 +559,13 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
         )
         save_official_nav(con, nav or {})
         save_issuer_detail(con, issuer or {})
+        # 投信投顧公會的當日正式淨值：只補空白，投信官網公告的優先
+        con.executemany(
+            """UPDATE daily SET nav_official = :nav,
+                 premium_official = CASE WHEN price IS NOT NULL THEN (price - :nav) / :nav * 100 END
+               WHERE date = :date AND code = :code AND nav_official IS NULL""",
+            [{"nav": v, "date": date, "code": c} for c, v in (fund_nav or {}).items()],
+        )
         con.executemany(
             """INSERT OR REPLACE INTO price_check(date, code, field, yahoo, exchange, checked_at)
                VALUES(:date, :code, :field, :yahoo, :exchange, :now)""",
@@ -732,6 +740,16 @@ def apply_fund_info(items: list[dict], info: dict) -> None:
                 it["fee"] = f["expense"]["total"]
 
 
+def apply_fund_nav(items: list[dict], navs: dict[str, float]) -> None:
+    """投信投顧公會的當日正式淨值：還沒有投信官網正式淨值的 ETF，用它取代預估淨值，折溢價跟著重算。"""
+    for it in items:
+        nav = navs.get(it["code"])
+        if not nav or "正式淨值" in (it.get("nav_source") or ""):
+            continue
+        it["nav"], it["nav_source"] = nav, f"{sitca.SOURCE}（正式淨值）"
+        it["premium"] = round((it["price"] - nav) / nav * 100, 4) if it.get("price") else None
+
+
 FUND_MONTH_COLS = ("code", "month", "aum_twd", "nav", "units", "beneficiaries", "beneficiaries_natural",
                    "beneficiaries_legal", "subscribe_twd", "redeem_twd")
 
@@ -895,6 +913,7 @@ def main(argv=None) -> int:
     issuer: dict[str, dict] = {}
     with ThreadPoolExecutor(max_workers=len(ISSUER_MODULES) + 1) as pool:
         fresh_info = pool.submit(sitca.fetch, args.fixtures / "sitca" if args.fixtures else None, SSL_CONTEXT, today) if refresh else None
+        fund_nav = pool.submit(sitca.fetch_nav, date, args.fixtures / "sitca" if args.fixtures else None, SSL_CONTEXT)
         for mod, records in pool.map(fetch_issuer, ISSUER_MODULES.items()):
             print(f"{mod.SOURCE}：{sum(1 for r in records.values() if not r.get('delisted'))} 檔")
             issuer.update(records)
@@ -907,8 +926,11 @@ def main(argv=None) -> int:
           + "）" + ("" if fresh else "，沿用資料庫裡的資料"))
     apply_issuer(items, issuer, date)
     apply_fund_info(items, fund_info)
+    navs = fund_nav.result()
+    apply_fund_nav(items, navs)
+    print(f"{sitca.SOURCE}基金淨值：{date} 共 {len(navs)} 檔" if navs else f"{sitca.SOURCE}基金淨值：{date} 尚未公布")
 
-    save_db(items, date, args.db, nav, dividends, diffs, issuer, fresh.get("dividends"))
+    save_db(items, date, args.db, nav, dividends, diffs, issuer, fresh.get("dividends"), navs)
     con = sqlite3.connect(args.db)
     try:
         attach_returns(con, items, date, reused, returns.parse_history(history_raw))
