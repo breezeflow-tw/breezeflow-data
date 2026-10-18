@@ -793,6 +793,32 @@ def apply_fund_month(items: list[dict], monthly: dict[str, dict]) -> None:
             it["beneficiaries_source"] = f"{sitca.SOURCE}基金資料彙總表"
 
 
+def months_between(first: str, last: str) -> list[str]:
+    """YYYY-MM 到 YYYY-MM（含）的每個月。"""
+    y, m = map(int, first.split("-"))
+    out = []
+    while f"{y:04d}-{m:02d}" <= last:
+        out.append(f"{y:04d}-{m:02d}")
+        y, m = (y + 1, 1) if m == 12 else (y, m + 1)
+    return out
+
+
+def backfill_plan(db_path: Path) -> dict[str, list[str]]:
+    """要回補的月份：從 sitca.BACKFILL_FROM 到資料庫最新一個月之間還沒抓過的，由近到遠，每種最多 BACKFILL_MONTHS 個。"""
+    con = sqlite3.connect(db_path)
+    try:
+        latest = con.execute("SELECT MAX(month) FROM fund_month").fetchone()[0]
+        done = set(con.execute("SELECT report, month FROM fund_fetch").fetchall())
+    except sqlite3.OperationalError:
+        return {}
+    finally:
+        con.close()
+    if not latest:
+        return {}
+    return {report: [m for m in reversed(months_between(first, latest)) if (report, m) not in done][:sitca.BACKFILL_MONTHS]
+            for report, first in sitca.BACKFILL_FROM.items()}
+
+
 def save_fund_top(con: sqlite3.Connection, top10: dict) -> None:
     """公會月前十大依月份累積；同一個月重抓時整批取代。"""
     if not top10.get("month"):
@@ -914,12 +940,19 @@ def main(argv=None) -> int:
     with ThreadPoolExecutor(max_workers=len(ISSUER_MODULES) + 1) as pool:
         fresh_info = pool.submit(sitca.fetch, args.fixtures / "sitca" if args.fixtures else None, SSL_CONTEXT, today) if refresh else None
         fund_nav = pool.submit(sitca.fetch_nav, date, args.fixtures / "sitca" if args.fixtures else None, SSL_CONTEXT)
+        # 沒有重抓最新資料的那幾次，順便回補公會彙總表與配息資料的歷史月份
+        plan = {} if refresh or not fund_info.get("funds") else backfill_plan(args.db)
+        old_info = (pool.submit(sitca.backfill, plan, fund_info["funds"], args.fixtures / "sitca" if args.fixtures else None,
+                                SSL_CONTEXT) if any(plan.values()) else None)
         for mod, records in pool.map(fetch_issuer, ISSUER_MODULES.items()):
             print(f"{mod.SOURCE}：{sum(1 for r in records.values() if not r.get('delisted'))} 檔")
             issuer.update(records)
         fresh = fresh_info.result() if fresh_info else {}
+        old = old_info.result() if old_info else {}
     if fresh:
         fund_info = fresh
+    if old.get("done"):
+        print(f"{sitca.SOURCE}歷史資料回補：" + "、".join(f"{'彙總表' if r == 'summary' else '配息'} {m}" for r, m in old["done"]))
     summary = fresh.get("summary") or {}
     print(f"{sitca.SOURCE}：{len(fund_info.get('funds') or {})} 檔（基本資料 {fund_info.get('month') or '—'}、"
           f"費用比率 {fund_info.get('year') or '—'} 年度" + (f"、彙總表 {summary['month']} 共 {len(summary['funds'])} 檔" if summary else "")
@@ -930,7 +963,7 @@ def main(argv=None) -> int:
     apply_fund_nav(items, navs)
     print(f"{sitca.SOURCE}基金淨值：{date} 共 {len(navs)} 檔" if navs else f"{sitca.SOURCE}基金淨值：{date} 尚未公布")
 
-    save_db(items, date, args.db, nav, dividends, diffs, issuer, fresh.get("dividends"), navs)
+    save_db(items, date, args.db, nav, dividends, diffs, issuer, (fresh.get("dividends") or []) + (old.get("dividends") or []), navs)
     con = sqlite3.connect(args.db)
     try:
         attach_returns(con, items, date, reused, returns.parse_history(history_raw))
@@ -938,7 +971,13 @@ def main(argv=None) -> int:
             save_fund_info(con, fresh, today.isoformat())
             save_fund_month(con, fresh.get("summary") or {})
             save_fund_top(con, fresh.get("top10") or {})
-            con.commit()
+        for month, funds in (old.get("summary") or {}).items():
+            save_fund_month(con, {"month": month, "funds": funds})
+        done = [("summary", fresh["summary"]["month"])] if (fresh.get("summary") or {}).get("month") else []
+        done += [("dividend", m) for m in fresh.get("dividend_months") or []] + list(old.get("done") or [])
+        con.executemany("INSERT OR REPLACE INTO fund_fetch(report, month, fetched) VALUES(?, ?, ?)",
+                        [(r, m, today.isoformat()) for r, m in done])
+        con.commit()
         apply_fund_month(items, load_fund_month(con))
         apply_fund_top(items, load_fund_top(con))
         store.dump(con, history)
