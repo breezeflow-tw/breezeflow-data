@@ -379,6 +379,7 @@ def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
         for f in ISSUER_FIELDS:
             it.setdefault(f, None)
         it["holdings_top"] = []
+        it["holdings_source"] = it["holdings_date"] = None
         it["units_change"] = None
         it["fee_source"] = None
         it["beneficiaries_source"] = None
@@ -412,6 +413,9 @@ def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
             it["units_change"] = r.get("units_change")
         it["holdings_top"] = sorted((h for h in r.get("holdings") or [] if h.get("weight") is not None),
                                     key=lambda h: -h["weight"])[:10]
+        if it["holdings_top"]:
+            it["holdings_source"] = src
+            it["holdings_date"] = r.get("holdings_date") or r.get("pcf_date") or r.get("nav_date")
 
 
 def trade_date(nav: dict, quotes: dict, now: datetime) -> str:
@@ -499,7 +503,7 @@ def known_markets(db_path: Path) -> dict[str, str]:
 
 def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | None = None,
             dividends: list[dict] | None = None, diffs: list[dict] | None = None,
-            issuer: dict[str, dict] | None = None) -> None:
+            issuer: dict[str, dict] | None = None, fund_dividends: list[dict] | None = None) -> None:
     con = store.open_db(db_path, None)
     try:
         now = datetime.now(TW).isoformat(timespec="seconds")
@@ -559,15 +563,27 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
                VALUES(:date, :code, :field, :yahoo, :exchange, :now)""",
             [{**d, "date": date, "now": now} for d in diffs or []],
         )
-        # 交易所除權息預告：只補投信官網還沒有的資料，不覆蓋投信公告
+        # 交易所除權息預告：只補投信官網、投信投顧公會還沒有的資料，不覆蓋投信公告
         con.executemany(
             """INSERT INTO dividend(code, ex_date, cash, source, updated_at)
                VALUES(:code, :ex_date, :cash, '交易所除權息預告', :now)
                ON CONFLICT(code, ex_date) DO UPDATE SET
+                 cash=CASE WHEN dividend.source LIKE '%官網' OR dividend.source = :fund THEN dividend.cash
+                           ELSE COALESCE(excluded.cash, dividend.cash) END,
+                 source=CASE WHEN dividend.source LIKE '%官網' OR dividend.source = :fund THEN dividend.source ELSE excluded.source END,
+                 updated_at=excluded.updated_at""",
+            [{**d, "now": now, "fund": sitca.SOURCE} for d in dividends or []],
+        )
+        # 投信投顧公會的配息資料（含發放日）：取代交易所預告，不覆蓋投信官網
+        con.executemany(
+            """INSERT INTO dividend(code, ex_date, cash, pay_date, source, updated_at)
+               VALUES(:code, :ex_date, :cash, :pay_date, :source, :now)
+               ON CONFLICT(code, ex_date) DO UPDATE SET
                  cash=CASE WHEN dividend.source LIKE '%官網' THEN dividend.cash ELSE COALESCE(excluded.cash, dividend.cash) END,
+                 pay_date=COALESCE(dividend.pay_date, excluded.pay_date),
                  source=CASE WHEN dividend.source LIKE '%官網' THEN dividend.source ELSE excluded.source END,
                  updated_at=excluded.updated_at""",
-            [{**d, "now": now} for d in dividends or []],
+            [{**d, "source": sitca.SOURCE, "now": now} for d in fund_dividends or []],
         )
         # 投信官網的配息紀錄（含發放日）優先
         con.executemany(
@@ -759,6 +775,40 @@ def apply_fund_month(items: list[dict], monthly: dict[str, dict]) -> None:
             it["beneficiaries_source"] = f"{sitca.SOURCE}基金資料彙總表"
 
 
+def save_fund_top(con: sqlite3.Connection, top10: dict) -> None:
+    """公會月前十大依月份累積；同一個月重抓時整批取代。"""
+    if not top10.get("month"):
+        return
+    con.execute("DELETE FROM fund_top WHERE month = ?", (top10["month"],))
+    con.executemany(
+        "INSERT OR REPLACE INTO fund_top(code, month, rank, asset_code, asset_name, kind, weight) VALUES(?, ?, ?, ?, ?, ?, ?)",
+        [(code, top10["month"], h["rank"], h["asset_code"], h["asset_name"], h["kind"], h["weight"])
+         for code, rows in sorted(top10["funds"].items()) for h in rows],
+    )
+
+
+def load_fund_top(con: sqlite3.Connection) -> dict[str, tuple[str, list[dict]]]:
+    """每檔 ETF 最新一個月的公會月前十大：{代號: (年月, 持股)}。"""
+    out: dict[str, tuple[str, list[dict]]] = {}
+    for code, month, asset_code, asset_name, kind, weight in con.execute(
+            "SELECT code, month, asset_code, asset_name, kind, weight FROM fund_top f "
+            "WHERE month = (SELECT MAX(month) FROM fund_top g WHERE g.code = f.code) ORDER BY code, rank"):
+        out.setdefault(code, (month, []))[1].append(
+            {"asset_code": asset_code, "asset_name": asset_name, "kind": kind, "weight": weight, "qty": None})
+    return out
+
+
+def apply_fund_top(items: list[dict], top: dict[str, tuple[str, list[dict]]]) -> None:
+    """投信官網沒有成分股的 ETF，用投信投顧公會的月底前十大（只有權重，沒有股數）。"""
+    for it in items:
+        if it.get("holdings_top") or it["code"] not in top:
+            continue
+        month, rows = top[it["code"]]
+        it["holdings_top"] = rows
+        it["holdings_source"] = f"{sitca.SOURCE}基金投資明細（月前十大）"
+        it["holdings_date"] = month
+
+
 def attach_returns(con: sqlite3.Connection, items: list[dict], date: str, reused: dict, history: dict) -> None:
     """每檔附上區間報酬。含息報酬要和資料庫的配息紀錄核對，所以在投信資料寫入資料庫之後才算。"""
     known: dict[str, list] = {}
@@ -858,15 +908,17 @@ def main(argv=None) -> int:
     apply_issuer(items, issuer, date)
     apply_fund_info(items, fund_info)
 
-    save_db(items, date, args.db, nav, dividends, diffs, issuer)
+    save_db(items, date, args.db, nav, dividends, diffs, issuer, fresh.get("dividends"))
     con = sqlite3.connect(args.db)
     try:
         attach_returns(con, items, date, reused, returns.parse_history(history_raw))
         if fresh:
             save_fund_info(con, fresh, today.isoformat())
             save_fund_month(con, fresh.get("summary") or {})
+            save_fund_top(con, fresh.get("top10") or {})
             con.commit()
         apply_fund_month(items, load_fund_month(con))
+        apply_fund_top(items, load_fund_top(con))
         store.dump(con, history)
     finally:
         con.close()
