@@ -1,5 +1,6 @@
 """離線測試：用 tests/fixtures 的假資料驗證解析、分類、合併與寫入。執行：python -m unittest -v"""
 import json
+import shutil
 import sqlite3
 import sys
 import tempfile
@@ -11,6 +12,13 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import fetch_etf as f  # noqa: E402
 
 FIX = ROOT / "tests" / "fixtures"
+
+
+def fixtures_without(tmp: str, *names: str) -> Path:
+    """複製一份測試資料並拿掉指定來源，用來測試只有交易所資料的情況。"""
+    dst = Path(tmp) / "fix"
+    shutil.copytree(FIX, dst, ignore=shutil.ignore_patterns(*names))
+    return dst
 
 
 class ParseTest(unittest.TestCase):
@@ -104,6 +112,54 @@ class ParseTest(unittest.TestCase):
         self.assertEqual(f.issuer_from_name("期元大S&P黃金"), "元大")
 
 
+class YuantaTest(unittest.TestCase):
+    def test_fee_parsing(self):
+        from issuers import yuanta as y
+        self.assertEqual(y.official_fee("約0.0682%  (資料日期：2026/10/16) "), 0.0682)
+        self.assertEqual(y.flat_fee("0.99%"), 0.99)
+        self.assertIsNone(y.flat_fee("100億(含)以下：0.40%\n逾100億(不含)：0.30%"))  # 分段級距不換算
+        self.assertIsNone(y.official_fee(""))
+
+    def test_parse(self):
+        from issuers import yuanta as y
+        info = y.parse_info(y.unwrap(json.loads((FIX / "yuanta" / "info.json").read_text("utf-8"))))
+        self.assertNotIn("0099X", info)  # 已下市
+        self.assertEqual(info["0050"]["mgmt_fee"], 0.07)
+        self.assertEqual(info["00679B"]["mgmt_fee"], 0.15)
+        self.assertIsNone(info["00631L"]["mgmt_fee"])
+        pcf = y.parse_pcf(json.loads((FIX / "yuanta" / "pcf_0050.json").read_text("utf-8")))
+        self.assertEqual((pcf["nav_official"], pcf["nav_date"], pcf["aum"]), (52.30, "2026-10-16", 5230.0))
+        self.assertEqual(pcf["beneficiaries_month"], "2026-09")
+        self.assertEqual([h["asset_code"] for h in pcf["holdings"]], ["2330", "2317", "TX-202610"])
+        empty = y.parse_pcf(json.loads((FIX / "yuanta" / "pcf_00631L.json").read_text("utf-8")))
+        self.assertIsNone(empty["nav_official"])
+        self.assertEqual(empty["holdings"], [])
+        self.assertIsNone(y.parse_factset(None))
+
+    def test_pipeline_prefers_issuer(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            self.assertEqual(f.main(["--fixtures", str(FIX), "--db", str(db), "--out", str(out)]), 0)
+            items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            a = items["0050"]
+            self.assertEqual(a["nav"], 52.30)  # 投信正式淨值取代證交所預估淨值 52.25
+            self.assertIn("元大投信官網", a["nav_source"])
+            self.assertAlmostEqual(a["premium"], (52.35 - 52.30) / 52.30 * 100, places=3)
+            self.assertEqual((a["aum"], a["aum_source"]), (5230.0, "元大投信官網"))
+            self.assertEqual((a["mgmt_fee"], a["beneficiaries"], a["stats"]["div_yield"]), (0.07, 1000000, 3.1))
+            self.assertEqual(a["holdings_top"][0]["asset_name"], "台積電")
+            b = items["00679B"]
+            self.assertEqual(b["nav"], 28.40)  # 債券型正式淨值晚一天（10/15），當天仍用預估淨值
+            self.assertTrue(b["nav_source"].startswith("證交所"))
+            self.assertEqual(b["aum"], 1700.0)
+            self.assertIsNone(b["stats"])
+            self.assertTrue(items["00757"]["aum_source"] is None or items["00757"]["aum_source"].startswith("交易所"))
+            con = sqlite3.connect(db)
+            self.assertEqual(con.execute("SELECT COUNT(*) FROM holding WHERE code='0050'").fetchone()[0], 3)
+            self.assertEqual(con.execute("SELECT nav_official FROM daily WHERE code='0050'").fetchone()[0], 52.30)
+            con.close()
+
+
 class PipelineTest(unittest.TestCase):
     def test_end_to_end_and_rerun(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -139,7 +195,8 @@ class PipelineTest(unittest.TestCase):
     def test_size_and_dividends_in_output(self):
         with tempfile.TemporaryDirectory() as tmp:
             db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
-            self.assertEqual(f.main(["--fixtures", str(FIX), "--db", str(db), "--out", str(out)]), 0)
+            fix = fixtures_without(tmp, "yuanta")
+            self.assertEqual(f.main(["--fixtures", str(fix), "--db", str(db), "--out", str(out)]), 0)
             items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
             self.assertAlmostEqual(items["0050"]["aum"], 1e9 * 52.25 / 1e8)    # 上市：基金基本資料 × 預估淨值
             self.assertAlmostEqual(items["00679B"]["aum"], 6e9 * 28.40 / 1e8)  # 上櫃：Capitals × 預估淨值
@@ -155,7 +212,8 @@ class PipelineTest(unittest.TestCase):
             nonav.mkdir()
             for name in ("twse.json", "tpex.json"):
                 (nonav / name).write_bytes((FIX / name).read_bytes())
-            self.assertEqual(f.main(["--fixtures", str(FIX), "--db", str(db), "--out", str(out)]), 0)
+            fix = fixtures_without(tmp, "yuanta")
+            self.assertEqual(f.main(["--fixtures", str(fix), "--db", str(db), "--out", str(out)]), 0)
             self.assertEqual(f.main(["--fixtures", str(nonav), "--db", str(db), "--out", str(out)]), 0)
             con = sqlite3.connect(db)
             self.assertEqual(con.execute("SELECT nav FROM daily WHERE code='0050'").fetchone()[0], 52.25)
@@ -167,7 +225,8 @@ class PipelineTest(unittest.TestCase):
         """早上開盤前：淨值資料已換成下個交易日，收盤行情還是前一天。"""
         with tempfile.TemporaryDirectory() as tmp:
             db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
-            self.assertEqual(f.main(["--fixtures", str(FIX), "--db", str(db), "--out", str(out)]), 0)
+            fix = fixtures_without(tmp, "yuanta")
+            self.assertEqual(f.main(["--fixtures", str(fix), "--db", str(db), "--out", str(out)]), 0)
 
             morning = Path(tmp) / "morning"
             morning.mkdir()

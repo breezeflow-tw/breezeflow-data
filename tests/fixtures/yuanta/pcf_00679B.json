@@ -1,0 +1,33 @@
+{
+ "PCF": {
+  "fundid": "1199",
+  "markcd": "00679B",
+  "trandate": "20261015",
+  "totalav": 170000000000,
+  "osunit": 6000000000,
+  "nav": 28.3,
+  "Beneficiary": {
+   "doc_ym": "20260930",
+   "bf_cnt_a": 200000
+  }
+ },
+ "InKind": {
+  "FundComposition": null
+ },
+ "Cash": {},
+ "FundWeights": {
+  "StockWeights": 0,
+  "FutureWeights": 0,
+  "ETFWeights": 0,
+  "BondWeights": [
+   {
+    "code": "US912810XX",
+    "ym": null,
+    "name": "美國公債 2054",
+    "weights": 4.1,
+    "qty": 1000000.0
+   }
+  ]
+ },
+ "Memo": null
+}

@@ -14,12 +14,15 @@ import csv
 import json
 import re
 import sqlite3
+import ssl
 import sys
 import time
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+from issuers import yuanta
 
 ROOT = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT / "data" / "etf.db"
@@ -47,15 +50,23 @@ SOURCES = {
 YAHOO_CHART = "https://{host}/v8/finance/chart/{symbol}?range=10d&interval=1d"
 YAHOO_HOSTS = ("query1.finance.yahoo.com", "query2.finance.yahoo.com")
 
+# 已接入的投信官網；淨值、規模、費用、成分股以這裡的資料為主
+ISSUER_MODULES = {"yuanta": yuanta}
+
 
 # ---------- 下載 ----------
+
+# 照常驗證憑證鏈與網域名稱，只關閉 Python 3.13 起預設的 X.509 嚴格模式：
+# 部分投信網站（例如元大）的憑證缺少 Subject Key Identifier，瀏覽器與 curl 都接受，嚴格模式會拒絕。
+SSL_CONTEXT = ssl.create_default_context()
+SSL_CONTEXT.verify_flags &= ~getattr(ssl, "VERIFY_X509_STRICT", 0)
 
 def http_get_json(url: str, retries: int = 4, first_delay: float = 2) -> object:
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (breezeflow-data)"})
     delay = first_delay
     for attempt in range(retries + 1):
         try:
-            with urllib.request.urlopen(req, timeout=30) as resp:
+            with urllib.request.urlopen(req, timeout=30, context=SSL_CONTEXT) as resp:
                 raw = resp.read().decode("utf-8-sig")
             return json.loads(raw)
         except Exception as exc:  # noqa: BLE001 - 網路錯誤一律重試
@@ -343,6 +354,37 @@ def load_meta(path: Path = META_PATH) -> dict[str, dict]:
 
 # ---------- 合併 ----------
 
+ISSUER_FIELDS = ("mgmt_fee", "mgmt_fee_text", "custodian_fee_text", "manager", "risk_class",
+                 "beneficiaries", "beneficiaries_month", "stats")
+
+
+def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
+    """投信官網的資料優先；沒有接入的投信維持交易所資料，並標示每個欄位的出處。"""
+    for it in items:
+        it["nav_source"] = "證交所（投信預估淨值）" if it["nav"] is not None else None
+        it["aum_source"] = "交易所資料推算（發行單位數×淨值）" if it["aum"] is not None else None
+        for f in ISSUER_FIELDS:
+            it.setdefault(f, None)
+        it["holdings_top"] = []
+        r = issuer.get(it["code"])
+        if not r:
+            continue
+        src = r["source"]
+        for f in ISSUER_FIELDS:
+            it[f] = r.get(f)
+        for f in ("list_date", "index_name", "units"):
+            if r.get(f):
+                it[f] = r[f]
+        if r.get("aum"):
+            it["aum"], it["aum_source"] = r["aum"], src
+        if r.get("nav_official") and r.get("nav_date") == date:
+            it["nav"], it["nav_source"] = r["nav_official"], f"{src}（正式淨值）"
+            if it["price"]:
+                it["premium"] = round((it["price"] - it["nav"]) / it["nav"] * 100, 4)
+        it["holdings_top"] = sorted((h for h in r.get("holdings") or [] if h.get("weight") is not None),
+                                    key=lambda h: -h["weight"])[:10]
+
+
 def trade_date(nav: dict, quotes: dict, now: datetime) -> str:
     """以收盤行情的日期為準（取最多檔的那天）；沒有行情時用淨值資料的日期。"""
     for source, key in ((quotes, "date"), (nav, "date")):
@@ -414,36 +456,58 @@ def known_markets(db_path: Path) -> dict[str, str]:
 # ---------- 儲存 ----------
 
 def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | None = None,
-            dividends: list[dict] | None = None, diffs: list[dict] | None = None) -> None:
+            dividends: list[dict] | None = None, diffs: list[dict] | None = None,
+            issuer: dict[str, dict] | None = None) -> None:
     db_path.parent.mkdir(parents=True, exist_ok=True)
     con = sqlite3.connect(db_path)
     try:
         con.executescript(SCHEMA_PATH.read_text("utf-8"))
         # 舊資料庫補上新欄位
         for table, cols in (("daily", {"nav_official": "REAL", "premium_official": "REAL", "aum": "REAL",
-                                       "price_check": "TEXT"}),
-                            ("etf", {"units": "REAL", "index_name": "TEXT", "listed_date": "TEXT"})):
+                                       "price_check": "TEXT", "nav_source": "TEXT", "aum_source": "TEXT",
+                                       "beneficiaries": "INTEGER"}),
+                            ("etf", {"units": "REAL", "index_name": "TEXT", "listed_date": "TEXT",
+                                     "mgmt_fee": "REAL", "mgmt_fee_text": "TEXT", "custodian_fee_text": "TEXT",
+                                     "manager": "TEXT", "risk_class": "TEXT", "beneficiaries": "INTEGER",
+                                     "beneficiaries_month": "TEXT", "stats_json": "TEXT"})):
             have = {r[1] for r in con.execute(f"PRAGMA table_info({table})")}
             for col, typ in cols.items():
                 if col not in have:
                     con.execute(f"ALTER TABLE {table} ADD COLUMN {col} {typ}")
         now = datetime.now(TW).isoformat(timespec="seconds")
         con.executemany(
-            """INSERT INTO etf(code, name, issuer, category, market, fee, aum, units, index_name, listed_date, updated_at)
-               VALUES(:code, :name, :issuer, :category, :market, :fee, :aum, :units, :index_name, :listed_date, :now)
+            """INSERT INTO etf(code, name, issuer, category, market, fee, aum, units, index_name, listed_date,
+                               mgmt_fee, mgmt_fee_text, custodian_fee_text, manager, risk_class,
+                               beneficiaries, beneficiaries_month, stats_json, updated_at)
+               VALUES(:code, :name, :issuer, :category, :market, :fee, :aum, :units, :index_name, :listed_date,
+                      :mgmt_fee, :mgmt_fee_text, :custodian_fee_text, :manager, :risk_class,
+                      :beneficiaries, :beneficiaries_month, :stats_json, :now)
                ON CONFLICT(code) DO UPDATE SET name=excluded.name,
                  issuer=COALESCE(excluded.issuer, etf.issuer), category=excluded.category,
                  market=COALESCE(excluded.market, etf.market), fee=COALESCE(excluded.fee, etf.fee),
                  aum=COALESCE(excluded.aum, etf.aum), units=COALESCE(excluded.units, etf.units),
                  index_name=COALESCE(excluded.index_name, etf.index_name),
-                 listed_date=COALESCE(excluded.listed_date, etf.listed_date), updated_at=excluded.updated_at""",
-            [{**it, "now": now} for it in items],
+                 listed_date=COALESCE(excluded.listed_date, etf.listed_date),
+                 mgmt_fee=COALESCE(excluded.mgmt_fee, etf.mgmt_fee),
+                 mgmt_fee_text=COALESCE(excluded.mgmt_fee_text, etf.mgmt_fee_text),
+                 custodian_fee_text=COALESCE(excluded.custodian_fee_text, etf.custodian_fee_text),
+                 manager=COALESCE(excluded.manager, etf.manager), risk_class=COALESCE(excluded.risk_class, etf.risk_class),
+                 beneficiaries=COALESCE(excluded.beneficiaries, etf.beneficiaries),
+                 beneficiaries_month=COALESCE(excluded.beneficiaries_month, etf.beneficiaries_month),
+                 stats_json=COALESCE(excluded.stats_json, etf.stats_json), updated_at=excluded.updated_at""",
+            [{**it, "now": now, "stats_json": json.dumps(it["stats"], ensure_ascii=False) if it.get("stats") else None}
+             for it in items],
         )
         # 同一天重跑會更新當天資料；這次沒抓到的欄位（例如 MIS 暫時連不上時的淨值）保留原值
         con.executemany(
-            """INSERT INTO daily(date, code, price, change_pct, nav, nav_prev, premium, volume_lots, source_time, aum, price_check)
-               VALUES(:date, :code, :price, :change_pct, :nav, :nav_prev, :premium, :volume_lots, :source_time, :aum, :price_check)
+            """INSERT INTO daily(date, code, price, change_pct, nav, nav_prev, premium, volume_lots, source_time, aum,
+                                 price_check, nav_source, aum_source, beneficiaries)
+               VALUES(:date, :code, :price, :change_pct, :nav, :nav_prev, :premium, :volume_lots, :source_time, :aum,
+                      :price_check, :nav_source, :aum_source, :beneficiaries)
                ON CONFLICT(date, code) DO UPDATE SET
+                 nav_source=COALESCE(excluded.nav_source, daily.nav_source),
+                 aum_source=COALESCE(excluded.aum_source, daily.aum_source),
+                 beneficiaries=COALESCE(excluded.beneficiaries, daily.beneficiaries),
                  price_check=COALESCE(excluded.price_check, daily.price_check),
                  aum=COALESCE(excluded.aum, daily.aum),
                  price=COALESCE(excluded.price, daily.price),
@@ -456,6 +520,7 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
             [{**it, "date": date} for it in items],
         )
         save_official_nav(con, nav or {})
+        save_issuer_detail(con, issuer or {})
         con.executemany(
             """INSERT OR REPLACE INTO price_check(date, code, field, yahoo, exchange, checked_at)
                VALUES(:date, :code, :field, :yahoo, :exchange, :now)""",
@@ -470,7 +535,7 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
         con.commit()
         attach_dividends(con, items, date)
         # 讓輸出的 JSON 與資料庫一致
-        cols = ["price", "change_pct", "nav", "nav_prev", "premium", "volume_lots", "source_time"]
+        cols = ["price", "change_pct", "nav", "nav_prev", "premium", "volume_lots", "source_time", "nav_source", "aum_source"]
         stored = {r[0]: r[1:] for r in con.execute(f"SELECT code, {', '.join(cols)} FROM daily WHERE date=?", (date,))}
         for it in items:
             if it["code"] in stored:
@@ -490,6 +555,26 @@ def attach_dividends(con: sqlite3.Connection, items: list[dict], date: str) -> N
         it["last_ex"] = dict(zip(("ex_date", "cash", "pay_date"), last)) if last else None
 
 
+def save_issuer_detail(con: sqlite3.Connection, issuer: dict[str, dict]) -> None:
+    """投信公告的正式淨值寫回對應日期；成分股只保留每檔最新一份。"""
+    con.executemany(
+        """UPDATE daily SET nav_official = :nav,
+             premium_official = CASE WHEN price IS NOT NULL THEN (price - :nav) / :nav * 100 END
+           WHERE date = :date AND code = :code""",
+        [{"nav": r["nav_official"], "date": r["nav_date"], "code": c}
+         for c, r in issuer.items() if r.get("nav_official") and r.get("nav_date")],
+    )
+    for code, r in issuer.items():
+        if not r.get("holdings"):
+            continue
+        con.execute("DELETE FROM holding WHERE code = ?", (code,))
+        con.executemany(
+            """INSERT OR REPLACE INTO holding(code, date, asset_code, asset_name, kind, weight, qty, source)
+               VALUES(:code, :date, :asset_code, :asset_name, :kind, :weight, :qty, :source)""",
+            [{**h, "code": code, "date": r.get("nav_date"), "source": r["source"]} for h in r["holdings"]],
+        )
+
+
 def save_official_nav(con: sqlite3.Connection, nav: dict) -> None:
     """MIS 的「前一營業日淨值」是投信公告的正式淨值，寫回資料庫中前一個交易日那一列，
     並用當天收盤價算出正式折溢價。早上 08:50 那次排程主要就是為了補這個。"""
@@ -502,9 +587,10 @@ def save_official_nav(con: sqlite3.Connection, nav: dict) -> None:
         if not prev:
             continue
         con.executemany(
+            # 只補空白：投信官網公告的正式淨值優先，不被證交所轉載的數字覆蓋
             """UPDATE daily SET nav_official = :nav,
                  premium_official = CASE WHEN price IS NOT NULL THEN (price - :nav) / :nav * 100 END
-               WHERE date = :date AND code = :code""",
+               WHERE date = :date AND code = :code AND nav_official IS NULL""",
             [{"nav": n["nav_prev"], "date": prev, "code": n["code"]} for n in rows],
         )
 
@@ -558,7 +644,14 @@ def main(argv=None) -> int:
     items = merge(nav, quotes, load_meta(), date, parse_fund(raw["fund"]))
     dividends = parse_dividends(raw["div_twse"], raw["div_tpex"])
 
-    save_db(items, date, args.db, nav, dividends, diffs)
+    issuer: dict[str, dict] = {}
+    for name, mod in ISSUER_MODULES.items():
+        records = mod.fetch(http_get_json, fixtures=args.fixtures / name if args.fixtures else None)
+        print(f"{mod.SOURCE}：{len(records)} 檔")
+        issuer.update(records)
+    apply_issuer(items, issuer, date)
+
+    save_db(items, date, args.db, nav, dividends, diffs, issuer)
     save_json(items, date, "fixture" if args.fixtures else "live", args.out,
               has_nav=any(it["nav"] is not None for it in items))
     flagged = sum(1 for it in items if it["premium"] is not None and abs(it["premium"]) >= 1)
