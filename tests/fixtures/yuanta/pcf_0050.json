@@ -1,0 +1,49 @@
+{
+ "PCF": {
+  "fundid": "1066",
+  "markcd": "0050",
+  "trandate": "20261016",
+  "totalav": 523000000000,
+  "osunit": 10000000000,
+  "nav": 52.3,
+  "Beneficiary": {
+   "doc_ym": "20260930",
+   "bf_cnt_a": 1000000
+  }
+ },
+ "InKind": {
+  "FundComposition": []
+ },
+ "Cash": null,
+ "FundWeights": {
+  "Summary": {},
+  "StockWeights": [
+   {
+    "code": "2330",
+    "ym": null,
+    "name": "台積電",
+    "weights": 50.5,
+    "qty": 1000.0
+   },
+   {
+    "code": "2317",
+    "ym": null,
+    "name": "鴻海",
+    "weights": 5.2,
+    "qty": 300.0
+   }
+  ],
+  "FutureWeights": [
+   {
+    "code": "TX",
+    "ym": "202610",
+    "name": "臺股期貨",
+    "weights": 1.2,
+    "qty": 10.0
+   }
+  ],
+  "ETFWeights": 0,
+  "BondWeights": 0
+ },
+ "Memo": null
+}

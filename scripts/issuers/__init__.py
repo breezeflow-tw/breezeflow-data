@@ -1,0 +1,20 @@
+"""各家投信官網的資料抓取模組。
+
+每個模組提供 `fetch(get_json, fixtures=None) -> dict[代號, dict]`，回傳統一格式的紀錄：
+
+    code            代號
+    issuer          投信簡稱
+    source          來源名稱（網站上標示出處用）
+    nav_official    投信公告的正式淨值
+    nav_date        正式淨值的日期 YYYY-MM-DD
+    aum             基金規模（億元）
+    units           發行單位數
+    beneficiaries   受益人數；beneficiaries_month 為資料年月 YYYY-MM
+    mgmt_fee        經理費率（%），只有單一費率或官方公布實際費率時才有數字
+    mgmt_fee_text   經理費原文；custodian_fee_text 保管費原文
+    manager / risk_class / list_date / index_name
+    stats           投資組合統計 {date, div_yield, pe, pb, roe, beta, volatility}
+    holdings        成分 [{asset_code, asset_name, kind, weight, qty}]
+
+抓不到的欄位一律為 None，不可估計或補值。
+"""

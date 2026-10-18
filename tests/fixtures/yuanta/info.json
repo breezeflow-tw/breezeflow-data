@@ -1,0 +1,48 @@
+{
+ "ResultCode": 0,
+ "ResultMsg": "",
+ "Data": [
+  {
+   "FUND_ID": "1066",
+   "STK_CD": "0050",
+   "MANAGER": "測試經理人",
+   "RISK_CLASS": "RR4",
+   "LIST_DATE": "20030630",
+   "INDEX_FUND_NAME": "臺灣50指數",
+   "DELISTING": false,
+   "MANAGEMENT_FEE_TEXT": "約0.0700%  (資料日期：2026/10/16) ",
+   "MANAGEMENT_FEE": "1. 1,000億(含)以下之部分：0.15%\n2. 逾1,000億(不含)之部分：0.10%",
+   "CUSTODIAN_FEE": "0.03%"
+  },
+  {
+   "FUND_ID": "1199",
+   "STK_CD": "00679B",
+   "MANAGER": "債券經理人",
+   "RISK_CLASS": "RR2",
+   "LIST_DATE": "20170117",
+   "INDEX_FUND_NAME": "美國20年期以上公債指數",
+   "DELISTING": false,
+   "MANAGEMENT_FEE_TEXT": "",
+   "MANAGEMENT_FEE": "0.15%",
+   "CUSTODIAN_FEE": "30億以下(含)：0.10%\n30億以上：0.06%"
+  },
+  {
+   "FUND_ID": "1200",
+   "STK_CD": "00631L",
+   "MANAGER": "槓桿經理人",
+   "RISK_CLASS": "RR5",
+   "LIST_DATE": "20141031",
+   "INDEX_FUND_NAME": null,
+   "DELISTING": false,
+   "MANAGEMENT_FEE_TEXT": "",
+   "MANAGEMENT_FEE": "",
+   "CUSTODIAN_FEE": ""
+  },
+  {
+   "FUND_ID": "9999",
+   "STK_CD": "0099X",
+   "DELISTING": true,
+   "MANAGEMENT_FEE": "0.5%"
+  }
+ ]
+}

@@ -148,11 +148,11 @@ footer .wrap{display:grid;gap:4px}
         <th class="l" data-k="category" tabindex="0">類型</th>
         <th data-k="price" tabindex="0">市價</th>
         <th data-k="change_pct" tabindex="0">漲跌</th>
-        <th data-k="nav" tabindex="0">預估淨值</th>
+        <th data-k="nav" tabindex="0">淨值</th>
         <th data-k="premium" tabindex="0">折溢價</th>
         <th data-k="volume_lots" tabindex="0">成交量（張）</th>
         <th data-k="aum" tabindex="0">規模（億）</th>
-        <th data-k="fee" tabindex="0">總費用率</th>
+        <th data-k="mgmt_fee" tabindex="0">經理費</th>
         <th data-k="ex_date" tabindex="0">除息日</th>
         <th data-k="ex_cash" tabindex="0">每單位配息</th>
         <th data-k="pay_date" tabindex="0">發放日</th>
@@ -164,7 +164,7 @@ footer .wrap{display:grid;gap:4px}
   <div class="notes">
     <div><h2>折溢價怎麼算</h2><p>（市價 − 預估淨值）÷ 預估淨值。正數是溢價，負數是折價。海外與熱門主題 ETF 較容易出現大幅溢價。</p></div>
     <div><h2>淨值與市價</h2><p>預估淨值由投信盤中公告，反映 ETF 持有資產每單位的價值；市價是交易所的成交價格。</p></div>
-    <div><h2>資料來源</h2><p>市價與成交量取自 Yahoo 股市，並逐檔與臺灣證券交易所、證券櫃檯買賣中心資料查核，不一致時採用交易所數字。淨值、規模、除息資料陸續改以各投信官網公告為準。每個交易日 08:50 與 18:00 自動更新。</p></div>
+    <div><h2>資料來源</h2><p>市價與成交量取自 Yahoo 股市，並逐檔與臺灣證券交易所、證券櫃檯買賣中心資料查核，不一致時採用交易所數字。元大 ETF 的正式淨值、規模、經理費、成分股取自元大投信官網；其他投信陸續接入，尚未接入者的淨值取自證交所轉載的投信預估淨值。每個交易日 08:50 與 18:00 自動更新。</p></div>
   </div>
 </main>
 
@@ -211,11 +211,11 @@ footer .wrap{display:grid;gap:4px}
       <td class="l"><span class="tag">${esc(d.category)}</span></td>
       <td class="num">${d.price_check==="已修正"?`<span class="fixed" title="Yahoo 股市與交易所數字不一致，已採用交易所資料">${fmt(d.price,2)}</span>`:fmt(d.price,2)}</td>
       <td class="num ${d.change_pct==null?"":d.change_pct>=0?"up":"down"}">${d.change_pct==null?"—":(d.change_pct>=0?"+":"")+fmt(d.change_pct,2)+"%"}</td>
-      <td class="num">${fmt(d.nav,2)}</td>
+      <td class="num" title="${esc(d.nav_source||"")}">${fmt(d.nav,2)}${d.nav==null?"":`<span class="ex-note">${(d.nav_source||"").includes("正式")?"正式淨值":"預估淨值"}</span>`}</td>
       <td class="num">${pdCell(d.premium)}</td>
       <td class="num">${fmt(d.volume_lots,0)}</td>
-      <td class="num">${fmt(d.aum,0)}</td>
-      <td class="num">${d.fee==null?"—":fmt(d.fee,2)+"%"}</td>
+      <td class="num" title="${esc(d.aum_source?"出處："+d.aum_source:"")}">${fmt(d.aum,0)}</td>
+      <td class="num" title="${esc([d.mgmt_fee_text&&"經理費："+d.mgmt_fee_text,d.custodian_fee_text&&"保管費："+d.custodian_fee_text].filter(Boolean).join("\n"))}">${d.mgmt_fee!=null?fmt(d.mgmt_fee,d.mgmt_fee<0.1?4:2)+"%":d.mgmt_fee_text?'<span class="fixed">依規模分段</span>':"—"}</td>
       <td class="num ${d.ex_date?(d.ex_upcoming?"ex-next":"ex-past"):""}">${md(d.ex_date)}${d.ex_date?`<span class="ex-note">${d.ex_upcoming?"即將除息":"最近一次"}</span>`:""}</td>
       <td class="num">${d.ex_cash==null?(d.ex_date?"待公告":"—"):fmt(d.ex_cash,3)}</td>
       <td class="num">${md(d.pay_date)}</td></tr>`).join(""):`<tr><td colspan="13" class="empty">沒有符合條件的 ETF，試試清除搜尋或切回「全部」。</td></tr>`;
