@@ -36,7 +36,7 @@
 
 網站只讀這一個檔案。欄位沒有資料時一律是 `null`，畫面請顯示「—」，**不可自行估算或補值**。
 
-最上層：`generated_at`（產生時間）、`trade_date`（交易日）、`source`（`live` 或 `fixture`）、`has_nav`、`price_check`（市價查核統計）、`count`、`items`（每檔 ETF 一筆）。
+最上層：`generated_at`（產生時間）、`trade_date`（交易日）、`source`（`live` 或 `fixture`）、`has_nav`、`price_check`（市價查核統計）、`returns_info`（區間報酬的出處 `source` 與各區間起始日 `starts`）、`count`、`items`（每檔 ETF 一筆）。
 
 `items[]` 每筆：
 
@@ -55,6 +55,7 @@
 | `holdings_top` | 前 10 大成分 `[{asset_code, asset_name, kind, weight, qty}]`，`weight` 為 %，`kind` 為股票／債券／期貨／基金 |
 | `next_ex`、`last_ex` | 下一次／最近一次除息 `{ex_date, cash, pay_date, source}`，`pay_date` 為配息發放日 |
 | `fee` | 總費用率（目前尚無來源，多為 `null`） |
+| `returns` | 區間報酬 `{price: {...}, total: {...}}`，單位 %。`price` 是市價報酬，`total` 是含息報酬（配息再投入）。區間代號：`1w` 近一週、`1m` 近一月、`3m` 近三月、`6m` 近六月、`ytd` 今年以來、`1y` 近一年、`3y` 近三年、`5y` 近五年。期初是 `returns_info.starts` 那天或之前最近的交易日，期末是 `trade_date`。上市不到該區間、或配息紀錄核對不符時為 `null`；整檔沒有資料時 `returns` 為 `null` |
 
 本機產生測試資料（假資料，用完請還原）：
 
