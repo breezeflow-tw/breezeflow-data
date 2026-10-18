@@ -1,0 +1,18 @@
+{
+ "code": 200,
+ "message": "",
+ "data": {
+  "manageCharge": "50億以下(含)0.4%；50億以上0.35%",
+  "storageCharge": "0.035％",
+  "listingDate": "2023-06-08",
+  "indexName": "臺灣半導體收益指數",
+  "managers": [
+   {
+    "managerName": "甲"
+   },
+   {
+    "managerName": "乙"
+   }
+  ]
+ }
+}

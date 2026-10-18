@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS daily (
   nav_source   TEXT,              -- 淨值出處
   aum_source   TEXT,              -- 規模出處
   beneficiaries INTEGER,          -- 受益人數
+  units_change REAL,              -- 當日申購買回造成的發行單位數增減（正數為淨申購，可看資金流向）
   PRIMARY KEY (date, code)
 );
 

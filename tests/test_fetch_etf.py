@@ -148,6 +148,7 @@ class YuantaTest(unittest.TestCase):
             self.assertEqual((a["aum"], a["aum_source"]), (5230.0, "元大投信官網"))
             self.assertEqual((a["mgmt_fee"], a["beneficiaries"], a["stats"]["div_yield"]), (0.07, 1000000, 3.1))
             self.assertEqual(a["holdings_top"][0]["asset_name"], "台積電")
+            self.assertEqual(a["units_change"], 85000000)  # 當日申購買回增減單位數
             b = items["00679B"]
             self.assertEqual(b["nav"], 28.40)  # 債券型正式淨值晚一天（10/15），當天仍用預估淨值
             self.assertTrue(b["nav_source"].startswith("證交所"))
@@ -187,6 +188,7 @@ class UniTest(unittest.TestCase):
             a = items["00757"]
             self.assertEqual((a["aum"], a["aum_source"]), (300.0, "統一投信官網"))
             self.assertEqual(a["nav"], 110.00)  # 正式淨值是前一天的（10/15），當天仍用預估淨值
+            self.assertEqual(a["listed_date"], "2016-09-06")  # 上市日取自投信官網（交易所測試資料沒有這檔）
             # 交易所預告沒有金額，投信官網有，且多了發放日
             self.assertEqual(a["next_ex"], {"ex_date": "2026-11-03", "cash": 0.5, "pay_date": "2026-11-25", "source": "統一投信官網"})
 
@@ -197,6 +199,58 @@ class UniTest(unittest.TestCase):
             row = con.execute("SELECT cash, pay_date, source FROM dividend WHERE code='00757' AND ex_date='2026-11-03'").fetchone()
             self.assertEqual(row, (0.5, "2026-11-25", "統一投信官網"))
             self.assertEqual(con.execute("SELECT COUNT(*) FROM dividend WHERE code='00939'").fetchone()[0], 2)
+            con.close()
+
+
+class CapitalTest(unittest.TestCase):
+    def test_parse(self):
+        from issuers import capital as c
+        self.assertEqual(c.futures_code("TE202610", "電子期202610"), "TE-202610")
+        self.assertEqual(c.futures_code("FTSE China A50 Index Futures202610", None), "FTSEChinaA50IndexFutures-202610")
+        bb = c.parse_buyback(c.unwrap(json.loads((FIX / "capital" / "buyback_195.json").read_text("utf-8"))))
+        self.assertEqual((bb["nav_official"], bb["nav_date"], bb["aum"], bb["units_change"]), (32.95, "2026-10-16", 6384.48, -500000.0))
+        self.assertEqual([h["asset_code"] for h in bb["holdings"]], ["2881", "2882", "TX-202610"])
+        d = c.parse_detail(c.unwrap(json.loads((FIX / "capital" / "detail_366.json").read_text("utf-8"))))
+        self.assertIsNone(d["mgmt_fee"])  # 分段級距不換算
+        self.assertEqual(d["manager"], "甲、乙")
+        divs = c.parse_dividends(c.unwrap(json.loads((FIX / "capital" / "dividends.json").read_text("utf-8"))))
+        self.assertEqual(divs[0], {"code": "00919", "ex_date": "2026-09-16", "pay_date": "2026-10-15", "cash": 1.1})
+        self.assertIsNone(c.unwrap({"code": 500, "data": None}))
+
+    def fixtures(self, tmp: str) -> Path:
+        """在共用測試資料加上兩檔群益 ETF 的交易所資料。"""
+        fix = fixtures_without(tmp)
+        nav = json.loads((fix / "nav.json").read_text("utf-8"))
+        nav["a1"].append({"msgArray": [
+            {"a": "00919", "b": "群益台灣精選高息", "e": "32.74", "f": "32.90", "g": "", "h": "32.42", "i": "20261016", "j": "13:30:00"},
+            {"a": "00927", "b": "群益半導體收益", "e": "38.22", "f": "37.95", "g": "", "h": "37.72", "i": "20261016", "j": "13:30:00"}]})
+        (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
+        twse = json.loads((fix / "twse.json").read_text("utf-8"))
+        twse += [{"Code": "00919", "Name": "群益台灣精選高息", "TradeVolume": "50,000,000", "ClosingPrice": "32.74", "Change": "-0.1000"},
+                 {"Code": "00927", "Name": "群益半導體收益", "TradeVolume": "9,000,000", "ClosingPrice": "38.22", "Change": "0.3000"}]
+        (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
+        return fix
+
+    def test_pipeline(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            self.assertEqual(f.main(["--fixtures", str(self.fixtures(tmp)), "--db", str(db), "--out", str(out)]), 0)
+            items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            a = items["00919"]
+            self.assertEqual((a["nav"], a["nav_source"]), (32.95, "群益投信官網（正式淨值）"))
+            self.assertAlmostEqual(a["premium"], (32.74 - 32.95) / 32.95 * 100, places=3)
+            self.assertEqual((a["aum"], a["units_change"], a["mgmt_fee"]), (6384.48, -500000.0, 0.3))
+            self.assertEqual((a["listed_date"], a["index_name"], a["manager"]), ("2022-10-20", "臺灣精選高息指數", "測試經理人"))
+            self.assertEqual(a["last_ex"], {"ex_date": "2026-09-16", "cash": 1.1, "pay_date": "2026-10-15", "source": "群益投信官網"})
+            b = items["00927"]
+            # 正式淨值是 10/15 的，當天改用群益公布的預估淨值，不用證交所轉載的 37.95
+            self.assertEqual((b["nav"], b["nav_source"]), (37.98, "群益投信官網（預估淨值）"))
+            self.assertIsNone(b["units_change"])
+            self.assertIsNone(b["mgmt_fee"])
+            self.assertIn("0.4%", b["mgmt_fee_text"])
+            con = sqlite3.connect(db)
+            self.assertEqual(con.execute("SELECT units_change FROM daily WHERE code='00919'").fetchone()[0], -500000.0)
+            self.assertEqual(con.execute("SELECT pay_date FROM dividend WHERE code='00765B'").fetchone()[0], "2023-04-12")  # 已下市也保留
             con.close()
 
 

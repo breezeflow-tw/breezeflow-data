@@ -1,0 +1,30 @@
+{
+ "code": 200,
+ "message": "",
+ "data": [
+  {
+   "etfNo": "00919",
+   "amt": "1.100",
+   "lasttransDate": "2026/08/31",
+   "getinterestDate": "2026/09/15",
+   "interestDate": "2026/09/16",
+   "assignDate": "2026/10/15"
+  },
+  {
+   "etfNo": "00919",
+   "amt": "1.000",
+   "lasttransDate": "2026/05/31",
+   "getinterestDate": "2026/06/15",
+   "interestDate": "2026/06/16",
+   "assignDate": "2026/07/13"
+  },
+  {
+   "etfNo": "00765B",
+   "amt": "0.150",
+   "lasttransDate": "2023/02/28",
+   "getinterestDate": "2023/03/15",
+   "interestDate": "2023/03/16",
+   "assignDate": "2023/04/12"
+  }
+ ]
+}

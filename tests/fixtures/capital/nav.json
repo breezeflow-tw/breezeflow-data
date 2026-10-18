@@ -1,0 +1,24 @@
+{
+ "code": 200,
+ "message": "",
+ "data": [
+  {
+   "fundId": "195",
+   "stocNo": "00919",
+   "date1": "2026/10/16",
+   "nav": 32.92,
+   "closeNav": "32.950000",
+   "openNav": "32.420000",
+   "openNavDate": "2026/10/15"
+  },
+  {
+   "fundId": "366",
+   "stocNo": "00927",
+   "date1": "2026/10/16",
+   "nav": 37.98,
+   "closeNav": null,
+   "openNav": "37.720000",
+   "openNavDate": "2026/10/15"
+  }
+ ]
+}

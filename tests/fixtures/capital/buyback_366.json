@@ -1,0 +1,32 @@
+{
+ "code": 200,
+ "message": "",
+ "data": {
+  "pcf": {
+   "date1": "2026-10-19",
+   "date2": "2026-10-15",
+   "nav": 100000000000.0,
+   "totUnit": 2650000000.0,
+   "disUnit": 95000000.0,
+   "pUnit": 37.72,
+   "dollar": "TWD"
+  },
+  "stocks": [
+   {
+    "stocNo": "2330",
+    "stocName": "台積電",
+    "weight": 20.0,
+    "share": 1000000.0
+   }
+  ],
+  "bonds": [],
+  "futures": [
+   {
+    "txDesc": "富時中國A50指數期貨202610",
+    "weight": 2.873,
+    "lot": 10.0,
+    "txEname": "FTSE China A50 Index Futures202610"
+   }
+  ]
+ }
+}

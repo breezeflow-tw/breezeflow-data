@@ -20,13 +20,12 @@
 
 | 資料 | 來源 |
 |---|---|
-| 元大 ETF：正式淨值、規模、發行單位數、受益人數、經理費、保管費、成分股、投資組合統計 | 元大投信官網介面 `etfapi.yuantaetfs.com`（`scripts/issuers/yuanta.py`） |
-| 其他 ETF：預估淨值、前日淨值、折溢價 | 臺灣證券交易所 ETF 預估淨值資訊 `mis.twse.com.tw/stock/data/all_etf.txt`（投信提供、證交所轉載） |
+| 已接入投信的 ETF：正式／預估淨值、規模、發行單位數、申購買回增減、經理費、保管費、成分股、配息紀錄 | 各投信官網（`scripts/issuers/`）：元大 `etfapi.yuantaetfs.com`、統一 `www.ezmoney.com.tw`、群益 `www.capitalfund.com.tw` |
+| 尚未接入投信的 ETF：預估淨值、前日淨值、折溢價 | 臺灣證券交易所 ETF 預估淨值資訊 `mis.twse.com.tw/stock/data/all_etf.txt`（投信提供、證交所轉載） |
 | 收盤價、成交量（主要） | Yahoo 股市日線 `query1.finance.yahoo.com/v8/finance/chart/{代號}.TW`（上櫃為 `.TWO`） |
 | 收盤價、成交量（查核） | 證交所 OpenAPI `exchangeReport/STOCK_DAY_ALL`、櫃買 `tpex_mainboard_daily_close_quotes`。與 Yahoo 不一致時採用交易所數字，差異記錄在 `price_check` 表 |
 | 規模 | 發行單位數 × 淨值。上市用證交所 OpenAPI `opendata/t187ap47_L`（基金基本資料），上櫃用櫃買行情的 `Capitals` |
-| 除息日、每單位配息 | 證交所 `exchangeReport/TWT48U_ALL`、櫃買 `tpex_exright_prepost`（除權除息預告表），每天累積進 `dividend` 表 |
-| 配息發放日 | 尚未接上，需要公開資訊觀測站 `mops.twse.com.tw` |
+| 除息日、每單位配息、發放日 | 投信官網配息紀錄為主（統一、群益，含發放日）；證交所 `exchangeReport/TWT48U_ALL`、櫃買 `tpex_exright_prepost` 除權息預告補充尚未公布的部分 |
 | 總費用率 | 尚未接上，需要投信投顧公會 `www.sitca.org.tw`；目前可在 `data/etf_meta.csv` 人工填寫 |
 
 ## 資料下載
@@ -63,13 +62,13 @@ python -m http.server -d web 8000         # 開 http://localhost:8000 看網頁
 - GitHub 排程在整點時段較忙，實際執行時間可能延後數分鐘到半小時。
 
 - 證交所 MIS（淨值來源）偶爾回應 502。抓不到時本次只更新價格與成交量，同一天已存的淨值不會被清掉；重跑一次即可補上。
-- 已接入投信：元大（54 檔）。其餘投信陸續接入，接入前沿用交易所資料。
+- 已接入投信：元大（54 檔）、統一（11 檔）、群益（29 檔）。各投信網站同時抓取。其餘投信陸續接入，接入前沿用交易所資料。
 - 元大的配息歷史在 `api.yuantafunds.com`，尚未接上；配息暫用交易所除權息預告表。
 - 經理費多為依規模分段收費，程式不自行換算，只在投信公布單一費率或實際費率時記錄數字，其餘保留原文。
 - 債券型、海外型 ETF 的正式淨值通常晚一天公布，當天折溢價使用預估淨值。
 - Yahoo 股市使用條款限制自動抓取與轉載，介面也可能變更或封鎖雲端主機；連不上時自動改用交易所資料。
 - 類型由代號與名稱自動判斷，判斷錯誤時在 `data/etf_meta.csv` 的 `category` 欄修正。
-- 總費用率與配息發放日尚無自動來源（網域未開放）。
+- 總費用率尚無自動來源。元大與尚未接入投信的 ETF 沒有配息發放日。
 - 除息預告表只列近期資料，配息歷史要靠每天累積；越早開始跑，歷史越完整。
 
 ## 聲明

@@ -7,6 +7,8 @@
     source          來源名稱（網站上標示出處用）
     nav_official    投信公告的正式淨值
     nav_date        正式淨值的日期 YYYY-MM-DD
+    nav_estimate    投信公布的預估淨值；nav_estimate_date 為其日期（有提供的投信才有）
+    units_change    當日申購買回造成的發行單位數增減（對應 nav_date）
     aum             基金規模（億元）
     units           發行單位數
     beneficiaries   受益人數；beneficiaries_month 為資料年月 YYYY-MM

@@ -23,7 +23,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import store
-from issuers import uni, yuanta
+from issuers import capital, uni, yuanta
 
 ROOT = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT / "data" / "etf.db"
@@ -51,7 +51,7 @@ YAHOO_CHART = "https://{host}/v8/finance/chart/{symbol}?range=10d&interval=1d"
 YAHOO_HOSTS = ("query1.finance.yahoo.com", "query2.finance.yahoo.com")
 
 # 已接入的投信官網；淨值、規模、費用、成分股以這裡的資料為主
-ISSUER_MODULES = {"yuanta": yuanta, "uni": uni}
+ISSUER_MODULES = {"yuanta": yuanta, "uni": uni, "capital": capital}
 
 
 # ---------- 下載 ----------
@@ -366,21 +366,30 @@ def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
         for f in ISSUER_FIELDS:
             it.setdefault(f, None)
         it["holdings_top"] = []
+        it["units_change"] = None
         r = issuer.get(it["code"])
         if not r:
             continue
         src = r["source"]
         for f in ISSUER_FIELDS:
             it[f] = r.get(f)
-        for f in ("list_date", "index_name", "units"):
-            if r.get(f):
-                it[f] = r[f]
+        for field, key in (("listed_date", "list_date"), ("index_name", "index_name"), ("units", "units")):
+            if r.get(key):
+                it[field] = r[key]
         if r.get("aum"):
             it["aum"], it["aum_source"] = r["aum"], src
+        # 淨值優先順序：投信正式淨值（當天）→ 投信預估淨值（當天）→ 證交所轉載的預估淨值
+        nav = None
         if r.get("nav_official") and r.get("nav_date") == date:
-            it["nav"], it["nav_source"] = r["nav_official"], f"{src}（正式淨值）"
+            nav, label = r["nav_official"], "正式淨值"
+        elif r.get("nav_estimate") and r.get("nav_estimate_date") == date:
+            nav, label = r["nav_estimate"], "預估淨值"
+        if nav:
+            it["nav"], it["nav_source"] = nav, f"{src}（{label}）"
             if it["price"]:
-                it["premium"] = round((it["price"] - it["nav"]) / it["nav"] * 100, 4)
+                it["premium"] = round((it["price"] - nav) / nav * 100, 4)
+        if r.get("nav_date") == date:
+            it["units_change"] = r.get("units_change")
         it["holdings_top"] = sorted((h for h in r.get("holdings") or [] if h.get("weight") is not None),
                                     key=lambda h: -h["weight"])[:10]
 
@@ -487,10 +496,11 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
         # 同一天重跑會更新當天資料；這次沒抓到的欄位（例如 MIS 暫時連不上時的淨值）保留原值
         con.executemany(
             """INSERT INTO daily(date, code, price, change_pct, nav, nav_prev, premium, volume_lots, source_time, aum,
-                                 price_check, nav_source, aum_source, beneficiaries)
+                                 price_check, nav_source, aum_source, beneficiaries, units_change)
                VALUES(:date, :code, :price, :change_pct, :nav, :nav_prev, :premium, :volume_lots, :source_time, :aum,
-                      :price_check, :nav_source, :aum_source, :beneficiaries)
+                      :price_check, :nav_source, :aum_source, :beneficiaries, :units_change)
                ON CONFLICT(date, code) DO UPDATE SET
+                 units_change=COALESCE(excluded.units_change, daily.units_change),
                  nav_source=COALESCE(excluded.nav_source, daily.nav_source),
                  aum_source=COALESCE(excluded.aum_source, daily.aum_source),
                  beneficiaries=COALESCE(excluded.beneficiaries, daily.beneficiaries),
@@ -534,7 +544,8 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
         con.commit()
         attach_dividends(con, items, date)
         # 讓輸出的 JSON 與資料庫一致
-        cols = ["price", "change_pct", "nav", "nav_prev", "premium", "volume_lots", "source_time", "nav_source", "aum_source"]
+        cols = ["price", "change_pct", "nav", "nav_prev", "premium", "volume_lots", "source_time", "nav_source", "aum_source",
+                "units_change"]
         stored = {r[0]: r[1:] for r in con.execute(f"SELECT code, {', '.join(cols)} FROM daily WHERE date=?", (date,))}
         for it in items:
             if it["code"] in stored:
@@ -556,13 +567,18 @@ def attach_dividends(con: sqlite3.Connection, items: list[dict], date: str) -> N
 
 
 def save_issuer_detail(con: sqlite3.Connection, issuer: dict[str, dict]) -> None:
-    """投信公告的正式淨值寫回對應日期；成分股依清單日期保存，同一天重抓會覆蓋當天那份。"""
+    """投信公告的正式淨值與申購買回增減單位數寫回對應日期；成分股依清單日期保存，同一天重抓會覆蓋當天那份。"""
     con.executemany(
         """UPDATE daily SET nav_official = :nav,
              premium_official = CASE WHEN price IS NOT NULL THEN (price - :nav) / :nav * 100 END
            WHERE date = :date AND code = :code""",
         [{"nav": r["nav_official"], "date": r["nav_date"], "code": c}
          for c, r in issuer.items() if r.get("nav_official") and r.get("nav_date")],
+    )
+    con.executemany(
+        "UPDATE daily SET units_change = :chg WHERE date = :date AND code = :code",
+        [{"chg": r["units_change"], "date": r["nav_date"], "code": c}
+         for c, r in issuer.items() if r.get("units_change") is not None and r.get("nav_date")],
     )
     for code, r in issuer.items():
         if not r.get("holdings"):
@@ -647,11 +663,16 @@ def main(argv=None) -> int:
     items = merge(nav, quotes, load_meta(), date, parse_fund(raw["fund"]))
     dividends = parse_dividends(raw["div_twse"], raw["div_tpex"])
 
+    # 各投信是不同網站，同時抓；同一個網站內仍逐筆、放慢速度
+    def fetch_issuer(item):
+        name, mod = item
+        return mod, mod.fetch(http_get_json, fixtures=args.fixtures / name if args.fixtures else None, context=SSL_CONTEXT)
+
     issuer: dict[str, dict] = {}
-    for name, mod in ISSUER_MODULES.items():
-        records = mod.fetch(http_get_json, fixtures=args.fixtures / name if args.fixtures else None, context=SSL_CONTEXT)
-        print(f"{mod.SOURCE}：{len(records)} 檔")
-        issuer.update(records)
+    with ThreadPoolExecutor(max_workers=len(ISSUER_MODULES)) as pool:
+        for mod, records in pool.map(fetch_issuer, ISSUER_MODULES.items()):
+            print(f"{mod.SOURCE}：{sum(1 for r in records.values() if not r.get('delisted'))} 檔")
+            issuer.update(records)
     apply_issuer(items, issuer, date)
 
     save_db(items, date, args.db, nav, dividends, diffs, issuer)

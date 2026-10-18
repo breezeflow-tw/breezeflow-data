@@ -1,0 +1,16 @@
+{
+ "code": 200,
+ "message": "",
+ "data": [
+  {
+   "fundNo": "195",
+   "stockNo": "00919",
+   "shortName": "群益台灣精選高息"
+  },
+  {
+   "fundNo": "366",
+   "stockNo": "00927",
+   "shortName": "群益半導體收益"
+  }
+ ]
+}
