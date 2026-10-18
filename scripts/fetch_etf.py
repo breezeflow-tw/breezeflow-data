@@ -25,7 +25,7 @@ from pathlib import Path
 import returns
 import sitca
 import store
-from issuers import capital, cathay, ctbc, fubon, fuhhwa, jpmorgan, kgi, nomura, uni, yuanta
+from issuers import blackrock, capital, cathay, ctbc, fubon, fuhhwa, jpmorgan, kgi, nomura, uni, yuanta
 from issuers.common import flat_fee
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -57,7 +57,7 @@ YAHOO_HOSTS = ("query1.finance.yahoo.com", "query2.finance.yahoo.com")
 
 # 已接入的投信官網；淨值、規模、費用、成分股以這裡的資料為主
 ISSUER_MODULES = {"yuanta": yuanta, "uni": uni, "capital": capital, "fuhhwa": fuhhwa, "kgi": kgi, "fubon": fubon,
-                  "cathay": cathay, "ctbc": ctbc, "nomura": nomura, "jpmorgan": jpmorgan}
+                  "cathay": cathay, "ctbc": ctbc, "nomura": nomura, "jpmorgan": jpmorgan, "blackrock": blackrock}
 
 
 # ---------- 下載 ----------
