@@ -302,6 +302,9 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
         currency = info.pop("currency")
         rec.update(info)
         rec.update(assets)
+        rec["currency"] = "TWD" if currency in TWD else None
+        rec["source_url"] = f"{BASE}/Fund/Assets.aspx?stkId={code}"
+        rec["holdings_url"] = rec["source_url"]
         if currency not in (None, *TWD):
             rec["nav_official"] = rec["nav_estimate"] = None  # 外幣計價的淨值不和新台幣市價比較
         rec["beneficiaries"], rec["beneficiaries_month"] = pcf["beneficiaries"], pcf["beneficiaries_month"]

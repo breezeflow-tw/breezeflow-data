@@ -121,6 +121,7 @@ def parse_pcf(r) -> dict:
     month = re.match(r"(\d{4})/(\d{1,2})", str(r.get("dataDate") or ""))
     return {
         "nav_date": ymd(r["preDateC"]),
+        "currency": "TWD" if twd else None,
         # 外幣計價的淨值不和新台幣市價比較，規模也不自行換算
         "nav_official": num(r.get("nav")) if twd else None,
         "aum": round(total / 1e8, 2) if total and twd else None,
@@ -231,6 +232,7 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
         rec.update({"list_date": ymd(intro.get("listedDate")), "manager": text(intro.get("manager")),
                     "mgmt_fee": flat_fee(mgmt), "mgmt_fee_text": mgmt, "custodian_fee_text": text(charge.get("storageCharge")),
                     **pcf})
+        rec["source_url"] = f"https://www.cathaysite.com.tw/ETF/purchase?code={fid}"
         if "主動" not in str(f.get("etfTypeName")):  # 主動式 ETF 沒有追蹤指數
             try:
                 rec["index_name"] = text((call(f"index_{fid}", "api/ETF/GetIndexInfo", fundCode=fid) or {}).get("indexName"))

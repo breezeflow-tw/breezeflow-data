@@ -661,7 +661,7 @@ class StoreTest(unittest.TestCase):
         con = sqlite3.connect(":memory:")
         store.ensure_schema(con)
         rows = [("0050", d, "2330", "台積電", "股票", w, 1.0, "測試") for d, w in (("2026-10-15", 50.0), ("2026-10-16", 51.0))]
-        con.executemany("INSERT INTO holding VALUES(?,?,?,?,?,?,?,?)", rows)
+        con.executemany("INSERT INTO holding(code,date,asset_code,asset_name,kind,weight,qty,source) VALUES(?,?,?,?,?,?,?,?)", rows)
         self.assertEqual(con.execute("SELECT COUNT(*) FROM holding").fetchone()[0], 2)
 
     def test_old_holding_table_upgraded(self):
@@ -712,8 +712,10 @@ class PipelineTest(unittest.TestCase):
             fix = fixtures_without(tmp, "yuanta")
             self.assertEqual(f.main(["--fixtures", str(fix), "--db", str(db), "--out", str(out)]), 0)
             items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
-            self.assertAlmostEqual(items["0050"]["aum"], 1e9 * 52.25 / 1e8)    # 上市：基金基本資料 × 預估淨值
-            self.assertAlmostEqual(items["00679B"]["aum"], 6e9 * 28.40 / 1e8)  # 上櫃：Capitals × 預估淨值
+            # 基金規模只採投信或公會公告；交易所單位數乘預估淨值不再顯示為官方規模。
+            self.assertIsNone(items["0050"]["aum"])
+            self.assertIsNone(items["00679B"]["aum"])
+            self.assertIsNone(items["0050"]["aum_source"])
             self.assertEqual(items["0056"]["next_ex"],
                              {"ex_date": "2026-10-20", "cash": 0.866, "pay_date": None, "source": "交易所除權息預告"})
             self.assertEqual(items["0050"]["last_ex"]["ex_date"], "2026-10-15")

@@ -77,5 +77,22 @@ CREATE TABLE IF NOT EXISTS holding (
   weight      REAL,               -- 權重（%）
   qty         REAL,               -- 股數、口數或面額
   source      TEXT,
+  source_url  TEXT,
   PRIMARY KEY (code, date, asset_code, kind)
+);
+
+-- 投信原公告快照，與交易所預估資料分開保存，避免混用日期及來源計算資金流。
+CREATE TABLE IF NOT EXISTS fund_daily (
+  code TEXT NOT NULL, date TEXT NOT NULL, nav REAL, aum REAL,
+  units REAL, units_change REAL, currency TEXT, source TEXT NOT NULL,
+  source_url TEXT NOT NULL, observed_at TEXT, PRIMARY KEY(code,date)
+);
+CREATE TABLE IF NOT EXISTS fund_monthly (
+  code TEXT NOT NULL, month TEXT NOT NULL, currency TEXT, aum REAL, nav REAL, units REAL,
+  subscriptions REAL, redemptions REAL, beneficiaries REAL,
+  source TEXT NOT NULL, source_url TEXT NOT NULL, published_at TEXT, PRIMARY KEY(code,month)
+);
+CREATE TABLE IF NOT EXISTS fund_event (
+  code TEXT NOT NULL, date TEXT NOT NULL, kind TEXT NOT NULL, description TEXT,
+  source TEXT NOT NULL, source_url TEXT NOT NULL, PRIMARY KEY(code,date,kind)
 );

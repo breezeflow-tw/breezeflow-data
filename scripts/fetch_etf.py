@@ -24,6 +24,8 @@ from pathlib import Path
 
 import returns
 import store
+import fund_flows
+import sitca
 from issuers import capital, cathay, fubon, fuhhwa, kgi, uni, yuanta
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -384,6 +386,8 @@ def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
         src = r["source"]
         for f in ISSUER_FIELDS:
             it[f] = r.get(f)
+        if r.get("beneficiaries") is not None:
+            it["beneficiaries_source"], it["beneficiaries_source_url"] = src, r.get("source_url")
         for field, key in (("listed_date", "list_date"), ("index_name", "index_name"), ("units", "units")):
             if r.get(key):
                 it[field] = r[key]
@@ -397,6 +401,8 @@ def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
             nav, label = r["nav_estimate"], "預估淨值"
         if nav:
             it["nav"], it["nav_source"] = nav, f"{src}（{label}）"
+            it["nav_date"] = date
+            it["nav_source_url"] = r.get("source_url") if label == "正式淨值" else None
             if it["price"]:
                 it["premium"] = round((it["price"] - nav) / nav * 100, 4)
         # 申購買回清單的資料日期可能和最新淨值不同（例如凱基晚一天），有提供就以清單日期為準
@@ -611,9 +617,9 @@ def save_issuer_detail(con: sqlite3.Connection, issuer: dict[str, dict]) -> None
         day = r.get("pcf_date") or r.get("nav_date")
         con.execute("DELETE FROM holding WHERE code = ? AND date IS ?", (code, day))
         con.executemany(
-            """INSERT OR REPLACE INTO holding(code, date, asset_code, asset_name, kind, weight, qty, source)
-               VALUES(:code, :date, :asset_code, :asset_name, :kind, :weight, :qty, :source)""",
-            [{**h, "code": code, "date": day, "source": r["source"]} for h in r["holdings"]],
+            """INSERT OR REPLACE INTO holding(code, date, asset_code, asset_name, kind, weight, qty, source, source_url)
+               VALUES(:code, :date, :asset_code, :asset_name, :kind, :weight, :qty, :source, :source_url)""",
+            [{**h, "code": code, "date": day, "source": r["source"], "source_url": r.get("holdings_url") or r.get("source_url")} for h in r["holdings"]],
         )
 
 
@@ -721,11 +727,15 @@ def main(argv=None) -> int:
             print(f"{mod.SOURCE}：{sum(1 for r in records.values() if not r.get('delisted'))} 檔")
             issuer.update(records)
     apply_issuer(items, issuer, date)
+    monthly = sitca.fetch(args.fixtures / "sitca" if args.fixtures else None, context=SSL_CONTEXT)
 
     save_db(items, date, args.db, nav, dividends, diffs, issuer)
     con = sqlite3.connect(args.db)
     try:
         attach_returns(con, items, date, reused, returns.parse_history(history_raw))
+        fund_flows.save(con, issuer, monthly)
+        fund_flows.attach(con, items, date)
+        con.commit()
         store.dump(con, history)
     finally:
         con.close()
