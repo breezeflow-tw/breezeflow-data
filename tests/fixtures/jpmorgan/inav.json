@@ -1,0 +1,21 @@
+{
+ "isTWSEBizDay": false,
+ "marketData": [
+  {
+   "securityCode": "00989A",
+   "inav": "17.56",
+   "inavDatetime": "2026-10-16 16:59:51",
+   "navTMinusOne": "17.45",
+   "navDate": "2026-10-15",
+   "isBusinessDay": "Y"
+  },
+  {
+   "securityCode": "00401A",
+   "inav": "13.76",
+   "inavDatetime": "2026-10-16 16:59:58",
+   "navTMinusOne": "13.63",
+   "navDate": "2026-10-15",
+   "isBusinessDay": "Y"
+  }
+ ]
+}

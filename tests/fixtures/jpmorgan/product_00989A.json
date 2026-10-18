@@ -1,0 +1,241 @@
+{
+ "fundData": {
+  "currencyCode": "TWD",
+  "fundManagers": [
+   {
+    "fullName": "蓋欣聖"
+   }
+  ],
+  "fundIndustryRiskRating": [
+   {
+    "fundIndustryRatingDate": "2025-10-14",
+    "fundRiskRatingSchemeCode": "RISK_RATING_TW",
+    "fundRiskRatingCode": "RISK_RATING_TW_RR4",
+    "fundRiskRatingValue": "RR4"
+   }
+  ],
+  "stringValueWrapper": {
+   "twEtfTPlusOneFund": true,
+   "holdingLatestDate": "2026-10-15"
+  },
+  "shareClass": {
+   "nav": {
+    "price": 17.45,
+    "date": "2026-10-15"
+   },
+   "netGrossAssetClass": 1066215464.0,
+   "grossAssetClassEffectiveDate": "2026-10-15",
+   "sharesOutstanding": 61117000.0,
+   "listingDate": "2025-10-22",
+   "currencyCode": "TWD",
+   "fees": {
+    "managementFee": 0.75,
+    "custodianFee": 0.15,
+    "totalExpenseRatio": 0.9
+   }
+  },
+  "breakdowns": {
+   "m12Details": {
+    "effectiveDate": "2026-10-19",
+    "data": [
+     {
+      "name": "預收申購總價金(元)",
+      "displayValue": "9,165,000"
+     },
+     {
+      "name": "2026/10/15 基金淨資產價值(元)",
+      "displayValue": "1,066,215,464"
+     },
+     {
+      "name": "2026/10/15 已發行受益權單位總數",
+      "displayValue": "61,117,000"
+     },
+     {
+      "name": "2026/10/16 與前日已發行單位差異數",
+      "displayValue": "0"
+     },
+     {
+      "name": "2026/10/16 預估發行受益權單位數",
+      "displayValue": "61,117,000"
+     },
+     {
+      "name": "2026/10/15 每受益權單位淨資產價值(元)",
+      "displayValue": "17.45"
+     },
+     {
+      "name": "每現金申購/買回基數之受益權單位數",
+      "displayValue": "500,000"
+     },
+     {
+      "name": "每現金申購/買回基數約當市值(元)",
+      "displayValue": "8,722,741"
+     },
+     {
+      "name": "每現金申購/買回基數估計現金差額(元)",
+      "displayValue": "0"
+     },
+     {
+      "name": "2026/10/15 每基數申購總價金差異額(元)",
+      "displayValue": "-718,514"
+     },
+     {
+      "name": "2026/10/15 每基數實際申購總價金(元)",
+      "displayValue": "8,728,486"
+     }
+    ]
+   }
+  },
+  "holdings": {
+   "pcfEquityHoldings": {
+    "effectiveDate": "2026-10-15",
+    "data": [
+     {
+      "securityDescription": "META PLATFORMS INC-CLASS A",
+      "securityTicker": "META",
+      "securityType": "Equity",
+      "securityIsin": "US30303M1027",
+      "shares": 2034,
+      "marketValuePercent": 4.536,
+      "marketValueBase": 48363716.0,
+      "navDate": "2026-10-15"
+     },
+     {
+      "securityDescription": "NVIDIA CORP",
+      "securityTicker": "NVDA",
+      "securityType": "Equity",
+      "securityIsin": "US67066G1040",
+      "shares": 6740,
+      "marketValuePercent": 4.432,
+      "marketValueBase": 47254802.0,
+      "navDate": "2026-10-15"
+     },
+     {
+      "securityDescription": "CROWDSTRIKE HOLDINGS INC - A",
+      "securityTicker": "CRWD",
+      "securityType": "Equity",
+      "securityIsin": "US22788C1053",
+      "shares": 4690,
+      "marketValuePercent": 3.4721,
+      "marketValueBase": 37020500.0,
+      "navDate": "2026-10-15"
+     },
+     {
+      "securityDescription": "BROADCOM INC",
+      "securityTicker": "AVGO",
+      "securityType": "Equity",
+      "securityIsin": "US11135F1012",
+      "shares": 3241,
+      "marketValuePercent": 3.3781,
+      "marketValueBase": 36018046.0,
+      "navDate": "2026-10-15"
+     },
+     {
+      "securityDescription": "PALO ALTO NETWORKS INC",
+      "securityTicker": "PANW",
+      "securityType": "Equity",
+      "securityIsin": "US6974351057",
+      "shares": 3000,
+      "marketValuePercent": 3.3625,
+      "marketValueBase": 35851393.0,
+      "navDate": "2026-10-15"
+     },
+     {
+      "securityDescription": "SHOPIFY INC - CLASS A",
+      "securityTicker": "SHOP",
+      "securityType": "Equity",
+      "securityIsin": "CA82509L1076",
+      "shares": 6103,
+      "marketValuePercent": 3.291,
+      "marketValueBase": 35089006.0,
+      "navDate": "2026-10-15"
+     },
+     {
+      "securityDescription": "SALESFORCE INC",
+      "securityTicker": "CRM",
+      "securityType": "Equity",
+      "securityIsin": "US79466L3024",
+      "shares": 4392,
+      "marketValuePercent": 3.2804,
+      "marketValueBase": 34975839.0,
+      "navDate": "2026-10-15"
+     },
+     {
+      "securityDescription": "ADVANCED MICRO DEVICES",
+      "securityTicker": "AMD",
+      "securityType": "Equity",
+      "securityIsin": "US0079031078",
+      "shares": 1726,
+      "marketValuePercent": 2.9375,
+      "marketValueBase": 31319950.0,
+      "navDate": "2026-10-15"
+     },
+     {
+      "securityDescription": "MICROSOFT CORP",
+      "securityTicker": "MSFT",
+      "securityType": "Equity",
+      "securityIsin": "US5949181045",
+      "shares": 1790,
+      "marketValuePercent": 2.9229,
+      "marketValueBase": 31164663.0,
+      "navDate": "2026-10-15"
+     },
+     {
+      "securityDescription": "SNOWFLAKE INC-CLASS A",
+      "securityTicker": "SNOW",
+      "securityType": "Equity",
+      "securityIsin": "US8334451098",
+      "shares": 2881,
+      "marketValuePercent": 2.9221,
+      "marketValueBase": 31156241.0,
+      "navDate": "2026-10-15"
+     },
+     {
+      "securityDescription": "TAKE-TWO INTERACTIVE SOFTWRE",
+      "securityTicker": "TTWO",
+      "securityType": "Equity",
+      "securityIsin": "US8740541094",
+      "shares": 4602,
+      "marketValuePercent": 2.9168,
+      "marketValueBase": 31099117.0,
+      "navDate": "2026-10-15"
+     },
+     {
+      "securityDescription": "TESLA INC",
+      "securityTicker": "TSLA",
+      "securityType": "Equity",
+      "securityIsin": "US88160R1014",
+      "shares": 2603,
+      "marketValuePercent": 2.8558,
+      "marketValueBase": 30449246.0,
+      "navDate": "2026-10-15"
+     }
+    ]
+   },
+   "pcfCashHoldings": {
+    "effectiveDate": "2026-10-15",
+    "data": [
+     {
+      "securityDescription": "US DOLLAR",
+      "securityTicker": null,
+      "securityType": "Curncy",
+      "securityIsin": null,
+      "shares": 896917,
+      "marketValuePercent": 2.715,
+      "marketValueBase": 28948004.0,
+      "navDate": "2026-10-15"
+     },
+     {
+      "securityDescription": "NEW TAIWAN DOLLAR",
+      "securityTicker": null,
+      "securityType": "Curncy",
+      "securityIsin": null,
+      "shares": 6388971,
+      "marketValuePercent": 0.6024,
+      "marketValueBase": 6422398.0,
+      "navDate": "2026-10-15"
+     }
+    ]
+   }
+  }
+ }
+}
