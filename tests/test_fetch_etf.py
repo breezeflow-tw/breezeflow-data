@@ -335,6 +335,61 @@ class FuhHwaTest(unittest.TestCase):
             con.close()
 
 
+class KgiTest(unittest.TestCase):
+    def test_parse(self):
+        from issuers import kgi as k
+        page = lambda n: (FIX / "kgi" / f"{n}.html").read_text("utf-8")
+        self.assertEqual(k.parse_nav_list(page("nav")),
+                         {"J023": {"nav_official": 16.15, "nav_date": "2026-10-16"},
+                          "J018": {"nav_official": 14.4736, "nav_date": "2026-10-15"}})
+        d = k.parse_detail(page("detail_J018"))
+        self.assertEqual((d["code"], d["list_date"], d["risk_class"], d["manager"]), ("00945B", "2023-11-02", "RR3", "債券經理人"))
+        self.assertIsNone(d["mgmt_fee"])  # 分段級距不換算
+        self.assertEqual(k.parse_detail(page("detail_J023"))["mgmt_fee"], 0.15)
+        p = k.parse_pcf(page("pcf_J023"))
+        self.assertEqual((p["code"], p["pcf_date"], p["aum"], p["units_change"]), ("009816", "2026-10-16", 2092.5, 116000000.0))
+        self.assertEqual([h["asset_code"] for h in p["holdings"]], ["2330", "2454", "TX-202611"])
+        b = k.parse_pcf(page("pcf_J018"))
+        self.assertEqual((b["pcf_date"], b["units_change"], b["holdings"][0]["kind"]), ("2026-10-15", -2000000.0, "債券"))
+        self.assertEqual(k.parse_pcf("<html>查無資料</html>"), {})
+        divs = k.parse_dividends(page("dividends"))
+        self.assertEqual(divs[0], {"code": "00945B", "ex_date": "2026-10-16", "pay_date": "2026-10-22", "cash": 0.115})
+        self.assertEqual({x["code"] for x in divs}, {"00945B", "00952"})
+
+    def fixtures(self, tmp: str) -> Path:
+        """在共用測試資料加上兩檔凱基 ETF 的交易所資料。"""
+        fix = fixtures_without(tmp)
+        nav = json.loads((fix / "nav.json").read_text("utf-8"))
+        nav["a1"].append({"msgArray": [
+            {"a": "009816", "b": "凱基台灣TOP50", "e": "16.20", "f": "16.14", "g": "", "h": "16.11", "i": "20261016", "j": "13:30:00"},
+            {"a": "00945B", "b": "凱基美國非投等債", "e": "14.50", "f": "14.46", "g": "", "h": "14.32", "i": "20261016", "j": "13:30:00"}]})
+        (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
+        twse = json.loads((fix / "twse.json").read_text("utf-8"))
+        twse += [{"Code": "009816", "Name": "凱基台灣TOP50", "TradeVolume": "60,000,000", "ClosingPrice": "16.20", "Change": "0.0500"},
+                 {"Code": "00945B", "Name": "凱基美國非投等債", "TradeVolume": "4,000,000", "ClosingPrice": "14.50", "Change": "0.0800"}]
+        (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
+        return fix
+
+    def test_pipeline(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            self.assertEqual(f.main(["--fixtures", str(self.fixtures(tmp)), "--db", str(db), "--out", str(out)]), 0)
+            items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            a = items["009816"]
+            self.assertEqual((a["nav"], a["nav_source"]), (16.15, "凱基投信官網（正式淨值）"))
+            self.assertEqual((a["aum"], a["units_change"], a["mgmt_fee"], a["risk_class"]), (2092.5, 116000000.0, 0.15, "RR4"))
+            self.assertEqual(a["holdings_top"][0]["asset_name"], "台積電")
+            b = items["00945B"]
+            self.assertTrue(b["nav_source"].startswith("證交所"))  # 正式淨值是 10/15 的，凱基沒有公布預估淨值
+            self.assertIsNone(b["units_change"])  # 清單資料是 10/15 的，不放在 10/16
+            self.assertEqual(b["last_ex"], {"ex_date": "2026-10-16", "cash": 0.115, "pay_date": "2026-10-22", "source": "凱基投信官網"})
+            con = sqlite3.connect(db)
+            # 持債依清單日期（10/15）保存，不是最新淨值日期
+            self.assertEqual(con.execute("SELECT DISTINCT date FROM holding WHERE code='00945B'").fetchall(), [("2026-10-15",)])
+            self.assertEqual(con.execute("SELECT DISTINCT date FROM holding WHERE code='009816'").fetchall(), [("2026-10-16",)])
+            con.close()
+
+
 class StoreTest(unittest.TestCase):
     def snapshot(self, history: Path) -> dict:
         return {str(p.relative_to(history)): p.read_text("utf-8") for p in sorted(history.rglob("*.csv"))}

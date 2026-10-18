@@ -23,7 +23,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import store
-from issuers import capital, fuhhwa, uni, yuanta
+from issuers import capital, fuhhwa, kgi, uni, yuanta
 
 ROOT = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT / "data" / "etf.db"
@@ -51,7 +51,7 @@ YAHOO_CHART = "https://{host}/v8/finance/chart/{symbol}?range=10d&interval=1d"
 YAHOO_HOSTS = ("query1.finance.yahoo.com", "query2.finance.yahoo.com")
 
 # 已接入的投信官網；淨值、規模、費用、成分股以這裡的資料為主
-ISSUER_MODULES = {"yuanta": yuanta, "uni": uni, "capital": capital, "fuhhwa": fuhhwa}
+ISSUER_MODULES = {"yuanta": yuanta, "uni": uni, "capital": capital, "fuhhwa": fuhhwa, "kgi": kgi}
 
 
 # ---------- 下載 ----------
@@ -388,7 +388,8 @@ def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
             it["nav"], it["nav_source"] = nav, f"{src}（{label}）"
             if it["price"]:
                 it["premium"] = round((it["price"] - nav) / nav * 100, 4)
-        if r.get("nav_date") == date:
+        # 申購買回清單的資料日期可能和最新淨值不同（例如凱基晚一天），有提供就以清單日期為準
+        if (r.get("pcf_date") or r.get("nav_date")) == date:
             it["units_change"] = r.get("units_change")
         it["holdings_top"] = sorted((h for h in r.get("holdings") or [] if h.get("weight") is not None),
                                     key=lambda h: -h["weight"])[:10]
@@ -590,17 +591,18 @@ def save_issuer_detail(con: sqlite3.Connection, issuer: dict[str, dict]) -> None
     )
     con.executemany(
         "UPDATE daily SET units_change = :chg WHERE date = :date AND code = :code",
-        [{"chg": r["units_change"], "date": r["nav_date"], "code": c}
-         for c, r in issuer.items() if r.get("units_change") is not None and r.get("nav_date")],
+        [{"chg": r["units_change"], "date": r.get("pcf_date") or r["nav_date"], "code": c}
+         for c, r in issuer.items() if r.get("units_change") is not None and (r.get("pcf_date") or r.get("nav_date"))],
     )
     for code, r in issuer.items():
         if not r.get("holdings"):
             continue
-        con.execute("DELETE FROM holding WHERE code = ? AND date IS ?", (code, r.get("nav_date")))
+        day = r.get("pcf_date") or r.get("nav_date")
+        con.execute("DELETE FROM holding WHERE code = ? AND date IS ?", (code, day))
         con.executemany(
             """INSERT OR REPLACE INTO holding(code, date, asset_code, asset_name, kind, weight, qty, source)
                VALUES(:code, :date, :asset_code, :asset_name, :kind, :weight, :qty, :source)""",
-            [{**h, "code": code, "date": r.get("nav_date"), "source": r["source"]} for h in r["holdings"]],
+            [{**h, "code": code, "date": day, "source": r["source"]} for h in r["holdings"]],
         )
 
 
