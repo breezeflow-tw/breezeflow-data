@@ -74,7 +74,7 @@ class ParseTest(unittest.TestCase):
     def test_clean_name(self):
         self.assertEqual(f.clean_name("國泰標普低波高息(本基金並無保證收益及配息)"), "國泰標普低波高息")
         self.assertEqual(f.clean_name("聯邦台灣精彩50ETF證券投資信託基金"), "聯邦台灣精彩50")
-        self.assertEqual(f.issuer_from_name("FT臺灣Smart"), "第一金")
+        self.assertEqual(f.issuer_from_name("FT臺灣Smart"), "富蘭克林華美")  # FT 是富蘭克林華美投信（Franklin Templeton）的品牌
 
     def test_fund_and_dividends(self):
         fund = f.parse_fund(json.loads((FIX / "fund.json").read_text("utf-8")))
