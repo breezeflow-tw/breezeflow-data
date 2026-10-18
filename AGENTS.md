@@ -44,9 +44,10 @@
 |---|---|
 | `code`、`name`、`issuer`、`category`、`market` | 代號、名稱、發行投信、類型、上市／上櫃 |
 | `price`、`change_pct`、`volume_lots`、`price_check` | 收盤價、漲跌幅 %、成交量（張）、市價查核結果 |
-| `nav`、`nav_source` | 淨值與出處；出處含「正式淨值」代表投信公告的正式淨值，否則是預估淨值 |
+| `nav`、`nav_source` | 淨值與出處；出處含「正式淨值」代表投信公告的正式淨值，其餘為預估淨值（投信官網公布或證交所轉載） |
 | `nav_prev`、`premium` | 前一營業日淨值、折溢價 %（正數為溢價） |
 | `aum`、`aum_source`、`units` | 規模（億元）與出處、發行單位數 |
+| `units_change` | 當天申購買回造成的發行單位數增減，正數為淨申購（資金流入）、負數為淨買回；只有部分投信提供 |
 | `mgmt_fee`、`mgmt_fee_text`、`custodian_fee_text` | 經理費率 %（只有單一費率才有數字）、經理費與保管費原文（多為依規模分段） |
 | `manager`、`risk_class`、`listed_date`、`index_name` | 經理人、風險等級（RR1～RR5）、上市日、追蹤指數 |
 | `beneficiaries`、`beneficiaries_month` | 受益人數與資料年月 |
