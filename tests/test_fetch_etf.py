@@ -5,6 +5,7 @@ import sqlite3
 import sys
 import tempfile
 import unittest
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -387,6 +388,98 @@ class KgiTest(unittest.TestCase):
             # 持債依清單日期（10/15）保存，不是最新淨值日期
             self.assertEqual(con.execute("SELECT DISTINCT date FROM holding WHERE code='00945B'").fetchall(), [("2026-10-15",)])
             self.assertEqual(con.execute("SELECT DISTINCT date FROM holding WHERE code='009816'").fetchall(), [("2026-10-16",)])
+            con.close()
+
+
+class FubonTest(unittest.TestCase):
+    def test_parse(self):
+        from issuers import fubon as fb
+        page = lambda n: (FIX / "fubon" / f"{n}.html").read_text("utf-8")
+        self.assertEqual(fb.parse_codes(page("list")), ["006208", "00696B"])  # 語言切換連結不算
+        self.assertEqual(fb.parse_estimates(page("estimate")),
+                         {"006208": {"nav_estimate": 150.3, "nav_estimate_date": "2026-10-16"},
+                          "00696B": {"nav_estimate": 30.6, "nav_estimate_date": "2026-10-16"}})
+        p = fb.parse_profile(page("profile_006208"))
+        self.assertEqual((p["list_date"], p["risk_class"], p["index_name"], p["currency"]), ("2012-07-17", "RR4", "臺灣50指數", "新台幣"))
+        self.assertIsNone(p["mgmt_fee"])  # 分段級距不換算
+        self.assertEqual(p["mgmt_fee_text"], "0億(含)以上 : 0.15%；1000億(不含)以上 : 0.1%")
+        self.assertEqual(fb.parse_profile(page("profile_00696B"))["mgmt_fee"], 0.12)  # 只有一段就是單一費率
+        a = fb.parse_assets(page("assets_006208"))
+        self.assertEqual((a["nav_date"], a["nav_official"], a["aum"], a["units"]), ("2026-10-16", 150.25, 3005.0, 2000000000.0))
+        self.assertEqual([(h["asset_code"], h["kind"]) for h in a["holdings"]], [("WTXV6F", "期貨"), ("2317", "股票"), ("2330", "股票")])
+        b = fb.parse_assets(page("assets_00696B"))
+        self.assertEqual((b["nav_date"], b["holdings"][0]["kind"], b["holdings"][0]["qty"]), ("2026-10-15", "債券", 20000000.0))
+        self.assertEqual(fb.parse_assets("<html>查無資料</html>"), {})
+        # 淨值日期取自總價金差異額的欄位名稱，不是「預估發行受益權單位數」的日期
+        self.assertEqual(fb.parse_pcf(page("pcf_00696B")),
+                         {"date": "2026-10-15", "nav": 30.5, "units": 500000000.0, "units_change": -1000000.0,
+                          "beneficiaries": 12000.0, "beneficiaries_month": "2026-09"})
+        divs = fb.parse_dividends(page("dividends_all"))
+        self.assertEqual(divs[0], {"code": "00696B", "ex_date": "2026-09-16", "pay_date": "2026-10-14", "cash": 0.35})
+        self.assertEqual(len(divs), 4)
+        q = fb.dividend_query(page("dividends"), date(2006, 1, 1), date(2027, 12, 31))
+        pre = "ctl00$ctl00$mainContent$subMainContent$"
+        self.assertEqual((q["__VIEWSTATE"], q[pre + "contact"], q[pre + "sDate"], q[pre + "ddlRange"]),
+                         ("dGVzdC12aWV3c3RhdGU=", "2", "2006/01/01", "2026"))  # 年度只能送頁面上有的選項
+        self.assertIsNone(fb.dividend_query("<html></html>", date(2006, 1, 1), date(2026, 12, 31)))
+
+    def test_fetch_dividends_and_pcf_date(self):
+        from issuers import fubon as fb
+        recs = fb.fetch(fixtures=FIX / "fubon", dividend_codes=set())
+        self.assertEqual(sorted((d["code"], d["ex_date"]) for r in recs.values() for d in r["dividends"]),
+                         [("006208", "2025-11-18"), ("006208", "2026-07-16"), ("00696B", "2017-12-18"), ("00696B", "2026-09-16")])
+        # 資料庫已有富邦紀錄時只看預設頁（今年）
+        recs = fb.fetch(fixtures=FIX / "fubon", dividend_codes={"006208"})
+        self.assertEqual(sorted(d["ex_date"] for d in recs["006208"]["dividends"]), ["2026-07-16"])
+        self.assertEqual(recs["00696B"]["units_change"], -1000000.0)
+        with tempfile.TemporaryDirectory() as tmp:
+            fix = Path(tmp) / "fubon"
+            shutil.copytree(FIX / "fubon", fix)
+            # 完整歷史查詢失敗（回到預設頁）就整批不用，下次再查
+            shutil.copy(fix / "dividends.html", fix / "dividends_all.html")
+            # 申購買回清單和基金資產不是同一天，單位增減不採用
+            pcf = fix / "pcf_00696B.html"
+            pcf.write_text(pcf.read_text("utf-8").replace("2026/10/15 每", "2026/10/14 每"), "utf-8")
+            # 網站改顯示別檔基金（標題代號不同）時不採用該頁
+            assets = fix / "assets_006208.html"
+            assets.write_text(assets.read_text("utf-8").replace("006208 / 富邦台50", "00692 / 富邦公司治理"), "utf-8")
+            recs = fb.fetch(fixtures=fix, dividend_codes=set())
+            self.assertEqual([d for r in recs.values() for d in r["dividends"]], [])
+            self.assertIsNone(recs["00696B"]["units_change"])
+            self.assertEqual((recs["006208"]["nav_official"], recs["006208"]["holdings"], recs["006208"]["risk_class"]), (None, [], "RR4"))
+
+    def fixtures(self, tmp: str) -> Path:
+        """在共用測試資料加上兩檔富邦 ETF 的交易所資料。"""
+        fix = fixtures_without(tmp)
+        nav = json.loads((fix / "nav.json").read_text("utf-8"))
+        nav["a1"].append({"msgArray": [
+            {"a": "006208", "b": "富邦台50", "e": "150.60", "f": "150.28", "g": "", "h": "149.80", "i": "20261016", "j": "13:30:00"},
+            {"a": "00696B", "b": "富邦美債20年", "e": "30.70", "f": "30.58", "g": "", "h": "30.50", "i": "20261016", "j": "13:30:00"}]})
+        (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
+        twse = json.loads((fix / "twse.json").read_text("utf-8"))
+        twse += [{"Code": "006208", "Name": "富邦台50", "TradeVolume": "5,000,000", "ClosingPrice": "150.60", "Change": "0.6000"},
+                 {"Code": "00696B", "Name": "富邦美債20年", "TradeVolume": "3,000,000", "ClosingPrice": "30.70", "Change": "0.1500"}]
+        (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
+        return fix
+
+    def test_pipeline(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            self.assertEqual(f.main(["--fixtures", str(self.fixtures(tmp)), "--db", str(db), "--out", str(out)]), 0)
+            items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            a = items["006208"]
+            self.assertEqual((a["issuer"], a["nav"], a["nav_source"]), ("富邦", 150.25, "富邦投信官網（正式淨值）"))
+            self.assertEqual((a["aum"], a["units_change"], a["risk_class"], a["listed_date"]), (3005.0, 4000000.0, "RR4", "2012-07-17"))
+            self.assertEqual((a["beneficiaries"], a["beneficiaries_month"]), (500000.0, "2026-09"))
+            self.assertAlmostEqual(a["premium"], (150.60 - 150.25) / 150.25 * 100, places=3)
+            self.assertEqual(a["holdings_top"][0]["asset_name"], "台積電")
+            self.assertEqual(a["last_ex"], {"ex_date": "2026-07-16", "cash": 1.0, "pay_date": "2026-08-12", "source": "富邦投信官網"})
+            b = items["00696B"]
+            # 正式淨值是 10/15 的，當天用富邦公布的預估淨值；單位增減屬於 10/15，不放在 10/16
+            self.assertEqual((b["nav"], b["nav_source"], b["units_change"], b["mgmt_fee"]), (30.6, "富邦投信官網（預估淨值）", None, 0.12))
+            con = sqlite3.connect(db)
+            self.assertEqual(con.execute("SELECT DISTINCT date FROM holding WHERE code='00696B'").fetchall(), [("2026-10-15",)])
+            self.assertEqual(con.execute("SELECT COUNT(*) FROM dividend WHERE source='富邦投信官網'").fetchone()[0], 4)
             con.close()
 
 
