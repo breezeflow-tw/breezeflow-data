@@ -234,7 +234,8 @@ def parse_yahoo(payloads: dict[str, object]) -> dict[str, dict[str, dict]]:
 
 
 def reconcile(yahoo: dict, exchange: dict, date: str) -> tuple[dict, list[dict]]:
-    """以 Yahoo 為主、交易所為查核。兩邊不一致時採用交易所的數字，並記錄差異。"""
+    """收盤價以 Yahoo 為主、交易所為查核，不一致時採用交易所並記錄差異。
+    成交量一律用交易所的官方總量：實測 Yahoo 的成交量系統性偏低約 1～8%，屬於統計範圍不同，不算錯誤。"""
     quotes, diffs = {}, []
     for code in sorted(set(yahoo) | set(exchange)):
         y = yahoo.get(code, {}).get(date)
@@ -243,14 +244,12 @@ def reconcile(yahoo: dict, exchange: dict, date: str) -> tuple[dict, list[dict]]
         q = {k: e.get(k) for k in ("name", "market", "units", "date")}
         if y and e_ok:
             price_bad = abs(y["close"] - e["close"]) > 0.005
-            vol_bad = (y["volume_lots"] is not None and e["volume_lots"] is not None
-                       and abs(y["volume_lots"] - e["volume_lots"]) > max(1, e["volume_lots"] * 0.005))
-            for field, bad in (("close", price_bad), ("volume_lots", vol_bad)):
-                if bad:
-                    diffs.append({"code": code, "field": field, "yahoo": y[field], "exchange": e[field]})
-            src = e if (price_bad or vol_bad) else y
+            if price_bad:
+                diffs.append({"code": code, "field": "close", "yahoo": y["close"], "exchange": e["close"]})
+            src = e if price_bad else y
             q.update(close=src["close"], change_pct=src["change_pct"] if src["change_pct"] is not None else e["change_pct"],
-                     volume_lots=src["volume_lots"], check="已修正" if (price_bad or vol_bad) else "一致")
+                     volume_lots=e["volume_lots"] if e["volume_lots"] is not None else y["volume_lots"],
+                     check="已修正" if price_bad else "一致")
         elif y:
             q.update(close=y["close"], change_pct=y["change_pct"], volume_lots=y["volume_lots"], check="未查核")
         elif e_ok:

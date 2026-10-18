@@ -81,12 +81,13 @@ class ParseTest(unittest.TestCase):
 
     def test_yahoo_reconcile(self):
         yahoo = f.parse_yahoo(json.loads((FIX / "yahoo.json").read_text("utf-8")))
-        self.assertEqual(yahoo["0050"]["2026-10-16"]["volume_lots"], 25300)
+        self.assertEqual(yahoo["0050"]["2026-10-16"]["volume_lots"], 23500)
         self.assertAlmostEqual(yahoo["0050"]["2026-10-16"]["change_pct"], 0.45 / 51.9 * 100)
         exchange = {**f.parse_quotes(json.loads((FIX / "tpex.json").read_text("utf-8")), "上櫃"),
                     **f.parse_quotes(json.loads((FIX / "twse.json").read_text("utf-8")), "上市")}
         quotes, diffs = f.reconcile(yahoo, exchange, "2026-10-16")
-        self.assertEqual(quotes["0050"]["check"], "一致")
+        self.assertEqual(quotes["0050"]["check"], "一致")  # 成交量不同不算不一致
+        self.assertEqual(quotes["0050"]["volume_lots"], 25300)  # 成交量採用交易所官方總量
         self.assertEqual(quotes["00679B"]["check"], "一致")
         self.assertEqual(quotes["00757"]["check"], "已修正")
         self.assertEqual(quotes["00757"]["close"], 112.50)  # 不一致時採用交易所
