@@ -25,6 +25,7 @@ TABLES = {
     "price_check": (None, "date, code, field"),
     "daily": ("date", "code"),
     "holding": ("date", "code, kind, asset_code"),
+    "fund_info": (None, "code"),
 }
 SPLIT_DIRS = {"daily": "daily", "holding": "holdings"}
 
@@ -34,7 +35,8 @@ MIGRATIONS = {
               "nav_source": "TEXT", "aum_source": "TEXT", "beneficiaries": "INTEGER", "units_change": "REAL"},
     "etf": {"units": "REAL", "index_name": "TEXT", "listed_date": "TEXT", "mgmt_fee": "REAL",
             "mgmt_fee_text": "TEXT", "custodian_fee_text": "TEXT", "manager": "TEXT", "risk_class": "TEXT",
-            "beneficiaries": "INTEGER", "beneficiaries_month": "TEXT", "stats_json": "TEXT"},
+            "beneficiaries": "INTEGER", "beneficiaries_month": "TEXT", "stats_json": "TEXT",
+            "fee_source": "TEXT", "expense_json": "TEXT"},
     "dividend": {"source": "TEXT"},
 }
 
