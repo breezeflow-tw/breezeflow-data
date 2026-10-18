@@ -11,7 +11,10 @@
 | 路徑 | 內容 |
 |---|---|
 | `scripts/fetch_etf.py` | 抓資料、查核、合併、寫入資料庫與 JSON |
-| `scripts/schema.sql` | 資料庫結構（`etf`、`daily`、`dividend`、`price_check`） |
+| `scripts/schema.sql` | 資料庫結構（`etf`、`daily`、`dividend`、`price_check`、`holding`） |
+| `scripts/store.py` | 資料保存：歷史資料存成 `data/history/` 的 CSV，執行時重建 SQLite |
+| `scripts/issuers/` | 各投信官網的抓取模組（一家一個檔案） |
+| `data/history/` | **資料庫本體**（CSV，依日期分檔）。`data/etf.db` 是執行時產生的，不提交 |
 | `web/index.html` | 網站（單一檔案，讀 `web/data/latest.json`） |
 | `tests/` | 離線測試；`tests/fixtures/` 是測試用假資料 |
 | `data/etf_meta.csv` | 人工補充資料（類型修正、費用率、規模） |
@@ -40,7 +43,8 @@
 ## Git 規則（避免互相覆蓋）
 
 - **不要直接推 `main`。** 每項工作開新分支（例如 `codex/改善手機版表格`、`claude/接元大投信`），完成後開 Pull Request。
-- **不要提交 `data/etf.db` 和 `web/data/latest.json`。** 這兩個檔案只由每日排程機器人更新；本機測試產生的變更請還原：`git checkout -- data/etf.db web/data/latest.json`
+- **不要提交 `data/history/` 和 `web/data/latest.json` 的變更。** 這些只由每日排程機器人更新；本機測試產生的變更請還原：`git checkout -- data/history web/data/latest.json && git clean -fd data/history`
+- `data/etf.db` 已列入 `.gitignore`，不會也不應提交。資料庫結構有變動時，同步更新 `scripts/store.py` 的 `MIGRATIONS`。
 - 開工前先 `git pull origin main`，PR 合併前確認測試通過。
 - 一個 PR 只做一件事，說明寫清楚改了什麼、怎麼驗證。
 - **合併權限（擁有者授權）**：Claude 的分支在全部測試通過後，可由 Claude 自行合併進 `main`；Codex 與其他協作者的修改，須由擁有者確認後合併（可請 Claude 先檢查）。

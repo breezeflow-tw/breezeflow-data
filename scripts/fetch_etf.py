@@ -22,13 +22,13 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+import store
 from issuers import yuanta
 
 ROOT = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT / "data" / "etf.db"
 META_PATH = ROOT / "data" / "etf_meta.csv"
 OUT_PATH = ROOT / "web" / "data" / "latest.json"
-SCHEMA_PATH = ROOT / "scripts" / "schema.sql"
 
 TW = timezone(timedelta(hours=8))
 
@@ -458,22 +458,8 @@ def known_markets(db_path: Path) -> dict[str, str]:
 def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | None = None,
             dividends: list[dict] | None = None, diffs: list[dict] | None = None,
             issuer: dict[str, dict] | None = None) -> None:
-    db_path.parent.mkdir(parents=True, exist_ok=True)
-    con = sqlite3.connect(db_path)
+    con = store.open_db(db_path, None)
     try:
-        con.executescript(SCHEMA_PATH.read_text("utf-8"))
-        # 舊資料庫補上新欄位
-        for table, cols in (("daily", {"nav_official": "REAL", "premium_official": "REAL", "aum": "REAL",
-                                       "price_check": "TEXT", "nav_source": "TEXT", "aum_source": "TEXT",
-                                       "beneficiaries": "INTEGER"}),
-                            ("etf", {"units": "REAL", "index_name": "TEXT", "listed_date": "TEXT",
-                                     "mgmt_fee": "REAL", "mgmt_fee_text": "TEXT", "custodian_fee_text": "TEXT",
-                                     "manager": "TEXT", "risk_class": "TEXT", "beneficiaries": "INTEGER",
-                                     "beneficiaries_month": "TEXT", "stats_json": "TEXT"})):
-            have = {r[1] for r in con.execute(f"PRAGMA table_info({table})")}
-            for col, typ in cols.items():
-                if col not in have:
-                    con.execute(f"ALTER TABLE {table} ADD COLUMN {col} {typ}")
         now = datetime.now(TW).isoformat(timespec="seconds")
         con.executemany(
             """INSERT INTO etf(code, name, issuer, category, market, fee, aum, units, index_name, listed_date,
@@ -556,7 +542,7 @@ def attach_dividends(con: sqlite3.Connection, items: list[dict], date: str) -> N
 
 
 def save_issuer_detail(con: sqlite3.Connection, issuer: dict[str, dict]) -> None:
-    """投信公告的正式淨值寫回對應日期；成分股只保留每檔最新一份。"""
+    """投信公告的正式淨值寫回對應日期；成分股依清單日期保存，同一天重抓會覆蓋當天那份。"""
     con.executemany(
         """UPDATE daily SET nav_official = :nav,
              premium_official = CASE WHEN price IS NOT NULL THEN (price - :nav) / :nav * 100 END
@@ -567,7 +553,7 @@ def save_issuer_detail(con: sqlite3.Connection, issuer: dict[str, dict]) -> None
     for code, r in issuer.items():
         if not r.get("holdings"):
             continue
-        con.execute("DELETE FROM holding WHERE code = ?", (code,))
+        con.execute("DELETE FROM holding WHERE code = ? AND date IS ?", (code, r.get("nav_date")))
         con.executemany(
             """INSERT OR REPLACE INTO holding(code, date, asset_code, asset_name, kind, weight, qty, source)
                VALUES(:code, :date, :asset_code, :asset_name, :kind, :weight, :qty, :source)""",
@@ -618,7 +604,10 @@ def main(argv=None) -> int:
     ap.add_argument("--fixtures", type=Path, help="改用此資料夾內的 nav.json / twse.json / tpex.json")
     ap.add_argument("--db", type=Path, default=DB_PATH)
     ap.add_argument("--out", type=Path, default=OUT_PATH)
+    ap.add_argument("--history", type=Path, help="歷史 CSV 資料夾，預設為資料庫旁的 history/")
     args = ap.parse_args(argv)
+    history = args.history or args.db.parent / "history"
+    store.open_db(args.db, history).close()  # 資料庫檔不存在時，先從歷史 CSV 重建
 
     raw = load_sources(args.fixtures)
     nav = parse_nav(raw["nav"])
@@ -652,6 +641,11 @@ def main(argv=None) -> int:
     apply_issuer(items, issuer, date)
 
     save_db(items, date, args.db, nav, dividends, diffs, issuer)
+    con = sqlite3.connect(args.db)
+    try:
+        store.dump(con, history)
+    finally:
+        con.close()
     save_json(items, date, "fixture" if args.fixtures else "live", args.out,
               has_nav=any(it["nav"] is not None for it in items))
     flagged = sum(1 for it in items if it["premium"] is not None and abs(it["premium"]) >= 1)

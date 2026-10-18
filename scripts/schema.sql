@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS price_check (
   PRIMARY KEY (date, code, field)
 );
 
--- 成分股：投信公告的申購買回清單，每檔只保留最新一份
+-- 成分股：投信公告的申購買回清單，依清單日期保存歷史
 CREATE TABLE IF NOT EXISTS holding (
   code        TEXT NOT NULL,      -- ETF 代號
   date        TEXT,               -- 清單日期
@@ -75,5 +75,5 @@ CREATE TABLE IF NOT EXISTS holding (
   weight      REAL,               -- 權重（%）
   qty         REAL,               -- 股數、口數或面額
   source      TEXT,
-  PRIMARY KEY (code, asset_code, kind)
+  PRIMARY KEY (code, date, asset_code, kind)
 );

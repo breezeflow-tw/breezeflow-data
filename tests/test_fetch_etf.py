@@ -160,6 +160,56 @@ class YuantaTest(unittest.TestCase):
             con.close()
 
 
+class StoreTest(unittest.TestCase):
+    def snapshot(self, history: Path) -> dict:
+        return {str(p.relative_to(history)): p.read_text("utf-8") for p in sorted(history.rglob("*.csv"))}
+
+    def test_rebuild_from_history(self):
+        """刪掉資料庫後從 CSV 重建，內容不變；再跑一次，昨天以前的資料仍在。"""
+        import store
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out, history = Path(tmp) / "etf.db", Path(tmp) / "latest.json", Path(tmp) / "history"
+            self.assertEqual(f.main(["--fixtures", str(FIX), "--db", str(db), "--out", str(out)]), 0)
+            self.assertTrue((history / "daily" / "2026-10-16.csv").exists())
+            self.assertTrue((history / "holdings" / "2026-10-16.csv").exists())
+            first = self.snapshot(history)
+
+            def table(path):
+                con = sqlite3.connect(path)
+                try:
+                    return {t: con.execute(f"SELECT * FROM {t} ORDER BY 1, 2, 3").fetchall()
+                            for t in ("etf", "daily", "dividend", "price_check", "holding")}
+                finally:
+                    con.close()
+            before = table(db)
+            db.unlink()
+            con = store.open_db(db, history)
+            con.close()
+            self.assertEqual(table(db), before)  # 數字、空值、前導零代號都還原
+
+            con = sqlite3.connect(db)
+            store.dump(con, history)
+            con.close()
+            self.assertEqual(self.snapshot(history), first)  # 內容沒變，檔案也完全相同
+
+    def test_holdings_keep_history(self):
+        import store
+        con = sqlite3.connect(":memory:")
+        store.ensure_schema(con)
+        rows = [("0050", d, "2330", "台積電", "股票", w, 1.0, "測試") for d, w in (("2026-10-15", 50.0), ("2026-10-16", 51.0))]
+        con.executemany("INSERT INTO holding VALUES(?,?,?,?,?,?,?,?)", rows)
+        self.assertEqual(con.execute("SELECT COUNT(*) FROM holding").fetchone()[0], 2)
+
+    def test_old_holding_table_upgraded(self):
+        import store
+        con = sqlite3.connect(":memory:")
+        con.execute("CREATE TABLE holding (code TEXT NOT NULL, date TEXT, asset_code TEXT NOT NULL, asset_name TEXT,"
+                    " kind TEXT NOT NULL, weight REAL, qty REAL, source TEXT, PRIMARY KEY (code, asset_code, kind))")
+        store.ensure_schema(con)
+        pk = [r[1] for r in con.execute("PRAGMA table_info(holding)") if r[5]]
+        self.assertIn("date", pk)
+
+
 class PipelineTest(unittest.TestCase):
     def test_end_to_end_and_rerun(self):
         with tempfile.TemporaryDirectory() as tmp:

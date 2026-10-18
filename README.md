@@ -7,8 +7,10 @@
 | 路徑 | 內容 |
 |---|---|
 | `scripts/fetch_etf.py` | 抓資料、分類、合併、寫入資料庫與 JSON（只用 Python 標準函式庫） |
-| `scripts/schema.sql` | 資料庫結構：`etf` 基本資料、`daily` 每日快照 |
-| `data/etf.db` | SQLite 資料庫（每日自動更新並提交） |
+| `scripts/schema.sql` | 資料庫結構：`etf` 基本資料、`daily` 每日快照、`dividend` 配息、`holding` 成分股、`price_check` 查核紀錄 |
+| `scripts/store.py` | 資料保存：`data/history/` 的 CSV ↔ SQLite |
+| `data/history/` | 資料庫本體，CSV 依日期分檔（`daily/`、`holdings/`），每日自動更新並提交 |
+| `data/etf.db` | 執行時從 `data/history/` 重建的 SQLite，不提交；網站上提供下載 `data/etf.db` |
 | `data/etf_meta.csv` | 人工補充資料：發行商、類型修正、總費用率、規模 |
 | `web/index.html` | ETF 總覽網頁，讀取 `web/data/latest.json` |
 | `tests/` | 離線測試與測試用假資料 |
@@ -26,6 +28,12 @@
 | 除息日、每單位配息 | 證交所 `exchangeReport/TWT48U_ALL`、櫃買 `tpex_exright_prepost`（除權除息預告表），每天累積進 `dividend` 表 |
 | 配息發放日 | 尚未接上，需要公開資訊觀測站 `mops.twse.com.tw` |
 | 總費用率 | 尚未接上，需要投信投顧公會 `www.sitca.org.tw`；目前可在 `data/etf_meta.csv` 人工填寫 |
+
+## 資料下載
+
+- 最新總覽：`https://htc20025-oss.github.io/breezeflow-data/data/latest.json`
+- 完整 SQLite 資料庫：`https://htc20025-oss.github.io/breezeflow-data/data/etf.db`
+- 歷史 CSV：本 repo 的 `data/history/`
 
 ## 本機執行
 
