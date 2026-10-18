@@ -26,6 +26,7 @@
 | 收盤價、成交量（查核） | 證交所 OpenAPI `exchangeReport/STOCK_DAY_ALL`、櫃買 `tpex_mainboard_daily_close_quotes`。與 Yahoo 不一致時採用交易所數字，差異記錄在 `price_check` 表 |
 | 規模 | 發行單位數 × 淨值。上市用證交所 OpenAPI `opendata/t187ap47_L`（基金基本資料），上櫃用櫃買行情的 `Capitals` |
 | 除息日、每單位配息、發放日 | 投信官網配息紀錄為主（統一、群益、復華、凱基、富邦、國泰，含發放日）；證交所 `exchangeReport/TWT48U_ALL`、櫃買 `tpex_exright_prepost` 除權息預告補充尚未公布的部分 |
+| 區間報酬（近一週到近五年、今年以來） | Yahoo 股市五年日線（收盤價已做分割還原）。市價報酬用收盤價，含息報酬用還原收盤價；期末收盤價用查核後的數字，含息報酬會和投信官網、交易所的配息紀錄核對，對不上就留空。每個交易日只抓一次五年日線 |
 | 總費用率 | 尚未接上，需要投信投顧公會 `www.sitca.org.tw`；目前可在 `data/etf_meta.csv` 人工填寫 |
 
 ## 資料下載

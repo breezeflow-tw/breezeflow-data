@@ -22,6 +22,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+import returns
 import store
 from issuers import capital, cathay, fubon, fuhhwa, kgi, uni, yuanta
 
@@ -48,6 +49,8 @@ SOURCES = {
 
 # 市價與成交量的主要來源；上市代號加 .TW，上櫃加 .TWO
 YAHOO_CHART = "https://{host}/v8/finance/chart/{symbol}?range=10d&interval=1d"
+# 每個交易日抓一次五年日線（含配息紀錄）計算區間報酬，同一份資料也拿來比對收盤價
+YAHOO_HISTORY = "https://{host}/v8/finance/chart/{symbol}?period1={start}&period2={end}&interval=1d&events=div"
 YAHOO_HOSTS = ("query1.finance.yahoo.com", "query2.finance.yahoo.com")
 
 # 已接入的投信官網；淨值、規模、費用、成分股以這裡的資料為主
@@ -79,12 +82,19 @@ def http_get_json(url: str, retries: int = 4, first_delay: float = 2) -> object:
     raise AssertionError("unreachable")
 
 
-def fetch_yahoo(symbols: list[str]) -> dict[str, object]:
-    """逐檔抓 Yahoo 股市日線。前 10 檔全部失敗就放棄（多半是被擋），避免白跑幾百次。"""
+def fetch_yahoo(symbols: list[str], since: datetime | None = None) -> dict[str, object]:
+    """逐檔抓 Yahoo 股市日線；給 since 時抓從那天起的完整日線與配息紀錄。
+    前 10 檔全部失敗就放棄（多半是被擋），避免白跑幾百次。"""
+    def url(host, symbol):
+        if since is None:
+            return YAHOO_CHART.format(host=host, symbol=symbol)
+        return YAHOO_HISTORY.format(host=host, symbol=symbol, start=int(since.timestamp()),
+                                    end=int(datetime.now(TW).timestamp()) + 86400)
+
     def one(symbol):
         for host in YAHOO_HOSTS:
             try:
-                return symbol, http_get_json(YAHOO_CHART.format(host=host, symbol=symbol), retries=1, first_delay=1)
+                return symbol, http_get_json(url(host, symbol), retries=1, first_delay=1)
             except RuntimeError:
                 continue
         return symbol, None
@@ -627,7 +637,18 @@ def save_official_nav(con: sqlite3.Connection, nav: dict) -> None:
         )
 
 
+def attach_returns(con: sqlite3.Connection, items: list[dict], date: str, reused: dict, history: dict) -> None:
+    """每檔附上區間報酬。含息報酬要和資料庫的配息紀錄核對，所以在投信資料寫入資料庫之後才算。"""
+    known: dict[str, list] = {}
+    for code, ex_date, cash in con.execute("SELECT code, ex_date, cash FROM dividend"):
+        known.setdefault(code, []).append((ex_date, cash))
+    for it in items:
+        it["returns"] = reused.get(it["code"]) if reused else returns.compute(
+            history.get(it["code"]), date, it["price"], known.get(it["code"], []))
+
+
 def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, has_nav: bool = True) -> None:
+    """網站讀的唯一檔案。區間報酬的起始日與出處放在最上層 returns_info，各檔數字在 items[].returns。"""
     checks: dict[str, int] = {}
     for it in items:
         if it.get("price_check"):
@@ -639,6 +660,7 @@ def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, h
         "source": source,
         "has_nav": has_nav,
         "price_check": checks,
+        "returns_info": {"source": returns.SOURCE, "starts": returns.start_dates(date)},
         "count": len(items),
         "items": items,
     }
@@ -659,14 +681,23 @@ def main(argv=None) -> int:
     nav = parse_nav(raw["nav"])
     exchange = {**parse_quotes(raw["tpex"], "上櫃"), **parse_quotes(raw["twse"], "上市")}
 
-    # 市價與成交量：Yahoo 股市為主，交易所為查核
+    # 市價與成交量：Yahoo 股市為主，交易所為查核。
+    # 區間報酬：這個交易日還沒算過時抓五年日線（同一份資料也拿來比對收盤價），算過就沿用上次的結果
+    date = trade_date(nav, exchange, datetime.now(TW))
+    source = "fixture" if args.fixtures else "live"
+    reused = returns.previous(args.out, date, source)
     markets = {**known_markets(args.db), **{c: q["market"] for c, q in exchange.items()}}
     symbols = [f"{c}.TWO" if markets.get(c) == "上櫃" else f"{c}.TW" for c in sorted(set(nav) | set(exchange) | set(markets))]
+    history_raw = {}
     if args.fixtures:
-        path = args.fixtures / "yahoo.json"
-        yahoo_raw = json.loads(path.read_text("utf-8")) if path.exists() else {}
-    else:
+        load = lambda name: json.loads((args.fixtures / name).read_text("utf-8")) if (args.fixtures / name).exists() else {}
+        yahoo_raw = load("yahoo.json")
+        history_raw = {} if reused else load("yahoo_history.json")
+    elif reused:
         yahoo_raw = fetch_yahoo(symbols)
+    else:
+        since = datetime.fromisoformat(date).replace(tzinfo=TW) - timedelta(days=returns.HISTORY_DAYS)
+        yahoo_raw = history_raw = fetch_yahoo(symbols, since)
     yahoo = parse_yahoo(yahoo_raw)
 
     if not nav and not exchange and not yahoo:
@@ -674,7 +705,6 @@ def main(argv=None) -> int:
         return 1
     if not nav:
         print("警告：沒有淨值資料，本次只更新價格與成交量。", file=sys.stderr)
-    date = trade_date(nav, exchange, datetime.now(TW))
     quotes, diffs = reconcile(yahoo, exchange, date)
     items = merge(nav, quotes, load_meta(), date, parse_fund(raw["fund"]))
     dividends = parse_dividends(raw["div_twse"], raw["div_tpex"])
@@ -695,15 +725,16 @@ def main(argv=None) -> int:
     save_db(items, date, args.db, nav, dividends, diffs, issuer)
     con = sqlite3.connect(args.db)
     try:
+        attach_returns(con, items, date, reused, returns.parse_history(history_raw))
         store.dump(con, history)
     finally:
         con.close()
-    save_json(items, date, "fixture" if args.fixtures else "live", args.out,
-              has_nav=any(it["nav"] is not None for it in items))
+    save_json(items, date, source, args.out, has_nav=any(it["nav"] is not None for it in items))
     flagged = sum(1 for it in items if it["premium"] is not None and abs(it["premium"]) >= 1)
     checks = {k: sum(1 for it in items if it["price_check"] == k) for k in ("一致", "已修正", "未查核", "交易所")}
     print(f"{date}：共 {len(items)} 檔 ETF，折溢價超過 ±1% 有 {flagged} 檔，除息預告 {len(dividends)} 筆 → {args.out}")
     print("市價查核：" + "、".join(f"{k} {v} 檔" for k, v in checks.items()))
+    print(f"區間報酬：{sum(1 for it in items if it.get('returns'))} 檔" + ("（沿用本交易日先前的計算）" if reused else ""))
     return 0
 
 

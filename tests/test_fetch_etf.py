@@ -559,6 +559,68 @@ class CathayTest(unittest.TestCase):
             con.close()
 
 
+class ReturnsTest(unittest.TestCase):
+    def history(self):
+        import returns
+        return returns.parse_history(json.loads((FIX / "yahoo_history.json").read_text("utf-8")))
+
+    def test_start_dates(self):
+        import returns
+        self.assertEqual(returns.add_months(date(2026, 3, 31), -1), date(2026, 2, 28))  # 該月沒有 31 日
+        self.assertEqual(returns.add_months(date(2024, 3, 31), -1), date(2024, 2, 29))
+        self.assertEqual(returns.start_dates("2026-10-16"),
+                         {"1w": "2026-10-09", "1m": "2026-09-16", "3m": "2026-07-16", "6m": "2026-04-16",
+                          "ytd": "2025-12-31", "1y": "2025-10-16", "3y": "2023-10-16", "5y": "2021-10-16"})
+
+    def test_compute(self):
+        import returns
+        h = self.history()
+        r = returns.compute(h["0050"], "2026-10-16", 52.35, [("2026-07-21", 1.0)])
+        # 期初取起始日當天或之前最近的交易日：近一週的起始日 10/09 沒有資料，用 10/08
+        self.assertEqual(r["price"]["1w"], round((52.35 / 51.5 - 1) * 100, 2))
+        self.assertEqual((r["price"]["1y"], r["total"]["1y"]), (round((52.35 / 45 - 1) * 100, 2), round((52.35 / 42 - 1) * 100, 2)))
+        self.assertEqual(r["total"]["5y"], round((52.35 / 25 - 1) * 100, 2))
+        # 期末用查核後的收盤價
+        self.assertEqual(returns.compute(h["0050"], "2026-10-16", 52.0)["price"]["1m"], round((52.0 / 50.5 - 1) * 100, 2))
+        # 資料庫有、Yahoo 沒列到的配息：涵蓋那天的區間不算含息報酬，市價報酬照算
+        miss = returns.compute(h["0050"], "2026-10-16", 52.35, [("2026-08-20", 0.5)])
+        self.assertEqual((miss["total"]["1m"] is None, miss["total"]["3m"], miss["price"]["3m"] is None), (False, None, False))
+        # 配息金額不符也一樣
+        self.assertIsNone(returns.compute(h["0050"], "2026-10-16", 52.35, [("2026-07-21", 1.2)])["total"]["6m"])
+        # 上市不到 3 年就不算 3 年、5 年報酬
+        b = returns.compute(h["00679B"], "2026-10-16", 28.0)
+        self.assertEqual((b["price"]["3y"], b["total"]["5y"]), (None, None))
+        self.assertIsNone(returns.compute(h["00679B"], "2026-10-19", 28.0))  # Yahoo 沒有期末那天
+
+    def test_previous(self):
+        import returns
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "latest.json"
+            out.write_text(json.dumps({"trade_date": "2026-10-16", "source": "live",
+                                       "items": [{"code": "0050", "returns": {"price": {"1m": 1.0}}}, {"code": "0056", "returns": None}]}), "utf-8")
+            self.assertEqual(returns.previous(out, "2026-10-16", "live"), {"0050": {"price": {"1m": 1.0}}})
+            self.assertEqual(returns.previous(out, "2026-10-19", "live"), {})  # 換了交易日要重算
+            self.assertEqual(returns.previous(out, "2026-10-16", "fixture"), {})
+            self.assertEqual(returns.previous(Path(tmp) / "none.json", "2026-10-16", "live"), {})
+
+    def test_pipeline_and_reuse(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fix = fixtures_without(tmp)
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            args = ["--fixtures", str(fix), "--db", str(db), "--out", str(out)]
+            self.assertEqual(f.main(args), 0)
+            payload = json.loads(out.read_text("utf-8"))
+            self.assertEqual(payload["returns_info"]["starts"]["1y"], "2025-10-16")
+            items = {i["code"]: i for i in payload["items"]}
+            self.assertEqual(items["0050"]["returns"]["price"]["1y"], round((52.35 / 45 - 1) * 100, 2))
+            self.assertIsNone(items["0056"]["returns"])  # Yahoo 沒有這檔的日線
+            # 同一交易日再跑：不再需要五年日線，沿用上次的報酬
+            (fix / "yahoo_history.json").unlink()
+            self.assertEqual(f.main(args), 0)
+            again = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            self.assertEqual(again["0050"]["returns"], items["0050"]["returns"])
+
+
 class StoreTest(unittest.TestCase):
     def snapshot(self, history: Path) -> dict:
         return {str(p.relative_to(history)): p.read_text("utf-8") for p in sorted(history.rglob("*.csv"))}
