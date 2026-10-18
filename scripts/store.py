@@ -35,6 +35,7 @@ MIGRATIONS = {
     "etf": {"units": "REAL", "index_name": "TEXT", "listed_date": "TEXT", "mgmt_fee": "REAL",
             "mgmt_fee_text": "TEXT", "custodian_fee_text": "TEXT", "manager": "TEXT", "risk_class": "TEXT",
             "beneficiaries": "INTEGER", "beneficiaries_month": "TEXT", "stats_json": "TEXT"},
+    "dividend": {"source": "TEXT"},
 }
 
 

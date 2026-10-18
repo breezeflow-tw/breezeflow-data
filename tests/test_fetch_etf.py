@@ -153,10 +153,50 @@ class YuantaTest(unittest.TestCase):
             self.assertTrue(b["nav_source"].startswith("證交所"))
             self.assertEqual(b["aum"], 1700.0)
             self.assertIsNone(b["stats"])
-            self.assertTrue(items["00757"]["aum_source"] is None or items["00757"]["aum_source"].startswith("交易所"))
+            # 尚未接入投信的 ETF（0056 不在元大測試資料裡）維持交易所資料
+            self.assertTrue(items["0056"]["aum_source"] is None or items["0056"]["aum_source"].startswith("交易所"))
             con = sqlite3.connect(db)
             self.assertEqual(con.execute("SELECT COUNT(*) FROM holding WHERE code='0050'").fetchone()[0], 3)
             self.assertEqual(con.execute("SELECT nav_official FROM daily WHERE code='0050'").fetchone()[0], 52.30)
+            con.close()
+
+
+class UniTest(unittest.TestCase):
+    def test_parse(self):
+        from issuers import uni as u
+        funds, token = u.parse_fund_list((FIX / "uni" / "div.html").read_text("utf-8"))
+        self.assertEqual(funds, {"36YTW": "00757", "46YTW": "00939"})
+        self.assertEqual(token, "TESTTOKEN")
+        a = u.parse_info((FIX / "uni" / "info_36YTW.html").read_text("utf-8"))  # DataFund 被跳脫兩次
+        self.assertEqual((a["code"], a["nav_official"], a["nav_date"], a["aum"]), ("00757", 150.0, "2026-10-15", 300.0))
+        self.assertEqual((a["mgmt_fee"], a["custodian_fee_text"], a["manager"], a["risk_class"]), (0.85, "0.12%", "測試經理人", "RR5"))
+        self.assertEqual((a["list_date"], a["index_name"]), ("2016-09-06", "NYSE FANG+指數"))
+        self.assertEqual([h["asset_code"] for h in a["holdings"]], ["META", "NVDA", "NQ-202612"])
+        b = u.parse_info((FIX / "uni" / "info_46YTW.html").read_text("utf-8"))
+        self.assertIsNone(b["mgmt_fee"])  # 分段級距不換算
+        self.assertIsNone(b["aum"])  # 外幣計價不自行換算規模
+        divs = u.parse_dividends((FIX / "uni" / "div_46YTW.html").read_text("utf-8"))
+        self.assertEqual(divs[0], {"code": "00939", "ex_date": "2026-10-05", "pay_date": "2026-10-29", "cash": 0.125})
+        self.assertIsNone(u.parse_dividends("<html>被擋下的頁面</html>"))  # 查詢失敗與「沒有配息」要分開
+
+    def test_pipeline_dividends(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            self.assertEqual(f.main(["--fixtures", str(FIX), "--db", str(db), "--out", str(out)]), 0)
+            items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            a = items["00757"]
+            self.assertEqual((a["aum"], a["aum_source"]), (300.0, "統一投信官網"))
+            self.assertEqual(a["nav"], 110.00)  # 正式淨值是前一天的（10/15），當天仍用預估淨值
+            # 交易所預告沒有金額，投信官網有，且多了發放日
+            self.assertEqual(a["next_ex"], {"ex_date": "2026-11-03", "cash": 0.5, "pay_date": "2026-11-25", "source": "統一投信官網"})
+
+            # 再跑一次但統一官網沒資料：交易所預告不可覆蓋投信公告
+            fix = fixtures_without(tmp, "uni")
+            self.assertEqual(f.main(["--fixtures", str(fix), "--db", str(db), "--out", str(out)]), 0)
+            con = sqlite3.connect(db)
+            row = con.execute("SELECT cash, pay_date, source FROM dividend WHERE code='00757' AND ex_date='2026-11-03'").fetchone()
+            self.assertEqual(row, (0.5, "2026-11-25", "統一投信官網"))
+            self.assertEqual(con.execute("SELECT COUNT(*) FROM dividend WHERE code='00939'").fetchone()[0], 2)
             con.close()
 
 
@@ -250,7 +290,8 @@ class PipelineTest(unittest.TestCase):
             items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
             self.assertAlmostEqual(items["0050"]["aum"], 1e9 * 52.25 / 1e8)    # 上市：基金基本資料 × 預估淨值
             self.assertAlmostEqual(items["00679B"]["aum"], 6e9 * 28.40 / 1e8)  # 上櫃：Capitals × 預估淨值
-            self.assertEqual(items["0056"]["next_ex"], {"ex_date": "2026-10-20", "cash": 0.866, "pay_date": None})
+            self.assertEqual(items["0056"]["next_ex"],
+                             {"ex_date": "2026-10-20", "cash": 0.866, "pay_date": None, "source": "交易所除權息預告"})
             self.assertEqual(items["0050"]["last_ex"]["ex_date"], "2026-10-15")
             self.assertIsNone(items["0050"]["next_ex"])
             self.assertEqual(items["00679B"]["last_ex"]["ex_date"], "2026-10-16")  # 交易日當天除息算「最近一次」

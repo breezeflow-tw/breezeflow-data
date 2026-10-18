@@ -1,6 +1,6 @@
 """各家投信官網的資料抓取模組。
 
-每個模組提供 `fetch(get_json, fixtures=None) -> dict[代號, dict]`，回傳統一格式的紀錄：
+每個模組提供 `fetch(get_json, fixtures=None, context=None) -> dict[代號, dict]`，回傳統一格式的紀錄：
 
     code            代號
     issuer          投信簡稱
@@ -15,6 +15,7 @@
     manager / risk_class / list_date / index_name
     stats           投資組合統計 {date, div_yield, pe, pb, roe, beta, volatility}
     holdings        成分 [{asset_code, asset_name, kind, weight, qty}]
+    dividends       配息紀錄 [{code, ex_date, pay_date, cash}]（有提供的投信才有）
 
 抓不到的欄位一律為 None，不可估計或補值。
 """
