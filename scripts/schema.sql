@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS daily (
   nav_official     REAL,          -- 投信公告的正式淨值（隔天才會有）
   premium_official REAL,          -- 收盤價對正式淨值的折溢價（%）
   aum          REAL,              -- 當天規模（億元）
+  price_check  TEXT,              -- 市價查核結果：一致 / 已修正 / 未查核 / 交易所
   PRIMARY KEY (date, code)
 );
 
@@ -40,4 +41,15 @@ CREATE TABLE IF NOT EXISTS dividend (
   pay_date    TEXT,               -- 發放日（待接公開資訊觀測站）
   updated_at  TEXT,
   PRIMARY KEY (code, ex_date)
+);
+
+-- 市價查核紀錄：Yahoo 股市與交易所數字不一致的明細
+CREATE TABLE IF NOT EXISTS price_check (
+  date        TEXT NOT NULL,
+  code        TEXT NOT NULL,
+  field       TEXT NOT NULL,      -- close / volume_lots
+  yahoo       REAL,
+  exchange    REAL,               -- 網站採用此值
+  checked_at  TEXT,
+  PRIMARY KEY (date, code, field)
 );

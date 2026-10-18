@@ -79,6 +79,22 @@ class ParseTest(unittest.TestCase):
         self.assertEqual(codes["00679B"], {"code": "00679B", "ex_date": "2026-10-16", "cash": 0.34})
         self.assertIsNone(codes["00757"]["cash"])  # 尚未公告金額
 
+    def test_yahoo_reconcile(self):
+        yahoo = f.parse_yahoo(json.loads((FIX / "yahoo.json").read_text("utf-8")))
+        self.assertEqual(yahoo["0050"]["2026-10-16"]["volume_lots"], 25300)
+        self.assertAlmostEqual(yahoo["0050"]["2026-10-16"]["change_pct"], 0.45 / 51.9 * 100)
+        exchange = {**f.parse_quotes(json.loads((FIX / "tpex.json").read_text("utf-8")), "上櫃"),
+                    **f.parse_quotes(json.loads((FIX / "twse.json").read_text("utf-8")), "上市")}
+        quotes, diffs = f.reconcile(yahoo, exchange, "2026-10-16")
+        self.assertEqual(quotes["0050"]["check"], "一致")
+        self.assertEqual(quotes["00679B"]["check"], "一致")
+        self.assertEqual(quotes["00757"]["check"], "已修正")
+        self.assertEqual(quotes["00757"]["close"], 112.50)  # 不一致時採用交易所
+        self.assertEqual(diffs, [{"code": "00757", "field": "close", "yahoo": 112.8, "exchange": 112.5}])
+        self.assertEqual(quotes["00631L"]["check"], "未查核")
+        self.assertEqual(quotes["00631L"]["close"], 24.05)
+        self.assertEqual(quotes["0056"]["check"], "交易所")  # Yahoo 沒有這檔
+
     def test_issuer(self):
         self.assertEqual(f.issuer_from_name("元大台灣50"), "元大")
         self.assertEqual(f.issuer_from_name("大華優利高填息30"), "大華銀")
@@ -106,6 +122,17 @@ class PipelineTest(unittest.TestCase):
             con = sqlite3.connect(db)
             self.assertEqual(con.execute("SELECT COUNT(*) FROM daily").fetchone()[0], 5)
             self.assertEqual(con.execute("SELECT COUNT(*) FROM etf").fetchone()[0], 5)
+            con.close()
+
+    def test_price_check_saved(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            self.assertEqual(f.main(["--fixtures", str(FIX), "--db", str(db), "--out", str(out)]), 0)
+            payload = json.loads(out.read_text("utf-8"))
+            self.assertEqual(payload["price_check"], {"一致": 2, "已修正": 1, "未查核": 1, "交易所": 1})
+            con = sqlite3.connect(db)
+            self.assertEqual(con.execute("SELECT code, field, yahoo, exchange FROM price_check").fetchall(),
+                             [("00757", "close", 112.8, 112.5)])
             con.close()
 
     def test_size_and_dividends_in_output(self):

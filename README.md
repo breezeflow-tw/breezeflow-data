@@ -19,8 +19,8 @@
 | 資料 | 來源 |
 |---|---|
 | 預估淨值、前日淨值、折溢價 | 臺灣證券交易所 ETF 預估淨值資訊 `mis.twse.com.tw/stock/data/all_etf.txt` |
-| 上市收盤價、成交量 | 證交所 OpenAPI `exchangeReport/STOCK_DAY_ALL` |
-| 上櫃收盤價、成交量 | 櫃買中心 OpenAPI `tpex_mainboard_daily_close_quotes` |
+| 收盤價、成交量（主要） | Yahoo 股市日線 `query1.finance.yahoo.com/v8/finance/chart/{代號}.TW`（上櫃為 `.TWO`） |
+| 收盤價、成交量（查核） | 證交所 OpenAPI `exchangeReport/STOCK_DAY_ALL`、櫃買 `tpex_mainboard_daily_close_quotes`。與 Yahoo 不一致時採用交易所數字，差異記錄在 `price_check` 表 |
 | 規模 | 發行單位數 × 淨值。上市用證交所 OpenAPI `opendata/t187ap47_L`（基金基本資料），上櫃用櫃買行情的 `Capitals` |
 | 除息日、每單位配息 | 證交所 `exchangeReport/TWT48U_ALL`、櫃買 `tpex_exright_prepost`（除權除息預告表），每天累積進 `dividend` 表 |
 | 配息發放日 | 尚未接上，需要公開資訊觀測站 `mops.twse.com.tw` |
@@ -54,7 +54,8 @@ python -m http.server -d web 8000         # 開 http://localhost:8000 看網頁
 - GitHub 排程在整點時段較忙，實際執行時間可能延後數分鐘到半小時。
 
 - 證交所 MIS（淨值來源）偶爾回應 502。抓不到時本次只更新價格與成交量，同一天已存的淨值不會被清掉；重跑一次即可補上。
-- 投信網站目前未接。若 MIS 長期不穩，可改從各投信官網補抓淨值。
+- 淨值、規模、費用率、配息將改以各投信官網公告為主，目前尚未接上（網域未開放）。
+- Yahoo 股市使用條款限制自動抓取與轉載，介面也可能變更或封鎖雲端主機；連不上時自動改用交易所資料。
 - 類型由代號與名稱自動判斷，判斷錯誤時在 `data/etf_meta.csv` 的 `category` 欄修正。
 - 總費用率與配息發放日尚無自動來源（網域未開放）。
 - 除息預告表只列近期資料，配息歷史要靠每天累積；越早開始跑，歷史越完整。

@@ -17,6 +17,7 @@ import sqlite3
 import sys
 import time
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -42,23 +43,52 @@ SOURCES = {
     "div_tpex": "https://www.tpex.org.tw/openapi/v1/tpex_exright_prepost",
 }
 
+# 市價與成交量的主要來源；上市代號加 .TW，上櫃加 .TWO
+YAHOO_CHART = "https://{host}/v8/finance/chart/{symbol}?range=10d&interval=1d"
+YAHOO_HOSTS = ("query1.finance.yahoo.com", "query2.finance.yahoo.com")
+
 
 # ---------- 下載 ----------
 
-def http_get_json(url: str, retries: int = 4) -> object:
+def http_get_json(url: str, retries: int = 4, first_delay: float = 2) -> object:
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (breezeflow-data)"})
-    delay = 2
+    delay = first_delay
     for attempt in range(retries + 1):
         try:
             with urllib.request.urlopen(req, timeout=30) as resp:
                 raw = resp.read().decode("utf-8-sig")
             return json.loads(raw)
         except Exception as exc:  # noqa: BLE001 - 網路錯誤一律重試
-            if attempt == retries:
+            # 被網路政策擋下（代理伺服器拒絕連線）不是暫時性錯誤，重試沒有用
+            if attempt == retries or "Tunnel connection failed: 403" in str(exc):
                 raise RuntimeError(f"下載失敗：{url}（{exc}）") from exc
             time.sleep(delay)
             delay *= 2
     raise AssertionError("unreachable")
+
+
+def fetch_yahoo(symbols: list[str]) -> dict[str, object]:
+    """逐檔抓 Yahoo 股市日線。前 10 檔全部失敗就放棄（多半是被擋），避免白跑幾百次。"""
+    def one(symbol):
+        for host in YAHOO_HOSTS:
+            try:
+                return symbol, http_get_json(YAHOO_CHART.format(host=host, symbol=symbol), retries=1, first_delay=1)
+            except RuntimeError:
+                continue
+        return symbol, None
+
+    result = {}
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        head = dict(pool.map(one, symbols[:10]))
+        if symbols and not any(head.values()):
+            print("警告：Yahoo 股市連不上，本次市價與成交量改用交易所資料。", file=sys.stderr)
+            return {}
+        result.update(head)
+        result.update(pool.map(one, symbols[10:]))
+    missing = [s for s, v in result.items() if v is None]
+    if missing:
+        print(f"警告：Yahoo 有 {len(missing)} 檔沒抓到：{', '.join(missing[:10])}", file=sys.stderr)
+    return {s: v for s, v in result.items() if v is not None}
 
 
 def load_sources(fixtures: Path | None) -> dict[str, object]:
@@ -176,6 +206,59 @@ def parse_quotes(rows, market: str) -> dict[str, dict]:
             "units": num(pick(row, "Capitals")),
         }
     return result
+
+
+def parse_yahoo(payloads: dict[str, object]) -> dict[str, dict[str, dict]]:
+    """Yahoo 日線 → {代號: {日期: {close, change_pct, volume_lots}}}。成交量單位是股，換算成張。"""
+    result = {}
+    for symbol, payload in payloads.items():
+        try:
+            chart = payload["chart"]["result"][0]
+            stamps = chart.get("timestamp") or []
+            quote = chart["indicators"]["quote"][0]
+        except (KeyError, IndexError, TypeError):
+            continue
+        days, prev = {}, None
+        for ts, close, vol in zip(stamps, quote.get("close") or [], quote.get("volume") or []):
+            if close is None:
+                continue
+            date = datetime.fromtimestamp(ts, TW).strftime("%Y-%m-%d")
+            days[date] = {
+                "close": round(close, 4),
+                "change_pct": (close - prev) / prev * 100 if prev else None,
+                "volume_lots": round(vol / 1000) if vol is not None else None,
+            }
+            prev = close
+        result[symbol.split(".")[0]] = days
+    return result
+
+
+def reconcile(yahoo: dict, exchange: dict, date: str) -> tuple[dict, list[dict]]:
+    """以 Yahoo 為主、交易所為查核。兩邊不一致時採用交易所的數字，並記錄差異。"""
+    quotes, diffs = {}, []
+    for code in sorted(set(yahoo) | set(exchange)):
+        y = yahoo.get(code, {}).get(date)
+        e = exchange.get(code, {})
+        e_ok = e.get("close") is not None and e.get("date") in (None, date)
+        q = {k: e.get(k) for k in ("name", "market", "units", "date")}
+        if y and e_ok:
+            price_bad = abs(y["close"] - e["close"]) > 0.005
+            vol_bad = (y["volume_lots"] is not None and e["volume_lots"] is not None
+                       and abs(y["volume_lots"] - e["volume_lots"]) > max(1, e["volume_lots"] * 0.005))
+            for field, bad in (("close", price_bad), ("volume_lots", vol_bad)):
+                if bad:
+                    diffs.append({"code": code, "field": field, "yahoo": y[field], "exchange": e[field]})
+            src = e if (price_bad or vol_bad) else y
+            q.update(close=src["close"], change_pct=src["change_pct"] if src["change_pct"] is not None else e["change_pct"],
+                     volume_lots=src["volume_lots"], check="已修正" if (price_bad or vol_bad) else "一致")
+        elif y:
+            q.update(close=y["close"], change_pct=y["change_pct"], volume_lots=y["volume_lots"], check="未查核")
+        elif e_ok:
+            q.update(close=e["close"], change_pct=e["change_pct"], volume_lots=e["volume_lots"], check="交易所")
+        else:
+            q.update(close=None, change_pct=None, volume_lots=e.get("volume_lots"), check=None)
+        quotes[code] = q
+    return quotes, diffs
 
 
 def parse_fund(rows) -> dict[str, dict]:
@@ -304,6 +387,7 @@ def merge(nav: dict, quotes: dict, meta: dict, date: str, fund: dict | None = No
             "nav_prev": n["nav_prev"],
             "premium": round(premium, 4) if premium is not None else None,
             "volume_lots": q.get("volume_lots"),
+            "price_check": q.get("check"),
             "fee": num(m.get("fee")),
             "aum": aum,
             "units": units,
@@ -315,16 +399,30 @@ def merge(nav: dict, quotes: dict, meta: dict, date: str, fund: dict | None = No
     return items
 
 
+def known_markets(db_path: Path) -> dict[str, str]:
+    """資料庫記得的上市 / 上櫃別，交易所資料缺漏時用來決定 Yahoo 代號。"""
+    if not db_path.exists():
+        return {}
+    con = sqlite3.connect(db_path)
+    try:
+        return {c: m for c, m in con.execute("SELECT code, market FROM etf WHERE market IS NOT NULL")}
+    except sqlite3.OperationalError:
+        return {}
+    finally:
+        con.close()
+
+
 # ---------- 儲存 ----------
 
 def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | None = None,
-            dividends: list[dict] | None = None) -> None:
+            dividends: list[dict] | None = None, diffs: list[dict] | None = None) -> None:
     db_path.parent.mkdir(parents=True, exist_ok=True)
     con = sqlite3.connect(db_path)
     try:
         con.executescript(SCHEMA_PATH.read_text("utf-8"))
         # 舊資料庫補上新欄位
-        for table, cols in (("daily", {"nav_official": "REAL", "premium_official": "REAL", "aum": "REAL"}),
+        for table, cols in (("daily", {"nav_official": "REAL", "premium_official": "REAL", "aum": "REAL",
+                                       "price_check": "TEXT"}),
                             ("etf", {"units": "REAL", "index_name": "TEXT", "listed_date": "TEXT"})):
             have = {r[1] for r in con.execute(f"PRAGMA table_info({table})")}
             for col, typ in cols.items():
@@ -344,9 +442,10 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
         )
         # 同一天重跑會更新當天資料；這次沒抓到的欄位（例如 MIS 暫時連不上時的淨值）保留原值
         con.executemany(
-            """INSERT INTO daily(date, code, price, change_pct, nav, nav_prev, premium, volume_lots, source_time, aum)
-               VALUES(:date, :code, :price, :change_pct, :nav, :nav_prev, :premium, :volume_lots, :source_time, :aum)
+            """INSERT INTO daily(date, code, price, change_pct, nav, nav_prev, premium, volume_lots, source_time, aum, price_check)
+               VALUES(:date, :code, :price, :change_pct, :nav, :nav_prev, :premium, :volume_lots, :source_time, :aum, :price_check)
                ON CONFLICT(date, code) DO UPDATE SET
+                 price_check=COALESCE(excluded.price_check, daily.price_check),
                  aum=COALESCE(excluded.aum, daily.aum),
                  price=COALESCE(excluded.price, daily.price),
                  change_pct=COALESCE(excluded.change_pct, daily.change_pct),
@@ -358,6 +457,11 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
             [{**it, "date": date} for it in items],
         )
         save_official_nav(con, nav or {})
+        con.executemany(
+            """INSERT OR REPLACE INTO price_check(date, code, field, yahoo, exchange, checked_at)
+               VALUES(:date, :code, :field, :yahoo, :exchange, :now)""",
+            [{**d, "date": date, "now": now} for d in diffs or []],
+        )
         con.executemany(
             """INSERT INTO dividend(code, ex_date, cash, updated_at) VALUES(:code, :ex_date, :cash, :now)
                ON CONFLICT(code, ex_date) DO UPDATE SET cash=COALESCE(excluded.cash, dividend.cash),
@@ -407,12 +511,17 @@ def save_official_nav(con: sqlite3.Connection, nav: dict) -> None:
 
 
 def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, has_nav: bool = True) -> None:
+    checks: dict[str, int] = {}
+    for it in items:
+        if it.get("price_check"):
+            checks[it["price_check"]] = checks.get(it["price_check"], 0) + 1
     out.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "generated_at": datetime.now(TW).isoformat(timespec="seconds"),
         "trade_date": date,
         "source": source,
         "has_nav": has_nav,
+        "price_check": checks,
         "count": len(items),
         "items": items,
     }
@@ -428,21 +537,35 @@ def main(argv=None) -> int:
 
     raw = load_sources(args.fixtures)
     nav = parse_nav(raw["nav"])
-    quotes = {**parse_quotes(raw["tpex"], "上櫃"), **parse_quotes(raw["twse"], "上市")}
-    if not nav and not quotes:
+    exchange = {**parse_quotes(raw["tpex"], "上櫃"), **parse_quotes(raw["twse"], "上市")}
+
+    # 市價與成交量：Yahoo 股市為主，交易所為查核
+    markets = {**known_markets(args.db), **{c: q["market"] for c, q in exchange.items()}}
+    symbols = [f"{c}.TWO" if markets.get(c) == "上櫃" else f"{c}.TW" for c in sorted(set(nav) | set(exchange) | set(markets))]
+    if args.fixtures:
+        path = args.fixtures / "yahoo.json"
+        yahoo_raw = json.loads(path.read_text("utf-8")) if path.exists() else {}
+    else:
+        yahoo_raw = fetch_yahoo(symbols)
+    yahoo = parse_yahoo(yahoo_raw)
+
+    if not nav and not exchange and not yahoo:
         print("錯誤：所有來源都沒有資料，可能是網路被擋或來源格式改變。", file=sys.stderr)
         return 1
     if not nav:
         print("警告：沒有淨值資料，本次只更新價格與成交量。", file=sys.stderr)
-    date = trade_date(nav, quotes, datetime.now(TW))
+    date = trade_date(nav, exchange, datetime.now(TW))
+    quotes, diffs = reconcile(yahoo, exchange, date)
     items = merge(nav, quotes, load_meta(), date, parse_fund(raw["fund"]))
     dividends = parse_dividends(raw["div_twse"], raw["div_tpex"])
 
-    save_db(items, date, args.db, nav, dividends)
+    save_db(items, date, args.db, nav, dividends, diffs)
     save_json(items, date, "fixture" if args.fixtures else "live", args.out,
               has_nav=any(it["nav"] is not None for it in items))
     flagged = sum(1 for it in items if it["premium"] is not None and abs(it["premium"]) >= 1)
+    checks = {k: sum(1 for it in items if it["price_check"] == k) for k in ("一致", "已修正", "未查核", "交易所")}
     print(f"{date}：共 {len(items)} 檔 ETF，折溢價超過 ±1% 有 {flagged} 檔，除息預告 {len(dividends)} 筆 → {args.out}")
+    print("市價查核：" + "、".join(f"{k} {v} 檔" for k, v in checks.items()))
     return 0
 
 

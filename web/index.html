@@ -61,6 +61,8 @@ button{font:inherit;cursor:pointer}
 .search{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);width:200px;max-width:100%}
 .select{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);max-width:100%}
 .ex-next{color:var(--accent);font-weight:500}
+.checkline{font-size:12px;color:var(--muted);margin:-4px 0 12px}
+.fixed{border-bottom:1px dashed var(--prem);cursor:help}
 .ex-past{color:var(--muted)}
 .ex-note{display:block;font-family:var(--f-body);font-size:11px;color:var(--muted)}
 .toggle{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer}
@@ -125,6 +127,7 @@ footer .wrap{display:grid;gap:4px}
     <div class="stat"><span class="label">折價超過 1%</span><span class="v" id="s-disc">—</span><span class="s">市價明顯低於淨值</span></div>
   </div>
 
+  <p class="checkline" id="checkline"></p>
   <p class="banner" id="banner" hidden></p>
 
   <div class="toolbar">
@@ -161,7 +164,7 @@ footer .wrap{display:grid;gap:4px}
   <div class="notes">
     <div><h2>折溢價怎麼算</h2><p>（市價 − 預估淨值）÷ 預估淨值。正數是溢價，負數是折價。海外與熱門主題 ETF 較容易出現大幅溢價。</p></div>
     <div><h2>淨值與市價</h2><p>預估淨值由投信盤中公告，反映 ETF 持有資產每單位的價值；市價是交易所的成交價格。</p></div>
-    <div><h2>資料來源</h2><p>預估淨值取自臺灣證券交易所 ETF 預估淨值資訊；收盤價、成交量、除息預告取自證交所與櫃買中心 OpenAPI。規模為發行單位數乘以淨值。每個交易日 08:50 與 18:00 自動更新。</p></div>
+    <div><h2>資料來源</h2><p>市價與成交量取自 Yahoo 股市，並逐檔與臺灣證券交易所、證券櫃檯買賣中心資料查核，不一致時採用交易所數字。淨值、規模、除息資料陸續改以各投信官網公告為準。每個交易日 08:50 與 18:00 自動更新。</p></div>
   </div>
 </main>
 
@@ -206,7 +209,7 @@ footer .wrap{display:grid;gap:4px}
       <td class="l code">${esc(d.code)}</td>
       <td class="l"><div class="name">${esc(d.name)}</div><div class="issuer">${esc(d.issuer||"")}${d.market?" · "+esc(d.market):""}</div></td>
       <td class="l"><span class="tag">${esc(d.category)}</span></td>
-      <td class="num">${fmt(d.price,2)}</td>
+      <td class="num">${d.price_check==="已修正"?`<span class="fixed" title="Yahoo 股市與交易所數字不一致，已採用交易所資料">${fmt(d.price,2)}</span>`:fmt(d.price,2)}</td>
       <td class="num ${d.change_pct==null?"":d.change_pct>=0?"up":"down"}">${d.change_pct==null?"—":(d.change_pct>=0?"+":"")+fmt(d.change_pct,2)+"%"}</td>
       <td class="num">${fmt(d.nav,2)}</td>
       <td class="num">${pdCell(d.premium)}</td>
@@ -242,6 +245,10 @@ footer .wrap{display:grid;gap:4px}
       .map(([k,n])=>`<option value="${esc(k)}">${esc(k)}（${n}）</option>`).join("");
     $("h-date").textContent="資料日期 "+p.trade_date;
     $("s-date").textContent="更新於 "+(p.generated_at||"").replace("T"," ").slice(0,16);
+    const pc=p.price_check||{};
+    const parts=[["一致","與交易所一致"],["已修正","已依交易所修正"],["未查核","尚未查核"],["交易所","Yahoo 缺資料，直接用交易所"]]
+      .filter(([k])=>pc[k]).map(([k,t])=>`${t} ${pc[k]} 檔`);
+    $("checkline").textContent=parts.length?"市價查核："+parts.join("、"):"";
     if(p.source!=="live"){$("banner").hidden=false;$("banner").textContent="目前顯示的是測試資料，不是實際行情。";}
     chips();render();
   }).catch(()=>{
