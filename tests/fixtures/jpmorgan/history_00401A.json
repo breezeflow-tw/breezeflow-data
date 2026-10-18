@@ -1,0 +1,81 @@
+{
+ "fundDistribution": [
+  {
+   "exDate": "2026-10-15",
+   "recordDate": "2026-10-21",
+   "payDate": "2026-11-05",
+   "dividendAmount": 0.131,
+   "navPrice": 13.63
+  },
+  {
+   "exDate": "2026-09-14",
+   "recordDate": "2026-09-20",
+   "payDate": "2026-10-06",
+   "dividendAmount": 0.125,
+   "navPrice": 13.86
+  },
+  {
+   "exDate": "2026-08-14",
+   "recordDate": "2026-08-22",
+   "payDate": "2026-09-04",
+   "dividendAmount": 0.121,
+   "navPrice": 13.69
+  }
+ ],
+ "historicalNAVList": [
+  {
+   "fundShareclassIdentifier": null,
+   "date": "2026-10-14",
+   "time": null,
+   "marketValueNavPrice": null,
+   "navPrice": 14.32,
+   "adjustedNavPrice": null,
+   "adjustedUsDollarNavPrice": null,
+   "constantVariableNAVDiff": null,
+   "marketBasedNAVBasisPointDifferenceValue": null,
+   "shareclassMarketBasedNAVBasisPointDifferenceValue": null,
+   "marketBasedNAVPrice": null,
+   "rebasedPriceIndicator": "N",
+   "regionCode": "TW",
+   "returnRate": null,
+   "belgianTisRate": null,
+   "epochDate": 1791936000000
+  },
+  {
+   "fundShareclassIdentifier": null,
+   "date": "2026-10-15",
+   "time": null,
+   "marketValueNavPrice": null,
+   "navPrice": 13.63,
+   "adjustedNavPrice": null,
+   "adjustedUsDollarNavPrice": null,
+   "constantVariableNAVDiff": null,
+   "marketBasedNAVBasisPointDifferenceValue": null,
+   "shareclassMarketBasedNAVBasisPointDifferenceValue": null,
+   "marketBasedNAVPrice": null,
+   "rebasedPriceIndicator": "N",
+   "regionCode": "TW",
+   "returnRate": null,
+   "belgianTisRate": null,
+   "epochDate": 1792022400000
+  },
+  {
+   "fundShareclassIdentifier": null,
+   "date": "2026-10-16",
+   "time": null,
+   "marketValueNavPrice": null,
+   "navPrice": 13.76,
+   "adjustedNavPrice": null,
+   "adjustedUsDollarNavPrice": null,
+   "constantVariableNAVDiff": null,
+   "marketBasedNAVBasisPointDifferenceValue": null,
+   "shareclassMarketBasedNAVBasisPointDifferenceValue": null,
+   "marketBasedNAVPrice": null,
+   "rebasedPriceIndicator": "N",
+   "regionCode": "TW",
+   "returnRate": null,
+   "belgianTisRate": null,
+   "epochDate": 1792108800000
+  }
+ ]
+}

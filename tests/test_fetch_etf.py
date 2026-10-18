@@ -687,6 +687,61 @@ class NomuraTest(unittest.TestCase):
             self.assertEqual((b["nav"], b["nav_source"], b["units_change"]), (15.6529, "野村投信官網（預估淨值）", None))
 
 
+class JpmorganTest(unittest.TestCase):
+    def load(self, name: str):
+        return json.loads((FIX / "jpmorgan" / f"{name}.json").read_text("utf-8"))
+
+    def test_parse(self):
+        from issuers import jpmorgan as j
+        self.assertEqual(j.parse_list(self.load("list")), [{"code": "00401A", "isin": "TW00000401A1"}, {"code": "00989A", "isin": "TW00000989A5"}])
+        self.assertEqual(j.parse_estimates(self.load("inav"))["00989A"], {"nav_estimate": 17.56, "nav_estimate_date": "2026-10-16"})
+        a = j.parse_product(self.load("product_00401A"), "00401A")
+        self.assertEqual((a["nav_official"], a["nav_date"], a["aum"], a["units"], a["units_change"], a["pcf_date"]),
+                         (13.76, "2026-10-16", 38.11, 276895000.0, 0.0, "2026-10-16"))
+        self.assertEqual((a["manager"], a["risk_class"], a["list_date"], a["mgmt_fee"], a["mgmt_fee_text"], a["custodian_fee_text"]),
+                         ("沈馨、魏伯宇", "RR4", "2026-04-10", 0.6, "0.6%", "0.045%"))
+        # 選擇權與現金不是成分；期貨用官網的代號（已含月份）
+        self.assertEqual({h["kind"] for h in a["holdings"]}, {"股票", "期貨"})
+        self.assertIn({"asset_code": "FTV6", "asset_name": "台股期貨10/26", "kind": "期貨", "weight": 0.1817, "qty": 28.0}, a["holdings"])
+        # 海外 ETF：淨值、規模與持股是前一天的，單位差異已經是當天的
+        b = j.parse_product(self.load("product_00989A"), "00989A")
+        self.assertEqual((b["nav_date"], b["holdings_date"], b["pcf_date"]), ("2026-10-15", "2026-10-15", "2026-10-16"))
+        self.assertEqual(j.parse_dividends(self.load("history_00401A"), "00401A")[0],
+                         {"code": "00401A", "ex_date": "2026-10-15", "pay_date": "2026-11-05", "cash": 0.131})
+        self.assertEqual(j.parse_product({"fundData": {}}, "00401A"), {})
+
+    def fixtures(self, tmp: str) -> Path:
+        """在共用測試資料加上兩檔摩根 ETF 的交易所資料。"""
+        fix = fixtures_without(tmp)
+        nav = json.loads((fix / "nav.json").read_text("utf-8"))
+        nav["a1"].append({"msgArray": [
+            {"a": "00401A", "b": "主動摩根台灣鑫收", "e": "13.80", "f": "13.70", "g": "", "h": "13.63", "i": "20261016", "j": "13:30:00"},
+            {"a": "00989A", "b": "主動摩根美國科技", "e": "17.60", "f": "17.50", "g": "", "h": "17.45", "i": "20261016", "j": "13:30:00"}]})
+        (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
+        twse = json.loads((fix / "twse.json").read_text("utf-8"))
+        twse += [{"Code": "00401A", "Name": "主動摩根台灣鑫收", "TradeVolume": "5,000,000", "ClosingPrice": "13.80", "Change": "0.1000"},
+                 {"Code": "00989A", "Name": "主動摩根美國科技", "TradeVolume": "1,000,000", "ClosingPrice": "17.60", "Change": "0.1500"}]
+        (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
+        return fix
+
+    def test_pipeline(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            self.assertEqual(f.main(["--fixtures", str(self.fixtures(tmp)), "--db", str(db), "--out", str(out)]), 0)
+            items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            a = items["00401A"]
+            self.assertEqual((a["issuer"], a["nav"], a["nav_source"]), ("摩根", 13.76, "摩根投信官網（正式淨值）"))
+            self.assertEqual((a["aum"], a["units_change"], a["mgmt_fee"], a["fee_source"], a["manager"]),
+                             (38.11, 0.0, 0.6, "摩根投信官網", "沈馨、魏伯宇"))
+            self.assertEqual(a["last_ex"], {"ex_date": "2026-10-15", "cash": 0.131, "pay_date": "2026-11-05", "source": "摩根投信官網"})
+            b = items["00989A"]
+            # 正式淨值是 10/15 的，當天用摩根公布的預估淨值；單位差異標示為 10/16，記在當天
+            self.assertEqual((b["nav"], b["nav_source"], b["units_change"]), (17.56, "摩根投信官網（預估淨值）", 0.0))
+            con = sqlite3.connect(db)
+            # 持股依持股表標示的日期保存
+            self.assertEqual(con.execute("SELECT DISTINCT date FROM holding WHERE code='00989A'").fetchall(), [("2026-10-15",)])
+            con.close()
+
 class ReturnsTest(unittest.TestCase):
     def history(self):
         import returns

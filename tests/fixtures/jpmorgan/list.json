@@ -1,0 +1,20 @@
+[
+ {
+  "ticker": "00401A",
+  "identifier": "TW00000401A1",
+  "shareclassShortName": "主動摩根台灣鑫收",
+  "nav": 13.76,
+  "navDate": "2026-10-16",
+  "riskLevel": "中高(RR4)",
+  "currencyCode": "新台幣"
+ },
+ {
+  "ticker": "00989A",
+  "identifier": "TW00000989A5",
+  "shareclassShortName": "主動摩根美國科技",
+  "nav": 17.45,
+  "navDate": "2026-10-15",
+  "riskLevel": "中高(RR4)",
+  "currencyCode": "新台幣"
+ }
+]

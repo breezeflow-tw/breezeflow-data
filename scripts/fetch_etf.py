@@ -25,7 +25,7 @@ from pathlib import Path
 import returns
 import sitca
 import store
-from issuers import capital, cathay, ctbc, fubon, fuhhwa, kgi, nomura, uni, yuanta
+from issuers import capital, cathay, ctbc, fubon, fuhhwa, jpmorgan, kgi, nomura, uni, yuanta
 from issuers.common import flat_fee
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -57,7 +57,7 @@ YAHOO_HOSTS = ("query1.finance.yahoo.com", "query2.finance.yahoo.com")
 
 # 已接入的投信官網；淨值、規模、費用、成分股以這裡的資料為主
 ISSUER_MODULES = {"yuanta": yuanta, "uni": uni, "capital": capital, "fuhhwa": fuhhwa, "kgi": kgi, "fubon": fubon,
-                  "cathay": cathay, "ctbc": ctbc, "nomura": nomura}
+                  "cathay": cathay, "ctbc": ctbc, "nomura": nomura, "jpmorgan": jpmorgan}
 
 
 # ---------- 下載 ----------
@@ -620,7 +620,8 @@ def save_issuer_detail(con: sqlite3.Connection, issuer: dict[str, dict]) -> None
     for code, r in issuer.items():
         if not r.get("holdings"):
             continue
-        day = r.get("pcf_date") or r.get("nav_date")
+        # 持股有自己的資料日期時（例如海外 ETF 的持股比申購買回單位差異早一天）以持股日期為準
+        day = r.get("holdings_date") or r.get("pcf_date") or r.get("nav_date")
         con.execute("DELETE FROM holding WHERE code = ? AND date IS ?", (code, day))
         con.executemany(
             """INSERT OR REPLACE INTO holding(code, date, asset_code, asset_name, kind, weight, qty, source)
