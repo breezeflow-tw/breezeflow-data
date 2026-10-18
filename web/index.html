@@ -81,6 +81,9 @@ tbody tr:hover td{background:var(--row)}
 td.code,th.code{position:sticky;left:0;background:var(--surface);z-index:1}
 tbody tr:hover td.code{background:var(--row)}
 td.code{font-family:var(--f-num);font-weight:500;color:var(--accent)}
+tbody tr[data-code]{cursor:pointer}
+tbody tr[data-code]:focus-within td{background:var(--row)}
+.detail-trigger{font:inherit;color:inherit;background:transparent;border:0;padding:2px 0;text-align:left}
 .name{font-weight:500}
 .issuer{color:var(--muted);font-size:12px}
 .tag{font-size:11px;padding:1px 8px;border-radius:999px;background:var(--accent-soft);color:var(--ink)}
@@ -103,6 +106,55 @@ td.code{font-family:var(--f-num);font-weight:500;color:var(--accent)}
 footer{padding-block:24px 40px;color:var(--muted);font-size:12px;border-top:1px solid var(--line)}
 footer .wrap{display:grid;gap:4px}
 
+.detail-open{overflow:hidden}
+.detail-panel{box-sizing:border-box;position:fixed;inset:0 0 0 auto;margin:0;width:620px;max-width:100%;height:100%;height:100dvh;max-height:none;padding:0;border:0;border-left:1px solid var(--line);background:var(--surface);color:var(--ink);overflow:hidden}
+.detail-panel[open]{display:flex;flex-direction:column;animation:detail-enter .24s ease-out}
+.detail-panel::backdrop{background:color-mix(in srgb,var(--bg) 70%,transparent)}
+.detail-header{flex-shrink:0;padding:22px 28px 16px;border-bottom:1px solid var(--line);background:var(--surface)}
+.detail-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.detail-heading>div{min-width:0}
+.detail-eyebrow{font-size:12px;letter-spacing:.1em;color:var(--muted);margin-bottom:8px}
+#detail-title{font-size:26px;overflow-wrap:anywhere}
+#detail-title:focus{outline:none}
+.detail-code{display:block;font-family:var(--f-num);font-size:16px;font-weight:500;color:var(--accent);margin-bottom:4px}
+.detail-close{flex-shrink:0;min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:6px;color:var(--ink);background:var(--surface)}
+.detail-close:hover{border-color:var(--accent);background:var(--row)}
+.detail-context{font-size:12px;color:var(--muted);margin-top:12px}
+.detail-demo{display:block;color:var(--prem);margin-top:4px}
+.detail-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:24px 28px 32px;scrollbar-gutter:stable}
+.detail-section+.detail-section{margin-top:24px;padding-top:24px;border-top:1px solid var(--line)}
+.detail-section h3{margin:0 0 14px;font-family:var(--f-body);font-size:17px;font-weight:700}
+.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px;margin:0}
+.detail-field{min-width:0}
+.detail-field.wide{grid-column:1/-1}
+.detail-field dt{font-size:12px;color:var(--muted);margin-bottom:4px}
+.detail-field dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap}
+.detail-value{font-family:var(--f-num);font-size:17px;font-variant-numeric:tabular-nums}
+.detail-source{display:block;margin-top:5px;font-size:12px;font-family:var(--f-body);color:var(--muted);line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+.detail-badge{display:inline-block;vertical-align:middle;font-size:11px;font-family:var(--f-body);font-weight:500;padding:1px 7px;margin-left:8px;border-radius:4px;color:var(--accent);background:var(--accent-soft)}
+.detail-dividend{padding:16px;border:1px solid var(--line);border-radius:8px;background:var(--row)}
+.detail-dividend+.detail-dividend{margin-top:12px}
+.detail-dividend h4{font-size:14px;margin:0 0 12px}
+.detail-holdings{list-style:none;display:grid;gap:16px;margin:0;padding:0}
+.detail-holding-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:7px}
+.detail-holding-name{min-width:0;overflow-wrap:anywhere}
+.detail-holding-kind{display:inline-block;margin-left:8px;font-size:11px;color:var(--muted)}
+.detail-holding-weight{flex-shrink:0;white-space:nowrap}
+.detail-weight{height:7px;background:var(--row);border-radius:4px;overflow:hidden}
+.detail-weight span{display:block;height:100%;background:var(--accent);border-radius:4px}
+.detail-weight .negative{background:var(--disc)}
+.detail-footnote{font-size:12px;color:var(--muted);margin-top:12px}
+.detail-missing{color:var(--muted)}
+@keyframes detail-enter{from{transform:translateX(100%)}to{transform:translateX(0)}}
+@media (prefers-reduced-motion:reduce){.detail-panel[open]{animation:none}}
+@media (max-width:760px){
+  .detail-panel{width:100%;border-left:0}
+  .detail-header{padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 16px max(16px,env(safe-area-inset-left,0px))}
+  .detail-scroll{padding:20px max(16px,env(safe-area-inset-right,0px)) max(24px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));scrollbar-gutter:auto}
+  #detail-title{font-size:23px}
+  .detail-grid{gap:16px}
+}
+
 @media (max-width:760px){.summary{grid-template-columns:1fr 1fr}.notes{grid-template-columns:1fr}.search{width:100%}.right{width:100%}}
 </style>
 <style>body{margin:0}[hidden]{display:none!important}</style>
@@ -117,7 +169,7 @@ footer .wrap{display:grid;gap:4px}
   <div class="intro">
     <span class="label">台股 ETF 總覽</span>
     <h1>全市場 ETF，一頁看完淨值、市價與折溢價</h1>
-    <p>買 ETF 前先看折溢價：市價高於淨值太多，等於用貴的價格買進同一籃資產。點欄位標題可以排序，用分類和搜尋快速找到想看的 ETF。</p>
+    <p>買 ETF 前先看折溢價：市價高於淨值太多，等於用貴的價格買進同一籃資產。點欄位標題可以排序，用分類和搜尋快速找到想看的 ETF；點選任一列可查看 ETF 詳細資訊。</p>
   </div>
 
   <div class="summary">
@@ -172,6 +224,17 @@ footer .wrap{display:grid;gap:4px}
   <p>本站為投資研究與教育用途，不提供個別有價證券的買賣建議，亦非證券投資顧問服務。資料以各官方來源為準。</p>
 </div></footer>
 
+<dialog id="etf-detail" class="detail-panel" aria-labelledby="detail-title" aria-describedby="detail-context">
+  <div class="detail-header">
+    <div class="detail-heading">
+      <div><p class="detail-eyebrow">ETF 詳細資訊</p><h2 id="detail-title" tabindex="-1"></h2></div>
+      <button type="button" id="detail-close" class="detail-close" aria-label="關閉 ETF 詳細資訊">關閉 <span aria-hidden="true">×</span></button>
+    </div>
+    <p id="detail-context" class="detail-context"></p>
+  </div>
+  <div id="detail-content" class="detail-scroll"></div>
+</dialog>
+
 <script>
 (function(){
   const ORDER=["全部","市值型","高股息","主題型","海外股票","債券","商品","槓桿反向","主動式"];
@@ -181,6 +244,125 @@ footer .wrap{display:grid;gap:4px}
   const state={type:"全部",q:"",alert:false,div:false,issuer:"",key:"volume_lots",dir:-1};
   const md=s=>s?s.slice(5).replace("-","/"):"—";
   let DATA=[];
+  let detailDate=null,detailIsDemo=false,detailCode=null,detailReturnFocus=null;
+  const detailPanel=$("etf-detail");
+  const hasNumber=v=>typeof v==="number"&&Number.isFinite(v);
+  const detailText=v=>v==null||String(v).trim()===""?"—":esc(v);
+  const detailNumber=(v,unit="")=>hasNumber(v)?esc(v.toLocaleString("zh-TW",{maximumFractionDigits:20}))+unit:"—";
+  const detailSource=v=>`<small class="detail-source">出處：${detailText(v)}</small>`;
+  const detailField=(label,value,{note="",wide=false}={})=>`<div class="detail-field${wide?" wide":""}"><dt>${label}</dt><dd>${value}${note}</dd></div>`;
+  const detailMetric=(v,unit="")=>`<span class="detail-value">${detailNumber(v,unit)}</span>`;
+  const detailSection=(title,body)=>`<section class="detail-section"><h3>${title}</h3>${body}</section>`;
+
+  function dividendDetail(title,ex){
+    return `<div class="detail-dividend"><h4>${title}</h4><dl class="detail-grid">`+
+      detailField("除息日",detailText(ex?.ex_date))+
+      detailField("每單位配息",detailMetric(ex?.cash," 元"))+
+      detailField("發放日",detailText(ex?.pay_date))+
+      detailField("出處",detailText(ex?.source))+`</dl></div>`;
+  }
+
+  function holdingsDetail(holdings){
+    const rows=Array.isArray(holdings)?holdings.filter(h=>h&&typeof h==="object").slice(0,10):[];
+    if(!rows.length)return '<p class="detail-missing">—</p>';
+    // 橫條保留百分比刻度，不把前十大成分重新正規化為 100%。
+    const scale=Math.max(100,...rows.map(h=>hasNumber(h.weight)?Math.abs(h.weight):0));
+    return `<ol class="detail-holdings">`+rows.map(h=>`<li><div class="detail-holding-head">`+
+      `<span class="detail-holding-name">${detailText(h.asset_name)}<span class="detail-holding-kind">${detailText(h.kind)}</span></span>`+
+      `<span class="num detail-holding-weight">${detailNumber(h.weight,"%")}</span></div>`+
+      (hasNumber(h.weight)?`<div class="detail-weight" aria-hidden="true"><span class="${h.weight<0?"negative":""}" style="width:${Math.abs(h.weight)/scale*100}%"></span></div>`:"")+`</li>`).join("")+`</ol>`+
+      `<p class="detail-footnote">橫條表示權重幅度，刻度 0–${detailNumber(scale,"%")}；正負值以數字為準。</p>`;
+  }
+
+  function renderDetail(d){
+    $("detail-title").innerHTML=`<span class="detail-code">${detailText(d.code)}</span>${detailText(d.name)}`;
+    $("detail-context").innerHTML=`資料日期 ${detailText(detailDate)}`+
+      (detailIsDemo?'<span class="detail-demo">目前顯示的是測試資料，不是實際行情。</span>':"");
+    const basic=detailField("發行投信",detailText(d.issuer))+detailField("類型",detailText(d.category))+
+      detailField("上市／上櫃",detailText(d.market))+detailField("上市日",detailText(d.listed_date))+
+      detailField("追蹤指數",detailText(d.index_name),{wide:true})+
+      detailField("經理人",detailText(d.manager))+detailField("風險等級",detailText(d.risk_class));
+    const navLabel=hasNumber(d.nav)?`<span class="detail-badge">${String(d.nav_source??"").includes("正式淨值")?"正式淨值":"預估淨值"}</span>`:"";
+    const premium=hasNumber(d.premium)?`<span class="detail-value">${d.premium>0?"+":""}${detailNumber(d.premium,"%")}</span>`:"—";
+    const values=detailField("淨值",detailMetric(d.nav)+navLabel,{note:detailSource(d.nav_source)})+
+      detailField("前日淨值",detailMetric(d.nav_prev))+
+      detailField("折溢價",premium)+detailField("規模（億元）",detailMetric(d.aum),{note:detailSource(d.aum_source)})+
+      detailField("發行單位數",detailMetric(d.units))+
+      detailField("受益人數",detailMetric(d.beneficiaries),{note:`<small class="detail-source">資料年月：${detailText(d.beneficiaries_month)}</small>`});
+    const fees=detailField("經理費",hasNumber(d.mgmt_fee)?detailMetric(d.mgmt_fee,"%"):detailText(d.mgmt_fee_text),{wide:true})+
+      detailField("保管費",detailText(d.custodian_fee_text),{wide:true});
+    const metrics=[["div_yield","現金殖利率","%"],["pe","本益比"," 倍"],["pb","股價淨值比"," 倍"],
+      ["roe","ROE","%"],["beta","Beta",""],["volatility","年化波動度","%"]];
+    const stats=d.stats&&metrics.some(([key])=>hasNumber(d.stats[key]))?
+      detailSection("投資組合統計",`<dl class="detail-grid">`+metrics.map(([key,label,unit])=>detailField(label,detailMetric(d.stats[key],unit))).join("")+
+        `</dl><p class="detail-footnote">資料日期：${detailText(d.stats.date)}</p>`):"";
+    $("detail-content").innerHTML=detailSection("基本資料",`<dl class="detail-grid">${basic}</dl>`)+
+      detailSection("淨值與規模",`<dl class="detail-grid">${values}</dl>`)+
+      detailSection("費用",`<dl class="detail-grid">${fees}</dl>`)+
+      detailSection("配息",dividendDetail("最近一次除息",d.last_ex)+dividendDetail("下一次除息",d.next_ex))+
+      detailSection("前 10 大成分",holdingsDetail(d.holdings_top))+stats;
+    $("detail-content").scrollTop=0;
+  }
+
+  function hashCode(){
+    try{return decodeURIComponent(location.hash.slice(1)).toUpperCase();}catch{return "";}
+  }
+
+  function showDetail(d,trigger){
+    if(detailPanel.open&&detailCode===d.code)return;
+    const wasOpen=detailPanel.open;
+    if(!wasOpen)detailReturnFocus=trigger||document.activeElement;
+    detailCode=d.code;
+    renderDetail(d);
+    document.documentElement.classList.add("detail-open");
+    if(!wasOpen)detailPanel.showModal();
+    $("detail-title").focus({preventScroll:true});
+  }
+
+  function finishDetailClose(){
+    if(detailPanel.open||detailCode===null)return;
+    const code=detailCode;
+    detailCode=null;
+    document.documentElement.classList.remove("detail-open");
+    // 直接帶代號進站也只清除目前網址，不用上一頁離開網站。
+    if(hashCode()===code){const url=new URL(location.href);url.hash="";history.replaceState(history.state,"",url);}
+    const row=Array.from($("rows").querySelectorAll("tr[data-code]")).find(r=>r.dataset.code===code);
+    const target=detailReturnFocus?.isConnected&&detailReturnFocus!==document.body?detailReturnFocus:row?.querySelector(".detail-trigger")||$("q");
+    target.focus({preventScroll:true});
+    detailReturnFocus=null;
+  }
+
+  function closeDetail(){
+    if(detailPanel.open)detailPanel.close();
+    finishDetailClose();
+  }
+
+  function syncDetailHash(){
+    const d=DATA.find(item=>item.code===hashCode());
+    if(d)showDetail(d);else closeDetail();
+  }
+
+  $("rows").addEventListener("click",e=>{
+    const row=e.target.closest("tr[data-code]");
+    if(!row)return;
+    const d=DATA.find(item=>item.code===row.dataset.code);
+    if(!d)return;
+    if(hashCode()!==d.code){const url=new URL(location.href);url.hash=d.code;history.pushState(null,"",url);}
+    showDetail(d,row.querySelector(".detail-trigger"));
+  });
+  $("detail-close").addEventListener("click",closeDetail);
+  detailPanel.addEventListener("cancel",e=>{e.preventDefault();closeDetail();});
+  detailPanel.addEventListener("close",finishDetailClose);
+  let backdropPressed=false;
+  detailPanel.addEventListener("pointerdown",e=>{
+    const r=detailPanel.getBoundingClientRect();
+    backdropPressed=e.target===detailPanel&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom);
+  });
+  detailPanel.addEventListener("click",e=>{
+    if(backdropPressed&&e.target===detailPanel)closeDetail();
+    backdropPressed=false;
+  });
+  window.addEventListener("hashchange",syncDetailHash);
 
   function chips(){
     const types=ORDER.filter(t=>t==="全部"||DATA.some(d=>d.category===t));
@@ -205,8 +387,8 @@ footer .wrap{display:grid;gap:4px}
     const k=state.key;
     rows.sort((a,b)=>{const x=a[k],y=b[k];if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;
       return(typeof x==="string"?x.localeCompare(y,"zh-TW"):x-y)*state.dir;});
-    $("rows").innerHTML=rows.length?rows.map(d=>`<tr>
-      <td class="l code">${esc(d.code)}</td>
+    $("rows").innerHTML=rows.length?rows.map(d=>`<tr data-code="${esc(d.code)}">
+      <td class="l code"><button type="button" class="detail-trigger" aria-haspopup="dialog" aria-controls="etf-detail" aria-label="查看 ${esc(d.code)} ${esc(d.name)} 的 ETF 詳細資訊">${esc(d.code)}</button></td>
       <td class="l"><div class="name">${esc(d.name)}</div><div class="issuer">${esc(d.issuer||"")}${d.market?" · "+esc(d.market):""}</div></td>
       <td class="l"><span class="tag">${esc(d.category)}</span></td>
       <td class="num">${d.price_check==="已修正"?`<span class="fixed" title="Yahoo 股市與交易所數字不一致，已採用交易所資料">${fmt(d.price,2)}</span>`:fmt(d.price,2)}</td>
@@ -238,6 +420,7 @@ footer .wrap{display:grid;gap:4px}
   $("issuer").addEventListener("change",e=>{state.issuer=e.target.value;render();});
 
   fetch("data/latest.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(p=>{
+    detailDate=p.trade_date;detailIsDemo=p.source!=="live";
     DATA=(p.items||[]).map(d=>{const ex=d.next_ex||d.last_ex;
       return{...d,ex_upcoming:!!d.next_ex,ex_date:ex?ex.ex_date:null,ex_cash:ex?ex.cash:null,pay_date:ex?ex.pay_date:null};});
     const issuers={};DATA.forEach(d=>{if(d.issuer)issuers[d.issuer]=(issuers[d.issuer]||0)+1;});
@@ -250,7 +433,7 @@ footer .wrap{display:grid;gap:4px}
       .filter(([k])=>pc[k]).map(([k,t])=>`${t} ${pc[k]} 檔`);
     $("checkline").textContent=parts.length?"市價查核："+parts.join("、"):"";
     if(p.source!=="live"){$("banner").hidden=false;$("banner").textContent="目前顯示的是測試資料，不是實際行情。";}
-    chips();render();
+    chips();render();syncDetailHash();
   }).catch(()=>{
     $("h-date").textContent="尚無資料";
     $("rows").innerHTML=`<tr><td colspan="13" class="empty">還沒有資料。請先執行 python scripts/fetch_etf.py 產生 web/data/latest.json。</td></tr>`;
