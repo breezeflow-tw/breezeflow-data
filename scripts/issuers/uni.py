@@ -44,7 +44,7 @@ class KeepPostRedirect(urllib.request.HTTPRedirectHandler):
 
 
 class Site:
-    """保留 Cookie 的連線。每次請求間隔 2 秒，連線被中斷時最多重試 3 次。"""
+    """保留 Cookie 的連線。每次請求間隔 2 秒，連線被中斷時最多重試 3 次（間隔 10、25 秒）。"""
 
     def __init__(self, context: ssl.SSLContext | None = None):
         self.opener = urllib.request.build_opener(
@@ -59,8 +59,9 @@ class Site:
         if referer:
             headers["Referer"] = BASE + referer
         last = None
+        # 被防機器人機制擋下時要等一段時間才會解除，重試間隔逐次拉長
         for attempt in range(3):
-            time.sleep(2 if attempt == 0 else 5)
+            time.sleep((2, 10, 25)[attempt])
             try:
                 req = urllib.request.Request(BASE + path, data=body, headers=headers)
                 with self.opener.open(req, timeout=40) as resp:

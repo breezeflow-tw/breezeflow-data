@@ -10,7 +10,8 @@
     nav_official    投信公告的正式淨值
     nav_date        正式淨值的日期 YYYY-MM-DD
     nav_estimate    投信公布的預估淨值；nav_estimate_date 為其日期（有提供的投信才有）
-    units_change    當日申購買回造成的發行單位數增減（對應 nav_date）
+    units_change    當日申購買回造成的發行單位數增減（對應 pcf_date，沒有則對應 nav_date）
+    pcf_date        申購買回清單（規模、單位數、成分）的資料日期，和 nav_date 不同時才需要提供
     aum             基金規模（億元）
     units           發行單位數
     beneficiaries   受益人數；beneficiaries_month 為資料年月 YYYY-MM
