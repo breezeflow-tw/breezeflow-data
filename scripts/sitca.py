@@ -6,7 +6,9 @@
   - 「費率、銀行與規定」欄位組：契約上的經理費率、保管費率（分段收費的多半只寫區間或「載明於公開說明書」）
 - ROC/Industry/IN2211.aspx 各項費用比率：選年度與「全年」，列出每檔基金當年實際收取的經理費、保管費、
   其他費用與合計（含交易成本）占平均淨資產的比率
-三張表以基金統編串接。年度比率只收整年都在運作的基金：年中才成立的比率只涵蓋幾個月，不能當作年費率。
+- ROC/Industry/IN2201.aspx 基金資料彙總表-明細（月）：月底基金規模、單位淨值、受益權單位數、
+  自然人／法人受益人數與當月申購、買回總金額（新台幣）
+各表以基金統編串接。年度比率只收整年都在運作的基金：年中才成立的比率只涵蓋幾個月，不能當作年費率。
 
 網站是 ASP.NET 表單：先 GET 拿隱藏欄位，再帶條件 POST 查詢。改年度時伺服器會重設月份選單，
 所以「年度」與「全年」要分兩次送出。資料每月才更新，主程式每週最多抓一次。
@@ -30,6 +32,7 @@ SOURCE = "投信投顧公會"
 BASE = "https://www.sitca.org.tw/ROC/Industry/"
 BASIC = "IN2105.aspx?pid=IN2212_02"
 RATIO = "IN2211.aspx?pid=IN2222_01"
+SUMMARY = "IN2201.aspx?pid=IN2221_01"
 PRE = "ctl00$ContentPlaceHolder1$"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"
 REFRESH_DAYS = 7
@@ -175,10 +178,34 @@ def parse_ratios(page: str) -> dict[str, dict]:
     return out
 
 
+def parse_summary(page: str) -> dict[str, dict]:
+    """基金資料彙總表（月）→ {基金統編: {...}}。金額與淨值都是新台幣（外幣計價的基金由公會換算）。"""
+    def count(value):
+        n = num(value)
+        return int(n) if n is not None else None
+
+    out = {}
+    for r in table(page):
+        fund_id, aum = column(r, "基金統編"), num(column(r, "基金規模(台幣)"))
+        if fund_id and aum is not None:
+            out[fund_id] = {
+                "aum_twd": aum,
+                "nav": num(column(r, "單位淨值(台幣)")),
+                "units": num(column(r, "受益權單位數")),
+                "beneficiaries": count(column(r, "總受益人數")),
+                "beneficiaries_natural": count(column(r, "自然人受益人數")),
+                "beneficiaries_legal": count(column(r, "法人受益人數")),
+                "subscribe_twd": num(column(r, "本月申購總金額(台幣)")),
+                "redeem_twd": num(column(r, "本月買回總金額(台幣)")),
+            }
+    return out
+
+
 # ---------- 抓取 ----------
 
 def fetch(fixtures: Path | None = None, context: ssl.SSLContext | None = None, today: date | None = None) -> dict:
-    """回傳 {"month": 基本資料年月, "year": 費用比率年度, "funds": {ETF 代號: {...}}}；抓不到時回傳 {}。"""
+    """回傳 {"month": 基本資料年月, "year": 費用比率年度, "funds": {ETF 代號: {...}},
+    "summary": {"month": 彙總表年月, "funds": {ETF 代號: {...}}}}；基本資料抓不到時回傳 {}。"""
     today = today or date.today()
     if fixtures:
         def load(name, *_steps):
@@ -186,7 +213,7 @@ def fetch(fixtures: Path | None = None, context: ssl.SSLContext | None = None, t
             return path.read_text("utf-8") if path.exists() else ""
     else:
         site = Site(context)
-        names = {"basic_std": BASIC, "basic_fee": BASIC}
+        names = {"basic_std": BASIC, "basic_fee": BASIC, "summary": SUMMARY}
 
         def load(name, *steps):
             return site.query(names.get(name, RATIO), *steps)
@@ -219,4 +246,18 @@ def fetch(fixtures: Path | None = None, context: ssl.SSLContext | None = None, t
         # 年中才成立的基金，全年比率只涵蓋幾個月，不收
         full_year = year and f["inception"] and f["inception"] < f"{year}-01-01"
         f["expense"] = {"year": year, **r} if r and full_year else None
-    return {"month": f"{month[:4]}-{month[4:]}" if len(month) == 6 else None, "year": year, "funds": funds}
+
+    # 基金資料彙總表：最新一個月的全部基金
+    try:
+        page = load("summary", {"rdo1": "rbComid", "ddlQ_Comid": "", "BtnQuery": "查詢"})
+    except RuntimeError as exc:
+        print(f"警告：{SOURCE}基金資料彙總表抓取失敗（{exc}）", file=sys.stderr)
+        page = ""
+    by_id, ym = parse_summary(page), selected(page, "ddlQ_YM") or ""
+    summary = {code: by_id[f["fund_id"]] for code, f in funds.items() if f["fund_id"] in by_id}
+    return {"month": yyyymm(month), "year": year, "funds": funds,
+            "summary": {"month": yyyymm(ym), "funds": summary} if summary and yyyymm(ym) else {}}
+
+
+def yyyymm(value: str) -> str | None:
+    return f"{value[:4]}-{value[4:]}" if re.fullmatch(r"\d{6}", value or "") else None

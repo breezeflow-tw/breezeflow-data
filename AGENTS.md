@@ -50,11 +50,12 @@
 | `units_change` | 當天申購買回造成的發行單位數增減，正數為淨申購（資金流入）、負數為淨買回；只有部分投信提供 |
 | `mgmt_fee`、`mgmt_fee_text`、`custodian_fee_text`、`fee_source` | 經理費率 %（只有單一費率才有數字）、經理費與保管費原文（多為依規模分段）、原文出處。投信官網優先，沒有接入官網的 ETF 用投信投顧公會基金基本資料 |
 | `manager`、`risk_class`、`listed_date`、`index_name` | 經理人、風險等級（RR1～RR5）、上市日、追蹤指數 |
-| `beneficiaries`、`beneficiaries_month` | 受益人數與資料年月 |
+| `beneficiaries`、`beneficiaries_month`、`beneficiaries_source` | 受益人數、資料年月與出處。投信官網與投信投顧公會基金資料彙總表取資料月份較新的，同月份用投信官網的 |
 | `stats` | 投資組合統計 `{date, div_yield, pe, pb, roe, beta, volatility}`，可能為 `null` |
 | `holdings_top` | 前 10 大成分 `[{asset_code, asset_name, kind, weight, qty}]`，`weight` 為 %，`kind` 為股票／債券／期貨／基金 |
 | `next_ex`、`last_ex` | 下一次／最近一次除息 `{ex_date, cash, pay_date, source}`，`pay_date` 為配息發放日 |
 | `fee` | 總費用率 %：人工填寫（`data/etf_meta.csv`）優先，否則用投信投顧公會年度費用比率的合計（含交易成本） |
+| `monthly` | 投信投顧公會基金資料彙總表（月）`{month, aum, nav, units, beneficiaries, beneficiaries_natural, beneficiaries_legal, subscribe, redeem, net, source}`：月底規模（億元）、單位淨值、受益權單位數、總／自然人／法人受益人數，以及當月申購、買回總金額與兩者相減的淨申購（億元，負數為淨買回）。每月第 10 個營業日公布上個月的資料；公會沒有列出的 ETF（例如外幣交易線、期貨信託基金）為 `null` |
 | `expense` | 投信投顧公會公布的年度實際費用比率 `{year, mgmt, custodian, other, total, source}`，單位 %：經理費、保管費、其他費用與合計（含交易成本）。年中才成立的 ETF 沒有整年資料，為 `null` |
 | `returns` | 區間報酬 `{price: {...}, total: {...}}`，單位 %。`price` 是市價報酬，`total` 是含息報酬（配息再投入）。區間代號：`1w` 近一週、`1m` 近一月、`3m` 近三月、`6m` 近六月、`ytd` 今年以來、`1y` 近一年、`3y` 近三年、`5y` 近五年。期初是 `returns_info.starts` 那天或之前最近的交易日，期末是 `trade_date`。上市不到該區間、或配息紀錄核對不符時為 `null`；整檔沒有資料時 `returns` 為 `null` |
 

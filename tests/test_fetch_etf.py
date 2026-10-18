@@ -769,6 +769,13 @@ class SitcaTest(unittest.TestCase):
         self.assertEqual((info["month"], info["year"]), ("2026-09", 2025))
         self.assertIsNone(info["funds"]["00757"]["expense"])  # 2025 年才成立，全年比率只涵蓋幾個月
         self.assertEqual(info["funds"]["0050"]["expense"]["total"], 0.22)
+        # 基金資料彙總表：以基金統編對到 ETF 代號，公司小計與總計列不收
+        self.assertEqual(len(sitca.parse_summary(page("summary"))), 3)
+        self.assertEqual((info["summary"]["month"], sorted(info["summary"]["funds"])), ("2026-09", ["0050", "0056"]))
+        self.assertEqual(info["summary"]["funds"]["0056"],
+                         {"aum_twd": 800875038138.0, "nav": 56.75, "units": 14112534000.0, "beneficiaries": 1745584,
+                          "beneficiaries_natural": 1742995, "beneficiaries_legal": 2589,
+                          "subscribe_twd": 6578050000.0, "redeem_twd": 7496115000.0})
 
     def test_apply(self):
         info = {"month": "2026-09", "funds": {
@@ -786,6 +793,25 @@ class SitcaTest(unittest.TestCase):
         self.assertEqual((k_line["mgmt_fee"], k_line["custodian_fee_text"], k_line["fee"], k_line["manager"]), (0.4, "0.10%", 0.6, "甲"))
         self.assertEqual(k_line["fee_source"], "投信投顧公會基金基本資料（2026-09）")
 
+    def test_apply_month(self):
+        row = {"code": "0056", "month": "2026-09", "aum_twd": 800875038138.0, "nav": 56.75, "units": 14112534000.0,
+               "beneficiaries": 1745584, "beneficiaries_natural": 1742995, "beneficiaries_legal": 2589,
+               "subscribe_twd": 6578050000.0, "redeem_twd": 7496115000.0}
+        same = {"code": "0056", "beneficiaries": 1700000, "beneficiaries_month": "2026-09", "beneficiaries_source": "元大投信官網"}
+        older = {"code": "0056", "beneficiaries": 1600000, "beneficiaries_month": "2026-08", "beneficiaries_source": "元大投信官網"}
+        none = {"code": "0056", "beneficiaries": None, "beneficiaries_month": None, "beneficiaries_source": None}
+        k_line = {"code": "0056K", "beneficiaries": None}
+        f.apply_fund_month([same, older, none, k_line], {"0056": row})
+        self.assertEqual(none["monthly"], {"month": "2026-09", "aum": 8008.75, "nav": 56.75, "units": 14112534000.0,
+                                           "beneficiaries": 1745584, "beneficiaries_natural": 1742995, "beneficiaries_legal": 2589,
+                                           "subscribe": 65.78, "redeem": 74.96, "net": -9.18, "source": "投信投顧公會基金資料彙總表"})
+        # 受益人數：同一個月用投信官網的，公會資料較新或官網沒有時用公會的
+        self.assertEqual((same["beneficiaries"], same["beneficiaries_source"]), (1700000, "元大投信官網"))
+        self.assertEqual((older["beneficiaries"], older["beneficiaries_month"], older["beneficiaries_source"]),
+                         (1745584, "2026-09", "投信投顧公會基金資料彙總表"))
+        self.assertEqual((none["beneficiaries"], none["beneficiaries_source"]), (1745584, "投信投顧公會基金資料彙總表"))
+        self.assertIsNone(k_line["monthly"])  # 公會只列主要交易線
+
     def test_pipeline_and_cache(self):
         with tempfile.TemporaryDirectory() as tmp:
             fix = fixtures_without(tmp)
@@ -798,14 +824,21 @@ class SitcaTest(unittest.TestCase):
             self.assertEqual(a["fee_source"], "投信投顧公會基金基本資料（2026-09）")
             self.assertEqual((a["fee"], a["expense"]["mgmt"], a["expense"]["source"]), (0.58, 0.3, "投信投顧公會各項費用比率（2025 年度）"))
             self.assertIsNone(items["00757"]["expense"])
+            self.assertEqual((a["monthly"]["month"], a["monthly"]["aum"], a["monthly"]["beneficiaries"]), ("2026-09", 8008.75, 1745584))
+            self.assertEqual((a["beneficiaries"], a["beneficiaries_source"]), (1745584, "投信投顧公會基金資料彙總表"))
+            self.assertIsNone(items["00757"]["monthly"])
             # 一週內再跑：不重抓公會資料，沿用資料庫裡的
             shutil.rmtree(fix / "sitca")
             self.assertEqual(f.main(args), 0)
             again = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
             self.assertEqual((again["0056"]["mgmt_fee_text"], again["0056"]["fee"]), ("0.40%", 0.58))
+            self.assertEqual(again["0056"]["monthly"], a["monthly"])
             con = sqlite3.connect(db)
             self.assertEqual(con.execute("SELECT COUNT(*), MAX(data_month) FROM fund_info").fetchone(), (3, "2026-09"))
+            self.assertEqual(con.execute("SELECT code, month, beneficiaries FROM fund_month ORDER BY code").fetchall(),
+                             [("0050", "2026-09", 3794877), ("0056", "2026-09", 1745584)])
             con.close()
+            self.assertTrue((Path(tmp) / "history" / "fund_month.csv").exists())
 
 
 class StoreTest(unittest.TestCase):

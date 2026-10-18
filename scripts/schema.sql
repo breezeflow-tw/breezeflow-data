@@ -101,3 +101,18 @@ CREATE TABLE IF NOT EXISTS fund_info (
   exp_total     REAL,               -- 合計（含交易成本）
   fetched       TEXT                -- 抓取日期
 );
+
+-- 投信投顧公會基金資料彙總表（月）：月底規模、受益人數與當月申購買回金額，依月份累積
+CREATE TABLE IF NOT EXISTS fund_month (
+  code          TEXT NOT NULL,      -- ETF 代號
+  month         TEXT NOT NULL,      -- 資料年月 YYYY-MM
+  aum_twd       REAL,               -- 月底基金規模（新台幣元）
+  nav           REAL,               -- 月底單位淨值（新台幣）
+  units         REAL,               -- 受益權單位數
+  beneficiaries INTEGER,            -- 總受益人數
+  beneficiaries_natural INTEGER,    -- 自然人受益人數
+  beneficiaries_legal   INTEGER,    -- 法人受益人數
+  subscribe_twd REAL,               -- 當月申購總金額（新台幣元）
+  redeem_twd    REAL,               -- 當月買回總金額（新台幣元）
+  PRIMARY KEY (code, month)
+);
