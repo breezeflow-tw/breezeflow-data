@@ -19,12 +19,14 @@ import sys
 import time
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timedelta, timezone
+from datetime import date as date_type, datetime, timedelta, timezone
 from pathlib import Path
 
 import returns
+import sitca
 import store
 from issuers import capital, cathay, fubon, fuhhwa, kgi, uni, yuanta
+from issuers.common import flat_fee
 
 ROOT = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT / "data" / "etf.db"
@@ -378,12 +380,15 @@ def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
             it.setdefault(f, None)
         it["holdings_top"] = []
         it["units_change"] = None
+        it["fee_source"] = None
         r = issuer.get(it["code"])
         if not r:
             continue
         src = r["source"]
         for f in ISSUER_FIELDS:
             it[f] = r.get(f)
+        if it["mgmt_fee_text"] or it["custodian_fee_text"] or it["mgmt_fee"] is not None:
+            it["fee_source"] = src
         for field, key in (("listed_date", "list_date"), ("index_name", "index_name"), ("units", "units")):
             if r.get(key):
                 it[field] = r[key]
@@ -498,10 +503,10 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
         con.executemany(
             """INSERT INTO etf(code, name, issuer, category, market, fee, aum, units, index_name, listed_date,
                                mgmt_fee, mgmt_fee_text, custodian_fee_text, manager, risk_class,
-                               beneficiaries, beneficiaries_month, stats_json, updated_at)
+                               beneficiaries, beneficiaries_month, stats_json, fee_source, expense_json, updated_at)
                VALUES(:code, :name, :issuer, :category, :market, :fee, :aum, :units, :index_name, :listed_date,
                       :mgmt_fee, :mgmt_fee_text, :custodian_fee_text, :manager, :risk_class,
-                      :beneficiaries, :beneficiaries_month, :stats_json, :now)
+                      :beneficiaries, :beneficiaries_month, :stats_json, :fee_source, :expense_json, :now)
                ON CONFLICT(code) DO UPDATE SET name=excluded.name,
                  issuer=COALESCE(excluded.issuer, etf.issuer), category=excluded.category,
                  market=COALESCE(excluded.market, etf.market), fee=COALESCE(excluded.fee, etf.fee),
@@ -514,8 +519,12 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
                  manager=COALESCE(excluded.manager, etf.manager), risk_class=COALESCE(excluded.risk_class, etf.risk_class),
                  beneficiaries=COALESCE(excluded.beneficiaries, etf.beneficiaries),
                  beneficiaries_month=COALESCE(excluded.beneficiaries_month, etf.beneficiaries_month),
-                 stats_json=COALESCE(excluded.stats_json, etf.stats_json), updated_at=excluded.updated_at""",
-            [{**it, "now": now, "stats_json": json.dumps(it["stats"], ensure_ascii=False) if it.get("stats") else None}
+                 stats_json=COALESCE(excluded.stats_json, etf.stats_json),
+                 fee_source=COALESCE(excluded.fee_source, etf.fee_source),
+                 expense_json=COALESCE(excluded.expense_json, etf.expense_json), updated_at=excluded.updated_at""",
+            [{**it, "now": now, "stats_json": json.dumps(it["stats"], ensure_ascii=False) if it.get("stats") else None,
+              "fee_source": it.get("fee_source"),
+              "expense_json": json.dumps(it["expense"], ensure_ascii=False) if it.get("expense") else None}
              for it in items],
         )
         # 同一天重跑會更新當天資料；這次沒抓到的欄位（例如 MIS 暫時連不上時的淨值）保留原值
@@ -637,6 +646,72 @@ def save_official_nav(con: sqlite3.Connection, nav: dict) -> None:
         )
 
 
+FUND_INFO_COLS = ("code", "fund_id", "name", "data_month", "inception", "currency", "manager", "risk_class",
+                  "mgmt_fee_text", "custodian_fee_text", "expense_year", "exp_mgmt", "exp_custodian", "exp_other",
+                  "exp_total", "fetched")
+
+
+def load_fund_info(db_path: Path) -> tuple[dict, str | None]:
+    """資料庫裡上一次抓的投信投顧公會資料（格式同 sitca.fetch 的回傳值）與抓取日期。"""
+    if not db_path.exists():
+        return {}, None
+    con = sqlite3.connect(db_path)
+    try:
+        rows = con.execute(f"SELECT {', '.join(FUND_INFO_COLS)} FROM fund_info").fetchall()
+    except sqlite3.OperationalError:
+        return {}, None
+    finally:
+        con.close()
+    funds, fetched = {}, None
+    for row in rows:
+        r = dict(zip(FUND_INFO_COLS, row))
+        fetched = max(fetched or "", r["fetched"] or "") or None
+        expense = ({"year": r["expense_year"], "mgmt": r["exp_mgmt"], "custodian": r["exp_custodian"],
+                    "other": r["exp_other"], "total": r["exp_total"]} if r["exp_total"] is not None else None)
+        funds[r["code"]] = {k: r[k] for k in ("fund_id", "name", "inception", "currency", "manager", "risk_class",
+                                               "mgmt_fee_text", "custodian_fee_text")} | {"expense": expense}
+    if not funds:
+        return {}, None
+    months = [r[3] for r in rows if r[3]]
+    years = [r[10] for r in rows if r[10]]
+    return {"month": max(months) if months else None, "year": max(years) if years else None, "funds": funds}, fetched
+
+
+def save_fund_info(con: sqlite3.Connection, info: dict, fetched: str) -> None:
+    """重新抓到的公會資料整批取代舊資料。"""
+    con.execute("DELETE FROM fund_info")
+    con.executemany(
+        f"INSERT INTO fund_info({', '.join(FUND_INFO_COLS)}) VALUES({', '.join('?' * len(FUND_INFO_COLS))})",
+        [(code, f["fund_id"], f["name"], info.get("month"), f["inception"], f["currency"], f["manager"], f["risk_class"],
+          f["mgmt_fee_text"], f["custodian_fee_text"], (f["expense"] or {}).get("year"), (f["expense"] or {}).get("mgmt"),
+          (f["expense"] or {}).get("custodian"), (f["expense"] or {}).get("other"), (f["expense"] or {}).get("total"), fetched)
+         for code, f in sorted(info["funds"].items())],
+    )
+
+
+def apply_fund_info(items: list[dict], info: dict) -> None:
+    """投信投顧公會的資料補在投信官網沒有提供的欄位，並附上年度實際費用比率。
+    外幣交易線（代號結尾 K，例如 00636K）和同代號去掉 K 的 ETF 是同一檔基金，沿用其資料。"""
+    funds = info.get("funds") or {}
+    for it in items:
+        code = it["code"]
+        f = funds.get(code) or (funds.get(code[:-1]) if code.endswith("K") else None)
+        it["expense"] = None
+        if not f:
+            continue
+        if not it.get("mgmt_fee_text") and not it.get("custodian_fee_text") and it.get("mgmt_fee") is None:
+            if f["mgmt_fee_text"] or f["custodian_fee_text"]:
+                it["mgmt_fee_text"], it["custodian_fee_text"] = f["mgmt_fee_text"], f["custodian_fee_text"]
+                it["mgmt_fee"] = flat_fee(f["mgmt_fee_text"])
+                it["fee_source"] = f"{sitca.SOURCE}基金基本資料（{info.get('month') or '最新'}）"
+        it["manager"] = it.get("manager") or f["manager"]
+        it["risk_class"] = it.get("risk_class") or f["risk_class"]
+        if f["expense"]:
+            it["expense"] = {**f["expense"], "source": f"{sitca.SOURCE}各項費用比率（{f['expense']['year']} 年度）"}
+            if it.get("fee") is None:
+                it["fee"] = f["expense"]["total"]
+
+
 def attach_returns(con: sqlite3.Connection, items: list[dict], date: str, reused: dict, history: dict) -> None:
     """每檔附上區間報酬。含息報酬要和資料庫的配息紀錄核對，所以在投信資料寫入資料庫之後才算。"""
     known: dict[str, list] = {}
@@ -715,17 +790,32 @@ def main(argv=None) -> int:
         return mod, mod.fetch(http_get_json, fixtures=args.fixtures / name if args.fixtures else None, context=SSL_CONTEXT,
                               dividend_codes=known_dividend_codes(args.db, mod.SOURCE))
 
+    # 投信投顧公會的資料每月才更新：資料庫裡的資料超過一週才重抓，和各投信同時進行
+    fund_info, fetched = load_fund_info(args.db)
+    today = datetime.now(TW).date()
+    refresh = not fetched or date_type.fromisoformat(fetched) <= today - timedelta(days=sitca.REFRESH_DAYS)
+
     issuer: dict[str, dict] = {}
-    with ThreadPoolExecutor(max_workers=len(ISSUER_MODULES)) as pool:
+    with ThreadPoolExecutor(max_workers=len(ISSUER_MODULES) + 1) as pool:
+        fresh_info = pool.submit(sitca.fetch, args.fixtures / "sitca" if args.fixtures else None, SSL_CONTEXT, today) if refresh else None
         for mod, records in pool.map(fetch_issuer, ISSUER_MODULES.items()):
             print(f"{mod.SOURCE}：{sum(1 for r in records.values() if not r.get('delisted'))} 檔")
             issuer.update(records)
+        fresh = fresh_info.result() if fresh_info else {}
+    if fresh:
+        fund_info = fresh
+    print(f"{sitca.SOURCE}：{len(fund_info.get('funds') or {})} 檔（基本資料 {fund_info.get('month') or '—'}、"
+          f"費用比率 {fund_info.get('year') or '—'} 年度）" + ("" if fresh else "，沿用資料庫裡的資料"))
     apply_issuer(items, issuer, date)
+    apply_fund_info(items, fund_info)
 
     save_db(items, date, args.db, nav, dividends, diffs, issuer)
     con = sqlite3.connect(args.db)
     try:
         attach_returns(con, items, date, reused, returns.parse_history(history_raw))
+        if fresh:
+            save_fund_info(con, fresh, today.isoformat())
+            con.commit()
         store.dump(con, history)
     finally:
         con.close()

@@ -624,6 +624,62 @@ class ReturnsTest(unittest.TestCase):
             self.assertEqual(again["0050"]["returns"], items["0050"]["returns"])
 
 
+class SitcaTest(unittest.TestCase):
+    def test_parse(self):
+        import sitca
+        page = lambda n: (FIX / "sitca" / f"{n}.html").read_text("utf-8")
+        # 多列表頭展開：跨兩欄的「封閉式基金」下面是上市日期、下市日期
+        self.assertIn("封閉式基金/上市日期", sitca.table(page("basic_std"))[0])
+        funds = sitca.parse_basic(page("basic_std"), page("basic_fee"))
+        self.assertEqual(sorted(funds), ["0050", "0056", "00757"])  # 一般共同基金（受益憑證代號 T0102Y）不收
+        self.assertEqual((funds["0056"]["mgmt_fee_text"], funds["0056"]["custodian_fee_text"], funds["0056"]["inception"]),
+                         ("0.40%", "0.035%", "2007-12-13"))
+        ratios = sitca.parse_ratios(page("ratio_2025"))
+        self.assertEqual(ratios["48966213"], {"mgmt": 0.3, "custodian": 0.04, "other": 0.05, "total": 0.58})
+        self.assertEqual(sitca.selected(page("basic_std"), "ddlQ_YYYYMM"), "202609")
+        info = sitca.fetch(FIX / "sitca", today=date(2026, 10, 18))
+        self.assertEqual((info["month"], info["year"]), ("2026-09", 2025))
+        self.assertIsNone(info["funds"]["00757"]["expense"])  # 2025 年才成立，全年比率只涵蓋幾個月
+        self.assertEqual(info["funds"]["0050"]["expense"]["total"], 0.22)
+
+    def test_apply(self):
+        info = {"month": "2026-09", "funds": {
+            "00636": {"fund_id": "1", "name": "國泰中國A50", "inception": "2015-05-01", "currency": "新台幣", "manager": "甲",
+                      "risk_class": "RR5", "mgmt_fee_text": "0.40%", "custodian_fee_text": "0.10%",
+                      "expense": {"year": 2025, "mgmt": 0.4, "custodian": 0.1, "other": 0.05, "total": 0.6}}}}
+        base = {"mgmt_fee": None, "mgmt_fee_text": None, "custodian_fee_text": None, "manager": None, "risk_class": None,
+                "fee": None, "fee_source": None}
+        own = {**base, "code": "00636", "mgmt_fee_text": "官網原文", "fee_source": "國泰投信官網", "fee": 0.5}
+        k_line = {**base, "code": "00636K"}
+        f.apply_fund_info([own, k_line], info)
+        # 投信官網已有的費率不覆蓋，人工填的總費用率也不覆蓋；年度費用比率照樣附上
+        self.assertEqual((own["mgmt_fee_text"], own["fee_source"], own["fee"], own["expense"]["total"]), ("官網原文", "國泰投信官網", 0.5, 0.6))
+        # 外幣交易線沿用同一檔基金的公會資料
+        self.assertEqual((k_line["mgmt_fee"], k_line["custodian_fee_text"], k_line["fee"], k_line["manager"]), (0.4, "0.10%", 0.6, "甲"))
+        self.assertEqual(k_line["fee_source"], "投信投顧公會基金基本資料（2026-09）")
+
+    def test_pipeline_and_cache(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fix = fixtures_without(tmp)
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            args = ["--fixtures", str(fix), "--db", str(db), "--out", str(out)]
+            self.assertEqual(f.main(args), 0)
+            items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            a = items["0056"]  # 沒有接入投信官網資料的 ETF
+            self.assertEqual((a["mgmt_fee"], a["mgmt_fee_text"], a["custodian_fee_text"], a["manager"]), (0.4, "0.40%", "0.035%", "公會經理人乙"))
+            self.assertEqual(a["fee_source"], "投信投顧公會基金基本資料（2026-09）")
+            self.assertEqual((a["fee"], a["expense"]["mgmt"], a["expense"]["source"]), (0.58, 0.3, "投信投顧公會各項費用比率（2025 年度）"))
+            self.assertIsNone(items["00757"]["expense"])
+            # 一週內再跑：不重抓公會資料，沿用資料庫裡的
+            shutil.rmtree(fix / "sitca")
+            self.assertEqual(f.main(args), 0)
+            again = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            self.assertEqual((again["0056"]["mgmt_fee_text"], again["0056"]["fee"]), ("0.40%", 0.58))
+            con = sqlite3.connect(db)
+            self.assertEqual(con.execute("SELECT COUNT(*), MAX(data_month) FROM fund_info").fetchone(), (3, "2026-09"))
+            con.close()
+
+
 class StoreTest(unittest.TestCase):
     def snapshot(self, history: Path) -> dict:
         return {str(p.relative_to(history)): p.read_text("utf-8") for p in sorted(history.rglob("*.csv"))}

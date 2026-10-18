@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS etf (
   beneficiaries       INTEGER,    -- 受益人數
   beneficiaries_month TEXT,       -- 受益人數資料年月
   stats_json  TEXT,               -- 投資組合統計（現金殖利率、本益比等），JSON
+  fee_source  TEXT,               -- 經理費、保管費原文的出處（投信官網或投信投顧公會）
+  expense_json TEXT,              -- 投信投顧公會公布的年度實際費用比率，JSON
   updated_at  TEXT
 );
 
@@ -78,4 +80,24 @@ CREATE TABLE IF NOT EXISTS holding (
   qty         REAL,               -- 股數、口數或面額
   source      TEXT,
   PRIMARY KEY (code, date, asset_code, kind)
+);
+
+-- 投信投顧公會的基金資料：契約費率、經理人、風險等級（每月更新），以及年度實際費用比率（%）
+CREATE TABLE IF NOT EXISTS fund_info (
+  code          TEXT PRIMARY KEY,   -- ETF 代號（公會的受益憑證代號）
+  fund_id       TEXT,               -- 基金統編
+  name          TEXT,               -- 基金全名
+  data_month    TEXT,               -- 基本資料年月 YYYY-MM
+  inception     TEXT,               -- 基金成立日
+  currency      TEXT,
+  manager       TEXT,
+  risk_class    TEXT,
+  mgmt_fee_text TEXT,               -- 契約經理費率原文
+  custodian_fee_text TEXT,          -- 契約保管費率原文
+  expense_year  INTEGER,            -- 實際費用比率的年度（年中才成立的基金不收）
+  exp_mgmt      REAL,
+  exp_custodian REAL,
+  exp_other     REAL,
+  exp_total     REAL,               -- 合計（含交易成本）
+  fetched       TEXT                -- 抓取日期
 );
