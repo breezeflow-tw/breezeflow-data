@@ -381,6 +381,7 @@ def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
         it["holdings_top"] = []
         it["units_change"] = None
         it["fee_source"] = None
+        it["beneficiaries_source"] = None
         r = issuer.get(it["code"])
         if not r:
             continue
@@ -389,6 +390,8 @@ def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
             it[f] = r.get(f)
         if it["mgmt_fee_text"] or it["custodian_fee_text"] or it["mgmt_fee"] is not None:
             it["fee_source"] = src
+        if it["beneficiaries"] is not None:
+            it["beneficiaries_source"] = src
         for field, key in (("listed_date", "list_date"), ("index_name", "index_name"), ("units", "units")):
             if r.get(key):
                 it[field] = r[key]
@@ -712,6 +715,49 @@ def apply_fund_info(items: list[dict], info: dict) -> None:
                 it["fee"] = f["expense"]["total"]
 
 
+FUND_MONTH_COLS = ("code", "month", "aum_twd", "nav", "units", "beneficiaries", "beneficiaries_natural",
+                   "beneficiaries_legal", "subscribe_twd", "redeem_twd")
+
+
+def save_fund_month(con: sqlite3.Connection, summary: dict) -> None:
+    """公會基金資料彙總表依月份累積；同一個月重抓時以新資料為準。"""
+    if not summary.get("month"):
+        return
+    con.executemany(
+        f"INSERT OR REPLACE INTO fund_month({', '.join(FUND_MONTH_COLS)}) VALUES({', '.join('?' * len(FUND_MONTH_COLS))})",
+        [(code, summary["month"], *(f[c] for c in FUND_MONTH_COLS[2:])) for code, f in sorted(summary["funds"].items())],
+    )
+
+
+def load_fund_month(con: sqlite3.Connection) -> dict[str, dict]:
+    """每檔 ETF 最新一個月的公會彙總表資料。"""
+    rows = con.execute(f"SELECT {', '.join(FUND_MONTH_COLS)} FROM fund_month f "
+                       "WHERE month = (SELECT MAX(month) FROM fund_month g WHERE g.code = f.code)").fetchall()
+    return {r[0]: dict(zip(FUND_MONTH_COLS, r)) for r in rows}
+
+
+def apply_fund_month(items: list[dict], monthly: dict[str, dict]) -> None:
+    """附上投信投顧公會基金資料彙總表（月）：月底規模、受益人數（自然人／法人）與當月申購、買回金額（億元）。
+    受益人數以資料月份較新的為準，月份相同時用投信官網的。外幣交易線（代號結尾 K）和主要交易線是同一檔基金，
+    公會只列一筆，不重複套用。"""
+    def yi(value):
+        return round(value / 1e8, 2) if value is not None else None
+
+    for it in items:
+        m = monthly.get(it["code"])
+        it["monthly"] = None
+        if not m:
+            continue
+        net = m["subscribe_twd"] - m["redeem_twd"] if None not in (m["subscribe_twd"], m["redeem_twd"]) else None
+        it["monthly"] = {"month": m["month"], "aum": yi(m["aum_twd"]), "nav": m["nav"], "units": m["units"],
+                         "beneficiaries": m["beneficiaries"], "beneficiaries_natural": m["beneficiaries_natural"],
+                         "beneficiaries_legal": m["beneficiaries_legal"], "subscribe": yi(m["subscribe_twd"]),
+                         "redeem": yi(m["redeem_twd"]), "net": yi(net), "source": f"{sitca.SOURCE}基金資料彙總表"}
+        if m["beneficiaries"] and (it.get("beneficiaries") is None or (it.get("beneficiaries_month") or "") < m["month"]):
+            it["beneficiaries"], it["beneficiaries_month"] = m["beneficiaries"], m["month"]
+            it["beneficiaries_source"] = f"{sitca.SOURCE}基金資料彙總表"
+
+
 def attach_returns(con: sqlite3.Connection, items: list[dict], date: str, reused: dict, history: dict) -> None:
     """每檔附上區間報酬。含息報酬要和資料庫的配息紀錄核對，所以在投信資料寫入資料庫之後才算。"""
     known: dict[str, list] = {}
@@ -804,8 +850,10 @@ def main(argv=None) -> int:
         fresh = fresh_info.result() if fresh_info else {}
     if fresh:
         fund_info = fresh
+    summary = fresh.get("summary") or {}
     print(f"{sitca.SOURCE}：{len(fund_info.get('funds') or {})} 檔（基本資料 {fund_info.get('month') or '—'}、"
-          f"費用比率 {fund_info.get('year') or '—'} 年度）" + ("" if fresh else "，沿用資料庫裡的資料"))
+          f"費用比率 {fund_info.get('year') or '—'} 年度" + (f"、彙總表 {summary['month']} 共 {len(summary['funds'])} 檔" if summary else "")
+          + "）" + ("" if fresh else "，沿用資料庫裡的資料"))
     apply_issuer(items, issuer, date)
     apply_fund_info(items, fund_info)
 
@@ -815,7 +863,9 @@ def main(argv=None) -> int:
         attach_returns(con, items, date, reused, returns.parse_history(history_raw))
         if fresh:
             save_fund_info(con, fresh, today.isoformat())
+            save_fund_month(con, fresh.get("summary") or {})
             con.commit()
+        apply_fund_month(items, load_fund_month(con))
         store.dump(con, history)
     finally:
         con.close()
