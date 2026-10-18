@@ -8,6 +8,9 @@
   其他費用與合計（含交易成本）占平均淨資產的比率
 - ROC/Industry/IN2201.aspx 基金資料彙總表-明細（月）：月底基金規模、單位淨值、受益權單位數、
   自然人／法人受益人數與當月申購、買回總金額（新台幣）
+- ROC/Industry/IN2629.aspx 基金投資明細-月前十大：每檔基金月底前十大投資標的與占淨資產比例。
+  依基金類型查詢（指數股票型 AH*、主動式 AL*），表格只有基金名稱，用名稱對到基本資料表的代號
+- ROC/Industry/IN2213.aspx 基金配息資料：當月除息的配息基準日、除息日、發放日與每單位分派金額
 各表以基金統編串接。年度比率只收整年都在運作的基金：年中才成立的比率只涵蓋幾個月，不能當作年費率。
 
 網站是 ASP.NET 表單：先 GET 拿隱藏欄位，再帶條件 POST 查詢。改年度時伺服器會重設月份選單，
@@ -21,6 +24,7 @@ import re
 import ssl
 import sys
 import time
+import unicodedata
 import urllib.parse
 import urllib.request
 from datetime import date
@@ -33,6 +37,9 @@ BASE = "https://www.sitca.org.tw/ROC/Industry/"
 BASIC = "IN2105.aspx?pid=IN2212_02"
 RATIO = "IN2211.aspx?pid=IN2222_01"
 SUMMARY = "IN2201.aspx?pid=IN2221_01"
+TOP10 = "IN2629.aspx?pid=IN22601_04"
+DIVIDEND = "IN2213.aspx?pid=IN2222_03"
+ETF_CLASSES = ("AH", "AL")  # 指數股票型、主動式交易所交易基金
 PRE = "ctl00$ContentPlaceHolder1$"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"
 REFRESH_DAYS = 7
@@ -62,9 +69,10 @@ class Site:
                     break
         raise RuntimeError(f"{path}：{last}")
 
-    def query(self, path: str, *steps: dict) -> str:
-        """依序送出表單：每一步都帶回上一頁的隱藏欄位與選單目前的值，再換上這一步指定的條件。"""
-        page = self.page(path)
+    def query(self, path: str, *steps: dict, start: str | None = None) -> str:
+        """依序送出表單：每一步都帶回上一頁的隱藏欄位與選單目前的值，再換上這一步指定的條件。
+        start 是已經拿到的查詢頁，同一頁要查很多次時不必每次重新 GET。"""
+        page = start or self.page(path)
         for step in steps:
             page = self.page(path, {**form_fields(page), **{PRE + k: v for k, v in step.items()}})
         return page
@@ -89,6 +97,11 @@ def form_fields(page: str) -> dict[str, str]:
                   or re.search(r'<option[^>]*value="([^"]*)"', options))
         fields[name] = html.unescape(chosen.group(1)) if chosen else ""
     return fields
+
+
+def options(page: str, name: str) -> list[str]:
+    m = re.search(r'name="%s"[^>]*>(.*?)</select>' % re.escape(PRE + name), page or "", re.S)
+    return re.findall(r'<option[^>]*value="([^"]*)"', m.group(1)) if m else []
 
 
 def selected(page: str, name: str) -> str | None:
@@ -201,22 +214,72 @@ def parse_summary(page: str) -> dict[str, dict]:
     return out
 
 
+def name_key(name: str | None) -> str:
+    """基金名稱比對用：統一全形半形與相容字（兩張表的「金」可能是 U+91D1 與 U+F90A），去掉括號裡的警語與全部空白。"""
+    s = unicodedata.normalize("NFKC", name or "")
+    return re.sub(r"\s+", "", re.sub(r"\([^()]*\)", "", s))
+
+
+def asset_kind(text: str) -> str:
+    """標的種類 → 成分類型。公會的分類例如「國內上市」「國外股票(含承銷)」「公司債 無擔保」「國外掛牌交易之ETF」。"""
+    if "債" in text:
+        return "債券"
+    if "ETF" in text or "基金" in text:
+        return "基金"
+    if "期貨" in text:
+        return "期貨"
+    if any(k in text for k in ("股票", "上市", "上櫃", "興櫃", "存託憑證")):
+        return "股票"
+    return "其他"
+
+
+def parse_top10(page: str) -> dict[str, list[dict]]:
+    """基金投資明細-月前十大 → {基金名稱: [持股]}。基金名稱跨十列（rowspan），每檔後面接一列「合計」。"""
+    tables = re.findall(r"<table[^>]*>(.*?)</table>", page or "", re.S)
+    if not tables:
+        return {}
+    out, fund = {}, None
+    for tr in re.findall(r"<tr[^>]*>(.*?)</tr>", max(tables, key=lambda t: t.count("<tr")), re.S):
+        cells = [clean(c) for c in re.findall(r"<t[hd][^>]*>(.*?)</t[hd]>", tr, re.S)]
+        if len(cells) == 10:
+            fund, cells = cells[0], cells[1:]
+        if len(cells) != 9 or not fund or not re.fullmatch(r"\d+", cells[0]):
+            continue  # 表頭、合計列
+        rank, kind, code, name, _amount, _guarantor, _sub, _units, weight = cells
+        out.setdefault(fund, []).append({"rank": int(rank), "asset_code": blank(code), "asset_name": blank(name),
+                                         "kind": asset_kind(kind), "weight": num(weight)})
+    return out
+
+
+def parse_dividends(page: str) -> list[dict]:
+    """基金配息資料 → [{fund_id, ex_date, pay_date, cash}]。只收新台幣配息。"""
+    def day(value):
+        m = re.fullmatch(r"(\d{4})(\d{2})(\d{2})", value or "")
+        return "-".join(m.groups()) if m else None
+
+    return [{"fund_id": column(r, "基金統編"), "ex_date": day(column(r, "除息日")), "pay_date": day(column(r, "發放日")),
+             "cash": num(column(r, "每單位分派金額"))}
+            for r in table(page) if column(r, "配息幣別") == "TWD" and day(column(r, "除息日")) and column(r, "基金統編")]
+
+
 # ---------- 抓取 ----------
 
 def fetch(fixtures: Path | None = None, context: ssl.SSLContext | None = None, today: date | None = None) -> dict:
     """回傳 {"month": 基本資料年月, "year": 費用比率年度, "funds": {ETF 代號: {...}},
-    "summary": {"month": 彙總表年月, "funds": {ETF 代號: {...}}}}；基本資料抓不到時回傳 {}。"""
+    "summary": {"month": 彙總表年月, "funds": {ETF 代號: {...}}}, "top10": {"month": 年月, "funds": {ETF 代號: [持股]}},
+    "dividends": [{code, ex_date, pay_date, cash}]}；基本資料抓不到時回傳 {}。"""
     today = today or date.today()
     if fixtures:
-        def load(name, *_steps):
+        def load(name, *_steps, start=None):
             path = fixtures / f"{name}.html"
             return path.read_text("utf-8") if path.exists() else ""
     else:
         site = Site(context)
         names = {"basic_std": BASIC, "basic_fee": BASIC, "summary": SUMMARY}
 
-        def load(name, *steps):
-            return site.query(names.get(name, RATIO), *steps)
+        def load(name, *steps, start=None):
+            path = names.get(name) or (TOP10 if name.startswith("top10") else DIVIDEND if name.startswith("dividend") else RATIO)
+            return site.query(path, *steps, start=start)
 
     try:
         std = load("basic_std", {"ddlQ_Column": "1", "BtnQuery": "查詢"})
@@ -256,7 +319,41 @@ def fetch(fixtures: Path | None = None, context: ssl.SSLContext | None = None, t
     by_id, ym = parse_summary(page), selected(page, "ddlQ_YM") or ""
     summary = {code: by_id[f["fund_id"]] for code, f in funds.items() if f["fund_id"] in by_id}
     return {"month": yyyymm(month), "year": year, "funds": funds,
-            "summary": {"month": yyyymm(ym), "funds": summary} if summary and yyyymm(ym) else {}}
+            "summary": {"month": yyyymm(ym), "funds": summary} if summary and yyyymm(ym) else {},
+            "top10": fetch_top10(load, funds), "dividends": fetch_dividends(load, funds)}
+
+
+def fetch_top10(load, funds: dict) -> dict:
+    """月前十大：依 ETF 類型逐一查詢，用基金名稱對到代號（名稱重複、對不到的不收）。"""
+    try:
+        start = load("top10")
+        found: dict[str, list] = {}
+        for cls in (c for c in options(start, "ddlQ_Class") if c.startswith(ETF_CLASSES)):
+            found.update(parse_top10(load(f"top10_{cls}", {"rdo1": "rbClass", "ddlQ_Class": cls, "BtnQuery": "查詢"}, start=start)))
+    except RuntimeError as exc:
+        print(f"警告：{SOURCE}月前十大抓取失敗（{exc}）", file=sys.stderr)
+        return {}
+    keys: dict[str, str | None] = {}
+    for code, f in funds.items():
+        k = name_key(f["name"])
+        keys[k] = None if k in keys else code
+    top = {keys[name_key(n)]: rows for n, rows in found.items() if keys.get(name_key(n))}
+    ym = yyyymm(selected(start, "ddlQ_YM") or "")
+    return {"month": ym, "funds": top} if top and ym else {}
+
+
+def fetch_dividends(load, funds: dict) -> list[dict]:
+    """配息資料：最新兩個月（每月第 10 個營業日公布上個月的除息紀錄）。"""
+    by_id = {f["fund_id"]: code for code, f in funds.items()}
+    out = []
+    try:
+        start = load("dividend")
+        for ym in options(start, "ddlQ_YM")[-2:]:
+            page = load(f"dividend_{ym}", {"ddlQ_YM": ym, "rdo1": "rbComid", "ddlQ_Comid": "", "BtnQuery": "查詢"}, start=start)
+            out += [{"code": by_id[d.pop("fund_id")], **d} for d in parse_dividends(page) if d["fund_id"] in by_id]
+    except RuntimeError as exc:
+        print(f"警告：{SOURCE}配息資料抓取失敗（{exc}）", file=sys.stderr)
+    return out
 
 
 def yyyymm(value: str) -> str | None:

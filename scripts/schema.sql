@@ -116,3 +116,15 @@ CREATE TABLE IF NOT EXISTS fund_month (
   redeem_twd    REAL,               -- 當月買回總金額（新台幣元）
   PRIMARY KEY (code, month)
 );
+
+-- 投信投顧公會基金投資明細（月前十大）：每檔 ETF 月底前十大投資標的，依月份累積
+CREATE TABLE IF NOT EXISTS fund_top (
+  code        TEXT NOT NULL,      -- ETF 代號
+  month       TEXT NOT NULL,      -- 資料年月 YYYY-MM
+  rank        INTEGER NOT NULL,   -- 名次 1～10
+  asset_code  TEXT,               -- 標的代號（國內股票為證券代號，國外標的多為 ISIN）
+  asset_name  TEXT,
+  kind        TEXT,               -- 股票 / 債券 / 基金 / 期貨 / 其他
+  weight      REAL,               -- 占基金淨資產價值比例（%）
+  PRIMARY KEY (code, month, rank)
+);

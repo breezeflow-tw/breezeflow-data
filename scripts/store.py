@@ -9,6 +9,7 @@
     data/history/price_check.csv         市價查核差異
     data/history/fund_info.csv           投信投顧公會基金資料（最新一次）
     data/history/fund_month.csv          投信投顧公會基金資料彙總表（依月份累積）
+    data/history/fund_top.csv            投信投顧公會月前十大投資標的（依月份累積）
     data/history/daily/YYYY-MM-DD.csv    每日快照（每天一檔）
     data/history/holdings/YYYY-MM-DD.csv 成分股（依清單日期分檔）
 """
@@ -29,6 +30,7 @@ TABLES = {
     "holding": ("date", "code, kind, asset_code"),
     "fund_info": (None, "code"),
     "fund_month": (None, "code, month"),
+    "fund_top": (None, "code, month, rank"),
 }
 SPLIT_DIRS = {"daily": "daily", "holding": "holdings"}
 

@@ -879,6 +879,17 @@ class SitcaTest(unittest.TestCase):
                          {"aum_twd": 800875038138.0, "nav": 56.75, "units": 14112534000.0, "beneficiaries": 1745584,
                           "beneficiaries_natural": 1742995, "beneficiaries_legal": 2589,
                           "subscribe_twd": 6578050000.0, "redeem_twd": 7496115000.0})
+        # 月前十大：名稱去掉警語後對到代號，對不到的基金（兆豐藍籌30）不收；標的種類換成成分類型
+        self.assertEqual(sitca.name_key("元大台灣高股息基金 (本基金之配息來源可能為收益平準金)"), "元大台灣高股息基金")
+        self.assertEqual(sitca.name_key("中國信託亞太高股息ＥＴＦ基\uf90a（本子基金）"), "中國信託亞太高股息ETF基金")  # 全形與相容字
+        self.assertEqual([sitca.asset_kind(k) for k in ("國內上市", "國外股票(含承銷)", "公司債 無擔保", "國外掛牌交易之ETF",
+                                                       "同公司發行之境內基金", "其他")], ["股票", "股票", "債券", "基金", "基金", "其他"])
+        self.assertEqual(len(sitca.parse_top10(page("top10_AH11"))), 3)
+        self.assertEqual((info["top10"]["month"], sorted(info["top10"]["funds"])), ("2026-09", ["0050", "0056"]))
+        self.assertEqual(info["top10"]["funds"]["0056"][0], {"rank": 1, "asset_code": "1303", "asset_name": "南亞", "kind": "股票", "weight": 8.37})
+        # 配息資料：只收新台幣、對得到代號的
+        self.assertEqual(len(sitca.parse_dividends(page("dividend_202607"))), 2)
+        self.assertEqual(info["dividends"], [{"code": "0056", "ex_date": "2026-07-21", "pay_date": "2026-08-10", "cash": 1.35}])
 
     def test_apply(self):
         info = {"month": "2026-09", "funds": {
@@ -930,16 +941,23 @@ class SitcaTest(unittest.TestCase):
             self.assertEqual((a["monthly"]["month"], a["monthly"]["aum"], a["monthly"]["beneficiaries"]), ("2026-09", 8008.75, 1745584))
             self.assertEqual((a["beneficiaries"], a["beneficiaries_source"]), (1745584, "投信投顧公會基金資料彙總表"))
             self.assertIsNone(items["00757"]["monthly"])
+            # 沒有官網成分股的 ETF 用公會月前十大；配息用公會資料（含發放日）
+            self.assertEqual((a["holdings_source"], a["holdings_date"], a["holdings_top"][0]["asset_code"], a["holdings_top"][0]["qty"]),
+                             ("投信投顧公會基金投資明細（月前十大）", "2026-09", "1303", None))
+            self.assertEqual(a["last_ex"], {"ex_date": "2026-07-21", "cash": 1.35, "pay_date": "2026-08-10", "source": "投信投顧公會"})
+            self.assertEqual(items["0050"]["holdings_source"], "元大投信官網")  # 官網有成分股就用官網的
             # 一週內再跑：不重抓公會資料，沿用資料庫裡的
             shutil.rmtree(fix / "sitca")
             self.assertEqual(f.main(args), 0)
             again = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
             self.assertEqual((again["0056"]["mgmt_fee_text"], again["0056"]["fee"]), ("0.40%", 0.58))
             self.assertEqual(again["0056"]["monthly"], a["monthly"])
+            self.assertEqual((again["0056"]["holdings_top"], again["0056"]["last_ex"]), (a["holdings_top"], a["last_ex"]))
             con = sqlite3.connect(db)
             self.assertEqual(con.execute("SELECT COUNT(*), MAX(data_month) FROM fund_info").fetchone(), (3, "2026-09"))
             self.assertEqual(con.execute("SELECT code, month, beneficiaries FROM fund_month ORDER BY code").fetchall(),
                              [("0050", "2026-09", 3794877), ("0056", "2026-09", 1745584)])
+            self.assertEqual(con.execute("SELECT code, COUNT(*) FROM fund_top GROUP BY code").fetchall(), [("0050", 10), ("0056", 10)])
             con.close()
             self.assertTrue((Path(tmp) / "history" / "fund_month.csv").exists())
 
