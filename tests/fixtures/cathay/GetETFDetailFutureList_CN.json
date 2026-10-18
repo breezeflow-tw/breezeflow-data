@@ -1,0 +1,14 @@
+{
+ "returnCode": "2000",
+ "success": true,
+ "returnMessage": "成功",
+ "result": [
+  {
+   "ftNo": "TX",
+   "ftName": "台股期貨",
+   "ntMkval": "3.00",
+   "volumn": "1,000",
+   "ftDate": "2026/10"
+  }
+ ]
+}

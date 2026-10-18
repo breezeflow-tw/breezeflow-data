@@ -1,0 +1,26 @@
+{
+ "returnCode": "2000",
+ "success": true,
+ "returnMessage": "成功",
+ "result": {
+  "allotLimit": "",
+  "fundAllotInfoList": [
+   {
+    "allotYearMonth": "2026/07",
+    "allotMoney": 0.8,
+    "baseDate": "2026/08/17",
+    "transDate": "2026/08/18",
+    "lendingDate": "2026/09/11",
+    "allotPeriod": "季配"
+   },
+   {
+    "allotYearMonth": "2026/04",
+    "allotMoney": 0.6,
+    "baseDate": "2026/05/18",
+    "transDate": "2026/05/19",
+    "lendingDate": "2026/06/12",
+    "allotPeriod": "季配"
+   }
+  ]
+ }
+}

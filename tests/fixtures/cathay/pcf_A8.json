@@ -1,0 +1,22 @@
+{
+ "returnCode": "2000",
+ "success": true,
+ "returnMessage": "成功",
+ "result": {
+  "fundName": "測試基金",
+  "pbType": "2",
+  "stockCode": "00687B",
+  "date": "2026/10/19",
+  "pbTypeString": "現金",
+  "aum": "120,000,000,000",
+  "totUnit": "4,000,000,000",
+  "diffUnit": "-1,000,000",
+  "nav": "30.0000",
+  "basketUnit": "500,000",
+  "dataDate": "2026/09/30",
+  "benefiCount": "150000",
+  "preDate": "",
+  "preDateC": "2026/10/15",
+  "currency": "新台幣"
+ }
+}

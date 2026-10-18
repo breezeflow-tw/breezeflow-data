@@ -1,0 +1,43 @@
+{
+ "returnCode": "2000",
+ "success": true,
+ "returnMessage": "成功",
+ "result": [
+  {
+   "lastPrice": 0,
+   "estimateNav": 25.02,
+   "estimateNavString": "25.02",
+   "closingNav": 24.919999999999998,
+   "closingNavDate": "2026/10/15",
+   "closingPriceDate": "2026/10/16",
+   "fundCode": "CN",
+   "stockCode": "00878",
+   "currency": "新台幣",
+   "isETF": true
+  },
+  {
+   "lastPrice": 0,
+   "estimateNav": 30.2,
+   "estimateNavString": "30.2",
+   "closingNav": 30.099999999999998,
+   "closingNavDate": "2026/10/15",
+   "closingPriceDate": "2026/10/16",
+   "fundCode": "A8",
+   "stockCode": "00687B",
+   "currency": "新台幣",
+   "isETF": true
+  },
+  {
+   "lastPrice": 0,
+   "estimateNav": 9.0,
+   "estimateNavString": "9.0",
+   "closingNav": 8.9,
+   "closingNavDate": "2026/10/15",
+   "closingPriceDate": "2026/10/16",
+   "fundCode": "DY",
+   "stockCode": "00687C",
+   "currency": "美元",
+   "isETF": true
+  }
+ ]
+}

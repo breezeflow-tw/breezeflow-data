@@ -483,6 +483,82 @@ class FubonTest(unittest.TestCase):
             con.close()
 
 
+class CathayTest(unittest.TestCase):
+    def test_parse(self):
+        from issuers import cathay as c
+        load = lambda n: c.unwrap(json.loads((FIX / "cathay" / f"{n}.json").read_text("utf-8")), n)
+        # 外幣計價的預估淨值不收
+        self.assertEqual(c.parse_estimates(load("estimate")),
+                         {"00878": {"nav_estimate": 25.02, "nav_estimate_date": "2026-10-16"},
+                          "00687B": {"nav_estimate": 30.2, "nav_estimate_date": "2026-10-16"}})
+        self.assertEqual(c.distributing([{"fundCode": "CN", "isAllot": True, "allotPeriod": "季配", "allotYearMonth": "2026/07"},
+                                         {"fundCode": "87", "isAllot": False, "allotPeriod": "累積型"}]), {"CN": "2026/07"})
+        # 最近一次配息超過兩個月就不必每天重查
+        self.assertEqual([c.recent(m, date(2026, 10, 18)) for m in ("2026/08", "2026/07", None)], [True, False, True])
+        self.assertIsNone(c.unwrap({"returnCode": "4005", "returnMessage": "查無資料", "result": None}))
+        p = c.parse_pcf(load("pcf_CN"))
+        self.assertEqual((p["nav_date"], p["nav_official"], p["aum"], p["units_change"], p["beneficiaries_month"]),
+                         ("2026-10-16", 25.0, 5000.0, 2000000.0, "2026-09"))
+        usd = c.parse_pcf(load("pcf_DY"))
+        self.assertEqual((usd["nav_official"], usd["aum"], usd["units"]), (None, None, 2000000.0))  # 美元計價不換算
+        # 「期貨（名目本金）」查期貨明細，「附買回債券」不是債券成分
+        self.assertEqual(c.detail_kinds(load("bal_CN")), ["股票", "期貨"])
+        self.assertEqual(c.detail_kinds([{"item": "附買回債券"}, {"item": "現金"}]), [])
+        self.assertEqual(c.parse_holdings("期貨", load("GetETFDetailFutureList_CN")),
+                         [{"asset_code": "TX-202610", "asset_name": "台股期貨", "kind": "期貨", "weight": 3.0, "qty": 1000.0}])
+        fund = c.parse_holdings("基金", [{"fnNo": "80907786", "fnName": "貨幣市場基金", "ntMkval": "9,031,629"}])
+        self.assertEqual((fund[0]["kind"], fund[0]["weight"], fund[0]["qty"]), ("基金", None, 9031629.0))  # 網站只列持有單位數
+        self.assertEqual(c.parse_dividends("00878", load("dividends_CN"))[0],
+                         {"code": "00878", "ex_date": "2026-08-18", "pay_date": "2026-09-11", "cash": 0.8})
+        with self.assertRaises(RuntimeError):
+            c.unwrap({"returnCode": "5000", "returnMessage": "系統錯誤", "result": None}, "api/ETF/GetIndexInfo")
+
+    def test_fetch(self):
+        from issuers import cathay as c
+        recs = c.fetch(fixtures=FIX / "cathay", dividend_codes=set())
+        a = recs["00878"]
+        self.assertEqual((a["manager"], a["list_date"], a["index_name"], a["custodian_fee_text"]),
+                         ("測試經理人甲", "2020-07-20", "MSCI臺灣ESG永續高股息精選30指數", "0.03%"))
+        self.assertIsNone(a["mgmt_fee"])  # 分段費率不換算
+        self.assertEqual([h["asset_code"] for h in a["holdings"]], ["2330", "2891", "TX-202610"])
+        self.assertEqual(recs["00687B"]["mgmt_fee"], 0.15)
+        usd = recs["00687C"]
+        self.assertEqual((usd["nav_official"], usd["nav_estimate"], usd["aum"], usd["dividends"]), (None, None, None, []))
+
+    def fixtures(self, tmp: str) -> Path:
+        """在共用測試資料加上兩檔國泰 ETF 的交易所資料。"""
+        fix = fixtures_without(tmp)
+        nav = json.loads((fix / "nav.json").read_text("utf-8"))
+        nav["a1"].append({"msgArray": [
+            {"a": "00878", "b": "國泰永續高股息", "e": "25.10", "f": "25.02", "g": "", "h": "24.90", "i": "20261016", "j": "13:30:00"},
+            {"a": "00687B", "b": "國泰20年美債", "e": "30.30", "f": "30.21", "g": "", "h": "30.00", "i": "20261016", "j": "13:30:00"}]})
+        (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
+        twse = json.loads((fix / "twse.json").read_text("utf-8"))
+        twse += [{"Code": "00878", "Name": "國泰永續高股息", "TradeVolume": "50,000,000", "ClosingPrice": "25.10", "Change": "0.2000"},
+                 {"Code": "00687B", "Name": "國泰20年美債", "TradeVolume": "8,000,000", "ClosingPrice": "30.30", "Change": "0.1000"}]
+        (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
+        return fix
+
+    def test_pipeline(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            self.assertEqual(f.main(["--fixtures", str(self.fixtures(tmp)), "--db", str(db), "--out", str(out)]), 0)
+            items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            a = items["00878"]
+            self.assertEqual((a["issuer"], a["nav"], a["nav_source"]), ("國泰", 25.0, "國泰投信官網（正式淨值）"))
+            self.assertEqual((a["aum"], a["aum_source"], a["units_change"], a["beneficiaries"]), (5000.0, "國泰投信官網", 2000000.0, 1500000.0))
+            self.assertAlmostEqual(a["premium"], 0.4, places=4)
+            self.assertEqual(a["holdings_top"][0]["asset_name"], "中信金")
+            self.assertEqual(a["last_ex"], {"ex_date": "2026-08-18", "cash": 0.8, "pay_date": "2026-09-11", "source": "國泰投信官網"})
+            b = items["00687B"]
+            # 正式淨值是 10/15 的，當天用國泰公布的預估淨值；單位增減屬於 10/15
+            self.assertEqual((b["nav"], b["nav_source"], b["units_change"]), (30.2, "國泰投信官網（預估淨值）", None))
+            self.assertEqual(b["last_ex"]["ex_date"], "2026-10-16")
+            con = sqlite3.connect(db)
+            self.assertEqual(con.execute("SELECT DISTINCT date FROM holding WHERE code='00687B'").fetchall(), [("2026-10-15",)])
+            con.close()
+
+
 class StoreTest(unittest.TestCase):
     def snapshot(self, history: Path) -> dict:
         return {str(p.relative_to(history)): p.read_text("utf-8") for p in sorted(history.rglob("*.csv"))}

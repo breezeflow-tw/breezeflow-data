@@ -1,0 +1,22 @@
+{
+ "returnCode": "2000",
+ "success": true,
+ "returnMessage": "成功",
+ "result": [
+  {
+   "item": "現金",
+   "amount": "(TWD) $ 1,000,000",
+   "ntMkval": null
+  },
+  {
+   "item": "股票",
+   "amount": "NT$480,000,000,000",
+   "ntMkval": "96.0%"
+  },
+  {
+   "item": "期貨（名目本金）",
+   "amount": "NT$15,000,000,000",
+   "ntMkval": "3.0%"
+  }
+ ]
+}

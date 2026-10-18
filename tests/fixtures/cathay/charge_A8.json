@@ -1,0 +1,9 @@
+{
+ "returnCode": "2000",
+ "success": true,
+ "returnMessage": "成功",
+ "result": {
+  "managerCharge": "0.15%",
+  "storageCharge": "0.07%"
+ }
+}
