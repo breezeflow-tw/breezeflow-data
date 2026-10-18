@@ -32,6 +32,37 @@
 - 新增來源時，資料庫要記錄來源，讓網站能標示出處。
 - 抓取要有禮貌：限制並行數、遇到被擋（HTTP 403 / 代理拒絕）就停止，不要狂重試。
 
+## 網站資料格式（`web/data/latest.json`）
+
+網站只讀這一個檔案。欄位沒有資料時一律是 `null`，畫面請顯示「—」，**不可自行估算或補值**。
+
+最上層：`generated_at`（產生時間）、`trade_date`（交易日）、`source`（`live` 或 `fixture`）、`has_nav`、`price_check`（市價查核統計）、`count`、`items`（每檔 ETF 一筆）。
+
+`items[]` 每筆：
+
+| 欄位 | 說明 |
+|---|---|
+| `code`、`name`、`issuer`、`category`、`market` | 代號、名稱、發行投信、類型、上市／上櫃 |
+| `price`、`change_pct`、`volume_lots`、`price_check` | 收盤價、漲跌幅 %、成交量（張）、市價查核結果 |
+| `nav`、`nav_source` | 淨值與出處；出處含「正式淨值」代表投信公告的正式淨值，否則是預估淨值 |
+| `nav_prev`、`premium` | 前一營業日淨值、折溢價 %（正數為溢價） |
+| `aum`、`aum_source`、`units` | 規模（億元）與出處、發行單位數 |
+| `mgmt_fee`、`mgmt_fee_text`、`custodian_fee_text` | 經理費率 %（只有單一費率才有數字）、經理費與保管費原文（多為依規模分段） |
+| `manager`、`risk_class`、`listed_date`、`index_name` | 經理人、風險等級（RR1～RR5）、上市日、追蹤指數 |
+| `beneficiaries`、`beneficiaries_month` | 受益人數與資料年月 |
+| `stats` | 投資組合統計 `{date, div_yield, pe, pb, roe, beta, volatility}`，可能為 `null` |
+| `holdings_top` | 前 10 大成分 `[{asset_code, asset_name, kind, weight, qty}]`，`weight` 為 %，`kind` 為股票／債券／期貨／基金 |
+| `next_ex`、`last_ex` | 下一次／最近一次除息 `{ex_date, cash, pay_date, source}`，`pay_date` 為配息發放日 |
+| `fee` | 總費用率（目前尚無來源，多為 `null`） |
+
+本機產生測試資料（假資料，用完請還原）：
+
+```bash
+python scripts/fetch_etf.py --fixtures tests/fixtures --db /tmp/test.db --out web/data/latest.json
+python -m http.server -d web 8000   # 開 http://localhost:8000
+git checkout -- web/data/latest.json
+```
+
 ## 開發規則
 
 - 只用 **Python 標準函式庫**（GitHub Actions 上不安裝套件）。
