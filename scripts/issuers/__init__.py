@@ -1,6 +1,8 @@
 """各家投信官網的資料抓取模組。
 
-每個模組提供 `fetch(get_json, fixtures=None, context=None) -> dict[代號, dict]`，回傳統一格式的紀錄：
+每個模組提供 `fetch(get_json, fixtures=None, context=None, **kwargs) -> dict[代號, dict]`，回傳統一格式的紀錄。
+主程式另外傳入 `dividend_codes`（資料庫已有該投信配息紀錄的代號），需要回補歷史的模組可據此決定查詢範圍；
+用不到的模組以 `**_` 忽略即可。紀錄欄位：
 
     code            代號
     issuer          投信簡稱

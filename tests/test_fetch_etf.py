@@ -254,6 +254,87 @@ class CapitalTest(unittest.TestCase):
             con.close()
 
 
+class FuhHwaTest(unittest.TestCase):
+    def test_parse(self):
+        from datetime import date, timedelta
+        from issuers import fuhhwa as fh
+        info = fh.parse_fund(fh.result(json.loads((FIX / "fuhhwa" / "fund_ETF21.json").read_text("utf-8"))))
+        self.assertEqual((info["nav_official"], info["nav_date"], info["risk_class"]), (29.75, "2026-10-16", "RR5"))
+        self.assertIsNone(info["mgmt_fee"])  # 「0.30%~0.35%」是區間，不換算
+        a = fh.parse_assets(fh.result(json.loads((FIX / "fuhhwa" / "assets_ETF21.json").read_text("utf-8"))))
+        self.assertEqual((a["assets_date"], a["aum"], a["units"]), ("2026-10-16", 1626.77, 5468639000.0))
+        self.assertEqual(a["holdings"][0], {"asset_code": "2357", "asset_name": "華碩電腦", "kind": "股票",
+                                            "weight": 4.019, "qty": 6577000.0})
+        # 申購買回清單回傳資料日期，主流程只採用日期等於正式淨值日期的那份
+        self.assertEqual(fh.parse_pcf([{"postDate": "2026/10/19", "actBuyValDate": "2026/10/16", "qDiff": "23000000.0"}]),
+                         ("2026-10-16", 23000000.0))
+        self.assertEqual(fh.parse_pcf([]), (None, None))
+        self.assertFalse(fh.parse_fund({"ec040": "0"})["distributes"])  # 不配息
+        self.assertFalse(fh.parse_fund({"ec040": None})["distributes"])
+        self.assertTrue(fh.parse_fund({"ec040": "每月底"})["distributes"])
+        # 配息查詢一次最多兩年：從上市日回補要切段
+        w = fh.dividend_windows(date(2023, 6, 9), date(2026, 10, 18))
+        self.assertEqual(w[0][0], date(2023, 6, 9))
+        self.assertEqual(w[-1][1], date(2026, 10, 18))
+        self.assertTrue(all(e - s <= timedelta(days=fh.DIVIDEND_WINDOW_DAYS) for s, e in w))
+        self.assertTrue(all(w[i + 1][0] == w[i][1] + timedelta(days=1) for i in range(len(w) - 1)))  # 不漏日子
+
+    def test_fetch_backfill_only_once(self):
+        from datetime import date
+        from issuers import fuhhwa as fh
+        calls = []
+        # 用測試資料跑兩次：沒有紀錄時從上市日回補（多段），已有紀錄時只查最近一年（一段）
+        orig = fh.dividend_windows
+        fh.dividend_windows = lambda s, e: calls.append((s, e)) or orig(s, e)
+        try:
+            fh.fetch(fixtures=FIX / "fuhhwa", today=date(2026, 10, 18))
+            full = list(calls); calls.clear()
+            r = fh.fetch(fixtures=FIX / "fuhhwa", today=date(2026, 10, 18), dividend_codes={"00929", "00768B"})
+        finally:
+            fh.dividend_windows = orig
+        self.assertEqual(full, [(date(2023, 6, 9), date(2026, 10, 18))])  # 00929 從上市日起；00768B 不配息不查
+        self.assertEqual([c[0] for c in calls], [date(2025, 10, 18)])  # 已有紀錄：只補最近一年
+        self.assertEqual(len(r["00929"]["dividends"]), 2)
+        # 債券型：10/16 的清單是 10/14 的資料，要往後找到 10/19 那份（10/15）
+        self.assertEqual(r["00768B"]["units_change"], -1000000.0)
+
+    def fixtures(self, tmp: str) -> Path:
+        """在共用測試資料加上兩檔復華 ETF 的交易所資料。"""
+        fix = fixtures_without(tmp)
+        nav = json.loads((fix / "nav.json").read_text("utf-8"))
+        nav["a1"].append({"msgArray": [
+            {"a": "00929", "b": "復華台灣科技優息", "e": "29.90", "f": "29.80", "g": "", "h": "29.55", "i": "20261016", "j": "13:30:00"},
+            {"a": "00768B", "b": "復華20年美債", "e": "47.95", "f": "47.87", "g": "", "h": "47.80", "i": "20261016", "j": "13:30:00"}]})
+        (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
+        twse = json.loads((fix / "twse.json").read_text("utf-8"))
+        twse += [{"Code": "00929", "Name": "復華台灣科技優息", "TradeVolume": "80,000,000", "ClosingPrice": "29.90", "Change": "0.1500"},
+                 {"Code": "00768B", "Name": "復華20年美債", "TradeVolume": "3,000,000", "ClosingPrice": "47.95", "Change": "0.0500"}]
+        (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
+        return fix
+
+    def test_pipeline(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            self.assertEqual(f.main(["--fixtures", str(self.fixtures(tmp)), "--db", str(db), "--out", str(out)]), 0)
+            items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            a = items["00929"]
+            self.assertEqual((a["nav"], a["nav_source"]), (29.75, "復華投信官網（正式淨值）"))
+            self.assertEqual((a["aum"], a["units_change"], a["risk_class"]), (1626.77, 23000000.0, "RR5"))
+            self.assertEqual((a["mgmt_fee"], a["mgmt_fee_text"], a["listed_date"]), (None, "0.30%~0.35%", "2023-06-09"))
+            self.assertEqual(a["last_ex"], {"ex_date": "2026-09-17", "cash": 0.38, "pay_date": "2026-10-16", "source": "復華投信官網"})
+            self.assertEqual(a["holdings_top"][0]["asset_name"], "華碩電腦")
+            b = items["00768B"]
+            # 正式淨值是 10/15 的，當天用復華公布的預估淨值
+            self.assertEqual((b["nav"], b["nav_source"]), (47.87, "復華投信官網（預估淨值）"))
+            self.assertEqual((b["aum"], b["mgmt_fee"]), (378.09, 0.15))
+            self.assertIsNone(b["units_change"])  # 單位數增減屬於 10/15，不放在 10/16 那一列
+            self.assertEqual(b["next_ex"], None)
+            con = sqlite3.connect(db)
+            # 債券型：10/16 的清單裝 10/14 的資料，要往後找到 10/19 那份（10/15）才對
+            self.assertEqual(con.execute("SELECT COUNT(*) FROM dividend WHERE code='00768B'").fetchone()[0], 0)  # 測試資料設為不配息
+            con.close()
+
+
 class StoreTest(unittest.TestCase):
     def snapshot(self, history: Path) -> dict:
         return {str(p.relative_to(history)): p.read_text("utf-8") for p in sorted(history.rglob("*.csv"))}

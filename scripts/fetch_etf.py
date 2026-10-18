@@ -23,7 +23,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import store
-from issuers import capital, uni, yuanta
+from issuers import capital, fuhhwa, uni, yuanta
 
 ROOT = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT / "data" / "etf.db"
@@ -51,7 +51,7 @@ YAHOO_CHART = "https://{host}/v8/finance/chart/{symbol}?range=10d&interval=1d"
 YAHOO_HOSTS = ("query1.finance.yahoo.com", "query2.finance.yahoo.com")
 
 # 已接入的投信官網；淨值、規模、費用、成分股以這裡的資料為主
-ISSUER_MODULES = {"yuanta": yuanta, "uni": uni, "capital": capital}
+ISSUER_MODULES = {"yuanta": yuanta, "uni": uni, "capital": capital, "fuhhwa": fuhhwa}
 
 
 # ---------- 下載 ----------
@@ -449,6 +449,19 @@ def merge(nav: dict, quotes: dict, meta: dict, date: str, fund: dict | None = No
     return items
 
 
+def known_dividend_codes(db_path: Path, source: str) -> set[str]:
+    """資料庫裡已有某投信配息紀錄的代號；投信模組用來決定要完整回補還是只補最近的。"""
+    if not db_path.exists():
+        return set()
+    con = sqlite3.connect(db_path)
+    try:
+        return {c for (c,) in con.execute("SELECT DISTINCT code FROM dividend WHERE source = ?", (source,))}
+    except sqlite3.OperationalError:
+        return set()
+    finally:
+        con.close()
+
+
 def known_markets(db_path: Path) -> dict[str, str]:
     """資料庫記得的上市 / 上櫃別，交易所資料缺漏時用來決定 Yahoo 代號。"""
     if not db_path.exists():
@@ -666,7 +679,8 @@ def main(argv=None) -> int:
     # 各投信是不同網站，同時抓；同一個網站內仍逐筆、放慢速度
     def fetch_issuer(item):
         name, mod = item
-        return mod, mod.fetch(http_get_json, fixtures=args.fixtures / name if args.fixtures else None, context=SSL_CONTEXT)
+        return mod, mod.fetch(http_get_json, fixtures=args.fixtures / name if args.fixtures else None, context=SSL_CONTEXT,
+                              dividend_codes=known_dividend_codes(args.db, mod.SOURCE))
 
     issuer: dict[str, dict] = {}
     with ThreadPoolExecutor(max_workers=len(ISSUER_MODULES)) as pool:

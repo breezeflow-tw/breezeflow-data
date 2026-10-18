@@ -1,0 +1,28 @@
+{
+ "result": [
+  {
+   "fundID": "ETF21",
+   "dDate": "2026/10/16",
+   "pcf_FundNav": "162,677,209,931",
+   "pcf_FundQissue": "5,468,639,000",
+   "pcf_Fundpnav": "29.75",
+   "detail": [
+    {
+     "ftype": "股票",
+     "stockid": "2357",
+     "stockname": "華碩電腦",
+     "qshare": "6,577,000",
+     "prate_addaccint": "4.019%"
+    },
+    {
+     "ftype": "股票",
+     "stockid": "3034",
+     "stockname": "聯詠科技",
+     "qshare": "11,210,000",
+     "prate_addaccint": "3.976%"
+    }
+   ]
+  }
+ ],
+ "status": 0
+}

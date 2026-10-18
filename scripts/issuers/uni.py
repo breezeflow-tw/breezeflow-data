@@ -199,7 +199,7 @@ def roc_month(d: date) -> str:
 
 # ---------- 抓取 ----------
 
-def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext | None = None) -> dict[str, dict]:
+def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext | None = None, **_) -> dict[str, dict]:
     if fixtures:
         def load(name, *_args, **_kw):
             path = fixtures / f"{name}.html"
