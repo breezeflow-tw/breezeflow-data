@@ -89,6 +89,7 @@ def parse_pcf(payload) -> dict:
         "nav_date": ymd(pcf.get("trandate")),
         "aum": round(totalav / 1e8, 2) if totalav else None,
         "units": pcf.get("osunit"),
+        "units_change": pcf.get("issuesdiff"),  # 當日申購買回造成的發行單位數增減
         "beneficiaries": bf.get("bf_cnt_a"),
         "beneficiaries_month": f"{month[:4]}-{month[4:6]}" if len(month) >= 6 else None,
         "holdings": holdings,

@@ -1,0 +1,38 @@
+{
+ "code": 200,
+ "message": "",
+ "data": {
+  "pcf": {
+   "date1": "2026-10-19",
+   "date2": "2026-10-16",
+   "nav": 638447707613.0,
+   "totUnit": 19396135000.0,
+   "disUnit": -500000.0,
+   "pUnit": 32.95,
+   "dollar": "TWD"
+  },
+  "stocks": [
+   {
+    "stocNo": "2881",
+    "stocName": "富邦金",
+    "weight": 15.4756,
+    "share": 611790000.0
+   },
+   {
+    "stocNo": "2882",
+    "stocName": "國泰金",
+    "weight": 10.1,
+    "share": 400000000.0
+   }
+  ],
+  "bonds": [],
+  "futures": [
+   {
+    "txDesc": "台指期202610",
+    "weight": 0.3614,
+    "lot": 244.0,
+    "txEname": "TX202610"
+   }
+  ]
+ }
+}

@@ -9,7 +9,8 @@
   "Beneficiary": {
    "doc_ym": "20260930",
    "bf_cnt_a": 1000000
-  }
+  },
+  "issuesdiff": 85000000
  },
  "InKind": {
   "FundComposition": []

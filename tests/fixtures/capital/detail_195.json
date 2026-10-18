@@ -1,0 +1,15 @@
+{
+ "code": 200,
+ "message": "",
+ "data": {
+  "manageCharge": "0.30% ",
+  "storageCharge": "0.035％ ",
+  "listingDate": "2022-10-20",
+  "indexName": "臺灣精選高息指數 ",
+  "managers": [
+   {
+    "managerName": "測試經理人"
+   }
+  ]
+ }
+}
