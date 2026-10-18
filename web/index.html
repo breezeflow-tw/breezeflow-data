@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>微風流動 ETF 總覽</title>
+<meta name="description" content="台股全市場 ETF 一頁看完：市價、預估淨值、折溢價、成交量，每日自動更新。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: 品牌列 → 市場摘要 → 篩選列 → 全市場 ETF 表格（手機橫向捲動，代號欄固定） */
+:root{
+  --bg:#F3F6F8; --surface:#FFFFFF; --ink:#13202B; --muted:#5A6B78; --line:#D8E0E6; --row:#F7F9FB;
+  --accent:#0B6E5F; --accent-soft:#D6EDE8; --band:#E3B04B; --band-soft:rgba(227,176,75,.22);
+  --up:#C23B3B; --down:#1F7A4D; --prem:#B5651D; --prem-soft:rgba(181,101,29,.14); --disc:#2F6FA3; --disc-soft:rgba(47,111,163,.14);
+  --f-display:"Noto Serif TC","Songti TC",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E161D; --surface:#15212B; --ink:#E6EDF2; --muted:#93A3B0; --line:#26343F; --row:#192731;
+  --accent:#3FBFA6; --accent-soft:#183A36; --band:#E8BC5E; --band-soft:rgba(232,188,94,.18);
+  --up:#F06C6C; --down:#4CC38A; --prem:#F0A15A; --prem-soft:rgba(240,161,90,.16); --disc:#6FA8DC; --disc-soft:rgba(111,168,220,.16); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E161D; --surface:#15212B; --ink:#E6EDF2; --muted:#93A3B0; --line:#26343F; --row:#192731;
+  --accent:#3FBFA6; --accent-soft:#183A36; --band:#E8BC5E; --band-soft:rgba(232,188,94,.18);
+  --up:#F06C6C; --down:#4CC38A; --prem:#F0A15A; --prem-soft:rgba(240,161,90,.16); --disc:#6FA8DC; --disc-soft:rgba(111,168,220,.16); color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.6}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.25}
+p{margin:0}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.label{font-size:12px;letter-spacing:.08em;color:var(--muted);font-weight:500}
+
+header{border-bottom:1px solid var(--line);background:var(--surface)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;padding-block:14px;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:8px;font-family:var(--f-display);font-weight:900;font-size:22px}
+.brand small{font-family:var(--f-num);font-size:12px;color:var(--muted);font-weight:400;letter-spacing:.1em}
+.demo{font-size:12px;padding:3px 10px;border:1px solid var(--band);border-radius:999px;background:var(--band-soft)}
+
+.intro{padding-block:28px 16px;display:grid;gap:8px}
+.intro h1{font-size:clamp(24px,4vw,34px);font-weight:900}
+.intro p{color:var(--muted);max-width:68ch}
+
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding-block:8px 16px}
+.stat{border-top:2px solid var(--line);padding-top:8px;display:grid;gap:2px}
+.stat.main{border-top-color:var(--accent)}
+.stat .v{font-family:var(--f-num);font-size:24px;font-weight:500}
+.stat .s{font-size:12px;color:var(--muted)}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding-block:8px 12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+button{font:inherit;cursor:pointer}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:5px 12px;border-radius:6px;font-size:13px}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.chip .c{font-family:var(--f-num);font-size:11px;opacity:.75;margin-left:4px}
+.right{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.search{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);width:200px;max-width:100%}
+.toggle{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer}
+.toggle input{accent-color:var(--accent)}
+button:focus-visible,input:focus-visible,th:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.table-box{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:separate;border-spacing:0;width:100%;min-width:1080px}
+th,td{padding:9px 10px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line)}
+th{font-size:12px;font-weight:500;color:var(--muted);background:var(--surface);position:sticky;top:0;cursor:pointer;user-select:none}
+th:hover{color:var(--ink)}
+th[aria-sort="ascending"]::after{content:" ▲";font-size:9px}
+th[aria-sort="descending"]::after{content:" ▼";font-size:9px}
+th.l,td.l{text-align:left}
+tbody tr:hover td{background:var(--row)}
+td.code,th.code{position:sticky;left:0;background:var(--surface);z-index:1}
+tbody tr:hover td.code{background:var(--row)}
+td.code{font-family:var(--f-num);font-weight:500;color:var(--accent)}
+.name{font-weight:500}
+.issuer{color:var(--muted);font-size:12px}
+.tag{font-size:11px;padding:1px 8px;border-radius:999px;background:var(--accent-soft);color:var(--ink)}
+.up{color:var(--up)} .down{color:var(--down)}
+.pd{display:inline-flex;align-items:center;gap:8px;justify-content:flex-end}
+.bar{position:relative;width:60px;height:8px;background:var(--row);border-radius:2px}
+.bar::before{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--line)}
+.bar i{position:absolute;top:0;bottom:0;border-radius:2px}
+.pd.alert{font-weight:500;padding:1px 6px;border-radius:4px}
+.pd.alert.p{background:var(--prem-soft);color:var(--prem)}
+.pd.alert.d{background:var(--disc-soft);color:var(--disc)}
+.banner{margin-block:0 12px;padding:8px 12px;border:1px solid var(--band);background:var(--band-soft);border-radius:6px;font-size:13px}
+.empty{padding:32px;text-align:center;color:var(--muted)}
+
+.notes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-block:24px}
+.notes div{display:grid;gap:4px}
+.notes h2{font-size:16px}
+.notes p{color:var(--muted);font-size:13px}
+
+footer{padding-block:24px 40px;color:var(--muted);font-size:12px;border-top:1px solid var(--line)}
+footer .wrap{display:grid;gap:4px}
+
+@media (max-width:760px){.summary{grid-template-columns:1fr 1fr}.notes{grid-template-columns:1fr}.search{width:100%}.right{width:100%}}
+</style>
+<style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="brand">微風流動 <small>BREEZE FLOW</small></div>
+  <span class="label" id="h-date">載入中…</span>
+</div></header>
+
+<main class="wrap">
+  <div class="intro">
+    <span class="label">台股 ETF 總覽</span>
+    <h1>全市場 ETF，一頁看完淨值、市價與折溢價</h1>
+    <p>買 ETF 前先看折溢價：市價高於淨值太多，等於用貴的價格買進同一籃資產。點欄位標題可以排序，用分類和搜尋快速找到想看的 ETF。</p>
+  </div>
+
+  <div class="summary">
+    <div class="stat main"><span class="label">收錄 ETF</span><span class="v" id="s-count">—</span><span class="s" id="s-date"></span></div>
+    <div class="stat"><span class="label">平均折溢價</span><span class="v" id="s-avg">—</span><span class="s">以目前篩選結果計算</span></div>
+    <div class="stat"><span class="label">溢價超過 1%</span><span class="v" id="s-prem">—</span><span class="s">市價明顯高於淨值</span></div>
+    <div class="stat"><span class="label">折價超過 1%</span><span class="v" id="s-disc">—</span><span class="s">市價明顯低於淨值</span></div>
+  </div>
+
+  <p class="banner" id="banner" hidden></p>
+
+  <div class="toolbar">
+    <div class="chips" id="chips" role="group" aria-label="ETF 類型"></div>
+    <div class="right">
+      <label class="toggle"><input type="checkbox" id="only-alert">只看折溢價超過 ±1%</label>
+      <input class="search" id="q" type="search" placeholder="搜尋代號、名稱、發行商" aria-label="搜尋 ETF">
+    </div>
+  </div>
+
+  <div class="table-box">
+    <table>
+      <thead><tr>
+        <th class="l code" data-k="code" tabindex="0">代號</th>
+        <th class="l" data-k="name" tabindex="0">名稱 / 發行商</th>
+        <th class="l" data-k="category" tabindex="0">類型</th>
+        <th data-k="price" tabindex="0">市價</th>
+        <th data-k="change_pct" tabindex="0">漲跌</th>
+        <th data-k="nav" tabindex="0">預估淨值</th>
+        <th data-k="premium" tabindex="0">折溢價</th>
+        <th data-k="nav_prev" tabindex="0">前日淨值</th>
+        <th data-k="volume_lots" tabindex="0">成交量（張）</th>
+        <th data-k="fee" tabindex="0">總費用率</th>
+        <th data-k="aum" tabindex="0">規模（億）</th>
+      </tr></thead>
+      <tbody id="rows"><tr><td colspan="11" class="empty">資料載入中…</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="notes">
+    <div><h2>折溢價怎麼算</h2><p>（市價 − 預估淨值）÷ 預估淨值。正數是溢價，負數是折價。海外與熱門主題 ETF 較容易出現大幅溢價。</p></div>
+    <div><h2>淨值與市價</h2><p>預估淨值由投信盤中公告，反映 ETF 持有資產每單位的價值；市價是交易所的成交價格。</p></div>
+    <div><h2>資料來源</h2><p>預估淨值取自臺灣證券交易所 ETF 預估淨值資訊；收盤價與成交量取自證交所與櫃買中心 OpenAPI。每個交易日收盤後自動更新。</p></div>
+  </div>
+</main>
+
+<footer><div class="wrap">
+  <p>本站為投資研究與教育用途，不提供個別有價證券的買賣建議，亦非證券投資顧問服務。資料以各官方來源為準。</p>
+</div></footer>
+
+<script>
+(function(){
+  const ORDER=["全部","市值型","高股息","主題型","海外股票","債券","商品","槓桿反向","主動式"];
+  const $=id=>document.getElementById(id);
+  const fmt=(v,d)=>v==null?"—":v.toLocaleString("zh-TW",{minimumFractionDigits:d,maximumFractionDigits:d});
+  const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const state={type:"全部",q:"",alert:false,key:"volume_lots",dir:-1};
+  let DATA=[];
+
+  function chips(){
+    const types=ORDER.filter(t=>t==="全部"||DATA.some(d=>d.category===t));
+    $("chips").innerHTML=types.map(t=>{const n=t==="全部"?DATA.length:DATA.filter(d=>d.category===t).length;
+      return `<button class="chip" data-t="${t}" aria-pressed="${t===state.type}">${t}<span class="c">${n}</span></button>`;}).join("");
+    $("chips").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{state.type=b.dataset.t;chips();render();});
+  }
+
+  function pdCell(v){
+    if(v==null)return"—";
+    const w=Math.min(Math.abs(v),2.5)/2.5*30,alert=Math.abs(v)>=1;
+    const color=v>=0?"var(--prem)":"var(--disc)";
+    const pos=v>=0?`left:50%;width:${w}px`:`right:50%;width:${w}px`;
+    return `<span class="pd${alert?" alert "+(v>=0?"p":"d"):""}"><span class="bar"><i style="${pos};background:${color}"></i></span>${v>=0?"+":""}${fmt(v,2)}%</span>`;
+  }
+
+  function render(){
+    const q=state.q.trim().toLowerCase();
+    const rows=DATA.filter(d=>(state.type==="全部"||d.category===state.type)&&(!state.alert||(d.premium!=null&&Math.abs(d.premium)>=1))&&
+      (!q||d.code.toLowerCase().includes(q)||d.name.toLowerCase().includes(q)||(d.issuer||"").includes(q)));
+    const k=state.key;
+    rows.sort((a,b)=>{const x=a[k],y=b[k];if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;
+      return(typeof x==="string"?x.localeCompare(y,"zh-TW"):x-y)*state.dir;});
+    $("rows").innerHTML=rows.length?rows.map(d=>`<tr>
+      <td class="l code">${esc(d.code)}</td>
+      <td class="l"><div class="name">${esc(d.name)}</div><div class="issuer">${esc(d.issuer||"")}${d.market?" · "+esc(d.market):""}</div></td>
+      <td class="l"><span class="tag">${esc(d.category)}</span></td>
+      <td class="num">${fmt(d.price,2)}</td>
+      <td class="num ${d.change_pct==null?"":d.change_pct>=0?"up":"down"}">${d.change_pct==null?"—":(d.change_pct>=0?"+":"")+fmt(d.change_pct,2)+"%"}</td>
+      <td class="num">${fmt(d.nav,2)}</td>
+      <td class="num">${pdCell(d.premium)}</td>
+      <td class="num">${fmt(d.nav_prev,2)}</td>
+      <td class="num">${fmt(d.volume_lots,0)}</td>
+      <td class="num">${d.fee==null?"—":fmt(d.fee,2)+"%"}</td>
+      <td class="num">${fmt(d.aum,0)}</td></tr>`).join(""):`<tr><td colspan="11" class="empty">沒有符合條件的 ETF，試試清除搜尋或切回「全部」。</td></tr>`;
+    const valid=rows.filter(d=>d.premium!=null);
+    const avg=valid.length?valid.reduce((s,d)=>s+d.premium,0)/valid.length:null;
+    $("s-count").textContent=rows.length+" / "+DATA.length;
+    $("s-avg").textContent=avg==null?"—":(avg>=0?"+":"")+fmt(avg,2)+"%";
+    $("s-prem").textContent=rows.filter(d=>d.premium>=1).length+" 檔";
+    $("s-disc").textContent=rows.filter(d=>d.premium!=null&&d.premium<=-1).length+" 檔";
+    document.querySelectorAll("th[data-k]").forEach(th=>th.setAttribute("aria-sort",th.dataset.k===k?(state.dir>0?"ascending":"descending"):"none"));
+  }
+
+  document.querySelectorAll("th[data-k]").forEach(th=>{
+    const go=()=>{const k=th.dataset.k;if(state.key===k)state.dir*=-1;else{state.key=k;state.dir=["code","name","category"].includes(k)?1:-1;}render();};
+    th.onclick=go;th.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go();}};
+  });
+  $("q").addEventListener("input",e=>{state.q=e.target.value;render();});
+  $("only-alert").addEventListener("change",e=>{state.alert=e.target.checked;render();});
+
+  fetch("data/latest.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(p=>{
+    DATA=p.items||[];
+    $("h-date").textContent="資料日期 "+p.trade_date;
+    $("s-date").textContent="更新於 "+(p.generated_at||"").replace("T"," ").slice(0,16);
+    if(p.source!=="live"){$("banner").hidden=false;$("banner").textContent="目前顯示的是測試資料，不是實際行情。";}
+    chips();render();
+  }).catch(()=>{
+    $("h-date").textContent="尚無資料";
+    $("rows").innerHTML=`<tr><td colspan="11" class="empty">還沒有資料。請先執行 python scripts/fetch_etf.py 產生 web/data/latest.json。</td></tr>`;
+  });
+})();
+</script>
+</body>
+</html>

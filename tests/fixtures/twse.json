@@ -1,0 +1,6 @@
+[
+ {"Code":"0050","Name":"元大台灣50","TradeVolume":"25,300,000","TradeValue":"1,320,000,000","OpeningPrice":"52.00","HighestPrice":"52.50","LowestPrice":"51.90","ClosingPrice":"52.35","Change":"0.4500","Transaction":"30000"},
+ {"Code":"0056","Name":"元大高股息","TradeVolume":"18,000,500","ClosingPrice":"36.10","Change":"-0.1000"},
+ {"Code":"00757","Name":"統一FANG+","TradeVolume":"3,000,000","ClosingPrice":"112.50","Change":"3.3000"},
+ {"Code":"00631L","Name":"元大台灣50正2","TradeVolume":"","ClosingPrice":"","Change":""}
+]
