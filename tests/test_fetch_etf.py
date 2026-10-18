@@ -46,10 +46,32 @@ class ParseTest(unittest.TestCase):
         for (code, name), want in cases.items():
             self.assertEqual(f.classify(code, name), want, code)
 
+    def test_etf_filter_and_roc_date(self):
+        self.assertTrue(f.is_etf("0050"))
+        self.assertTrue(f.is_etf("00679B"))
+        self.assertFalse(f.is_etf("2330"))
+        self.assertFalse(f.is_etf("020000"))
+        self.assertEqual(f.roc_date("1151016"), "2026-10-16")
+        self.assertIsNone(f.roc_date(""))
+
+    def test_merge_without_nav(self):
+        quotes = f.parse_quotes(json.loads((FIX / "twse.json").read_text("utf-8")), "上市")
+        items = f.merge({}, quotes, {})
+        self.assertEqual(len(items), 4)
+        it = next(i for i in items if i["code"] == "0050")
+        self.assertEqual(it["name"], "元大台灣50")
+        self.assertIsNone(it["premium"])
+
+    def test_clean_name(self):
+        self.assertEqual(f.clean_name("國泰標普低波高息(本基金並無保證收益及配息)"), "國泰標普低波高息")
+        self.assertEqual(f.clean_name("聯邦台灣精彩50ETF證券投資信託基金"), "聯邦台灣精彩50")
+        self.assertEqual(f.issuer_from_name("FT臺灣Smart"), "第一金")
+
     def test_issuer(self):
         self.assertEqual(f.issuer_from_name("元大台灣50"), "元大")
         self.assertEqual(f.issuer_from_name("大華銀優利高填息30"), "大華銀")
-        self.assertIsNone(f.issuer_from_name("主動統一台股增長"))
+        self.assertEqual(f.issuer_from_name("主動統一台股增長"), "統一")
+        self.assertEqual(f.issuer_from_name("期元大S&P黃金"), "元大")
 
 
 class PipelineTest(unittest.TestCase):
@@ -72,6 +94,21 @@ class PipelineTest(unittest.TestCase):
             self.assertEqual(con.execute("SELECT COUNT(*) FROM daily").fetchone()[0], 5)
             self.assertEqual(con.execute("SELECT COUNT(*) FROM etf").fetchone()[0], 5)
             con.close()
+
+    def test_rerun_without_nav_keeps_nav(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            nonav = Path(tmp) / "nonav"
+            nonav.mkdir()
+            for name in ("twse.json", "tpex.json"):
+                (nonav / name).write_bytes((FIX / name).read_bytes())
+            self.assertEqual(f.main(["--fixtures", str(FIX), "--db", str(db), "--out", str(out)]), 0)
+            self.assertEqual(f.main(["--fixtures", str(nonav), "--db", str(db), "--out", str(out)]), 0)
+            con = sqlite3.connect(db)
+            self.assertEqual(con.execute("SELECT nav FROM daily WHERE code='0050'").fetchone()[0], 52.25)
+            con.close()
+            items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            self.assertEqual(items["0050"]["nav"], 52.25)
 
 
 if __name__ == "__main__":

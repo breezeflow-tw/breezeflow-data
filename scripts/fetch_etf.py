@@ -66,9 +66,7 @@ def load_sources(fixtures: Path | None) -> dict[str, object]:
             try:
                 data[key] = http_get_json(url)
             except RuntimeError as exc:
-                # 淨值資料是核心，抓不到就停；行情資料缺一個市場仍可繼續
-                if key == "nav":
-                    raise
+                # 任一來源失敗都繼續；證交所 MIS 會擋海外 IP，此時淨值欄位留空
                 print(f"警告：{exc}", file=sys.stderr)
                 data[key] = []
     return data
@@ -92,6 +90,12 @@ def num(value) -> float | None:
         return None
 
 
+def clean_name(name: str) -> str:
+    """去掉名稱後面的法定警語與冗長字尾，例如「(本基金並無保證收益及配息)」「ETF證券投資信託基金」。"""
+    name = re.sub(r"[（(][^）)]*[）)]$", "", str(name or "").strip())
+    return re.sub(r"(ETF)?證券投資信託基金$", "", name).strip()
+
+
 def parse_nav(payload) -> dict[str, dict]:
     """all_etf.txt 格式：{"a1": [{"msgArray": [{a: 代號, b: 名稱, e: 市價, f: 預估淨值,
     g: 預估折溢價 %, h: 前一營業日淨值, i: 日期, j: 時間}, ...]}, ...]}，每個 a1 元素是一家投信。"""
@@ -108,7 +112,7 @@ def parse_nav(payload) -> dict[str, dict]:
                 premium = (price - nav) / nav * 100
             result[code] = {
                 "code": code,
-                "name": str(row.get("b", "")).strip(),
+                "name": clean_name(row.get("b", "")),
                 "price": price,
                 "nav": nav,
                 "premium": premium,
@@ -126,18 +130,33 @@ def pick(row: dict, *keys):
     return None
 
 
+def is_etf(code: str) -> bool:
+    """台股 ETF 代號都是 00 開頭（0050、006208、00679B）；ETN 是 02 開頭，不收。"""
+    return code.startswith("00") and len(code) >= 4
+
+
+def roc_date(value) -> str | None:
+    """民國日期 '1151016' → '2026-10-16'。"""
+    m = re.fullmatch(r"(\d{2,3})(\d{2})(\d{2})", str(value or "").strip())
+    if not m:
+        return None
+    return f"{int(m.group(1)) + 1911}-{m.group(2)}-{m.group(3)}"
+
+
 def parse_quotes(rows, market: str) -> dict[str, dict]:
     """證交所與櫃買的收盤行情欄位名稱不同，這裡統一成 close / change / volume_lots。"""
     result = {}
     for row in rows if isinstance(rows, list) else []:
         code = str(pick(row, "Code", "SecuritiesCompanyCode") or "").strip()
-        if not code:
+        if not is_etf(code):
             continue
         close = num(pick(row, "ClosingPrice", "Close"))
         change = num(pick(row, "Change"))
         shares = num(pick(row, "TradeVolume", "TradingShares"))
         prev = close - change if close is not None and change is not None else None
         result[code] = {
+            "name": clean_name(pick(row, "Name", "CompanyName")),
+            "date": roc_date(pick(row, "Date")),
             "market": market,
             "close": close,
             "change_pct": (change / prev * 100) if prev else None,
@@ -173,14 +192,15 @@ def classify(code: str, name: str) -> str:
 
 ISSUERS = ["富蘭克林華美", "華南永昌", "第一金", "大華銀", "中國信託", "元大", "富邦", "國泰", "群益", "中信", "復華",
            "凱基", "統一", "新光", "永豐", "兆豐", "野村", "台新", "街口", "日盛", "摩根", "貝萊德", "安聯", "聯博",
-           "柏瑞", "路博邁", "宏利", "鋒裕匯理", "合庫", "玉山", "富達", "保德信", "施羅德", "瀚亞", "大華", "台灣人壽"]
+           "柏瑞", "路博邁", "宏利", "鋒裕匯理", "合庫", "玉山", "富達", "保德信", "施羅德", "瀚亞", "大華", "台灣人壽", "聯邦", "FT"]
 
 
 def issuer_from_name(name: str) -> str | None:
-    """台股 ETF 名稱多半以投信品牌開頭，例如「元大台灣50」。"""
+    """台股 ETF 名稱多半以投信品牌開頭，例如「元大台灣50」；主動式與期貨型前面多了「主動」「期」。"""
+    name = re.sub(r"^(主動|期|平衡)", "", name)
     for brand in ISSUERS:
         if name.startswith(brand):
-            return "中信" if brand == "中國信託" else brand
+            return {"中國信託": "中信", "FT": "第一金"}.get(brand, brand)
     return None
 
 
@@ -196,18 +216,21 @@ def load_meta(path: Path = META_PATH) -> dict[str, dict]:
 
 def merge(nav: dict, quotes: dict, meta: dict) -> list[dict]:
     items = []
-    for code, n in nav.items():
+    empty = {"name": "", "price": None, "nav": None, "premium": None, "nav_prev": None, "source_date": "", "source_time": ""}
+    for code in sorted(set(nav) | set(quotes)):
+        n = nav.get(code, empty)
         q = quotes.get(code, {})
         m = meta.get(code, {})
+        name = n["name"] or q.get("name", "")
         price = q.get("close") if q.get("close") is not None else n["price"]
         premium = n["premium"]
         if premium is None and price and n["nav"]:
             premium = (price - n["nav"]) / n["nav"] * 100
         items.append({
             "code": code,
-            "name": n["name"],
-            "issuer": (m.get("issuer") or "").strip() or issuer_from_name(n["name"]),
-            "category": (m.get("category") or "").strip() or classify(code, n["name"]),
+            "name": name,
+            "issuer": (m.get("issuer") or "").strip() or issuer_from_name(name),
+            "category": (m.get("category") or "").strip() or classify(code, name),
             "market": q.get("market"),
             "price": price,
             "change_pct": q.get("change_pct"),
@@ -218,12 +241,16 @@ def merge(nav: dict, quotes: dict, meta: dict) -> list[dict]:
             "fee": num(m.get("fee")),
             "aum": num(m.get("aum")),
             "source_time": f"{n['source_date']} {n['source_time']}".strip(),
+            "quote_date": q.get("date"),
         })
     items.sort(key=lambda x: x["code"])
     return items
 
 
 def trade_date(items: list[dict], now: datetime) -> str:
+    dates = [it["quote_date"] for it in items if it.get("quote_date")]
+    if dates:
+        return max(set(dates), key=dates.count)
     for it in items:
         m = re.match(r"(\d{4})(\d{2})(\d{2})", it["source_time"].replace("/", "").replace("-", ""))
         if m:
@@ -248,23 +275,38 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH) -> None:
                  aum=COALESCE(excluded.aum, etf.aum), updated_at=excluded.updated_at""",
             [{**it, "now": now} for it in items],
         )
-        # 同一天重跑會覆蓋當天資料，歷史不重複
+        # 同一天重跑會更新當天資料；這次沒抓到的欄位（例如 MIS 暫時連不上時的淨值）保留原值
         con.executemany(
-            """INSERT OR REPLACE INTO daily(date, code, price, change_pct, nav, nav_prev, premium, volume_lots, source_time)
-               VALUES(:date, :code, :price, :change_pct, :nav, :nav_prev, :premium, :volume_lots, :source_time)""",
+            """INSERT INTO daily(date, code, price, change_pct, nav, nav_prev, premium, volume_lots, source_time)
+               VALUES(:date, :code, :price, :change_pct, :nav, :nav_prev, :premium, :volume_lots, :source_time)
+               ON CONFLICT(date, code) DO UPDATE SET
+                 price=COALESCE(excluded.price, daily.price),
+                 change_pct=COALESCE(excluded.change_pct, daily.change_pct),
+                 nav=COALESCE(excluded.nav, daily.nav),
+                 nav_prev=COALESCE(excluded.nav_prev, daily.nav_prev),
+                 premium=COALESCE(excluded.premium, daily.premium),
+                 volume_lots=COALESCE(excluded.volume_lots, daily.volume_lots),
+                 source_time=COALESCE(NULLIF(excluded.source_time, ''), daily.source_time)""",
             [{**it, "date": date} for it in items],
         )
         con.commit()
+        # 讓輸出的 JSON 與資料庫一致
+        cols = ["price", "change_pct", "nav", "nav_prev", "premium", "volume_lots", "source_time"]
+        stored = {r[0]: r[1:] for r in con.execute(f"SELECT code, {', '.join(cols)} FROM daily WHERE date=?", (date,))}
+        for it in items:
+            if it["code"] in stored:
+                it.update(zip(cols, stored[it["code"]]))
     finally:
         con.close()
 
 
-def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH) -> None:
+def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, has_nav: bool = True) -> None:
     out.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "generated_at": datetime.now(TW).isoformat(timespec="seconds"),
         "trade_date": date,
         "source": source,
+        "has_nav": has_nav,
         "count": len(items),
         "items": items,
     }
@@ -280,15 +322,18 @@ def main(argv=None) -> int:
 
     raw = load_sources(args.fixtures)
     nav = parse_nav(raw["nav"])
-    if not nav:
-        print("錯誤：淨值資料是空的，可能是非交易時段或來源格式改變。", file=sys.stderr)
-        return 1
     quotes = {**parse_quotes(raw["tpex"], "上櫃"), **parse_quotes(raw["twse"], "上市")}
+    if not nav and not quotes:
+        print("錯誤：所有來源都沒有資料，可能是網路被擋或來源格式改變。", file=sys.stderr)
+        return 1
+    if not nav:
+        print("警告：沒有淨值資料，本次只更新價格與成交量。", file=sys.stderr)
     items = merge(nav, quotes, load_meta())
     date = trade_date(items, datetime.now(TW))
 
     save_db(items, date, args.db)
-    save_json(items, date, "fixture" if args.fixtures else "live", args.out)
+    save_json(items, date, "fixture" if args.fixtures else "live", args.out,
+              has_nav=any(it["nav"] is not None for it in items))
     flagged = sum(1 for it in items if it["premium"] is not None and abs(it["premium"]) >= 1)
     print(f"{date}：共 {len(items)} 檔 ETF，折溢價超過 ±1% 有 {flagged} 檔 → {args.out}")
     return 0
