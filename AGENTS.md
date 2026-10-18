@@ -43,6 +43,7 @@
 - **不要提交 `data/etf.db` 和 `web/data/latest.json`。** 這兩個檔案只由每日排程機器人更新；本機測試產生的變更請還原：`git checkout -- data/etf.db web/data/latest.json`
 - 開工前先 `git pull origin main`，PR 合併前確認測試通過。
 - 一個 PR 只做一件事，說明寫清楚改了什麼、怎麼驗證。
+- **合併權限（擁有者授權）**：Claude 的分支在全部測試通過後，可由 Claude 自行合併進 `main`；Codex 與其他協作者的修改，須由擁有者確認後合併（可請 Claude 先檢查）。
 
 ## 分工（避免同時改同一個檔案）
 
