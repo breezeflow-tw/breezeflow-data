@@ -44,12 +44,13 @@ CREATE TABLE IF NOT EXISTS daily (
 
 CREATE INDEX IF NOT EXISTS idx_daily_code ON daily(code, date);
 
--- 配息紀錄：從除權除息預告表每天累積
+-- 配息紀錄：投信官網配息紀錄為主，交易所除權息預告補充，每天累積
 CREATE TABLE IF NOT EXISTS dividend (
   code        TEXT NOT NULL,
   ex_date     TEXT NOT NULL,      -- 除息交易日
   cash        REAL,               -- 每單位現金配息（元），尚未公告時為空
-  pay_date    TEXT,               -- 發放日（待接公開資訊觀測站）
+  pay_date    TEXT,               -- 配息發放日（投信官網提供）
+  source      TEXT,               -- 出處：投信官網 / 交易所除權息預告
   updated_at  TEXT,
   PRIMARY KEY (code, ex_date)
 );

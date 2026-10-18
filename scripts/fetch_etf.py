@@ -23,7 +23,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import store
-from issuers import yuanta
+from issuers import uni, yuanta
 
 ROOT = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT / "data" / "etf.db"
@@ -51,7 +51,7 @@ YAHOO_CHART = "https://{host}/v8/finance/chart/{symbol}?range=10d&interval=1d"
 YAHOO_HOSTS = ("query1.finance.yahoo.com", "query2.finance.yahoo.com")
 
 # 已接入的投信官網；淨值、規模、費用、成分股以這裡的資料為主
-ISSUER_MODULES = {"yuanta": yuanta}
+ISSUER_MODULES = {"yuanta": yuanta, "uni": uni}
 
 
 # ---------- 下載 ----------
@@ -512,11 +512,24 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
                VALUES(:date, :code, :field, :yahoo, :exchange, :now)""",
             [{**d, "date": date, "now": now} for d in diffs or []],
         )
+        # 交易所除權息預告：只補投信官網還沒有的資料，不覆蓋投信公告
         con.executemany(
-            """INSERT INTO dividend(code, ex_date, cash, updated_at) VALUES(:code, :ex_date, :cash, :now)
-               ON CONFLICT(code, ex_date) DO UPDATE SET cash=COALESCE(excluded.cash, dividend.cash),
+            """INSERT INTO dividend(code, ex_date, cash, source, updated_at)
+               VALUES(:code, :ex_date, :cash, '交易所除權息預告', :now)
+               ON CONFLICT(code, ex_date) DO UPDATE SET
+                 cash=CASE WHEN dividend.source LIKE '%官網' THEN dividend.cash ELSE COALESCE(excluded.cash, dividend.cash) END,
+                 source=CASE WHEN dividend.source LIKE '%官網' THEN dividend.source ELSE excluded.source END,
                  updated_at=excluded.updated_at""",
             [{**d, "now": now} for d in dividends or []],
+        )
+        # 投信官網的配息紀錄（含發放日）優先
+        con.executemany(
+            """INSERT INTO dividend(code, ex_date, cash, pay_date, source, updated_at)
+               VALUES(:code, :ex_date, :cash, :pay_date, :source, :now)
+               ON CONFLICT(code, ex_date) DO UPDATE SET cash=COALESCE(excluded.cash, dividend.cash),
+                 pay_date=COALESCE(excluded.pay_date, dividend.pay_date), source=excluded.source,
+                 updated_at=excluded.updated_at""",
+            [{**d, "source": r["source"], "now": now} for r in (issuer or {}).values() for d in r.get("dividends") or []],
         )
         con.commit()
         attach_dividends(con, items, date)
@@ -533,12 +546,13 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
 def attach_dividends(con: sqlite3.Connection, items: list[dict], date: str) -> None:
     """每檔附上下一次除息（交易日之後）與最近一次除息（含當天）的日期、金額、發放日。"""
     for it in items:
-        nxt = con.execute("SELECT ex_date, cash, pay_date FROM dividend WHERE code=? AND ex_date>? ORDER BY ex_date LIMIT 1",
+        cols = ("ex_date", "cash", "pay_date", "source")
+        nxt = con.execute("SELECT ex_date, cash, pay_date, source FROM dividend WHERE code=? AND ex_date>? ORDER BY ex_date LIMIT 1",
                           (it["code"], date)).fetchone()
-        last = con.execute("SELECT ex_date, cash, pay_date FROM dividend WHERE code=? AND ex_date<=? ORDER BY ex_date DESC LIMIT 1",
+        last = con.execute("SELECT ex_date, cash, pay_date, source FROM dividend WHERE code=? AND ex_date<=? ORDER BY ex_date DESC LIMIT 1",
                            (it["code"], date)).fetchone()
-        it["next_ex"] = dict(zip(("ex_date", "cash", "pay_date"), nxt)) if nxt else None
-        it["last_ex"] = dict(zip(("ex_date", "cash", "pay_date"), last)) if last else None
+        it["next_ex"] = dict(zip(cols, nxt)) if nxt else None
+        it["last_ex"] = dict(zip(cols, last)) if last else None
 
 
 def save_issuer_detail(con: sqlite3.Connection, issuer: dict[str, dict]) -> None:
@@ -635,7 +649,7 @@ def main(argv=None) -> int:
 
     issuer: dict[str, dict] = {}
     for name, mod in ISSUER_MODULES.items():
-        records = mod.fetch(http_get_json, fixtures=args.fixtures / name if args.fixtures else None)
+        records = mod.fetch(http_get_json, fixtures=args.fixtures / name if args.fixtures else None, context=SSL_CONTEXT)
         print(f"{mod.SOURCE}：{len(records)} 檔")
         issuer.update(records)
     apply_issuer(items, issuer, date)

@@ -16,6 +16,8 @@ import uuid
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+from .common import flat_fee, ymd
+
 ISSUER = "元大"
 SOURCE = "元大投信官網"
 BASE = "https://etfapi.yuantaetfs.com/ectranslation"
@@ -34,17 +36,6 @@ def unwrap(payload):
     if isinstance(payload, dict) and "ResultCode" in payload:
         return payload.get("Data") if payload.get("ResultCode") == 0 else None
     return payload
-
-
-def ymd(value) -> str | None:
-    m = re.match(r"(\d{4})[/-]?(\d{2})[/-]?(\d{2})", str(value or "").strip())
-    return "-".join(m.groups()) if m else None
-
-
-def flat_fee(text) -> float | None:
-    """只接受單一費率（例如「0.99%」）。分段級距的說明不換算，避免算錯。"""
-    m = re.fullmatch(r"\s*(?:年費率)?\s*([\d.]+)\s*%\s*", str(text or ""))
-    return float(m.group(1)) if m else None
 
 
 def official_fee(text) -> float | None:
@@ -112,7 +103,7 @@ def parse_factset(data) -> dict | None:
             "volatility": data.get("COL06")}
 
 
-def fetch(get_json, fixtures: Path | None = None) -> dict[str, dict]:
+def fetch(get_json, fixtures: Path | None = None, context=None) -> dict[str, dict]:
     """get_json(url) 由主程式提供（含重試與被擋偵測）。fixtures 指定時改讀本機測試資料。"""
     device_id = str(uuid.uuid4())
 
