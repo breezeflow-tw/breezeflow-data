@@ -1,0 +1,147 @@
+{
+ "TotalPages": -1,
+ "TotalItems": 0,
+ "Entries": {
+  "CId": 7960,
+  "CFundId": "00935",
+  "CFullName": "野村臺灣創新科技50 ETF證券投資信託基金",
+  "CFundShortName": "野村臺灣新科技50",
+  "CPcfdate": "2026-10-19T00:00:00",
+  "CNavDt": "2026-10-16T00:00:00",
+  "CNavDtStr": "2026/10/16",
+  "CAnceTotalAv": 52153040671.0,
+  "CAnceTotalIssues": 917504000.0,
+  "CAnceIssuesDiff": 14500000.0,
+  "CAnceNav": "56.84",
+  "CAnceEstcValue": 28421152.0,
+  "CCtrlBasketValue": 31297000.0,
+  "CCtrlDiffBasketValue": -2610427.0,
+  "CCtrlBasketValueP": 28451573.0,
+  "CCloseDt": null,
+  "CAnceTotalIssuesT1": 0.0,
+  "CEtfindexCurrency": "TWD",
+  "CExRate": 1.0,
+  "CExRateDt": "2026-10-16T00:00:00",
+  "CEtfAcrossTime": "N",
+  "CAnceBaseValue": 500000.0,
+  "Stocks": [
+   {
+    "CtblTradeInfoId": 7960,
+    "CStockCode": "2330",
+    "CStockName": "台灣積體電路製造",
+    "CQuantity": 5247000,
+    "CWeightsPct": 24.35
+   },
+   {
+    "CtblTradeInfoId": 7960,
+    "CStockCode": "2454",
+    "CStockName": "聯發科技",
+    "CQuantity": 1968000,
+    "CWeightsPct": 16.04
+   },
+   {
+    "CtblTradeInfoId": 7960,
+    "CStockCode": "2308",
+    "CStockName": "台達電子工業",
+    "CQuantity": 2747000,
+    "CWeightsPct": 8.61
+   },
+   {
+    "CtblTradeInfoId": 7960,
+    "CStockCode": "3711",
+    "CStockName": "日月光投資控股",
+    "CQuantity": 4296000,
+    "CWeightsPct": 5.53
+   },
+   {
+    "CtblTradeInfoId": 7960,
+    "CStockCode": "2303",
+    "CStockName": "聯華電子",
+    "CQuantity": 15271000,
+    "CWeightsPct": 3.89
+   },
+   {
+    "CtblTradeInfoId": 7960,
+    "CStockCode": "3037",
+    "CStockName": "欣興電子",
+    "CQuantity": 1727870,
+    "CWeightsPct": 3.61
+   },
+   {
+    "CtblTradeInfoId": 7960,
+    "CStockCode": "3017",
+    "CStockName": "奇鋐科技",
+    "CQuantity": 434000,
+    "CWeightsPct": 2.76
+   },
+   {
+    "CtblTradeInfoId": 7960,
+    "CStockCode": "2327",
+    "CStockName": "國巨",
+    "CQuantity": 2408600,
+    "CWeightsPct": 2.62
+   },
+   {
+    "CtblTradeInfoId": 7960,
+    "CStockCode": "2345",
+    "CStockName": "智邦科技",
+    "CQuantity": 631000,
+    "CWeightsPct": 2.4
+   },
+   {
+    "CtblTradeInfoId": 7960,
+    "CStockCode": "2360",
+    "CStockName": "致茂電子",
+    "CQuantity": 505000,
+    "CWeightsPct": 1.94
+   },
+   {
+    "CtblTradeInfoId": 7960,
+    "CStockCode": "3653",
+    "CStockName": "健策精密工業",
+    "CQuantity": 140000,
+    "CWeightsPct": 1.81
+   },
+   {
+    "CtblTradeInfoId": 7960,
+    "CStockCode": "3443",
+    "CStockName": "創意電子",
+    "CQuantity": 114000,
+    "CWeightsPct": 1.64
+   }
+  ],
+  "Futures": [
+   {
+    "CtblTradeInfoId": 7960,
+    "CFuturesCode": "TX",
+    "CFuturesName": "台灣證交所加權股價指數",
+    "CQuantity": 161,
+    "CWeightsPct": 2.92,
+    "CContractYm": "2026/10"
+   }
+  ],
+  "Bonds": [],
+  "BondProperty": null,
+  "TradeInfoCurrencies": [
+   {
+    "CId": 0,
+    "CtblTradeInfoId": 7960,
+    "CFromCurrency": "TWD",
+    "CToCurrency": "TWD",
+    "CExchange": 1.0,
+    "CExRateDt": "2026-10-16T00:00:00",
+    "CCreateDt": null
+   }
+  ],
+  "Etfs": [],
+  "Options": [],
+  "CWarning": " (本基金之配息來源可能為收益平準金)",
+  "CCalendarDt": "-",
+  "CBeneficiariesCount": 130102,
+  "CIndexOrProductType": "1",
+  "CAnceTotalIssuesT1Date": null,
+  "CBeneficiariesCountDate": "2026-09-30T00:00:00"
+ },
+ "Message": "",
+ "StatusCode": 0
+}

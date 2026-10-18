@@ -608,6 +608,85 @@ class CtbcTest(unittest.TestCase):
             con.close()
 
 
+class NomuraTest(unittest.TestCase):
+    def load(self, name: str):
+        from issuers import nomura as n
+        return n.unwrap(json.loads((FIX / "nomura" / f"{name}.json").read_text("utf-8")), name)
+
+    def test_parse(self):
+        from issuers import nomura as n
+        funds = n.parse_list(self.load("list"))
+        self.assertEqual([(x["code"], x["nav_official"], x["nav_date"]) for x in funds],
+                         [("00935", 56.84, "2026-10-16"), ("009812", 13.2, "2026-10-16"), ("00987B", 15.5401, "2026-10-15"),
+                          ("00420A", None, None)])
+        self.assertEqual(n.parse_estimates(self.load("inav"))["00987B"], {"nav_estimate": 15.6529, "nav_estimate_date": "2026-10-16"})
+        d = n.parse_detail(self.load("detail_00935"), "00935")
+        # 追蹤指數去掉後面的指數代碼
+        self.assertEqual((d["index_name"], d["list_date"], d["mgmt_fee"], d["manager"], d["risk_class"]),
+                         ("臺灣指數公司特選臺灣上市上櫃FactSet創新科技50指數", "2023-11-01", 0.4, "林怡君", "RR5"))
+        self.assertEqual(d["dividends"][0], {"code": "00935", "ex_date": "2026-09-16", "pay_date": "2026-10-15", "cash": 1.83})
+        # 分段費率不換算；只寫代碼（AUDGQ9CW、1306 JP）的追蹤指數不收
+        b = n.parse_detail(self.load("detail_00987B"), "00987B")
+        self.assertEqual((b["mgmt_fee"], b["index_name"], b["custodian_fee_text"]),
+                         (None, None, "100億(含)以下：0.08%；100億-300 億(含)：0.07%；300億以上：0.06%"))
+        self.assertIsNone(n.parse_detail(self.load("detail_009812"), "009812")["index_name"])
+        self.assertEqual(n.parse_detail(self.load("detail_00935"), "00944"), {})
+        p = n.parse_pcf(self.load("trade_00935"))
+        self.assertEqual((p["pcf_date"], p["aum"], p["units"], p["units_change"], p["beneficiaries"], p["beneficiaries_month"]),
+                         ("2026-10-16", 521.53, 917504000.0, 14500000.0, 130102.0, "2026-09"))
+        # 期貨代號加上契約年月
+        self.assertEqual(p["holdings"][-1], {"asset_code": "TX-202610", "asset_name": "台灣證交所加權股價指數", "kind": "期貨",
+                                             "weight": 2.92, "qty": 161.0})
+        self.assertEqual([(h["asset_code"], h["kind"]) for h in n.parse_pcf(self.load("trade_009812"))["holdings"]],
+                         [("TP-202612", "期貨"), ("1306 JP", "基金")])
+        r = n.parse_pcf(self.load("trade_00987B"))
+        self.assertEqual(r["holdings"][0], {"asset_code": "AU0000407256", "asset_name": "ACGB 4 1/4 10/21/36", "kind": "債券",
+                                            "weight": 12.02, "qty": 6750000.0})
+        self.assertEqual(n.parse_pcf({"CFundId": "00420A"}), {})
+        with self.assertRaises(RuntimeError):
+            n.unwrap({"StatusCode": 1, "Message": "Year, Month, and Day parameters describe an un-representable DateTime."})
+
+    def test_fetch(self):
+        from issuers import nomura as n
+        recs = n.fetch(fixtures=FIX / "nomura")
+        self.assertEqual(sorted(recs), ["00420A", "00935", "009812", "00987B"])
+        # 債券 ETF 的基金資料頁只寫指數代碼，改用申購買回清單裡的指數名稱
+        self.assertEqual(recs["00987B"]["index_name"],
+                         "ICE TPEx 10+ Year Australia Government & Quasi-Government Coupon Weighted Index")
+        # 還沒上市的 ETF 沒有申購買回清單，只有基金資料
+        c = recs["00420A"]
+        self.assertEqual((c["nav_official"], c["aum"], c["holdings"], c["mgmt_fee"], "pcf_date" in c), (None, None, [], 0.99, False))
+
+    def fixtures(self, tmp: str) -> Path:
+        """在共用測試資料加上兩檔野村 ETF 的交易所資料。"""
+        fix = fixtures_without(tmp)
+        nav = json.loads((fix / "nav.json").read_text("utf-8"))
+        nav["a1"].append({"msgArray": [
+            {"a": "00935", "b": "野村臺灣新科技50", "e": "57.00", "f": "56.80", "g": "", "h": "56.42", "i": "20261016", "j": "13:30:00"},
+            {"a": "00987B", "b": "野村10+澳洲公債", "e": "15.70", "f": "15.60", "g": "", "h": "15.55", "i": "20261016", "j": "13:30:00"}]})
+        (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
+        twse = json.loads((fix / "twse.json").read_text("utf-8"))
+        twse += [{"Code": "00935", "Name": "野村臺灣新科技50", "TradeVolume": "20,000,000", "ClosingPrice": "57.00", "Change": "0.1500"},
+                 {"Code": "00987B", "Name": "野村10+澳洲公債", "TradeVolume": "1,000,000", "ClosingPrice": "15.70", "Change": "0.0500"}]
+        (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
+        return fix
+
+    def test_pipeline(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            self.assertEqual(f.main(["--fixtures", str(self.fixtures(tmp)), "--db", str(db), "--out", str(out)]), 0)
+            items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            a = items["00935"]
+            self.assertEqual((a["issuer"], a["nav"], a["nav_source"]), ("野村", 56.84, "野村投信官網（正式淨值）"))
+            self.assertEqual((a["aum"], a["units_change"], a["beneficiaries"], a["mgmt_fee"], a["fee_source"]),
+                             (521.53, 14500000.0, 130102.0, 0.4, "野村投信官網"))
+            self.assertEqual(a["last_ex"], {"ex_date": "2026-09-16", "cash": 1.83, "pay_date": "2026-10-15", "source": "野村投信官網"})
+            self.assertEqual(a["holdings_top"][0]["asset_code"], "2330")
+            b = items["00987B"]
+            # 正式淨值與清單都是 10/15 的，當天用野村公布的預估淨值；單位增減屬於 10/15
+            self.assertEqual((b["nav"], b["nav_source"], b["units_change"]), (15.6529, "野村投信官網（預估淨值）", None))
+
+
 class ReturnsTest(unittest.TestCase):
     def history(self):
         import returns
