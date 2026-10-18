@@ -353,7 +353,7 @@ def issuer_from_name(name: str) -> str | None:
     name = re.sub(r"^(主動|期|平衡)", "", name)
     for brand in ISSUERS:
         if name.startswith(brand):
-            return {"中國信託": "中信", "FT": "第一金", "大華": "大華銀"}.get(brand, brand)
+            return {"中國信託": "中信", "FT": "富蘭克林華美", "大華": "大華銀"}.get(brand, brand)
     return None
 
 
