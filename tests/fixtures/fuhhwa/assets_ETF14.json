@@ -1,0 +1,21 @@
+{
+ "result": [
+  {
+   "fundID": "ETF14",
+   "dDate": "2026/10/15",
+   "pcf_FundNav": "37,809,418,747",
+   "pcf_FundQissue": "789,600,000",
+   "pcf_Fundpnav": "47.8843",
+   "detail": [
+    {
+     "ftype": "債券",
+     "stockid": "US912810UU06",
+     "stockname": "T 5 05/15/56",
+     "qshare": "51,000,000",
+     "prate_addaccint": "4.187%"
+    }
+   ]
+  }
+ ],
+ "status": 0
+}

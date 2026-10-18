@@ -104,7 +104,7 @@ def parse_factset(data) -> dict | None:
             "volatility": data.get("COL06")}
 
 
-def fetch(get_json, fixtures: Path | None = None, context=None) -> dict[str, dict]:
+def fetch(get_json, fixtures: Path | None = None, context=None, **_) -> dict[str, dict]:
     """get_json(url) 由主程式提供（含重試與被擋偵測）。fixtures 指定時改讀本機測試資料。"""
     device_id = str(uuid.uuid4())
 

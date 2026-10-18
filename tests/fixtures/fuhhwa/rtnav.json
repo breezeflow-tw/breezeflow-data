@@ -1,0 +1,23 @@
+{
+ "result": [
+  {
+   "etfCode": "00929",
+   "fundID": "ETF21",
+   "name": "復華台灣科技優息",
+   "prePnav": "29.55",
+   "preDate": "10/15",
+   "pnav": "29.80",
+   "modifiedTime": "2026/10/16 16:59:54"
+  },
+  {
+   "etfCode": "00768B",
+   "fundID": "ETF14",
+   "name": "復華20年美債",
+   "prePnav": "47.80",
+   "preDate": "10/14",
+   "pnav": "47.87",
+   "modifiedTime": "2026/10/16 16:59:54"
+  }
+ ],
+ "status": 0
+}
