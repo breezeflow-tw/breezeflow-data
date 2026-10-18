@@ -11,6 +11,8 @@
 - ROC/Industry/IN2629.aspx 基金投資明細-月前十大：每檔基金月底前十大投資標的與占淨資產比例。
   依基金類型查詢（指數股票型 AH*、主動式 AL*），表格只有基金名稱，用名稱對到基本資料表的代號
 - ROC/Industry/IN2213.aspx 基金配息資料：當月除息的配息基準日、除息日、發放日與每單位分派金額
+- ROC/Industry/IN2106.aspx 基金淨值（日）：指定日期各基金的正式淨值與前一日淨值。投信每天申報，
+  晚上或隔天早上才齊全，查到的就用；這張表每次執行都抓，其他表每週最多抓一次
 各表以基金統編串接。年度比率只收整年都在運作的基金：年中才成立的比率只涵蓋幾個月，不能當作年費率。
 
 網站是 ASP.NET 表單：先 GET 拿隱藏欄位，再帶條件 POST 查詢。改年度時伺服器會重設月份選單，
@@ -39,6 +41,7 @@ RATIO = "IN2211.aspx?pid=IN2222_01"
 SUMMARY = "IN2201.aspx?pid=IN2221_01"
 TOP10 = "IN2629.aspx?pid=IN22601_04"
 DIVIDEND = "IN2213.aspx?pid=IN2222_03"
+NAV = "IN2106.aspx?pid=IN2213_02"
 ETF_CLASSES = ("AH", "AL")  # 指數股票型、主動式交易所交易基金
 PRE = "ctl00$ContentPlaceHolder1$"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"
@@ -262,7 +265,37 @@ def parse_dividends(page: str) -> list[dict]:
             for r in table(page) if column(r, "配息幣別") == "TWD" and day(column(r, "除息日")) and column(r, "基金統編")]
 
 
+def parse_nav(page: str) -> dict[str, float]:
+    """基金淨值（日）→ {ETF 代號: 正式淨值}。只收證券代號格式、新台幣計價的。"""
+    out = {}
+    for r in table(page):
+        code, nav = r.get("受益憑證代號") or "", num(r.get("淨值"))
+        if re.fullmatch(r"\d{4,6}[A-Z]?", code) and r.get("幣別") == "TWD" and nav:
+            out[code] = nav
+    return out
+
+
+def query_date(page: str) -> str | None:
+    """查詢頁上的日期欄（YYYYMMDD）→ YYYY-MM-DD，用來確認回應確實是要的那一天。"""
+    m = re.search(r'name="%s"[^>]*value="(\d{4})(\d{2})(\d{2})"' % re.escape(PRE + "txtQ_Date"), page or "")
+    return "-".join(m.groups()) if m else None
+
+
 # ---------- 抓取 ----------
+
+def fetch_nav(day: str, fixtures: Path | None = None, context: ssl.SSLContext | None = None) -> dict[str, float]:
+    """指定交易日（YYYY-MM-DD）的正式淨值；查不到或回應的日期不符時回傳 {}。"""
+    try:
+        if fixtures:
+            path = fixtures / "nav.html"
+            page = path.read_text("utf-8") if path.exists() else ""
+        else:
+            page = Site(context).query(NAV, {"txtQ_Date": day.replace("-", ""), "ddlQ_Comid": "", "BtnQuery": "查詢"})
+    except RuntimeError as exc:
+        print(f"警告：{SOURCE}基金淨值抓取失敗（{exc}）", file=sys.stderr)
+        return {}
+    return parse_nav(page) if query_date(page) == day else {}
+
 
 def fetch(fixtures: Path | None = None, context: ssl.SSLContext | None = None, today: date | None = None) -> dict:
     """回傳 {"month": 基本資料年月, "year": 費用比率年度, "funds": {ETF 代號: {...}},

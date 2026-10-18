@@ -890,6 +890,9 @@ class SitcaTest(unittest.TestCase):
         # 配息資料：只收新台幣、對得到代號的
         self.assertEqual(len(sitca.parse_dividends(page("dividend_202607"))), 2)
         self.assertEqual(info["dividends"], [{"code": "0056", "ex_date": "2026-07-21", "pay_date": "2026-08-10", "cash": 1.35}])
+        # 每日淨值：只收證券代號格式、新台幣計價的；回應的日期和要查的交易日不同就不用
+        self.assertEqual(sitca.parse_nav(page("nav")), {"0056": 36.2})
+        self.assertEqual((sitca.fetch_nav("2026-10-16", FIX / "sitca"), sitca.fetch_nav("2026-10-15", FIX / "sitca")), ({"0056": 36.2}, {}))
 
     def test_apply(self):
         info = {"month": "2026-09", "funds": {
@@ -946,6 +949,11 @@ class SitcaTest(unittest.TestCase):
                              ("投信投顧公會基金投資明細（月前十大）", "2026-09", "1303", None))
             self.assertEqual(a["last_ex"], {"ex_date": "2026-07-21", "cash": 1.35, "pay_date": "2026-08-10", "source": "投信投顧公會"})
             self.assertEqual(items["0050"]["holdings_source"], "元大投信官網")  # 官網有成分股就用官網的
+            # 沒有官網正式淨值的 ETF 用公會當日正式淨值，折溢價跟著重算，資料庫的正式淨值也補上
+            self.assertEqual((a["nav"], a["nav_source"], a["premium"]), (36.2, "投信投顧公會（正式淨值）", round((36.1 - 36.2) / 36.2 * 100, 4)))
+            con = sqlite3.connect(db)
+            self.assertEqual(con.execute("SELECT nav, nav_official FROM daily WHERE code='0056' AND date='2026-10-16'").fetchone(), (36.2, 36.2))
+            con.close()
             # 一週內再跑：不重抓公會資料，沿用資料庫裡的
             shutil.rmtree(fix / "sitca")
             self.assertEqual(f.main(args), 0)

@@ -22,6 +22,7 @@
 |---|---|
 | 已接入投信的 ETF：正式／預估淨值、規模、發行單位數、申購買回增減、經理費、保管費、成分股、配息紀錄 | 各投信官網（`scripts/issuers/`）：元大 `etfapi.yuantaetfs.com`、統一 `www.ezmoney.com.tw`、群益 `www.capitalfund.com.tw`、復華 `www.fhtrust.com.tw`、凱基 `www.kgifund.com.tw`、富邦 `websys.fsit.com.tw/FubonETF`、國泰 `cwapi.cathaysite.com.tw`、中信 `www.ctbcinvestments.com.tw/API`、野村 `www.nomurafunds.com.tw/API/ETFAPI`、摩根 `am.jpmorgan.com/FundsMarketingHandler`、貝萊德 `www.blackrock.com/tw` |
 | 尚未接入投信的 ETF：預估淨值、前日淨值、折溢價 | 臺灣證券交易所 ETF 預估淨值資訊 `mis.twse.com.tw/stock/data/all_etf.txt`（投信提供、證交所轉載） |
+| 尚未接入投信的 ETF：正式淨值 | 投信投顧公會基金淨值（日）`IN2106.aspx`，查詢當天交易日；公會收到投信申報後才有，有的話取代預估淨值重算折溢價 |
 | 收盤價、成交量（主要） | Yahoo 股市日線 `query1.finance.yahoo.com/v8/finance/chart/{代號}.TW`（上櫃為 `.TWO`） |
 | 收盤價、成交量（查核） | 證交所 OpenAPI `exchangeReport/STOCK_DAY_ALL`、櫃買 `tpex_mainboard_daily_close_quotes`。與 Yahoo 不一致時採用交易所數字，差異記錄在 `price_check` 表 |
 | 規模 | 發行單位數 × 淨值。上市用證交所 OpenAPI `opendata/t187ap47_L`（基金基本資料），上櫃用櫃買行情的 `Capitals` |
