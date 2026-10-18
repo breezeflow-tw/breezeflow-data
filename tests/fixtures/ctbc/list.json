@@ -1,0 +1,41 @@
+{
+ "ResultCode": 0,
+ "ResultMsg": "",
+ "Data": {
+  "Data": [
+   {
+    "FundName": "測試基金",
+    "ETF_ID": "00891",
+    "FID_TITLE": "",
+    "FID": "E0017",
+    "FID_BNAME": "測試",
+    "NAV": "20.10",
+    "NAV_DT": "2026/10/16",
+    "CNO": "88182265",
+    "NAV_CURX": "TWD",
+    "RISK_LV": "4",
+    "RISK_LV_NAME": "RR4",
+    "FundType": "00001",
+    "FundTypeName": "國內ETF",
+    "YieldName": "季配"
+   },
+   {
+    "FundName": "測試基金",
+    "ETF_ID": "00772B",
+    "FID_TITLE": "",
+    "FID": "E0003",
+    "FID_BNAME": "測試",
+    "NAV": "32.5000",
+    "NAV_DT": "2026/10/15",
+    "CNO": "74707446",
+    "NAV_CURX": "TWD",
+    "RISK_LV": "4",
+    "RISK_LV_NAME": "RR4",
+    "FundType": "00001",
+    "FundTypeName": "債券型ETF",
+    "YieldName": "季配"
+   }
+  ]
+ },
+ "ExecuteTime": "2026-10-16 18:05:00.000"
+}

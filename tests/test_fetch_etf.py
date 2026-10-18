@@ -559,6 +559,55 @@ class CathayTest(unittest.TestCase):
             con.close()
 
 
+class CtbcTest(unittest.TestCase):
+    def test_parse(self):
+        from issuers import ctbc as c
+        load = lambda n: c.unwrap(json.loads((FIX / "ctbc" / f"{n}.json").read_text("utf-8")), n)
+        funds = c.parse_list(load("list"))
+        self.assertEqual([(x["code"], x["fid"], x["nav_date"]) for x in funds], [("00891", "E0017", "2026-10-16"), ("00772B", "E0003", "2026-10-15")])
+        self.assertEqual(c.parse_estimates(load("inav"))["00772B"], {"nav_estimate": 32.6, "nav_estimate_date": "2026-10-16"})
+        d = c.parse_detail(load("detail_74707446"), "00772B")
+        self.assertEqual((d["index_name"], d["list_date"], d["mgmt_fee"]), ("彭博測試公司債指數", "2019-01-29", None))  # 英文指數名稱不收、分段費率不換算
+        self.assertEqual(d["dividends"], [{"code": "00772B", "ex_date": "2026-09-16", "pay_date": "2026-10-15", "cash": 0.14}])
+        p = c.parse_pcf(load("pcf_E0017"))
+        self.assertEqual((p["pcf_date"], p["aum"], p["units_change"], p["beneficiaries_month"]), ("2026-10-16", 402.0, 5000000.0, "2026-09"))
+        # 現金、保證金不是成分；期貨代號加上契約年月
+        self.assertEqual([(h["asset_code"], h["kind"]) for h in p["holdings"]], [("2330", "股票"), ("2454", "股票"), ("TE-202610", "期貨")])
+        self.assertEqual(c.parse_pcf({"Data": [{}], "Detail": []}), {})  # 查非交易日時清單是空的
+        with self.assertRaises(RuntimeError):
+            c.unwrap({"ResultCode": 1, "ResultMsg": "E404-查無指定的基金"}, "etf/ETFDetail")
+
+    def fixtures(self, tmp: str) -> Path:
+        """在共用測試資料加上兩檔中信 ETF 的交易所資料。"""
+        fix = fixtures_without(tmp)
+        nav = json.loads((fix / "nav.json").read_text("utf-8"))
+        nav["a1"].append({"msgArray": [
+            {"a": "00891", "b": "中信關鍵半導體", "e": "20.20", "f": "20.12", "g": "", "h": "20.00", "i": "20261016", "j": "13:30:00"},
+            {"a": "00772B", "b": "中信高評級公司債", "e": "32.70", "f": "32.60", "g": "", "h": "32.50", "i": "20261016", "j": "13:30:00"}]})
+        (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
+        twse = json.loads((fix / "twse.json").read_text("utf-8"))
+        twse += [{"Code": "00891", "Name": "中信關鍵半導體", "TradeVolume": "30,000,000", "ClosingPrice": "20.20", "Change": "0.1000"},
+                 {"Code": "00772B", "Name": "中信高評級公司債", "TradeVolume": "2,000,000", "ClosingPrice": "32.70", "Change": "0.1000"}]
+        (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
+        return fix
+
+    def test_pipeline(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            self.assertEqual(f.main(["--fixtures", str(self.fixtures(tmp)), "--db", str(db), "--out", str(out)]), 0)
+            items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            a = items["00891"]
+            self.assertEqual((a["issuer"], a["nav"], a["nav_source"]), ("中信", 20.1, "中信投信官網（正式淨值）"))
+            self.assertEqual((a["aum"], a["units_change"], a["beneficiaries"], a["fee_source"]), (402.0, 5000000.0, 150000.0, "中信投信官網"))
+            self.assertEqual(a["last_ex"], {"ex_date": "2026-08-18", "cash": 1.0, "pay_date": "2026-09-11", "source": "中信投信官網"})
+            b = items["00772B"]
+            # 正式淨值與清單都是 10/15 的，當天用中信公布的預估淨值；單位增減屬於 10/15
+            self.assertEqual((b["nav"], b["nav_source"], b["units_change"]), (32.6, "中信投信官網（預估淨值）", None))
+            con = sqlite3.connect(db)
+            self.assertEqual(con.execute("SELECT DISTINCT date FROM holding WHERE code='00772B'").fetchall(), [("2026-10-15",)])
+            con.close()
+
+
 class ReturnsTest(unittest.TestCase):
     def history(self):
         import returns

@@ -1,0 +1,45 @@
+{
+ "ResultCode": 0,
+ "ResultMsg": "",
+ "Data": {
+  "FundDetail": [
+   {
+    "CNO": "88182265",
+    "ETF_ID": "00891",
+    "FundName": "測試基金",
+    "ExponName": "台灣半導體測試指數",
+    "FundFount": "2019/01/20",
+    "FundAppear": "2021/05/28",
+    "RiskLv": "RR4",
+    "CurType": "新臺幣",
+    "ManagerCost": "0.40%",
+    "PreserveCost": "0.035%",
+    "Manager": "測試經理人甲",
+    "ActiveETF": "N"
+   }
+  ],
+  "FundNav": [
+   {
+    "NAV_DT": "2026/10/16",
+    "NAV": "20.10"
+   }
+  ],
+  "DivHist": [
+   {
+    "UNIT_NET": "1.0000",
+    "ESTIMATE_DATE": "2026/06/30",
+    "BASE_DATE": "2026/08/22",
+    "DIVIDENT_DATE": "2026/08/18",
+    "RELEASE_DATE": "2026/09/11"
+   },
+   {
+    "UNIT_NET": "0.8000",
+    "ESTIMATE_DATE": "2026/06/30",
+    "BASE_DATE": "2026/05/22",
+    "DIVIDENT_DATE": "2026/05/19",
+    "RELEASE_DATE": "2026/06/12"
+   }
+  ]
+ },
+ "ExecuteTime": "2026-10-16 18:05:00.000"
+}

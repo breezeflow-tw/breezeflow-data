@@ -1,0 +1,38 @@
+{
+ "ResultCode": 0,
+ "ResultMsg": "",
+ "Data": {
+  "FundDetail": [
+   {
+    "CNO": "74707446",
+    "ETF_ID": "00772B",
+    "FundName": "測試基金",
+    "ExponName": "彭博測試公司債指數<br/>(Bloomberg Test Corporate Index)",
+    "FundFount": "2019/01/20",
+    "FundAppear": "2019/01/29",
+    "RiskLv": "RR4",
+    "CurType": "新臺幣",
+    "ManagerCost": "基金規模新臺幣30億(含)以下：0.4%；新臺幣30億以上：0.3%",
+    "PreserveCost": "基金規模新臺幣30億(含)以下：0.14%；新臺幣30億以上：0.1%",
+    "Manager": "測試經理人乙",
+    "ActiveETF": "N"
+   }
+  ],
+  "FundNav": [
+   {
+    "NAV_DT": "2026/10/16",
+    "NAV": "20.10"
+   }
+  ],
+  "DivHist": [
+   {
+    "UNIT_NET": "0.1400",
+    "ESTIMATE_DATE": "2026/06/30",
+    "BASE_DATE": "2026/09/22",
+    "DIVIDENT_DATE": "2026/09/16",
+    "RELEASE_DATE": "2026/10/15"
+   }
+  ]
+ },
+ "ExecuteTime": "2026-10-16 18:05:00.000"
+}
