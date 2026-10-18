@@ -910,6 +910,40 @@ class SitcaTest(unittest.TestCase):
         self.assertEqual((k_line["mgmt_fee"], k_line["custodian_fee_text"], k_line["fee"], k_line["manager"]), (0.4, "0.10%", 0.6, "甲"))
         self.assertEqual(k_line["fee_source"], "投信投顧公會基金基本資料（2026-09）")
 
+    def test_backfill(self):
+        import sitca
+        funds = {"0050": {"fund_id": "98764389"}, "0056": {"fund_id": "48966213"}}
+        old = sitca.backfill({"summary": ["2026-08", "2026-07", "2026-06"], "dividend": ["2026-07"]}, funds, FIX / "sitca")
+        # 8 月有資料；7 月公會回應的是別的月份（記為已處理、不收資料）；6 月沒有測試資料（下次再試）
+        self.assertEqual(sorted(old["summary"]), ["2026-08"])
+        self.assertEqual(old["summary"]["2026-08"]["0056"]["beneficiaries"], 1700000)
+        self.assertEqual(old["done"], [("summary", "2026-08"), ("summary", "2026-07"), ("dividend", "2026-07")])
+        self.assertEqual(old["dividends"], [{"code": "0056", "ex_date": "2026-07-21", "pay_date": "2026-08-10", "cash": 1.35}])
+        self.assertEqual(f.months_between("2025-11", "2026-02"), ["2025-11", "2025-12", "2026-01", "2026-02"])
+
+    def test_backfill_pipeline(self):
+        import sitca
+        with tempfile.TemporaryDirectory() as tmp:
+            fix = fixtures_without(tmp)
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            args = ["--fixtures", str(fix), "--db", str(db), "--out", str(out)]
+            self.assertEqual(f.main(args), 0)  # 第一次：抓最新資料，不回補
+            con = sqlite3.connect(db)
+            self.assertEqual(con.execute("SELECT report, month FROM fund_fetch ORDER BY report, month").fetchall(),
+                             [("dividend", "2026-07"), ("summary", "2026-09")])
+            con.close()
+            plan = f.backfill_plan(db)
+            self.assertEqual(plan["summary"], ["2026-08", "2026-07", "2026-06"][:sitca.BACKFILL_MONTHS])
+            self.assertEqual(f.main(args), 0)  # 一週內再跑：回補歷史月份
+            con = sqlite3.connect(db)
+            self.assertEqual(con.execute("SELECT month, beneficiaries FROM fund_month WHERE code='0056' ORDER BY month").fetchall(),
+                             [("2026-08", 1700000), ("2026-09", 1745584)])
+            self.assertIn(("summary", "2026-07"), con.execute("SELECT report, month FROM fund_fetch").fetchall())
+            con.close()
+            # 網站顯示的仍是最新一個月
+            items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            self.assertEqual(items["0056"]["monthly"]["month"], "2026-09")
+
     def test_apply_month(self):
         row = {"code": "0056", "month": "2026-09", "aum_twd": 800875038138.0, "nav": 56.75, "units": 14112534000.0,
                "beneficiaries": 1745584, "beneficiaries_natural": 1742995, "beneficiaries_legal": 2589,

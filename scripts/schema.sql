@@ -128,3 +128,11 @@ CREATE TABLE IF NOT EXISTS fund_top (
   weight      REAL,               -- 占基金淨資產價值比例（%）
   PRIMARY KEY (code, month, rank)
 );
+
+-- 投信投顧公會歷史資料的回補進度：哪些報表的哪些月份已經抓過
+CREATE TABLE IF NOT EXISTS fund_fetch (
+  report   TEXT NOT NULL,         -- summary（基金資料彙總表）/ dividend（基金配息資料）
+  month    TEXT NOT NULL,         -- 資料年月 YYYY-MM
+  fetched  TEXT,                  -- 抓取日期
+  PRIMARY KEY (report, month)
+);

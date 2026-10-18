@@ -17,6 +17,8 @@
 
 網站是 ASP.NET 表單：先 GET 拿隱藏欄位，再帶條件 POST 查詢。改年度時伺服器會重設月份選單，
 所以「年度」與「全年」要分兩次送出。資料每月才更新，主程式每週最多抓一次。
+彙總表與配息資料的歷史月份另外回補：沒有重抓最新資料的那幾次執行，每次每種資料補幾個月，
+彙總表補到 BACKFILL_FROM 的月份（約五年），配息資料公會只提供到 2022 年 6 月。
 """
 from __future__ import annotations
 
@@ -46,6 +48,8 @@ ETF_CLASSES = ("AH", "AL")  # 指數股票型、主動式交易所交易基金
 PRE = "ctl00$ContentPlaceHolder1$"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"
 REFRESH_DAYS = 7
+BACKFILL_FROM = {"summary": "2021-01", "dividend": "2022-06"}
+BACKFILL_MONTHS = 3  # 每次執行每種資料最多回補幾個月
 
 
 class Site:
@@ -353,7 +357,7 @@ def fetch(fixtures: Path | None = None, context: ssl.SSLContext | None = None, t
     summary = {code: by_id[f["fund_id"]] for code, f in funds.items() if f["fund_id"] in by_id}
     return {"month": yyyymm(month), "year": year, "funds": funds,
             "summary": {"month": yyyymm(ym), "funds": summary} if summary and yyyymm(ym) else {},
-            "top10": fetch_top10(load, funds), "dividends": fetch_dividends(load, funds)}
+            "top10": fetch_top10(load, funds), **fetch_dividends(load, funds)}
 
 
 def fetch_top10(load, funds: dict) -> dict:
@@ -375,17 +379,53 @@ def fetch_top10(load, funds: dict) -> dict:
     return {"month": ym, "funds": top} if top and ym else {}
 
 
-def fetch_dividends(load, funds: dict) -> list[dict]:
-    """配息資料：最新兩個月（每月第 10 個營業日公布上個月的除息紀錄）。"""
+def fetch_dividends(load, funds: dict) -> dict:
+    """配息資料：最新兩個月（每月第 10 個營業日公布上個月的除息紀錄）。
+    回傳 {"dividends": [...], "dividend_months": [抓到的年月]}。"""
     by_id = {f["fund_id"]: code for code, f in funds.items()}
-    out = []
+    out, months = [], []
     try:
         start = load("dividend")
         for ym in options(start, "ddlQ_YM")[-2:]:
             page = load(f"dividend_{ym}", {"ddlQ_YM": ym, "rdo1": "rbComid", "ddlQ_Comid": "", "BtnQuery": "查詢"}, start=start)
-            out += [{"code": by_id[d.pop("fund_id")], **d} for d in parse_dividends(page) if d["fund_id"] in by_id]
+            if selected(page, "ddlQ_YM") == ym:
+                out += [{"code": by_id[d.pop("fund_id")], **d} for d in parse_dividends(page) if d["fund_id"] in by_id]
+                months.append(yyyymm(ym))
     except RuntimeError as exc:
         print(f"警告：{SOURCE}配息資料抓取失敗（{exc}）", file=sys.stderr)
+    return {"dividends": out, "dividend_months": months}
+
+
+def backfill(want: dict[str, list[str]], funds: dict, fixtures: Path | None = None,
+             context: ssl.SSLContext | None = None) -> dict:
+    """回補歷史月份。want = {"summary": [YYYY-MM], "dividend": [YYYY-MM]}，funds 是 {ETF 代號: {fund_id, ...}}。
+    回傳 {"summary": {年月: {代號: {...}}}, "dividends": [...], "done": [(報表, 年月)]}。
+    公會沒有那個月（回應的月份不同）也記為已處理，免得每次都重查。"""
+    site = None if fixtures else Site(context)
+    by_id = {f["fund_id"]: code for code, f in funds.items()}
+    out: dict = {"summary": {}, "dividends": [], "done": []}
+    for report, path in (("summary", SUMMARY), ("dividend", DIVIDEND)):
+        start = None
+        for month in want.get(report) or []:
+            ym = month.replace("-", "")
+            try:
+                if fixtures:
+                    file = fixtures / f"{report}_{ym}.html"
+                    page = file.read_text("utf-8") if file.exists() else None
+                else:
+                    start = start or site.page(path)
+                    page = site.query(path, {"ddlQ_YM": ym, "rdo1": "rbComid", "ddlQ_Comid": "", "BtnQuery": "查詢"}, start=start)
+            except RuntimeError as exc:
+                print(f"警告：{SOURCE}歷史資料回補中斷（{exc}）", file=sys.stderr)
+                return out
+            if page is None:
+                continue
+            if selected(page, "ddlQ_YM") == ym:
+                if report == "summary":
+                    out["summary"][month] = {by_id[i]: r for i, r in parse_summary(page).items() if i in by_id}
+                else:
+                    out["dividends"] += [{"code": by_id[d.pop("fund_id")], **d} for d in parse_dividends(page) if d["fund_id"] in by_id]
+            out["done"].append((report, month))
     return out
 
 
