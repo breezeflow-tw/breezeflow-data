@@ -6,7 +6,10 @@ CREATE TABLE IF NOT EXISTS etf (
   category    TEXT,               -- 市值型 / 高股息 / 主題型 / 海外股票 / 債券 / 商品 / 槓桿反向 / 主動式
   market      TEXT,               -- 上市 / 上櫃
   fee         REAL,               -- 總費用率（%）
-  aum         REAL,               -- 規模（億元）
+  aum         REAL,               -- 規模（億元）＝ 發行單位數 × 淨值
+  units       REAL,               -- 發行單位數
+  index_name  TEXT,               -- 追蹤指數
+  listed_date TEXT,               -- 上市日期
   updated_at  TEXT
 );
 
@@ -23,7 +26,18 @@ CREATE TABLE IF NOT EXISTS daily (
   source_time  TEXT,              -- 淨值資料時間
   nav_official     REAL,          -- 投信公告的正式淨值（隔天才會有）
   premium_official REAL,          -- 收盤價對正式淨值的折溢價（%）
+  aum          REAL,              -- 當天規模（億元）
   PRIMARY KEY (date, code)
 );
 
 CREATE INDEX IF NOT EXISTS idx_daily_code ON daily(code, date);
+
+-- 配息紀錄：從除權除息預告表每天累積
+CREATE TABLE IF NOT EXISTS dividend (
+  code        TEXT NOT NULL,
+  ex_date     TEXT NOT NULL,      -- 除息交易日
+  cash        REAL,               -- 每單位現金配息（元），尚未公告時為空
+  pay_date    TEXT,               -- 發放日（待接公開資訊觀測站）
+  updated_at  TEXT,
+  PRIMARY KEY (code, ex_date)
+);

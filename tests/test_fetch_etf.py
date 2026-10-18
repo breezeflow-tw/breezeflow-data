@@ -67,8 +67,21 @@ class ParseTest(unittest.TestCase):
         self.assertEqual(f.clean_name("聯邦台灣精彩50ETF證券投資信託基金"), "聯邦台灣精彩50")
         self.assertEqual(f.issuer_from_name("FT臺灣Smart"), "第一金")
 
+    def test_fund_and_dividends(self):
+        fund = f.parse_fund(json.loads((FIX / "fund.json").read_text("utf-8")))
+        self.assertEqual(fund["0050"]["units"], 1e9)
+        self.assertEqual(fund["0050"]["listed_date"], "2003-06-30")
+        self.assertIsNone(fund["00981A"]["index_name"])  # 「不適用」視為空值
+        divs = f.parse_dividends(json.loads((FIX / "div_twse.json").read_text("utf-8")),
+                                 json.loads((FIX / "div_tpex.json").read_text("utf-8")))
+        codes = {d["code"]: d for d in divs}
+        self.assertNotIn("2330", codes)  # 個股不收
+        self.assertEqual(codes["00679B"], {"code": "00679B", "ex_date": "2026-10-16", "cash": 0.34})
+        self.assertIsNone(codes["00757"]["cash"])  # 尚未公告金額
+
     def test_issuer(self):
         self.assertEqual(f.issuer_from_name("元大台灣50"), "元大")
+        self.assertEqual(f.issuer_from_name("大華優利高填息30"), "大華銀")
         self.assertEqual(f.issuer_from_name("大華銀優利高填息30"), "大華銀")
         self.assertEqual(f.issuer_from_name("主動統一台股增長"), "統一")
         self.assertEqual(f.issuer_from_name("期元大S&P黃金"), "元大")
@@ -94,6 +107,18 @@ class PipelineTest(unittest.TestCase):
             self.assertEqual(con.execute("SELECT COUNT(*) FROM daily").fetchone()[0], 5)
             self.assertEqual(con.execute("SELECT COUNT(*) FROM etf").fetchone()[0], 5)
             con.close()
+
+    def test_size_and_dividends_in_output(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            self.assertEqual(f.main(["--fixtures", str(FIX), "--db", str(db), "--out", str(out)]), 0)
+            items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            self.assertAlmostEqual(items["0050"]["aum"], 1e9 * 52.25 / 1e8)    # 上市：基金基本資料 × 預估淨值
+            self.assertAlmostEqual(items["00679B"]["aum"], 6e9 * 28.40 / 1e8)  # 上櫃：Capitals × 預估淨值
+            self.assertEqual(items["0056"]["next_ex"], {"ex_date": "2026-10-20", "cash": 0.866, "pay_date": None})
+            self.assertEqual(items["0050"]["last_ex"]["ex_date"], "2026-10-15")
+            self.assertIsNone(items["0050"]["next_ex"])
+            self.assertEqual(items["00679B"]["last_ex"]["ex_date"], "2026-10-16")  # 交易日當天除息算「最近一次」
 
     def test_rerun_without_nav_keeps_nav(self):
         with tempfile.TemporaryDirectory() as tmp:

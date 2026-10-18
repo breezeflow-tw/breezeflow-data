@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-18T12:57:15+08:00",
+ "generated_at": "2026-10-18T13:02:19+08:00",
  "trade_date": "2026-10-16",
  "source": "live",
  "has_nav": true,
@@ -18,8 +18,13 @@
    "premium": 0.54,
    "volume_lots": 27595,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 295.11,
+   "units": 1976640000.0,
+   "index_name": null,
+   "listed_date": "2026-04-09",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00401A",
@@ -34,8 +39,17 @@
    "premium": 0.42,
    "volume_lots": 7616,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 38.1,
+   "units": 276895000.0,
+   "index_name": null,
+   "listed_date": "2026-04-10",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": {
+    "ex_date": "2026-10-15",
+    "cash": 0.131,
+    "pay_date": null
+   }
   },
   {
    "code": "00402A",
@@ -50,8 +64,13 @@
    "premium": 0.1,
    "volume_lots": 895,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 55.66,
+   "units": 565627000.0,
+   "index_name": null,
+   "listed_date": "2026-06-09",
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00403A",
@@ -66,8 +85,13 @@
    "premium": 0.1,
    "volume_lots": 116689,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 1316.02,
+   "units": 12654019000.0,
+   "index_name": null,
+   "listed_date": "2026-05-12",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00404A",
@@ -82,8 +106,13 @@
    "premium": 0.31,
    "volume_lots": 6926,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:43"
+   "aum": 39.83,
+   "units": 415295000.0,
+   "index_name": null,
+   "listed_date": "2026-06-09",
+   "source_time": "20261016 16:59:43",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00405A",
@@ -98,8 +127,13 @@
    "premium": 0.23,
    "volume_lots": 44263,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 226.86,
+   "units": 2554745000.0,
+   "index_name": null,
+   "listed_date": "2026-06-09",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00406A",
@@ -114,8 +148,17 @@
    "premium": 0.43,
    "volume_lots": 792218,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 15:57:30"
+   "aum": 877.06,
+   "units": 9451062000.0,
+   "index_name": null,
+   "listed_date": "2026-06-11",
+   "source_time": "20261016 15:57:30",
+   "next_ex": {
+    "ex_date": "2026-11-03",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00407A",
@@ -130,8 +173,13 @@
    "premium": 0.21,
    "volume_lots": 21296,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 210.97,
+   "units": 2177239000.0,
+   "index_name": null,
+   "listed_date": "2026-06-24",
+   "source_time": "20261016 17:00:02",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00408A",
@@ -146,8 +194,17 @@
    "premium": 0.29,
    "volume_lots": 2196,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:48"
+   "aum": 14.23,
+   "units": 139634000.0,
+   "index_name": null,
+   "listed_date": "2026-07-15",
+   "source_time": "20261016 17:00:48",
+   "next_ex": {
+    "ex_date": "2026-10-21",
+    "cash": 0.21,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00409A",
@@ -162,8 +219,13 @@
    "premium": 0.75,
    "volume_lots": 10998,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 129.08,
+   "units": 1383448000.0,
+   "index_name": null,
+   "listed_date": "2026-09-02",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00410A",
@@ -178,8 +240,13 @@
    "premium": 0.42,
    "volume_lots": 18653,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:59:53"
+   "aum": 18.4,
+   "units": 154360000.0,
+   "index_name": null,
+   "listed_date": "2026-08-03",
+   "source_time": "20261016 13:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00411A",
@@ -194,8 +261,13 @@
    "premium": 0.5,
    "volume_lots": 13504,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:58"
+   "aum": 44.85,
+   "units": 444076000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:58",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00412A",
@@ -210,8 +282,13 @@
    "premium": 0.88,
    "volume_lots": 58417,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 14:59:45"
+   "aum": 66.57,
+   "units": 729988000.0,
+   "index_name": null,
+   "listed_date": "2026-10-13",
+   "source_time": "20261016 14:59:45",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "0050",
@@ -226,8 +303,13 @@
    "premium": 0.35,
    "volume_lots": 122161,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:31:00"
+   "aum": 24761.02,
+   "units": 22796000000.0,
+   "index_name": "臺灣50指數",
+   "listed_date": "2003-06-30",
+   "source_time": "20261016 13:31:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "0051",
@@ -242,8 +324,13 @@
    "premium": 0.39,
    "volume_lots": 52,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:31:00"
+   "aum": 37.57,
+   "units": 25000000.0,
+   "index_name": "臺灣中型100指數",
+   "listed_date": "2006-08-31",
+   "source_time": "20261016 13:31:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "0052",
@@ -258,8 +345,13 @@
    "premium": 0.6,
    "volume_lots": 17095,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 1627.11,
+   "units": 2586000000.0,
+   "index_name": "臺灣資訊科技指數",
+   "listed_date": "2006-09-12",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "0053",
@@ -274,8 +366,13 @@
    "premium": 0.59,
    "volume_lots": 992,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:31:00"
+   "aum": 31.44,
+   "units": 12988000.0,
+   "index_name": "電子類加權股價指數",
+   "listed_date": "2007-07-16",
+   "source_time": "20261016 13:31:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "0055",
@@ -290,8 +387,13 @@
    "premium": -0.21,
    "volume_lots": 1076,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:31:00"
+   "aum": 47.36,
+   "units": 91154000.0,
+   "index_name": "MSCI台灣金融指數",
+   "listed_date": "2007-07-16",
+   "source_time": "20261016 13:31:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "0056",
@@ -306,8 +408,17 @@
    "premium": 0.38,
    "volume_lots": 45404,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:31:00"
+   "aum": 8482.77,
+   "units": 14493034000.0,
+   "index_name": "臺灣高股息指數",
+   "listed_date": "2007-12-26",
+   "source_time": "20261016 13:31:00",
+   "next_ex": {
+    "ex_date": "2026-10-22",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "0057",
@@ -322,8 +433,13 @@
    "premium": 0.0,
    "volume_lots": 30,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 4.94,
+   "units": 1527000.0,
+   "index_name": "MSCI臺灣指數",
+   "listed_date": "2008-02-27",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "0061",
@@ -338,8 +454,13 @@
    "premium": 0.35,
    "volume_lots": 113,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 21.15,
+   "units": 93116000.0,
+   "index_name": "滬深300指數",
+   "listed_date": "2009-08-17",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "006201",
@@ -354,8 +475,13 @@
    "premium": 0.88,
    "volume_lots": 307,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:31:00"
+   "aum": 10.14,
+   "units": 22946000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 13:31:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "006203",
@@ -370,8 +496,13 @@
    "premium": -0.49,
    "volume_lots": 4,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:31:00"
+   "aum": 20.11,
+   "units": 10218000.0,
+   "index_name": "MSCI&#174;臺灣指數",
+   "listed_date": "2011-05-12",
+   "source_time": "20261016 13:31:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "006204",
@@ -386,8 +517,13 @@
    "premium": -0.13,
    "volume_lots": 51,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:59:52"
+   "aum": 3.54,
+   "units": 1500000.0,
+   "index_name": "臺灣證券交易所發行量加權股價指數",
+   "listed_date": "2011-09-28",
+   "source_time": "20261016 13:59:52",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "006205",
@@ -402,8 +538,13 @@
    "premium": -0.39,
    "volume_lots": 386,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 36.71,
+   "units": 94272000.0,
+   "index_name": "上証180指數",
+   "listed_date": "2011-09-26",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "006206",
@@ -418,8 +559,13 @@
    "premium": -0.84,
    "volume_lots": 44,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 9.87,
+   "units": 26778000.0,
+   "index_name": "上證50指數",
+   "listed_date": "2012-05-11",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "006207",
@@ -434,8 +580,13 @@
    "premium": -0.23,
    "volume_lots": 180,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 6.31,
+   "units": 20892000.0,
+   "index_name": "滬深300指數",
+   "listed_date": "2012-06-22",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "006208",
@@ -450,8 +601,13 @@
    "premium": 0.61,
    "volume_lots": 2590,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 4645.76,
+   "units": 1867040000.0,
+   "index_name": "臺灣50指數",
+   "listed_date": "2012-07-17",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00625K",
@@ -466,8 +622,13 @@
    "premium": 0.12,
    "volume_lots": 1,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 0.03,
+   "units": 333000.0,
+   "index_name": "上証180指數",
+   "listed_date": "2016-08-08",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00631L",
@@ -482,8 +643,13 @@
    "premium": 0.38,
    "volume_lots": 175188,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:31:00"
+   "aum": 2705.56,
+   "units": 7310348000.0,
+   "index_name": "臺灣50指數",
+   "listed_date": "2014-10-31",
+   "source_time": "20261016 13:31:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00632R",
@@ -498,8 +664,13 @@
    "premium": -0.21,
    "volume_lots": 106564,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:31:00"
+   "aum": 238.19,
+   "units": 2463207730.0,
+   "index_name": "臺灣50指數",
+   "listed_date": "2014-10-31",
+   "source_time": "20261016 13:31:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00633L",
@@ -514,8 +685,13 @@
    "premium": 0.27,
    "volume_lots": 2182,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 54.03,
+   "units": 132458000.0,
+   "index_name": "上証180兩倍槓桿指數",
+   "listed_date": "2014-11-25",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00634R",
@@ -530,8 +706,13 @@
    "premium": -0.88,
    "volume_lots": 226,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 1.46,
+   "units": 42756000.0,
+   "index_name": "上証180反向指數",
+   "listed_date": "2014-11-25",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00635U",
@@ -546,8 +727,13 @@
    "premium": -0.3,
    "volume_lots": 1968,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 144.82,
+   "units": 336014000.0,
+   "index_name": "標普高盛黃金ER指數",
+   "listed_date": "2015-04-15",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00636",
@@ -562,8 +748,13 @@
    "premium": -0.31,
    "volume_lots": 402,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 24.33,
+   "units": 93946000.0,
+   "index_name": "富時中國A50指數",
+   "listed_date": "2015-04-01",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00636K",
@@ -578,8 +769,13 @@
    "premium": 0.37,
    "volume_lots": 1,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 0.0,
+   "units": 62100.0,
+   "index_name": "富時中國A50指數",
+   "listed_date": "2017-10-24",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00637L",
@@ -594,8 +790,13 @@
    "premium": 0.29,
    "volume_lots": 23001,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 140.01,
+   "units": 823606000.0,
+   "index_name": "滬深300日報酬正向兩倍指數",
+   "listed_date": "2015-05-18",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00638R",
@@ -610,8 +811,13 @@
    "premium": -0.14,
    "volume_lots": 457,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 1.68,
+   "units": 22948000.0,
+   "index_name": "滬深300日報酬反向一倍指數",
+   "listed_date": "2015-05-18",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00639",
@@ -626,8 +832,13 @@
    "premium": -0.14,
    "volume_lots": 481,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 13.73,
+   "units": 95903000.0,
+   "index_name": "深証100指數",
+   "listed_date": "2015-06-09",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00640L",
@@ -642,8 +853,13 @@
    "premium": -0.13,
    "volume_lots": 109,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 7.44,
+   "units": 6919000.0,
+   "index_name": "東証正向二倍指數",
+   "listed_date": "2015-09-10",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00641R",
@@ -658,8 +874,13 @@
    "premium": 0.27,
    "volume_lots": 433,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 3.2,
+   "units": 87258000.0,
+   "index_name": "東証反向一倍指數",
+   "listed_date": "2015-09-10",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00642U",
@@ -674,8 +895,13 @@
    "premium": 0.48,
    "volume_lots": 1603,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 17.48,
+   "units": 52321000.0,
+   "index_name": "標普高盛原油增強超額回報指數",
+   "listed_date": "2015-09-07",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00643",
@@ -690,8 +916,13 @@
    "premium": 0.0,
    "volume_lots": 3091,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 12.17,
+   "units": 75200000.0,
+   "index_name": "中小企業１００指數",
+   "listed_date": "2015-12-02",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00643K",
@@ -706,8 +937,13 @@
    "premium": 0.6,
    "volume_lots": 5,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 0.01,
+   "units": 217000.0,
+   "index_name": "中小企業１００指數",
+   "listed_date": "2016-08-26",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00645",
@@ -722,8 +958,13 @@
    "premium": 0.07,
    "volume_lots": 69,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 26.28,
+   "units": 45497000.0,
+   "index_name": "東證股價指數",
+   "listed_date": "2015-11-06",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00646",
@@ -738,8 +979,13 @@
    "premium": 0.95,
    "volume_lots": 3447,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 504.21,
+   "units": 641485000.0,
+   "index_name": "標普500指數",
+   "listed_date": "2015-12-14",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00647L",
@@ -754,8 +1000,13 @@
    "premium": 0.32,
    "volume_lots": 18,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 6.99,
+   "units": 4916000.0,
+   "index_name": "標普500 2倍槓桿指數",
+   "listed_date": "2015-12-14",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00648R",
@@ -770,8 +1021,13 @@
    "premium": -0.26,
    "volume_lots": 287,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 5.48,
+   "units": 140188000.0,
+   "index_name": "標普500反向指數",
+   "listed_date": "2015-12-14",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00650L",
@@ -786,8 +1042,13 @@
    "premium": 1.34,
    "volume_lots": 1351,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 16.23,
+   "units": 103838000.0,
+   "index_name": "恒指槓桿指數",
+   "listed_date": "2016-01-27",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00651R",
@@ -802,8 +1063,13 @@
    "premium": -1.1,
    "volume_lots": 177,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 1.76,
+   "units": 32192000.0,
+   "index_name": "恒指短倉指數",
+   "listed_date": "2016-01-27",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00652",
@@ -818,8 +1084,13 @@
    "premium": -0.83,
    "volume_lots": 333,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 19.9,
+   "units": 61035000.0,
+   "index_name": "NIFTY指數",
+   "listed_date": "2016-03-29",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00653L",
@@ -834,8 +1105,13 @@
    "premium": -0.09,
    "volume_lots": 177,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 5.25,
+   "units": 12403000.0,
+   "index_name": "NIFTY正向2倍指數",
+   "listed_date": "2016-03-29",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00654R",
@@ -850,8 +1126,13 @@
    "premium": -0.56,
    "volume_lots": 69,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 1.39,
+   "units": 19466000.0,
+   "index_name": "NIFTY反向1倍指數",
+   "listed_date": "2016-03-29",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00655L",
@@ -866,8 +1147,13 @@
    "premium": 0.07,
    "volume_lots": 1738,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 17.63,
+   "units": 61958000.0,
+   "index_name": "富時中國A50指數",
+   "listed_date": "2016-03-18",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00656R",
@@ -882,8 +1168,13 @@
    "premium": -0.77,
    "volume_lots": 9,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 1.32,
+   "units": 20357000.0,
+   "index_name": "富時中國A50指數",
+   "listed_date": "2016-03-18",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00657",
@@ -898,8 +1189,13 @@
    "premium": 0.39,
    "volume_lots": 94,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 5.14,
+   "units": 6613000.0,
+   "index_name": "日經平均股價指數",
+   "listed_date": "2016-05-09",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00657K",
@@ -914,8 +1210,13 @@
    "premium": 0.17,
    "volume_lots": 0,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 0.01,
+   "units": 29900.0,
+   "index_name": "日經平均股價指數",
+   "listed_date": "2017-10-24",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00660",
@@ -930,8 +1231,13 @@
    "premium": -0.18,
    "volume_lots": 5,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 3.21,
+   "units": 7031000.0,
+   "index_name": "歐洲 STOXX50 指數",
+   "listed_date": "2016-06-15",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00661",
@@ -946,8 +1252,13 @@
    "premium": 0.45,
    "volume_lots": 79,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 20.33,
+   "units": 23925000.0,
+   "index_name": "日經225指數",
+   "listed_date": "2016-06-15",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00662",
@@ -962,8 +1273,13 @@
    "premium": 0.51,
    "volume_lots": 3122,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 1180.45,
+   "units": 949529000.0,
+   "index_name": "NASDAQ-100 指數",
+   "listed_date": "2016-06-17",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00663L",
@@ -978,8 +1294,13 @@
    "premium": -0.08,
    "volume_lots": 4876,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 140.17,
+   "units": 130163000.0,
+   "index_name": "臺灣證券交易所發行量加權股價日報酬正向兩倍指數",
+   "listed_date": "2016-07-14",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00664R",
@@ -994,8 +1315,13 @@
    "premium": 0.0,
    "volume_lots": 11730,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 13.98,
+   "units": 896075000.0,
+   "index_name": "臺灣證券交易所發行量加權股價日報酬反向一倍指數",
+   "listed_date": "2016-07-14",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00665L",
@@ -1010,8 +1336,13 @@
    "premium": 1.14,
    "volume_lots": 8613,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 36.92,
+   "units": 420465000.0,
+   "index_name": "恒生國企槓桿指數",
+   "listed_date": "2016-08-05",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00666R",
@@ -1026,8 +1357,13 @@
    "premium": -1.38,
    "volume_lots": 20,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 1.14,
+   "units": 12124000.0,
+   "index_name": "恒生國企短倉指數",
+   "listed_date": "2016-08-05",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00668",
@@ -1042,8 +1378,13 @@
    "premium": 0.58,
    "volume_lots": 115,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 4.97,
+   "units": 8058000.0,
+   "index_name": "道瓊斯工業平均指數",
+   "listed_date": "2016-10-17",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00668K",
@@ -1058,8 +1399,13 @@
    "premium": 0.0,
    "volume_lots": 0,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 0.0,
+   "units": 10500.0,
+   "index_name": "道瓊斯工業平均指數",
+   "listed_date": "2017-10-24",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00669R",
@@ -1074,8 +1420,13 @@
    "premium": -0.19,
    "volume_lots": 418,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 10.32,
+   "units": 192617000.0,
+   "index_name": "道瓊單日反向指數",
+   "listed_date": "2016-10-17",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00670L",
@@ -1090,8 +1441,13 @@
    "premium": 0.28,
    "volume_lots": 488,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 153.47,
+   "units": 75645000.0,
+   "index_name": "NASDAQ-100正向2倍指數",
+   "listed_date": "2017-02-21",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00671R",
@@ -1106,8 +1462,13 @@
    "premium": 0.0,
    "volume_lots": 3491,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 11.69,
+   "units": 486884000.0,
+   "index_name": "NASDAQ-100反向1倍指數",
+   "listed_date": "2017-02-21",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00673R",
@@ -1122,8 +1483,13 @@
    "premium": -0.1,
    "volume_lots": 42561,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 120.65,
+   "units": 1191050646.0,
+   "index_name": "標普高盛原油日報酬反向一倍ER指數",
+   "listed_date": "2016-10-07",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00674R",
@@ -1138,8 +1504,13 @@
    "premium": 0.31,
    "volume_lots": 22,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 4.23,
+   "units": 14420555.0,
+   "index_name": "標普高盛黃金日報酬反向一倍ER指數",
+   "listed_date": "2016-10-07",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00675L",
@@ -1154,8 +1525,13 @@
    "premium": -0.13,
    "volume_lots": 1167,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 353.24,
+   "units": 108286000.0,
+   "index_name": "臺灣證券交易所發行量加權股價日報酬正向兩倍指數",
+   "listed_date": "2016-10-05",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00676R",
@@ -1170,8 +1546,13 @@
    "premium": 0.38,
    "volume_lots": 5241,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 10.12,
+   "units": 189833683.0,
+   "index_name": "臺灣證券交易所發行量加權股價日報酬反向一倍指數",
+   "listed_date": "2016-10-05",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00678",
@@ -1186,8 +1567,13 @@
    "premium": 0.74,
    "volume_lots": 617,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 3.89,
+   "units": 8948000.0,
+   "index_name": "那斯達克生技指數(NBI)",
+   "listed_date": "2017-01-16",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00679B",
@@ -1202,8 +1588,13 @@
    "premium": 0.31,
    "volume_lots": 27260,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 1598.24,
+   "units": 6228192000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00680L",
@@ -1218,8 +1609,13 @@
    "premium": 0.12,
    "volume_lots": 20233,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 87.39,
+   "units": 1439076000.0,
+   "index_name": "ICE美國政府20+年期債券2倍槓桿指數",
+   "listed_date": "2017-01-17",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00681R",
@@ -1234,8 +1630,13 @@
    "premium": -0.35,
    "volume_lots": 288,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 1.71,
+   "units": 7594000.0,
+   "index_name": "ICE美國政府20+年期債券1倍反向指數",
+   "listed_date": "2017-01-17",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00682U",
@@ -1250,8 +1651,13 @@
    "premium": -0.38,
    "volume_lots": 1,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 1.61,
+   "units": 7644000.0,
+   "index_name": "標普美元ER指數",
+   "listed_date": "2017-03-14",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00683L",
@@ -1266,8 +1672,13 @@
    "premium": 0.04,
    "volume_lots": 154,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 2.58,
+   "units": 11434000.0,
+   "index_name": "標普美元日報酬正向兩倍ER指數",
+   "listed_date": "2017-03-14",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00684R",
@@ -1282,8 +1693,13 @@
    "premium": -0.47,
    "volume_lots": 51,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 1.44,
+   "units": 9688000.0,
+   "index_name": "標普美元日報酬反向一倍ER指數",
+   "listed_date": "2017-03-14",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00685L",
@@ -1298,8 +1714,13 @@
    "premium": 0.0,
    "volume_lots": 214237,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 15:00:00"
+   "aum": 787.23,
+   "units": 6389836000.0,
+   "index_name": "臺灣證券交易所發行量加權股價日報酬正向兩倍指數",
+   "listed_date": "2017-03-30",
+   "source_time": "20261016 15:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00686R",
@@ -1314,8 +1735,13 @@
    "premium": 0.0,
    "volume_lots": 9286,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 15:00:00"
+   "aum": 2.53,
+   "units": 266276000.0,
+   "index_name": "臺灣證券交易所發行量加權股價日報酬反向一倍指數",
+   "listed_date": "2017-03-30",
+   "source_time": "20261016 15:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00687B",
@@ -1330,8 +1756,13 @@
    "premium": 0.43,
    "volume_lots": 19369,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 1149.05,
+   "units": 4313880380.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:46",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00687C",
@@ -1346,8 +1777,13 @@
    "premium": 0.3,
    "volume_lots": 36,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 0.18,
+   "units": 1988626.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:46",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00688L",
@@ -1362,8 +1798,13 @@
    "premium": 0.06,
    "volume_lots": 10166,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 36.38,
+   "units": 600615000.0,
+   "index_name": "彭博20年期(以上)美國公債單日正向2倍指數",
+   "listed_date": "2017-04-13",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00689R",
@@ -1378,8 +1819,13 @@
    "premium": -0.54,
    "volume_lots": 102,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 1.63,
+   "units": 6889000.0,
+   "index_name": "彭博20年期(以上)美國公債單日反向1倍指數",
+   "listed_date": "2017-04-13",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00690",
@@ -1394,8 +1840,13 @@
    "premium": 0.57,
    "volume_lots": 228,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:47"
+   "aum": 65.72,
+   "units": 83830000.0,
+   "index_name": "藍籌30指數",
+   "listed_date": "2017-03-31",
+   "source_time": "20261016 16:59:47",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00692",
@@ -1410,8 +1861,13 @@
    "premium": 0.35,
    "volume_lots": 1037,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 575.67,
+   "units": 612280000.0,
+   "index_name": "臺灣證券交易所公司治理100指數",
+   "listed_date": "2017-05-17",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00693U",
@@ -1426,8 +1882,13 @@
    "premium": -0.31,
    "volume_lots": 1059,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:01:15"
+   "aum": 13.32,
+   "units": 57666000.0,
+   "index_name": "標普高盛黃豆ER指數(S&amp;P GSCI Soybeans ER Index)",
+   "listed_date": "2017-04-25",
+   "source_time": "20261016 17:01:15",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00694B",
@@ -1442,8 +1903,17 @@
    "premium": 0.01,
    "volume_lots": 195,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 13.21,
+   "units": 31076000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:05:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.399,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00695B",
@@ -1458,8 +1928,17 @@
    "premium": 0.07,
    "volume_lots": 541,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 15.31,
+   "units": 44186000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:05:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.328,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00696B",
@@ -1474,8 +1953,17 @@
    "premium": 0.29,
    "volume_lots": 2014,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 179.6,
+   "units": 641681000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:05:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.33,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00697B",
@@ -1490,8 +1978,13 @@
    "premium": 0.31,
    "volume_lots": 312,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 24.49,
+   "units": 70212000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00700",
@@ -1506,8 +1999,13 @@
    "premium": -0.06,
    "volume_lots": 173,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 5.32,
+   "units": 30983000.0,
+   "index_name": "恒生中國企業指數",
+   "listed_date": "2017-07-28",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00701",
@@ -1522,8 +2020,13 @@
    "premium": -0.44,
    "volume_lots": 286,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 72.2,
+   "units": 168891000.0,
+   "index_name": "臺灣指數公司低波動股利精選30指數",
+   "listed_date": "2017-08-17",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00702",
@@ -1538,8 +2041,13 @@
    "premium": -1.23,
    "volume_lots": 214,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 1.64,
+   "units": 6688000.0,
+   "index_name": "標普500低波動高股息指數",
+   "listed_date": "2017-08-17",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00703",
@@ -1554,8 +2062,13 @@
    "premium": 0.58,
    "volume_lots": 50,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 1.8,
+   "units": 9550000.0,
+   "index_name": "MSCI中國指數",
+   "listed_date": "2017-08-10",
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00706L",
@@ -1570,8 +2083,13 @@
    "premium": 0.0,
    "volume_lots": 184,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 22.98,
+   "units": 120270853.0,
+   "index_name": "標普日圓期貨日報酬正向2倍ER指數",
+   "listed_date": "2017-09-01",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00707R",
@@ -1586,8 +2104,13 @@
    "premium": -0.84,
    "volume_lots": 1,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 2.22,
+   "units": 6855000.0,
+   "index_name": "標普日圓期貨日報酬反向1倍ER指數",
+   "listed_date": "2017-09-01",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00708L",
@@ -1602,8 +2125,13 @@
    "premium": -0.66,
    "volume_lots": 2633,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 121.54,
+   "units": 167573000.0,
+   "index_name": "標普高盛黃金日報酬正向兩倍ER指數",
+   "listed_date": "2017-09-01",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00709",
@@ -1618,8 +2146,13 @@
    "premium": -0.87,
    "volume_lots": 65,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 5.81,
+   "units": 14460000.0,
+   "index_name": "富時發展歐洲指數",
+   "listed_date": "2017-08-15",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00710B",
@@ -1634,8 +2167,13 @@
    "premium": 0.11,
    "volume_lots": 337,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 33.91,
+   "units": 180761000.0,
+   "index_name": "彭博1至5年期美元高收益債券(不含中國)發行量五億美元產業10%上限指數",
+   "listed_date": "2017-08-21",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00711B",
@@ -1650,8 +2188,13 @@
    "premium": 0.2,
    "volume_lots": 139,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 132.68,
+   "units": 871761000.0,
+   "index_name": "彭博新興市場10年期以上美元投資等級債券(不含中國)國家10%上限指數",
+   "listed_date": "2017-08-21",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00712",
@@ -1666,8 +2209,13 @@
    "premium": 0.42,
    "volume_lots": 34128,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 469.51,
+   "units": 6566511000.0,
+   "index_name": "富時NAREIT抵押權型不動產投資信託指數",
+   "listed_date": "2017-08-21",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00713",
@@ -1682,8 +2230,13 @@
    "premium": -0.5,
    "volume_lots": 11843,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:31:00"
+   "aum": 1129.84,
+   "units": 1708512000.0,
+   "index_name": "臺灣指數公司特選高股息低波動指數",
+   "listed_date": "2017-09-27",
+   "source_time": "20261016 13:31:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00714",
@@ -1698,8 +2251,17 @@
    "premium": 0.19,
    "volume_lots": 210,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 3.91,
+   "units": 18567000.0,
+   "index_name": "道瓊美國地產指數(Dow Jones U.S. Real Estate Index)",
+   "listed_date": "2017-10-27",
+   "source_time": "20261016 17:00:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.123,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00715L",
@@ -1714,8 +2276,13 @@
    "premium": 0.11,
    "volume_lots": 1758,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:01:15"
+   "aum": 38.04,
+   "units": 49691793.0,
+   "index_name": "標普高盛布蘭特原油日報酬正向兩倍ER指數",
+   "listed_date": "2017-11-16",
+   "source_time": "20261016 17:01:15",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00717",
@@ -1730,8 +2297,17 @@
    "premium": -0.41,
    "volume_lots": 122,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 17.01,
+   "units": 116605000.0,
+   "index_name": "標普美國特別股指數",
+   "listed_date": "2017-11-29",
+   "source_time": "20261016 17:05:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.141,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00719B",
@@ -1746,8 +2322,17 @@
    "premium": 0.09,
    "volume_lots": 2548,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 102.87,
+   "units": 325514000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": {
+    "ex_date": "2026-10-22",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00720B",
@@ -1762,8 +2347,17 @@
    "premium": 0.05,
    "volume_lots": 6168,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 1317.8,
+   "units": 4133109000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": {
+    "ex_date": "2026-10-22",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00722B",
@@ -1778,8 +2372,17 @@
    "premium": 0.45,
    "volume_lots": 2654,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 497.12,
+   "units": 1468739000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.514,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00723B",
@@ -1794,8 +2397,17 @@
    "premium": 0.35,
    "volume_lots": 559,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 442.01,
+   "units": 1519583000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.436,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00724B",
@@ -1810,8 +2422,17 @@
    "premium": 0.29,
    "volume_lots": 3719,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 997.66,
+   "units": 3059775000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.488,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00725B",
@@ -1826,8 +2447,17 @@
    "premium": 0.92,
    "volume_lots": 11449,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 1282.15,
+   "units": 3800206000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:46",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.49,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00726B",
@@ -1842,8 +2472,17 @@
    "premium": 0.35,
    "volume_lots": 352,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 378.97,
+   "units": 1186989000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:46",
+   "next_ex": {
+    "ex_date": "2026-10-28",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00727B",
@@ -1858,8 +2497,17 @@
    "premium": 0.48,
    "volume_lots": 204,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 22.57,
+   "units": 57189000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:46",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.85,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00728",
@@ -1874,8 +2522,13 @@
    "premium": 0.53,
    "volume_lots": 153,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:48"
+   "aum": 25.84,
+   "units": 38923000.0,
+   "index_name": "臺灣工業菁英30指數",
+   "listed_date": "2018-04-18",
+   "source_time": "20261016 17:00:48",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00730",
@@ -1890,8 +2543,17 @@
    "premium": -0.6,
    "volume_lots": 179,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 20.64,
+   "units": 69044000.0,
+   "index_name": "道瓊斯台灣優質高股息30指數",
+   "listed_date": "2018-02-08",
+   "source_time": "20261016 17:05:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.11,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00731",
@@ -1906,8 +2568,13 @@
    "premium": -0.46,
    "volume_lots": 299,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 20.74,
+   "units": 20100000.0,
+   "index_name": "富時台灣高股息低波動指數",
+   "listed_date": "2018-04-20",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00733",
@@ -1922,8 +2589,17 @@
    "premium": 0.05,
    "volume_lots": 579,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 45.87,
+   "units": 60466000.0,
+   "index_name": "臺灣指數公司中小型A級動能50指數",
+   "listed_date": "2018-05-17",
+   "source_time": "20261016 17:05:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 1.487,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00734B",
@@ -1938,8 +2614,17 @@
    "premium": 0.11,
    "volume_lots": 217,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 3.8,
+   "units": 24979000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": {
+    "ex_date": "2026-10-16",
+    "cash": 0.16,
+    "pay_date": null
+   }
   },
   {
    "code": "00735",
@@ -1954,8 +2639,13 @@
    "premium": 0.35,
    "volume_lots": 2099,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 104.28,
+   "units": 106289000.0,
+   "index_name": "臺韓資訊科技指數",
+   "listed_date": "2018-06-11",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00736",
@@ -1970,8 +2660,13 @@
    "premium": -1.1,
    "volume_lots": 103,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 2.14,
+   "units": 6727000.0,
+   "index_name": "富時新興市場（納入A股）指數",
+   "listed_date": "2018-06-11",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00737",
@@ -1986,8 +2681,13 @@
    "premium": 0.44,
    "volume_lots": 89,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 9.02,
+   "units": 22038000.0,
+   "index_name": "納斯達克 CTA 全球人工智慧及機器人指數",
+   "listed_date": "2018-06-11",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00738U",
@@ -2002,8 +2702,13 @@
    "premium": -0.35,
    "volume_lots": 2624,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 121.38,
+   "units": 264799000.0,
+   "index_name": "道瓊白銀ER指數",
+   "listed_date": "2018-06-01",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00739",
@@ -2018,8 +2723,13 @@
    "premium": -0.12,
    "volume_lots": 139,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 6.4,
+   "units": 24988000.0,
+   "index_name": "MSCI中國A股國際通指數",
+   "listed_date": "2018-06-27",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00740B",
@@ -2034,8 +2744,17 @@
    "premium": 0.21,
    "volume_lots": 3350,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 828.33,
+   "units": 2240471000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:05:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.185,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00741B",
@@ -2050,8 +2769,17 @@
    "premium": 0.19,
    "volume_lots": 130,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 4.88,
+   "units": 13128000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:05:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.199,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00746B",
@@ -2066,8 +2794,17 @@
    "premium": 0.18,
    "volume_lots": 184,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 898.84,
+   "units": 2606964000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:05:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.468,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00749B",
@@ -2082,8 +2819,17 @@
    "premium": 0.38,
    "volume_lots": 57102,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 338.92,
+   "units": 1110500000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:02",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.43,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00750B",
@@ -2098,8 +2844,17 @@
    "premium": 0.43,
    "volume_lots": 100,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 50.24,
+   "units": 159500000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:02",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.42,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00751B",
@@ -2114,8 +2869,13 @@
    "premium": -0.09,
    "volume_lots": 83883,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 1572.85,
+   "units": 5250603000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00752",
@@ -2130,8 +2890,13 @@
    "premium": 0.58,
    "volume_lots": 1488,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 57.44,
+   "units": 256216000.0,
+   "index_name": "MSCI中國外資自由投資50不含A及B股指數",
+   "listed_date": "2018-10-31",
+   "source_time": "20261016 17:00:01",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00753L",
@@ -2146,8 +2911,13 @@
    "premium": 1.08,
    "volume_lots": 11788,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 64.22,
+   "units": 769157000.0,
+   "index_name": "MSCI中國外資自由投資50不含A及B股單日正向2倍指數",
+   "listed_date": "2018-10-31",
+   "source_time": "20261016 17:00:01",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00754B",
@@ -2162,8 +2932,13 @@
    "premium": 0.35,
    "volume_lots": 56691,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 427.66,
+   "units": 1365900000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00755B",
@@ -2178,8 +2953,13 @@
    "premium": 0.32,
    "volume_lots": 161,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 94.69,
+   "units": 298730000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00756B",
@@ -2194,8 +2974,13 @@
    "premium": 0.37,
    "volume_lots": 50192,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 400.64,
+   "units": 1340800000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00757",
@@ -2210,8 +2995,13 @@
    "premium": 0.91,
    "volume_lots": 684,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:52"
+   "aum": 384.91,
+   "units": 265494000.0,
+   "index_name": "NYSE FANG+ Index",
+   "listed_date": "2018-12-06",
+   "source_time": "20261016 16:59:52",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00758B",
@@ -2226,8 +3016,13 @@
    "premium": 0.24,
    "volume_lots": 102,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 2.78,
+   "units": 5525000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00759B",
@@ -2242,8 +3037,13 @@
    "premium": 0.23,
    "volume_lots": 103,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 25.11,
+   "units": 47525000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00760B",
@@ -2258,8 +3058,13 @@
    "premium": 0.25,
    "volume_lots": 107,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 224.38,
+   "units": 435520000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00761B",
@@ -2274,8 +3079,13 @@
    "premium": 0.62,
    "volume_lots": 388,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 899.02,
+   "units": 2734589000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:46",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00762",
@@ -2290,8 +3100,13 @@
    "premium": 0.43,
    "volume_lots": 464,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 53.53,
+   "units": 46748000.0,
+   "index_name": "STOXX全球人工智慧指數",
+   "listed_date": "2019-01-23",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00763U",
@@ -2306,8 +3121,13 @@
    "premium": -0.09,
    "volume_lots": 359,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:01:15"
+   "aum": 13.93,
+   "units": 40065000.0,
+   "index_name": "道瓊銅ER指數 (Dow Jones Commodity Index North American Copper ER)",
+   "listed_date": "2018-12-19",
+   "source_time": "20261016 17:01:15",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00764B",
@@ -2322,8 +3142,13 @@
    "premium": 0.5,
    "volume_lots": 4906,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 410.27,
+   "units": 1545500000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00768B",
@@ -2338,8 +3163,13 @@
    "premium": 0.13,
    "volume_lots": 518,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 377.97,
+   "units": 789600000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00770",
@@ -2354,8 +3184,13 @@
    "premium": 0.4,
    "volume_lots": 349,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 60.46,
+   "units": 93458000.0,
+   "index_name": "標普北美科技行業指數",
+   "listed_date": "2019-01-29",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00771",
@@ -2370,8 +3205,13 @@
    "premium": -1.19,
    "volume_lots": 26,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 2.16,
+   "units": 14225000.0,
+   "index_name": "標普美國高收益特別股指數",
+   "listed_date": "2019-05-16",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00772B",
@@ -2386,8 +3226,17 @@
    "premium": 0.27,
    "volume_lots": 4254,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 1099.27,
+   "units": 3405290000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:01",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.14,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00773B",
@@ -2402,8 +3251,17 @@
    "premium": 0.33,
    "volume_lots": 1333,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 895.42,
+   "units": 2598790000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:01",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.145,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00775B",
@@ -2418,8 +3276,13 @@
    "premium": -0.18,
    "volume_lots": 81,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 71.86,
+   "units": 232100000.0,
+   "index_name": "富時15年期以上投資等級債券指數",
+   "listed_date": "2019-02-15",
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00777B",
@@ -2434,8 +3297,17 @@
    "premium": 0.48,
    "volume_lots": 120,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 670.85,
+   "units": 2159150000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:02",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.14,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00778B",
@@ -2450,8 +3322,17 @@
    "premium": 0.64,
    "volume_lots": 120,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 503.07,
+   "units": 1528150000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:02",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.145,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00779B",
@@ -2466,8 +3347,13 @@
    "premium": 0.46,
    "volume_lots": 338,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 348.3,
+   "units": 1298650000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:02",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00780B",
@@ -2482,8 +3368,13 @@
    "premium": 0.48,
    "volume_lots": 177,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 90.89,
+   "units": 250602000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:46",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00781B",
@@ -2498,8 +3389,13 @@
    "premium": 0.88,
    "volume_lots": 153,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 2.48,
+   "units": 9336000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:46",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00782B",
@@ -2514,8 +3410,17 @@
    "premium": 0.57,
    "volume_lots": 162,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 6.17,
+   "units": 20967000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:46",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.5,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00783",
@@ -2530,8 +3435,13 @@
    "premium": 0.2,
    "volume_lots": 179,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 1.9,
+   "units": 7531000.0,
+   "index_name": "中証小盤500指數",
+   "listed_date": "2019-03-27",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00785B",
@@ -2546,8 +3456,17 @@
    "premium": 0.4,
    "volume_lots": 89,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 360.79,
+   "units": 1063466000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:05:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.508,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00786B",
@@ -2562,8 +3481,13 @@
    "premium": 0.51,
    "volume_lots": 45,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 6.04,
+   "units": 19066000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00787B",
@@ -2578,8 +3502,13 @@
    "premium": 0.46,
    "volume_lots": 13,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 3.55,
+   "units": 11306000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00788B",
@@ -2594,8 +3523,17 @@
    "premium": 0.25,
    "volume_lots": 58,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 6.95,
+   "units": 23706000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": {
+    "ex_date": "2026-10-22",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00789B",
@@ -2610,8 +3548,17 @@
    "premium": 0.07,
    "volume_lots": 107,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 210.29,
+   "units": 455600000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:54",
+   "next_ex": {
+    "ex_date": "2026-10-21",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00791B",
@@ -2626,8 +3573,17 @@
    "premium": 0.04,
    "volume_lots": 199,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 161.57,
+   "units": 281100000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:54",
+   "next_ex": {
+    "ex_date": "2026-10-21",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00792B",
@@ -2642,8 +3598,13 @@
    "premium": 0.18,
    "volume_lots": 41139,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 705.85,
+   "units": 2329115000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00795B",
@@ -2658,8 +3619,13 @@
    "premium": 0.45,
    "volume_lots": 8712,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 399.13,
+   "units": 1548598000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:01",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00799B",
@@ -2674,8 +3640,13 @@
    "premium": 0.7,
    "volume_lots": 324,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 7.4,
+   "units": 26036000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:46",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00830",
@@ -2690,8 +3661,13 @@
    "premium": 1.3,
    "volume_lots": 15140,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 743.73,
+   "units": 897465000.0,
+   "index_name": "美國費城半導體指數",
+   "listed_date": "2019-05-03",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00834B",
@@ -2706,8 +3682,17 @@
    "premium": 0.11,
    "volume_lots": 110,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:48"
+   "aum": 7.7,
+   "units": 23198000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:48",
+   "next_ex": {
+    "ex_date": "2026-10-22",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00836B",
@@ -2722,8 +3707,13 @@
    "premium": 0.07,
    "volume_lots": 9,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:28:04"
+   "aum": 183.22,
+   "units": 665541000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:28:04",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00840B",
@@ -2738,8 +3728,17 @@
    "premium": 0.53,
    "volume_lots": 100,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 17.0,
+   "units": 59431000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:02",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.125,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00841B",
@@ -2754,8 +3753,13 @@
    "premium": 0.32,
    "volume_lots": 100,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 19.22,
+   "units": 70440000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:02",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00842B",
@@ -2770,8 +3774,17 @@
    "premium": -0.43,
    "volume_lots": 241,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 6.66,
+   "units": 23267000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": {
+    "ex_date": "2026-10-16",
+    "cash": 0.55,
+    "pay_date": null
+   }
   },
   {
    "code": "00844B",
@@ -2786,8 +3799,13 @@
    "premium": 0.14,
    "volume_lots": 80,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 75.27,
+   "units": 247675000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00845B",
@@ -2802,8 +3820,13 @@
    "premium": 0.38,
    "volume_lots": 102,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 76.7,
+   "units": 237051000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00846B",
@@ -2818,8 +3841,13 @@
    "premium": 0.18,
    "volume_lots": 110,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 26.09,
+   "units": 74350000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00847B",
@@ -2835,7 +3863,12 @@
    "volume_lots": null,
    "fee": null,
    "aum": null,
-   "source_time": "20261006 09:35:31"
+   "units": null,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261006 09:35:31",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00848B",
@@ -2850,8 +3883,17 @@
    "premium": 0.47,
    "volume_lots": 201,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 45.05,
+   "units": 136066000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:01",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.37,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00849B",
@@ -2866,8 +3908,17 @@
    "premium": 0.7,
    "volume_lots": 207,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 184.01,
+   "units": 485606000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:01",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.33,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00850",
@@ -2882,8 +3933,13 @@
    "premium": 0.29,
    "volume_lots": 531,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:31:00"
+   "aum": 387.99,
+   "units": 413944000.0,
+   "index_name": "臺灣永續指數",
+   "listed_date": "2019-08-23",
+   "source_time": "20261016 13:31:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00851",
@@ -2898,8 +3954,17 @@
    "premium": 0.76,
    "volume_lots": 54,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 3.82,
+   "units": 5525000.0,
+   "index_name": "SG全球AI機器人精選指數",
+   "listed_date": "2019-08-12",
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": {
+    "ex_date": "2026-10-16",
+    "cash": 2.5,
+    "pay_date": null
+   }
   },
   {
    "code": "00852L",
@@ -2914,8 +3979,13 @@
    "premium": -0.23,
    "volume_lots": 312,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 2.35,
+   "units": 6865000.0,
+   "index_name": "道瓊工業平均單日正向2倍指數",
+   "listed_date": "2019-08-22",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00853B",
@@ -2930,8 +4000,13 @@
    "premium": 0.45,
    "volume_lots": 1050,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:49"
+   "aum": 47.54,
+   "units": 180134000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:49",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00856B",
@@ -2946,8 +4021,13 @@
    "premium": -0.34,
    "volume_lots": 4,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:28:04"
+   "aum": 2.59,
+   "units": 6792000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:28:04",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00857B",
@@ -2962,8 +4042,13 @@
    "premium": 0.04,
    "volume_lots": 88867,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:28:04"
+   "aum": 132.22,
+   "units": 594768000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:28:04",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00858",
@@ -2978,8 +4063,13 @@
    "premium": 0.14,
    "volume_lots": 242,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:28:04"
+   "aum": 42.41,
+   "units": 114874000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:28:04",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00859B",
@@ -2994,8 +4084,13 @@
    "premium": 0.28,
    "volume_lots": 3591,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 15.3,
+   "units": 37011000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00860B",
@@ -3010,8 +4105,13 @@
    "premium": 0.45,
    "volume_lots": 152,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 1.03,
+   "units": 2671000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00861",
@@ -3026,8 +4126,13 @@
    "premium": -0.02,
    "volume_lots": 70,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 57.87,
+   "units": 68912000.0,
+   "index_name": "NYSE FactSet全球未來通訊指數",
+   "listed_date": "2019-11-19",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00862B",
@@ -3042,8 +4147,13 @@
    "premium": 0.58,
    "volume_lots": 241,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 290.93,
+   "units": 966381000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:01",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00863B",
@@ -3058,8 +4168,13 @@
    "premium": 0.5,
    "volume_lots": 257,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 155.16,
+   "units": 515464000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:01",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00864B",
@@ -3074,8 +4189,13 @@
    "premium": 0.26,
    "volume_lots": 1310,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 53.23,
+   "units": 113222000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:01",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00865B",
@@ -3090,8 +4210,13 @@
    "premium": 0.35,
    "volume_lots": 5758,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 174.55,
+   "units": 350744000.0,
+   "index_name": "彭博美國短期公債收益指數",
+   "listed_date": "2019-11-25",
+   "source_time": "20261016 16:59:46",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00867B",
@@ -3106,8 +4231,13 @@
    "premium": 0.3,
    "volume_lots": 430,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 165.65,
+   "units": 565150000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00870B",
@@ -3122,8 +4252,17 @@
    "premium": -0.18,
    "volume_lots": 1,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 153.56,
+   "units": 564151000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": {
+    "ex_date": "2026-10-22",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00875",
@@ -3138,8 +4277,13 @@
    "premium": 0.08,
    "volume_lots": 200,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 9.8,
+   "units": 16488000.0,
+   "index_name": "納斯達克ISE 全球網路資安指數",
+   "listed_date": "2020-03-30",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00876",
@@ -3154,8 +4298,13 @@
    "premium": 0.55,
    "volume_lots": 125,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 79.66,
+   "units": 93024000.0,
+   "index_name": "iSTOXX全球5G關鍵科技指數",
+   "listed_date": "2020-07-07",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00877",
@@ -3170,8 +4319,13 @@
    "premium": 1.04,
    "volume_lots": 2157,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 52.66,
+   "units": 176288000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00878",
@@ -3186,8 +4340,13 @@
    "premium": 0.14,
    "volume_lots": 24855,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 6710.79,
+   "units": 18914290000.0,
+   "index_name": "MSCI臺灣ESG永續高股息精選30指數",
+   "listed_date": "2020-07-20",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00881",
@@ -3202,8 +4361,13 @@
    "premium": 0.26,
    "volume_lots": 10431,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 1478.6,
+   "units": 2964903000.0,
+   "index_name": "臺灣指數公司特選臺灣上市上櫃FactSet科技龍頭通訊指數",
+   "listed_date": "2020-12-10",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00882",
@@ -3218,8 +4382,13 @@
    "premium": -0.07,
    "volume_lots": 7648,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:57:00"
+   "aum": 295.85,
+   "units": 1943849000.0,
+   "index_name": "恒生中國高股息率指數",
+   "listed_date": "2021-02-04",
+   "source_time": "20261016 16:57:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00884B",
@@ -3234,8 +4403,17 @@
    "premium": 0.53,
    "volume_lots": 214,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 21.36,
+   "units": 75440000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:01",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.36,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00885",
@@ -3250,8 +4428,13 @@
    "premium": -0.78,
    "volume_lots": 1793,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 105.48,
+   "units": 591238000.0,
+   "index_name": "富時越南30指數",
+   "listed_date": "2021-04-19",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00886",
@@ -3266,8 +4449,13 @@
    "premium": -0.2,
    "volume_lots": 72,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:28:04"
+   "aum": 2.25,
+   "units": 4451000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:28:04",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00887",
@@ -3282,8 +4470,13 @@
    "premium": -0.14,
    "volume_lots": 5956,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:28:04"
+   "aum": 64.74,
+   "units": 458851000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:28:04",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00888",
@@ -3298,8 +4491,17 @@
    "premium": 0.44,
    "volume_lots": 10334,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:59:53"
+   "aum": 223.55,
+   "units": 650978000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 13:59:53",
+   "next_ex": {
+    "ex_date": "2026-10-27",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00890B",
@@ -3314,8 +4516,17 @@
    "premium": 0.07,
    "volume_lots": 146,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 5.64,
+   "units": 18264000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:02",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.145,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00891",
@@ -3330,8 +4541,13 @@
    "premium": 0.73,
    "volume_lots": 21020,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 15:48:15"
+   "aum": 676.95,
+   "units": 1909590000.0,
+   "index_name": "NYSE FactSet 臺灣ESG永續關鍵半導體指數",
+   "listed_date": "2021-05-28",
+   "source_time": "20261016 15:48:15",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00892",
@@ -3346,8 +4562,13 @@
    "premium": 0.05,
    "volume_lots": 3976,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 130.01,
+   "units": 316792000.0,
+   "index_name": "NYSE FactSet台灣核心半導體指數",
+   "listed_date": "2021-06-10",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00893",
@@ -3362,8 +4583,13 @@
    "premium": 0.64,
    "volume_lots": 1251,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 154.41,
+   "units": 350384000.0,
+   "index_name": "NYSE FactSet 全球智能電動車指數",
+   "listed_date": "2021-07-01",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00894",
@@ -3378,8 +4604,13 @@
    "premium": 0.67,
    "volume_lots": 1554,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 15:34:30"
+   "aum": 70.08,
+   "units": 147509000.0,
+   "index_name": "臺灣指數公司特選小資高價30指數",
+   "listed_date": "2021-08-13",
+   "source_time": "20261016 15:34:30",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00895",
@@ -3394,8 +4625,13 @@
    "premium": 0.49,
    "volume_lots": 311,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 71.49,
+   "units": 141416000.0,
+   "index_name": "MSCI ACWI IMI 精選未來車30指數",
+   "listed_date": "2021-08-12",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00896",
@@ -3410,8 +4646,13 @@
    "premium": 0.29,
    "volume_lots": 4016,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 15:34:00"
+   "aum": 132.87,
+   "units": 486880000.0,
+   "index_name": "臺灣指數公司特選臺灣上市上櫃綠能及電動車指數",
+   "listed_date": "2021-09-16",
+   "source_time": "20261016 15:34:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00897",
@@ -3426,8 +4667,13 @@
    "premium": 0.21,
    "volume_lots": 2771,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 18.85,
+   "units": 131512000.0,
+   "index_name": "NYSE FactSet 全球基因免疫生技指數",
+   "listed_date": "2021-10-04",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00898",
@@ -3442,8 +4688,13 @@
    "premium": 0.77,
    "volume_lots": 956,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 12.12,
+   "units": 103476000.0,
+   "index_name": "Solactive全球基因免疫與醫療革命指數",
+   "listed_date": "2021-11-22",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00899",
@@ -3458,8 +4709,13 @@
    "premium": -1.32,
    "volume_lots": 49,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 3.54,
+   "units": 16135000.0,
+   "index_name": "標普全球潔淨能源精選指數",
+   "listed_date": "2022-01-21",
+   "source_time": "20261016 16:59:46",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00900",
@@ -3474,8 +4730,17 @@
    "premium": -0.8,
    "volume_lots": 7581,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 292.38,
+   "units": 1457525000.0,
+   "index_name": "臺灣指數公司特選臺灣上市上櫃高股息30指數",
+   "listed_date": "2021-12-22",
+   "source_time": "20261016 17:05:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.075,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00901",
@@ -3490,8 +4755,13 @@
    "premium": 0.24,
    "volume_lots": 575,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:59:53"
+   "aum": 27.78,
+   "units": 60849000.0,
+   "index_name": "臺灣指數公司特選上市上櫃臺灣智能車供應鏈聯盟指數",
+   "listed_date": "2021-12-15",
+   "source_time": "20261016 13:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00902",
@@ -3506,8 +4776,13 @@
    "premium": 0.74,
    "volume_lots": 444,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 27.19,
+   "units": 224497000.0,
+   "index_name": "NYSE FactSet 電池與儲能科技指數",
+   "listed_date": "2022-01-25",
+   "source_time": "20261016 17:00:01",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00903",
@@ -3522,8 +4797,13 @@
    "premium": 0.19,
    "volume_lots": 209,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 9.85,
+   "units": 45721000.0,
+   "index_name": "Solactive元宇宙指數",
+   "listed_date": "2022-01-24",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00904",
@@ -3538,8 +4818,17 @@
    "premium": 0.33,
    "volume_lots": 5295,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 76.86,
+   "units": 198612000.0,
+   "index_name": "臺灣指數公司臺灣全市場半導體精選30指數",
+   "listed_date": "2022-03-07",
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": {
+    "ex_date": "2026-10-16",
+    "cash": 2.2,
+    "pay_date": null
+   }
   },
   {
    "code": "00905",
@@ -3554,8 +4843,17 @@
    "premium": 0.52,
    "volume_lots": 1058,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 95.38,
+   "units": 356827000.0,
+   "index_name": "臺灣指數公司特選Smart多因子指數",
+   "listed_date": "2022-04-21",
+   "source_time": "20261016 16:59:46",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.6,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00907",
@@ -3570,8 +4868,17 @@
    "premium": -0.43,
    "volume_lots": 1935,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:59:53"
+   "aum": 28.15,
+   "units": 149633000.0,
+   "index_name": "臺灣指數公司特選臺灣優選入息存股指數",
+   "listed_date": "2022-05-24",
+   "source_time": "20261016 13:59:53",
+   "next_ex": {
+    "ex_date": "2026-10-27",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00908",
@@ -3586,8 +4893,17 @@
    "premium": -0.34,
    "volume_lots": 69,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 5.0,
+   "units": 33916000.0,
+   "index_name": "全球入息不動產與基礎建設指數",
+   "listed_date": "2022-05-20",
+   "source_time": "20261016 17:05:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.145,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00909",
@@ -3602,8 +4918,13 @@
    "premium": 0.3,
    "volume_lots": 1467,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 48.92,
+   "units": 114204000.0,
+   "index_name": "Solactive全球數位支付服務指數",
+   "listed_date": "2022-07-13",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00910",
@@ -3618,8 +4939,13 @@
    "premium": -0.42,
    "volume_lots": 612,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:48"
+   "aum": 58.32,
+   "units": 112439000.0,
+   "index_name": "太空衛星指數",
+   "listed_date": "2022-07-20",
+   "source_time": "20261016 17:00:48",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00911",
@@ -3634,8 +4960,13 @@
    "premium": 0.7,
    "volume_lots": 87,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:47"
+   "aum": 14.17,
+   "units": 26903000.0,
+   "index_name": "洲際半導體指數",
+   "listed_date": "2022-06-27",
+   "source_time": "20261016 16:59:47",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00912",
@@ -3650,8 +4981,17 @@
    "premium": 0.66,
    "volume_lots": 2721,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 15:50:45"
+   "aum": 27.53,
+   "units": 79253000.0,
+   "index_name": "臺灣指數公司特選臺灣上市上櫃智慧50指數",
+   "listed_date": "2022-06-29",
+   "source_time": "20261016 15:50:45",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 1.8,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00913",
@@ -3666,8 +5006,13 @@
    "premium": 0.6,
    "volume_lots": 1129,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:47"
+   "aum": 28.61,
+   "units": 59266000.0,
+   "index_name": "臺灣晶圓製造指數",
+   "listed_date": "2022-08-08",
+   "source_time": "20261016 16:59:47",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00915",
@@ -3682,8 +5027,13 @@
    "premium": -0.56,
    "volume_lots": 2819,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 167.8,
+   "units": 494983000.0,
+   "index_name": "臺灣指數公司特選臺灣上市上櫃多因子優選高股息30指數",
+   "listed_date": "2022-08-09",
+   "source_time": "20261016 17:00:02",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00916",
@@ -3698,8 +5048,13 @@
    "premium": -0.11,
    "volume_lots": 1496,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 25.88,
+   "units": 92419000.0,
+   "index_name": "NYSE FactSet 全球品牌50指數",
+   "listed_date": "2022-09-26",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00917",
@@ -3714,13 +5069,18 @@
    "premium": 0.04,
    "volume_lots": 852,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 16.56,
+   "units": 72978000.0,
+   "index_name": "NYSE FactSet 特選金融及數據指數",
+   "listed_date": "2022-08-26",
+   "source_time": "20261016 17:00:01",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00918",
    "name": "大華優利高填息30",
-   "issuer": "大華",
+   "issuer": "大華銀",
    "category": "高股息",
    "market": "上市",
    "price": 34.53,
@@ -3730,8 +5090,13 @@
    "premium": -0.32,
    "volume_lots": 35985,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:51"
+   "aum": 1641.85,
+   "units": 4739764000.0,
+   "index_name": "特選台灣優利高填息30指數",
+   "listed_date": "2022-11-24",
+   "source_time": "20261016 16:59:51",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00919",
@@ -3746,8 +5111,13 @@
    "premium": -0.55,
    "volume_lots": 106328,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 15:00:00"
+   "aum": 6385.37,
+   "units": 19396635000.0,
+   "index_name": "臺灣指數公司特選臺灣上市上櫃精選高息指數",
+   "listed_date": "2022-10-20",
+   "source_time": "20261016 15:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00920",
@@ -3762,8 +5132,13 @@
    "premium": 0.08,
    "volume_lots": 279,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 4.81,
+   "units": 19780000.0,
+   "index_name": "NYSE  FactSet 全球綠能ESG指數",
+   "listed_date": "2022-10-20",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00921",
@@ -3778,8 +5153,13 @@
    "premium": -0.5,
    "volume_lots": 179,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:47"
+   "aum": 13.93,
+   "units": 57770000.0,
+   "index_name": "特選臺灣產業龍頭存股等權重指數",
+   "listed_date": "2023-01-13",
+   "source_time": "20261016 16:59:47",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00922",
@@ -3794,8 +5174,17 @@
    "premium": 0.5,
    "volume_lots": 14871,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 959.18,
+   "units": 2269186000.0,
+   "index_name": "MSCI台灣領袖50精選指數",
+   "listed_date": "2023-03-27",
+   "source_time": "20261016 16:59:54",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 2.1,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00923",
@@ -3810,8 +5199,13 @@
    "premium": 0.48,
    "volume_lots": 2027,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 15:00:00"
+   "aum": 377.05,
+   "units": 946423000.0,
+   "index_name": "臺灣指數公司特選臺灣ESG低碳50指數",
+   "listed_date": "2023-03-08",
+   "source_time": "20261016 15:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00924",
@@ -3826,8 +5220,13 @@
    "premium": 0.0,
    "volume_lots": 933,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 148.89,
+   "units": 434603000.0,
+   "index_name": "標普500成長指數",
+   "listed_date": "2023-04-26",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00926",
@@ -3842,8 +5241,13 @@
    "premium": 0.4,
    "volume_lots": 135,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 28.17,
+   "units": 102482000.0,
+   "index_name": "彭博全球菁英 55 指數",
+   "listed_date": "2023-06-02",
+   "source_time": "20261016 17:00:02",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00927",
@@ -3858,8 +5262,17 @@
    "premium": 0.63,
    "volume_lots": 112249,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 15:00:00"
+   "aum": 732.41,
+   "units": 1928397000.0,
+   "index_name": "臺灣指數公司特選臺灣上市上櫃半導體收益指數",
+   "listed_date": "2023-06-06",
+   "source_time": "20261016 15:00:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 2.0,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00928",
@@ -3874,8 +5287,13 @@
    "premium": 0.37,
    "volume_lots": 496,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 15:50:30"
+   "aum": 15.76,
+   "units": 48356000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 15:50:30",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00929",
@@ -3890,8 +5308,17 @@
    "premium": 0.3,
    "volume_lots": 41360,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 1620.08,
+   "units": 5445639000.0,
+   "index_name": "臺灣指數公司特選臺灣上市上櫃科技優息指數",
+   "listed_date": "2023-06-09",
+   "source_time": "20261016 16:59:54",
+   "next_ex": {
+    "ex_date": "2026-10-21",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00930",
@@ -3906,8 +5333,13 @@
    "premium": -0.42,
    "volume_lots": 761,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:59:53"
+   "aum": 37.48,
+   "units": 158279000.0,
+   "index_name": "臺灣指數公司特選臺灣上市上櫃ESG低碳高息40指數",
+   "listed_date": "2023-07-13",
+   "source_time": "20261016 13:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00931B",
@@ -3922,8 +5354,17 @@
    "premium": 0.39,
    "volume_lots": 3902,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:48"
+   "aum": 290.97,
+   "units": 2243398000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:48",
+   "next_ex": {
+    "ex_date": "2026-10-20",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00932",
@@ -3938,8 +5379,13 @@
    "premium": -0.55,
    "volume_lots": 997,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:47"
+   "aum": 18.7,
+   "units": 103283000.0,
+   "index_name": "臺灣ESG永續高股息等權重指數",
+   "listed_date": "2023-09-01",
+   "source_time": "20261016 16:59:47",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00933B",
@@ -3954,8 +5400,17 @@
    "premium": 0.55,
    "volume_lots": 13156,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 1069.67,
+   "units": 6947958000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:46",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.073,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00934",
@@ -3970,8 +5425,17 @@
    "premium": 0.2,
    "volume_lots": 8211,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 14:38:31"
+   "aum": 145.66,
+   "units": 481526000.0,
+   "index_name": "臺灣指數公司特選臺灣上市上櫃優選成長高股息指數",
+   "listed_date": "2023-11-01",
+   "source_time": "20261016 14:38:31",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.5,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00935",
@@ -3986,8 +5450,13 @@
    "premium": 0.28,
    "volume_lots": 10033,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:09:36"
+   "aum": 513.27,
+   "units": 903004000.0,
+   "index_name": "臺灣指數公司特選臺灣上市上櫃FactSet創新科技50指數",
+   "listed_date": "2023-11-01",
+   "source_time": "20261016 17:09:36",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00936",
@@ -4002,8 +5471,17 @@
    "premium": -0.41,
    "volume_lots": 595,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 41.12,
+   "units": 190297000.0,
+   "index_name": "台灣永續高息中小型指數",
+   "listed_date": "2023-11-08",
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": {
+    "ex_date": "2026-10-16",
+    "cash": 0.16,
+    "pay_date": null
+   }
   },
   {
    "code": "00937B",
@@ -4018,8 +5496,17 @@
    "premium": 0.22,
    "volume_lots": 65650,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 2434.44,
+   "units": 17242305000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.072,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00938",
@@ -4034,8 +5521,13 @@
    "premium": 0.47,
    "volume_lots": 2985,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 28.79,
+   "units": 104516000.0,
+   "index_name": "臺灣指數公司特選臺灣上市上櫃優選多因子30指數",
+   "listed_date": "2024-10-23",
+   "source_time": "20261016 17:00:02",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00939",
@@ -4050,8 +5542,17 @@
    "premium": -0.48,
    "volume_lots": 3677,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 290.67,
+   "units": 1152976000.0,
+   "index_name": "特選臺灣高息動能指數",
+   "listed_date": "2024-03-20",
+   "source_time": "20261016 16:59:46",
+   "next_ex": {
+    "ex_date": "2026-11-03",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00940",
@@ -4066,8 +5567,13 @@
    "premium": -0.66,
    "volume_lots": 11425,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 13:31:00"
+   "aum": 680.04,
+   "units": 5011365000.0,
+   "index_name": "臺灣指數公司特選臺灣價值高息指數",
+   "listed_date": "2024-04-01",
+   "source_time": "20261016 13:31:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00941",
@@ -4082,8 +5588,13 @@
    "premium": 0.36,
    "volume_lots": 688,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 111.24,
+   "units": 442291000.0,
+   "index_name": "NYSE FactSet 上游半導體指數",
+   "listed_date": "2024-03-15",
+   "source_time": "20261016 17:00:01",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00942B",
@@ -4098,8 +5609,17 @@
    "premium": 0.28,
    "volume_lots": 1766,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 281.32,
+   "units": 2065459000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": {
+    "ex_date": "2026-10-16",
+    "cash": 0.062,
+    "pay_date": null
+   }
   },
   {
    "code": "00943",
@@ -4114,8 +5634,17 @@
    "premium": 0.28,
    "volume_lots": 2681,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:47"
+   "aum": 11.05,
+   "units": 50889000.0,
+   "index_name": "臺灣電子成長高息等權重指數",
+   "listed_date": "2024-05-20",
+   "source_time": "20261016 16:59:47",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.36,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00944",
@@ -4130,8 +5659,17 @@
    "premium": -0.22,
    "volume_lots": 203,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:09:36"
+   "aum": 11.94,
+   "units": 52581000.0,
+   "index_name": "臺灣指數公司特選臺灣上市上櫃FactSet臺灣趨勢動能高股息指數",
+   "listed_date": "2024-05-09",
+   "source_time": "20261016 17:09:36",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.109,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00945B",
@@ -4146,8 +5684,17 @@
    "premium": 0.27,
    "volume_lots": 8557,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 121.99,
+   "units": 844818000.0,
+   "index_name": "彭博美國企業非投資等級1-5年Ba至B債券指數",
+   "listed_date": "2024-05-02",
+   "source_time": "20261016 17:00:02",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.097,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00946",
@@ -4162,8 +5709,17 @@
    "premium": -0.38,
    "volume_lots": 2024,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 15:00:00"
+   "aum": 66.94,
+   "units": 424746000.0,
+   "index_name": "臺灣指數公司特選臺灣上市上櫃科技高息成長指數",
+   "listed_date": "2024-05-09",
+   "source_time": "20261016 15:00:00",
+   "next_ex": {
+    "ex_date": "2026-11-04",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00947",
@@ -4178,8 +5734,17 @@
    "premium": 0.47,
    "volume_lots": 15208,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 120.66,
+   "units": 343364000.0,
+   "index_name": "台灣IC設計動能指數",
+   "listed_date": "2024-06-12",
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": {
+    "ex_date": "2026-10-16",
+    "cash": 2.0,
+    "pay_date": null
+   }
   },
   {
    "code": "00948B",
@@ -4194,8 +5759,17 @@
    "premium": 0.38,
    "volume_lots": 60025,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 404.33,
+   "units": 4459927000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:01",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.045,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00949",
@@ -4210,8 +5784,13 @@
    "premium": 0.44,
    "volume_lots": 270,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 37.93,
+   "units": 165928000.0,
+   "index_name": "NYSE FactSet日本護城河優勢龍頭企業指數",
+   "listed_date": "2024-07-01",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00950B",
@@ -4226,8 +5805,13 @@
    "premium": 0.29,
    "volume_lots": 7042,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 559.99,
+   "units": 4135809000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:02",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00951",
@@ -4242,8 +5826,13 @@
    "premium": 0.73,
    "volume_lots": 2394,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 38.96,
+   "units": 234542000.0,
+   "index_name": "NYSE FactSet日本半導體指數",
+   "listed_date": "2024-07-25",
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00952",
@@ -4258,8 +5847,17 @@
    "premium": -0.17,
    "volume_lots": 1708,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 44.82,
+   "units": 247775000.0,
+   "index_name": "臺灣指數公司特選臺灣上市上櫃FactSet優選AI 50指數",
+   "listed_date": "2024-09-05",
+   "source_time": "20261016 17:00:02",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.12,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00953B",
@@ -4274,8 +5872,13 @@
    "premium": 0.4,
    "volume_lots": 74257,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 457.49,
+   "units": 4784675000.0,
+   "index_name": "ICE 1-5 年 BB-B 級成熟市場信用優息美元非投資等級債券指數",
+   "listed_date": "2024-08-21",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00954",
@@ -4290,8 +5893,13 @@
    "premium": 0.73,
    "volume_lots": 3265,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 22.35,
+   "units": 126247000.0,
+   "index_name": "NYSE FactSet 日本半導體指數",
+   "listed_date": "2024-08-20",
+   "source_time": "20261016 17:00:01",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00955",
@@ -4306,8 +5914,13 @@
    "premium": 0.0,
    "volume_lots": 5543,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 77.97,
+   "units": 473431000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:01",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00956",
@@ -4322,8 +5935,17 @@
    "premium": 0.22,
    "volume_lots": 350,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 4.49,
+   "units": 32630000.0,
+   "index_name": "日經高股息50指數",
+   "listed_date": "2024-08-20",
+   "source_time": "20261016 17:00:01",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.3,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00957B",
@@ -4338,8 +5960,17 @@
    "premium": 0.24,
    "volume_lots": 196,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:47"
+   "aum": 24.04,
+   "units": 186763000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:47",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.064,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00958B",
@@ -4354,13 +5985,22 @@
    "premium": 0.22,
    "volume_lots": 106,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:28:04"
+   "aum": 10.33,
+   "units": 115771000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:28:04",
+   "next_ex": {
+    "ex_date": "2026-10-27",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00959B",
    "name": "大華投等美債15Y+",
-   "issuer": "大華",
+   "issuer": "大華銀",
    "category": "債券",
    "market": "上櫃",
    "price": 8.96,
@@ -4370,8 +6010,13 @@
    "premium": -0.01,
    "volume_lots": 2127,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:50"
+   "aum": 45.82,
+   "units": 511336000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:50",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00960",
@@ -4386,8 +6031,17 @@
    "premium": 0.47,
    "volume_lots": 407,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:09:36"
+   "aum": 13.56,
+   "units": 57995000.0,
+   "index_name": "NYSE FactSet全球航運龍頭息收指數",
+   "listed_date": "2024-09-20",
+   "source_time": "20261016 17:09:36",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.28,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00961",
@@ -4402,8 +6056,17 @@
    "premium": -0.8,
    "volume_lots": 28042,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 131.02,
+   "units": 951511000.0,
+   "index_name": "NYSE臺灣ESG高息指數",
+   "listed_date": "2024-10-15",
+   "source_time": "20261016 16:59:46",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.09,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00962",
@@ -4418,8 +6081,17 @@
    "premium": 0.16,
    "volume_lots": 7361,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 30.98,
+   "units": 210920000.0,
+   "index_name": "台灣AI優息動能指數",
+   "listed_date": "2024-12-06",
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": {
+    "ex_date": "2026-10-16",
+    "cash": 0.25,
+    "pay_date": null
+   }
   },
   {
    "code": "00963",
@@ -4434,8 +6106,17 @@
    "premium": -0.08,
    "volume_lots": 2006,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 16.84,
+   "units": 131433000.0,
+   "index_name": "NYSE 全球特選高股息自由現金流指數",
+   "listed_date": "2024-11-14",
+   "source_time": "20261016 17:00:01",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.1,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00964",
@@ -4450,8 +6131,17 @@
    "premium": 0.8,
    "volume_lots": 2576,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 12.33,
+   "units": 82124000.0,
+   "index_name": "NYSE 亞太高股息指數",
+   "listed_date": "2024-11-14",
+   "source_time": "20261016 17:00:01",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.2,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00965",
@@ -4466,8 +6156,13 @@
    "premium": -0.24,
    "volume_lots": 2847,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 99.82,
+   "units": 398492000.0,
+   "index_name": "NYSE FactSet全球航太與防衛科技指數",
+   "listed_date": "2024-11-26",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00966B",
@@ -4482,8 +6177,13 @@
    "premium": 0.3,
    "volume_lots": 939,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 14.99,
+   "units": 112232000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00967B",
@@ -4498,8 +6198,17 @@
    "premium": 0.24,
    "volume_lots": 655,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 15.93,
+   "units": 180407000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": {
+    "ex_date": "2026-10-22",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00968B",
@@ -4514,8 +6223,17 @@
    "premium": 0.0,
    "volume_lots": 2907,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 76.13,
+   "units": 853511000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": {
+    "ex_date": "2026-10-22",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00969B",
@@ -4530,8 +6248,13 @@
    "premium": 0.16,
    "volume_lots": 3148,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 11.49,
+   "units": 145133000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00970B",
@@ -4546,8 +6269,17 @@
    "premium": 0.06,
    "volume_lots": 2637,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 34.76,
+   "units": 389729000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": {
+    "ex_date": "2026-10-16",
+    "cash": 0.05,
+    "pay_date": null
+   }
   },
   {
    "code": "00971",
@@ -4562,8 +6294,13 @@
    "premium": 0.27,
    "volume_lots": 58,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:09:36"
+   "aum": 9.51,
+   "units": 52177000.0,
+   "index_name": "彭博研發龍頭指數",
+   "listed_date": "2025-01-09",
+   "source_time": "20261016 17:09:36",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00972",
@@ -4578,8 +6315,13 @@
    "premium": -0.27,
    "volume_lots": 194,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:09:36"
+   "aum": 3.3,
+   "units": 14672000.0,
+   "index_name": "彭博日本價值動能高息指數",
+   "listed_date": "2025-01-09",
+   "source_time": "20261016 17:09:36",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009800",
@@ -4594,8 +6336,13 @@
    "premium": 0.52,
    "volume_lots": 1237,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 41.95,
+   "units": 311891000.0,
+   "index_name": "美國納斯達克100指數",
+   "listed_date": "2025-02-11",
+   "source_time": "20261016 17:00:01",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009801",
@@ -4610,8 +6357,13 @@
    "premium": 0.35,
    "volume_lots": 554,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 10.74,
+   "units": 93119000.0,
+   "index_name": "Solactive美國創新科技指數",
+   "listed_date": "2025-02-11",
+   "source_time": "20261016 17:00:01",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009802",
@@ -4626,8 +6378,13 @@
    "premium": -0.4,
    "volume_lots": 1624,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 102.33,
+   "units": 514495000.0,
+   "index_name": "臺灣指數公司台灣上市上櫃旗艦動能50指數",
+   "listed_date": "2025-03-19",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009803",
@@ -4642,8 +6399,13 @@
    "premium": 0.24,
    "volume_lots": 4918,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 64.98,
+   "units": 310328000.0,
+   "index_name": "臺灣指數公司特選FactSet臺灣市值動能50指數",
+   "listed_date": "2025-03-13",
+   "source_time": "20261016 16:59:46",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009804",
@@ -4658,8 +6420,13 @@
    "premium": 0.47,
    "volume_lots": 1016,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:05"
+   "aum": 32.54,
+   "units": 139892000.0,
+   "index_name": "富時臺灣證券交易所臺灣50權重上限30%指數",
+   "listed_date": "2025-04-16",
+   "source_time": "20261016 17:00:05",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009805",
@@ -4674,8 +6441,17 @@
    "premium": 0.87,
    "volume_lots": 4773,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 90.47,
+   "units": 621816000.0,
+   "index_name": "NYSE FactSet美國電力基建息收指數",
+   "listed_date": "2025-05-13",
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": {
+    "ex_date": "2026-10-16",
+    "cash": 0.3,
+    "pay_date": null
+   }
   },
   {
    "code": "009806",
@@ -4690,8 +6466,13 @@
    "premium": 0.28,
    "volume_lots": 10,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 1.64,
+   "units": 11661000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009807",
@@ -4706,8 +6487,13 @@
    "premium": 0.49,
    "volume_lots": 146,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 2.41,
+   "units": 13760000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009808",
@@ -4722,8 +6508,13 @@
    "premium": -0.19,
    "volume_lots": 208,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 15:40:15"
+   "aum": 12.14,
+   "units": 38511000.0,
+   "index_name": "臺灣護城河概念優選 50 指數",
+   "listed_date": "2025-05-16",
+   "source_time": "20261016 15:40:15",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009809",
@@ -4738,8 +6529,13 @@
    "premium": 0.05,
    "volume_lots": 338,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 6.0,
+   "units": 32863000.0,
+   "index_name": "S&amp;P TIP臺灣淨零轉型ESG 50指數",
+   "listed_date": "2025-10-14",
+   "source_time": "20261016 17:05:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00980A",
@@ -4754,8 +6550,13 @@
    "premium": 0.37,
    "volume_lots": 5905,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:09:36"
+   "aum": 186.79,
+   "units": 762730000.0,
+   "index_name": null,
+   "listed_date": "2025-05-05",
+   "source_time": "20261016 17:09:36",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00980B",
@@ -4770,8 +6571,17 @@
    "premium": 0.13,
    "volume_lots": 783,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 4.93,
+   "units": 54569000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": {
+    "ex_date": "2026-10-16",
+    "cash": 0.047,
+    "pay_date": null
+   }
   },
   {
    "code": "00980D",
@@ -4786,8 +6596,17 @@
    "premium": 0.06,
    "volume_lots": 622,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:37"
+   "aum": 19.5,
+   "units": 98957000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:37",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.114,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00980T",
@@ -4802,8 +6621,13 @@
    "premium": 0.24,
    "volume_lots": 112,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 9.18,
+   "units": 74918000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:02",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009810",
@@ -4818,8 +6642,13 @@
    "premium": 0.0,
    "volume_lots": 29,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 4.18,
+   "units": 19154000.0,
+   "index_name": "標普全球100指數",
+   "listed_date": "2025-07-16",
+   "source_time": "20261016 16:59:46",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009811",
@@ -4834,8 +6663,13 @@
    "premium": 0.73,
    "volume_lots": 861,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:55"
+   "aum": 31.75,
+   "units": 231950000.0,
+   "index_name": "NYSE 美國50指數",
+   "listed_date": "2025-07-29",
+   "source_time": "20261016 16:59:55",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009812",
@@ -4850,8 +6684,13 @@
    "premium": 0.15,
    "volume_lots": 372,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:09:36"
+   "aum": 12.11,
+   "units": 91882000.0,
+   "index_name": "東證股價總報酬指數",
+   "listed_date": "2025-09-18",
+   "source_time": "20261016 17:09:36",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009813",
@@ -4866,8 +6705,13 @@
    "premium": 0.1,
    "volume_lots": 641,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:09:45"
+   "aum": 36.35,
+   "units": 308824000.0,
+   "index_name": "標普500卓越50指數",
+   "listed_date": "2025-10-20",
+   "source_time": "20261016 17:09:45",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009814",
@@ -4882,13 +6726,22 @@
    "premium": 0.17,
    "volume_lots": 521,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 17.78,
+   "units": 152076000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:05:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.043,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "009815",
    "name": "大華美國MAG7+",
-   "issuer": "大華",
+   "issuer": "大華銀",
    "category": "海外股票",
    "market": "上櫃",
    "price": 12.09,
@@ -4898,8 +6751,13 @@
    "premium": 0.25,
    "volume_lots": 2322,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:50"
+   "aum": 50.37,
+   "units": 417670000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:50",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009816",
@@ -4914,8 +6772,13 @@
    "premium": 0.31,
    "volume_lots": 127504,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 2073.63,
+   "units": 12839844000.0,
+   "index_name": "臺灣指數公司特選臺灣TOP 50指數",
+   "listed_date": "2026-02-03",
+   "source_time": "20261016 17:00:02",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009817",
@@ -4930,8 +6793,13 @@
    "premium": 0.23,
    "volume_lots": 372,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 18.92,
+   "units": 218936000.0,
+   "index_name": "東証REIT總報酬指數",
+   "listed_date": "2026-02-06",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009818",
@@ -4946,8 +6814,13 @@
    "premium": 0.05,
    "volume_lots": 101,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 9.63,
+   "units": 45652000.0,
+   "index_name": "NASDAQ 100 科技市值加權指數",
+   "listed_date": "2026-03-23",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009819",
@@ -4962,8 +6835,13 @@
    "premium": 0.52,
    "volume_lots": 2669,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 57.35,
+   "units": 591245000.0,
+   "index_name": "NYSE TIP數據中心及電力指數",
+   "listed_date": "2026-04-23",
+   "source_time": "20261016 17:00:01",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00981A",
@@ -4978,8 +6856,13 @@
    "premium": 0.61,
    "volume_lots": 119905,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:57"
+   "aum": 2672.23,
+   "units": 9104709000.0,
+   "index_name": null,
+   "listed_date": "2025-05-27",
+   "source_time": "20261016 16:59:57",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00981B",
@@ -4994,8 +6877,13 @@
    "premium": 0.09,
    "volume_lots": 13144,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:48"
+   "aum": 146.24,
+   "units": 1619113000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:48",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00981D",
@@ -5010,8 +6898,17 @@
    "premium": -0.28,
    "volume_lots": 2544,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 53.48,
+   "units": 521800000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:01",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.07,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00981T",
@@ -5026,8 +6923,17 @@
    "premium": 0.43,
    "volume_lots": 2095,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:02"
+   "aum": 29.35,
+   "units": 251261000.0,
+   "index_name": "臺灣指數公司 ICE雙核債股平衡指數",
+   "listed_date": "2025-09-24",
+   "source_time": "20261016 17:00:02",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.082,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "009820",
@@ -5042,8 +6948,13 @@
    "premium": 0.48,
    "volume_lots": 3541,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 98.01,
+   "units": 949702000.0,
+   "index_name": "納斯達克100增強成長指數",
+   "listed_date": "2026-04-23",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009821",
@@ -5058,8 +6969,13 @@
    "premium": 0.08,
    "volume_lots": 6987,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:09:36"
+   "aum": 75.19,
+   "units": 606840000.0,
+   "index_name": "NYSE TIP全球稀土與關鍵資源指數",
+   "listed_date": "2026-06-17",
+   "source_time": "20261016 17:09:36",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009822",
@@ -5074,8 +6990,13 @@
    "premium": -0.11,
    "volume_lots": 325,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 6.17,
+   "units": 67556000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009823",
@@ -5090,8 +7011,13 @@
    "premium": 0.0,
    "volume_lots": 2797,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 34.6,
+   "units": 321817000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009824",
@@ -5106,8 +7032,13 @@
    "premium": 0.1,
    "volume_lots": 2242,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 48.16,
+   "units": 460847000.0,
+   "index_name": "Solactive美國科技巨頭指數",
+   "listed_date": "2026-06-25",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009825",
@@ -5122,8 +7053,13 @@
    "premium": -1.29,
    "volume_lots": 280,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:05"
+   "aum": 11.55,
+   "units": 114708000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:00:05",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009826",
@@ -5138,8 +7074,13 @@
    "premium": -0.11,
    "volume_lots": 6057,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:09:45"
+   "aum": 87.95,
+   "units": 864804000.0,
+   "index_name": "標普TIP世界股票指數",
+   "listed_date": "2026-08-03",
+   "source_time": "20261016 17:09:45",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009827",
@@ -5154,8 +7095,13 @@
    "premium": 0.9,
    "volume_lots": 3176,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 20.56,
+   "units": 204950000.0,
+   "index_name": "NYSE TIP未來全球算力及太空基礎建設指數",
+   "listed_date": "2026-09-02",
+   "source_time": "20261016 16:59:46",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009828",
@@ -5170,13 +7116,18 @@
    "premium": 0.3,
    "volume_lots": 46933,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 106.46,
+   "units": 1053045000.0,
+   "index_name": "NYSE TIP台日韓PCB指數",
+   "listed_date": "2026-09-02",
+   "source_time": "20261016 17:00:01",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "009829",
    "name": "大華韓國KOSPI 50",
-   "issuer": "大華",
+   "issuer": "大華銀",
    "category": "海外股票",
    "market": "上市",
    "price": 9.04,
@@ -5186,8 +7137,13 @@
    "premium": 1.23,
    "volume_lots": 30820,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:50"
+   "aum": 51.29,
+   "units": 574370000.0,
+   "index_name": "KOSPI 50指數",
+   "listed_date": "2026-08-21",
+   "source_time": "20261016 16:59:50",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00982A",
@@ -5202,8 +7158,13 @@
    "premium": 0.04,
    "volume_lots": 14375,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 15:00:00"
+   "aum": 472.66,
+   "units": 2121436000.0,
+   "index_name": null,
+   "listed_date": "2025-05-22",
+   "source_time": "20261016 15:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00982B",
@@ -5218,8 +7179,17 @@
    "premium": -0.55,
    "volume_lots": 28,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 2.36,
+   "units": 24900000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:46",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.045,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00982D",
@@ -5234,8 +7204,17 @@
    "premium": -0.08,
    "volume_lots": 223,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 7.33,
+   "units": 76729000.0,
+   "index_name": null,
+   "listed_date": "2025-10-14",
+   "source_time": "20261016 17:05:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.052,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00982T",
@@ -5250,8 +7229,13 @@
    "premium": 0.21,
    "volume_lots": 70,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:47"
+   "aum": 2.46,
+   "units": 16597000.0,
+   "index_name": "Mega TW-US Momentum Balanced ETF",
+   "listed_date": "2025-12-26",
+   "source_time": "20261016 16:59:47",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00983A",
@@ -5266,13 +7250,18 @@
    "premium": 0.47,
    "volume_lots": 800,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:01"
+   "aum": 9.0,
+   "units": 70186000.0,
+   "index_name": null,
+   "listed_date": "2025-06-18",
+   "source_time": "20261016 17:00:01",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00983B",
    "name": "大華優利美公債20",
-   "issuer": "大華",
+   "issuer": "大華銀",
    "category": "債券",
    "market": "上櫃",
    "price": 15.03,
@@ -5282,8 +7271,13 @@
    "premium": 0.09,
    "volume_lots": 145,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:50"
+   "aum": 3.33,
+   "units": 22153000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:50",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00983D",
@@ -5298,8 +7292,17 @@
    "premium": -0.04,
    "volume_lots": 621,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:05:00"
+   "aum": 10.02,
+   "units": 101697000.0,
+   "index_name": null,
+   "listed_date": "2025-10-14",
+   "source_time": "20261016 17:05:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.061,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00984A",
@@ -5314,13 +7317,22 @@
    "premium": 0.5,
    "volume_lots": 9707,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 106.34,
+   "units": 667958000.0,
+   "index_name": null,
+   "listed_date": "2025-07-14",
+   "source_time": "20261016 16:59:45",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.473,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00984B",
    "name": "大華優利美A債15",
-   "issuer": "大華",
+   "issuer": "大華銀",
    "category": "債券",
    "market": "上櫃",
    "price": 15.67,
@@ -5330,8 +7342,13 @@
    "premium": 0.04,
    "volume_lots": 807,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:50"
+   "aum": 18.31,
+   "units": 116933000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:50",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00984D",
@@ -5346,8 +7363,17 @@
    "premium": -0.06,
    "volume_lots": 14980,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:42"
+   "aum": 121.17,
+   "units": 1247057000.0,
+   "index_name": null,
+   "listed_date": "2026-02-04",
+   "source_time": "20261016 16:59:42",
+   "next_ex": {
+    "ex_date": "2026-11-03",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00985A",
@@ -5362,8 +7388,17 @@
    "premium": 0.74,
    "volume_lots": 157048,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:09:36"
+   "aum": 280.07,
+   "units": 1219289000.0,
+   "index_name": null,
+   "listed_date": "2025-07-21",
+   "source_time": "20261016 17:09:36",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 2.15,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00985B",
@@ -5378,8 +7413,13 @@
    "premium": 0.18,
    "volume_lots": 10102,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 93.5,
+   "units": 916501000.0,
+   "index_name": "ICE ESG 0-5年期BBB級成熟市場大型美元公司債指數",
+   "listed_date": "2025-09-11",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00985D",
@@ -5394,8 +7434,17 @@
    "premium": 0.33,
    "volume_lots": 2164,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:09:45"
+   "aum": 11.94,
+   "units": 122232000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:09:45",
+   "next_ex": {
+    "ex_date": "2026-10-20",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00986A",
@@ -5410,8 +7459,13 @@
    "premium": 0.12,
    "volume_lots": 358,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 5.41,
+   "units": 37827000.0,
+   "index_name": null,
+   "listed_date": "2025-08-27",
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00986B",
@@ -5426,8 +7480,13 @@
    "premium": -0.42,
    "volume_lots": 42,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 1.74,
+   "units": 18262000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:46",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00986D",
@@ -5442,8 +7501,17 @@
    "premium": -0.07,
    "volume_lots": 878,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 20.08,
+   "units": 141177000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:54",
+   "next_ex": {
+    "ex_date": "2026-10-21",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00987A",
@@ -5458,8 +7526,13 @@
    "premium": 0.61,
    "volume_lots": 1538,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 22.68,
+   "units": 138143000.0,
+   "index_name": null,
+   "listed_date": "2025-12-30",
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00987B",
@@ -5474,8 +7547,13 @@
    "premium": -0.15,
    "volume_lots": 1032,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:09:36"
+   "aum": 11.95,
+   "units": 76327000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:09:36",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00987D",
@@ -5490,8 +7568,13 @@
    "premium": 0.3,
    "volume_lots": 1241,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:47"
+   "aum": 8.24,
+   "units": 83523000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:47",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00988A",
@@ -5506,8 +7589,13 @@
    "premium": 0.26,
    "volume_lots": 18800,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:53"
+   "aum": 475.03,
+   "units": 3050937000.0,
+   "index_name": null,
+   "listed_date": "2025-11-05",
+   "source_time": "20261016 16:59:53",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00988B",
@@ -5522,8 +7610,17 @@
    "premium": 0.15,
    "volume_lots": 1744,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 30.54,
+   "units": 161333000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:46",
+   "next_ex": null,
+   "last_ex": {
+    "ex_date": "2026-10-16",
+    "cash": 0.146,
+    "pay_date": null
+   }
   },
   {
    "code": "00989A",
@@ -5538,8 +7635,13 @@
    "premium": 0.0,
    "volume_lots": 316,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 10.73,
+   "units": 61117000.0,
+   "index_name": null,
+   "listed_date": "2025-10-22",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00989B",
@@ -5554,8 +7656,17 @@
    "premium": 0.27,
    "volume_lots": 2496,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 12.38,
+   "units": 125452000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": {
+    "ex_date": "2026-10-16",
+    "cash": 0.088,
+    "pay_date": null
+   }
   },
   {
    "code": "00990A",
@@ -5570,8 +7681,13 @@
    "premium": -0.07,
    "volume_lots": 7448,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 345.57,
+   "units": 2282522000.0,
+   "index_name": null,
+   "listed_date": "2025-12-22",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00990B",
@@ -5586,8 +7702,17 @@
    "premium": 0.27,
    "volume_lots": 3742,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:46"
+   "aum": 9.79,
+   "units": 98350000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:46",
+   "next_ex": {
+    "ex_date": "2026-10-28",
+    "cash": null,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00991A",
@@ -5602,8 +7727,13 @@
    "premium": 0.23,
    "volume_lots": 44384,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 709.18,
+   "units": 4096916000.0,
+   "index_name": null,
+   "listed_date": "2025-12-18",
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00991B",
@@ -5618,8 +7748,17 @@
    "premium": 0.28,
    "volume_lots": 1041,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:09:45"
+   "aum": 59.41,
+   "units": 400328000.0,
+   "index_name": "ICE TIP 10年期以上 A 級成熟市場美元公司債指數",
+   "listed_date": "2026-08-03",
+   "source_time": "20261016 17:09:45",
+   "next_ex": {
+    "ex_date": "2026-10-20",
+    "cash": 0.067,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00992A",
@@ -5634,8 +7773,17 @@
    "premium": 0.49,
    "volume_lots": 61552,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 15:00:00"
+   "aum": 461.72,
+   "units": 2518955000.0,
+   "index_name": null,
+   "listed_date": "2025-12-30",
+   "source_time": "20261016 15:00:00",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.85,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00992B",
@@ -5650,8 +7798,13 @@
    "premium": -0.74,
    "volume_lots": 890,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:01:15"
+   "aum": 4.58,
+   "units": 45614000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 17:01:15",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00993A",
@@ -5666,8 +7819,13 @@
    "premium": 0.08,
    "volume_lots": 3022,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:45"
+   "aum": 95.12,
+   "units": 713591000.0,
+   "index_name": null,
+   "listed_date": "2026-02-03",
+   "source_time": "20261016 16:59:45",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00994A",
@@ -5682,8 +7840,13 @@
    "premium": 0.24,
    "volume_lots": 1692,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:48"
+   "aum": 40.36,
+   "units": 245190000.0,
+   "index_name": null,
+   "listed_date": "2026-01-07",
+   "source_time": "20261016 17:00:48",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00995A",
@@ -5698,8 +7861,17 @@
    "premium": 0.41,
    "volume_lots": 4515,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 15:26:15"
+   "aum": 44.92,
+   "units": 265035000.0,
+   "index_name": null,
+   "listed_date": "2026-01-22",
+   "source_time": "20261016 15:26:15",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.5,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00996A",
@@ -5714,8 +7886,17 @@
    "premium": 0.63,
    "volume_lots": 22270,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:47"
+   "aum": 53.91,
+   "units": 379399000.0,
+   "index_name": null,
+   "listed_date": "2026-03-25",
+   "source_time": "20261016 16:59:47",
+   "next_ex": {
+    "ex_date": "2026-10-19",
+    "cash": 0.73,
+    "pay_date": null
+   },
+   "last_ex": null
   },
   {
    "code": "00997A",
@@ -5730,8 +7911,13 @@
    "premium": 0.37,
    "volume_lots": 4700,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:00:00"
+   "aum": 113.68,
+   "units": 1044877000.0,
+   "index_name": null,
+   "listed_date": "2026-04-14",
+   "source_time": "20261016 17:00:00",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00998A",
@@ -5746,8 +7932,13 @@
    "premium": -0.61,
    "volume_lots": 8850,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 16:59:54"
+   "aum": 72.01,
+   "units": 442609000.0,
+   "index_name": null,
+   "listed_date": null,
+   "source_time": "20261016 16:59:54",
+   "next_ex": null,
+   "last_ex": null
   },
   {
    "code": "00999A",
@@ -5762,8 +7953,13 @@
    "premium": 0.46,
    "volume_lots": 8613,
    "fee": null,
-   "aum": null,
-   "source_time": "20261016 17:09:36"
+   "aum": 108.19,
+   "units": 993517000.0,
+   "index_name": null,
+   "listed_date": "2026-05-05",
+   "source_time": "20261016 17:09:36",
+   "next_ex": null,
+   "last_ex": null
   }
  ]
 }

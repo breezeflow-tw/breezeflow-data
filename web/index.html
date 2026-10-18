@@ -59,12 +59,16 @@ button{font:inherit;cursor:pointer}
 .chip .c{font-family:var(--f-num);font-size:11px;opacity:.75;margin-left:4px}
 .right{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .search{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);width:200px;max-width:100%}
+.select{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);max-width:100%}
+.ex-next{color:var(--accent);font-weight:500}
+.ex-past{color:var(--muted)}
+.ex-note{display:block;font-family:var(--f-body);font-size:11px;color:var(--muted)}
 .toggle{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);cursor:pointer}
 .toggle input{accent-color:var(--accent)}
-button:focus-visible,input:focus-visible,th:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button:focus-visible,input:focus-visible,select:focus-visible,th:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 .table-box{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
-table{border-collapse:separate;border-spacing:0;width:100%;min-width:1080px}
+table{border-collapse:separate;border-spacing:0;width:100%;min-width:1320px}
 th,td{padding:9px 10px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line)}
 th{font-size:12px;font-weight:500;color:var(--muted);background:var(--surface);position:sticky;top:0;cursor:pointer;user-select:none}
 th:hover{color:var(--ink)}
@@ -126,6 +130,8 @@ footer .wrap{display:grid;gap:4px}
   <div class="toolbar">
     <div class="chips" id="chips" role="group" aria-label="ETF 類型"></div>
     <div class="right">
+      <select class="select" id="issuer" aria-label="發行投信"><option value="">全部投信</option></select>
+      <label class="toggle"><input type="checkbox" id="only-div">只看即將除息</label>
       <label class="toggle"><input type="checkbox" id="only-alert">只看折溢價超過 ±1%</label>
       <input class="search" id="q" type="search" placeholder="搜尋代號、名稱、發行商" aria-label="搜尋 ETF">
     </div>
@@ -141,19 +147,21 @@ footer .wrap{display:grid;gap:4px}
         <th data-k="change_pct" tabindex="0">漲跌</th>
         <th data-k="nav" tabindex="0">預估淨值</th>
         <th data-k="premium" tabindex="0">折溢價</th>
-        <th data-k="nav_prev" tabindex="0">前日淨值</th>
         <th data-k="volume_lots" tabindex="0">成交量（張）</th>
-        <th data-k="fee" tabindex="0">總費用率</th>
         <th data-k="aum" tabindex="0">規模（億）</th>
+        <th data-k="fee" tabindex="0">總費用率</th>
+        <th data-k="ex_date" tabindex="0">除息日</th>
+        <th data-k="ex_cash" tabindex="0">每單位配息</th>
+        <th data-k="pay_date" tabindex="0">發放日</th>
       </tr></thead>
-      <tbody id="rows"><tr><td colspan="11" class="empty">資料載入中…</td></tr></tbody>
+      <tbody id="rows"><tr><td colspan="13" class="empty">資料載入中…</td></tr></tbody>
     </table>
   </div>
 
   <div class="notes">
     <div><h2>折溢價怎麼算</h2><p>（市價 − 預估淨值）÷ 預估淨值。正數是溢價，負數是折價。海外與熱門主題 ETF 較容易出現大幅溢價。</p></div>
     <div><h2>淨值與市價</h2><p>預估淨值由投信盤中公告，反映 ETF 持有資產每單位的價值；市價是交易所的成交價格。</p></div>
-    <div><h2>資料來源</h2><p>預估淨值取自臺灣證券交易所 ETF 預估淨值資訊；收盤價與成交量取自證交所與櫃買中心 OpenAPI。每個交易日收盤後自動更新。</p></div>
+    <div><h2>資料來源</h2><p>預估淨值取自臺灣證券交易所 ETF 預估淨值資訊；收盤價、成交量、除息預告取自證交所與櫃買中心 OpenAPI。規模為發行單位數乘以淨值。每個交易日 08:50 與 18:00 自動更新。</p></div>
   </div>
 </main>
 
@@ -167,7 +175,8 @@ footer .wrap{display:grid;gap:4px}
   const $=id=>document.getElementById(id);
   const fmt=(v,d)=>v==null?"—":v.toLocaleString("zh-TW",{minimumFractionDigits:d,maximumFractionDigits:d});
   const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-  const state={type:"全部",q:"",alert:false,key:"volume_lots",dir:-1};
+  const state={type:"全部",q:"",alert:false,div:false,issuer:"",key:"volume_lots",dir:-1};
+  const md=s=>s?s.slice(5).replace("-","/"):"—";
   let DATA=[];
 
   function chips(){
@@ -188,6 +197,7 @@ footer .wrap{display:grid;gap:4px}
   function render(){
     const q=state.q.trim().toLowerCase();
     const rows=DATA.filter(d=>(state.type==="全部"||d.category===state.type)&&(!state.alert||(d.premium!=null&&Math.abs(d.premium)>=1))&&
+      (!state.issuer||d.issuer===state.issuer)&&(!state.div||d.ex_upcoming)&&
       (!q||d.code.toLowerCase().includes(q)||d.name.toLowerCase().includes(q)||(d.issuer||"").includes(q)));
     const k=state.key;
     rows.sort((a,b)=>{const x=a[k],y=b[k];if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;
@@ -200,10 +210,12 @@ footer .wrap{display:grid;gap:4px}
       <td class="num ${d.change_pct==null?"":d.change_pct>=0?"up":"down"}">${d.change_pct==null?"—":(d.change_pct>=0?"+":"")+fmt(d.change_pct,2)+"%"}</td>
       <td class="num">${fmt(d.nav,2)}</td>
       <td class="num">${pdCell(d.premium)}</td>
-      <td class="num">${fmt(d.nav_prev,2)}</td>
       <td class="num">${fmt(d.volume_lots,0)}</td>
+      <td class="num">${fmt(d.aum,0)}</td>
       <td class="num">${d.fee==null?"—":fmt(d.fee,2)+"%"}</td>
-      <td class="num">${fmt(d.aum,0)}</td></tr>`).join(""):`<tr><td colspan="11" class="empty">沒有符合條件的 ETF，試試清除搜尋或切回「全部」。</td></tr>`;
+      <td class="num ${d.ex_date?(d.ex_upcoming?"ex-next":"ex-past"):""}">${md(d.ex_date)}${d.ex_date?`<span class="ex-note">${d.ex_upcoming?"即將除息":"最近一次"}</span>`:""}</td>
+      <td class="num">${d.ex_cash==null?(d.ex_date?"待公告":"—"):fmt(d.ex_cash,3)}</td>
+      <td class="num">${md(d.pay_date)}</td></tr>`).join(""):`<tr><td colspan="13" class="empty">沒有符合條件的 ETF，試試清除搜尋或切回「全部」。</td></tr>`;
     const valid=rows.filter(d=>d.premium!=null);
     const avg=valid.length?valid.reduce((s,d)=>s+d.premium,0)/valid.length:null;
     $("s-count").textContent=rows.length+" / "+DATA.length;
@@ -214,21 +226,27 @@ footer .wrap{display:grid;gap:4px}
   }
 
   document.querySelectorAll("th[data-k]").forEach(th=>{
-    const go=()=>{const k=th.dataset.k;if(state.key===k)state.dir*=-1;else{state.key=k;state.dir=["code","name","category"].includes(k)?1:-1;}render();};
+    const go=()=>{const k=th.dataset.k;if(state.key===k)state.dir*=-1;else{state.key=k;state.dir=["code","name","category","ex_date","pay_date"].includes(k)?1:-1;}render();};
     th.onclick=go;th.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go();}};
   });
   $("q").addEventListener("input",e=>{state.q=e.target.value;render();});
   $("only-alert").addEventListener("change",e=>{state.alert=e.target.checked;render();});
+  $("only-div").addEventListener("change",e=>{state.div=e.target.checked;render();});
+  $("issuer").addEventListener("change",e=>{state.issuer=e.target.value;render();});
 
   fetch("data/latest.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(p=>{
-    DATA=p.items||[];
+    DATA=(p.items||[]).map(d=>{const ex=d.next_ex||d.last_ex;
+      return{...d,ex_upcoming:!!d.next_ex,ex_date:ex?ex.ex_date:null,ex_cash:ex?ex.cash:null,pay_date:ex?ex.pay_date:null};});
+    const issuers={};DATA.forEach(d=>{if(d.issuer)issuers[d.issuer]=(issuers[d.issuer]||0)+1;});
+    $("issuer").innerHTML='<option value="">全部投信</option>'+Object.entries(issuers).sort((a,b)=>b[1]-a[1])
+      .map(([k,n])=>`<option value="${esc(k)}">${esc(k)}（${n}）</option>`).join("");
     $("h-date").textContent="資料日期 "+p.trade_date;
     $("s-date").textContent="更新於 "+(p.generated_at||"").replace("T"," ").slice(0,16);
     if(p.source!=="live"){$("banner").hidden=false;$("banner").textContent="目前顯示的是測試資料，不是實際行情。";}
     chips();render();
   }).catch(()=>{
     $("h-date").textContent="尚無資料";
-    $("rows").innerHTML=`<tr><td colspan="11" class="empty">還沒有資料。請先執行 python scripts/fetch_etf.py 產生 web/data/latest.json。</td></tr>`;
+    $("rows").innerHTML=`<tr><td colspan="13" class="empty">還沒有資料。請先執行 python scripts/fetch_etf.py 產生 web/data/latest.json。</td></tr>`;
   });
 })();
 </script>

@@ -21,7 +21,10 @@
 | 預估淨值、前日淨值、折溢價 | 臺灣證券交易所 ETF 預估淨值資訊 `mis.twse.com.tw/stock/data/all_etf.txt` |
 | 上市收盤價、成交量 | 證交所 OpenAPI `exchangeReport/STOCK_DAY_ALL` |
 | 上櫃收盤價、成交量 | 櫃買中心 OpenAPI `tpex_mainboard_daily_close_quotes` |
-| 總費用率、規模 | 目前由 `data/etf_meta.csv` 人工維護，之後改接投信投顧公會 |
+| 規模 | 發行單位數 × 淨值。上市用證交所 OpenAPI `opendata/t187ap47_L`（基金基本資料），上櫃用櫃買行情的 `Capitals` |
+| 除息日、每單位配息 | 證交所 `exchangeReport/TWT48U_ALL`、櫃買 `tpex_exright_prepost`（除權除息預告表），每天累積進 `dividend` 表 |
+| 配息發放日 | 尚未接上，需要公開資訊觀測站 `mops.twse.com.tw` |
+| 總費用率 | 尚未接上，需要投信投顧公會 `www.sitca.org.tw`；目前可在 `data/etf_meta.csv` 人工填寫 |
 
 ## 本機執行
 
@@ -53,7 +56,8 @@ python -m http.server -d web 8000         # 開 http://localhost:8000 看網頁
 - 證交所 MIS（淨值來源）偶爾回應 502。抓不到時本次只更新價格與成交量，同一天已存的淨值不會被清掉；重跑一次即可補上。
 - 投信網站目前未接。若 MIS 長期不穩，可改從各投信官網補抓淨值。
 - 類型由代號與名稱自動判斷，判斷錯誤時在 `data/etf_meta.csv` 的 `category` 欄修正。
-- 總費用率與規模尚無自動來源，需在 `data/etf_meta.csv` 填寫。
+- 總費用率與配息發放日尚無自動來源（網域未開放）。
+- 除息預告表只列近期資料，配息歷史要靠每天累積；越早開始跑，歷史越完整。
 
 ## 聲明
 
