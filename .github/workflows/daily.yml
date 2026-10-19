@@ -1,6 +1,14 @@
 name: 每日更新 ETF 資料
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'web/index.html'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'data/etf_meta.csv'
+      - '.github/workflows/daily.yml'
   schedule:
     # GitHub 排程用 UTC（台灣時間減 8 小時），週一到週五
     - cron: "50 0 * * 1-5"   # 台灣 08:50：補上前一交易日的正式淨值
@@ -18,16 +26,25 @@ concurrency:
 
 jobs:
   update:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - name: 測試
-        run: python -m unittest discover -s tests -v
+        run: |
+          python -m unittest discover -s tests -v
+          if compgen -G 'tests/*.mjs' > /dev/null; then
+            node --test tests/*.mjs
+          fi
 
       - name: 抓取資料
         run: python scripts/fetch_etf.py
@@ -36,12 +53,10 @@ jobs:
         run: |
           git config user.name "breezeflow-bot"
           git config user.email "breezeflow-bot@users.noreply.github.com"
-          git add data/history web/data/latest.json
-          git diff --cached --quiet || git commit -m "資料更新 $(date -u +%Y-%m-%d)"
-          git push
+          python scripts/release.py publish
 
-      - name: 放上完整資料庫供下載
-        run: cp data/etf.db web/data/etf.db
+      - name: 重建下載資料庫並記錄發布版本
+        run: python scripts/release.py manifest
 
       - uses: actions/upload-pages-artifact@v3
         with:
