@@ -185,6 +185,27 @@ footer{background:var(--surface);padding-block:20px;border-top:1px solid var(--l
 .flow-sources{padding-left:18px}.flow-sources li{margin:6px 0;overflow-wrap:anywhere}
 .holdings-meta{margin-bottom:20px;color:var(--muted);font-size:12px}.footer-copy{max-width:90em}.footer-copy p+p{margin-top:8px}
 table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-size:20px}
+.rankings{grid-column:1/-1;padding:20px 24px 28px;border-top:1px solid var(--line);min-width:0}
+.rank-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.rank-toolbar h2{font-size:20px}.rank-controls{display:flex;gap:16px;flex-wrap:wrap}
+.rank-controls label{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.rank-meta{color:var(--muted);font-size:12px;line-height:1.8;margin-bottom:20px}
+.rank-meta strong{color:var(--ink);font-weight:500}.rank-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
+.rank-grid.single{grid-template-columns:minmax(0,1fr);max-width:960px}.rank-group{min-width:0}
+.rank-group h3{font-size:16px;margin-bottom:12px}.rank-group h3 small{color:var(--muted);font-size:12px;font-weight:400;margin-left:8px}
+.rank-axis{display:flex;justify-content:space-between;margin-left:40%;margin-right:86px;font-family:var(--f-num);font-size:11px;color:var(--muted);padding-bottom:6px}
+.rank-list{list-style:none;margin:0;padding:0}.rank-list li+li{border-top:1px solid var(--line)}
+.rank-row{display:grid;grid-template-columns:minmax(0,40%) minmax(0,1fr) 76px;gap:10px;align-items:center;width:100%;text-align:left;background:var(--clear);border:0;min-height:48px;padding:6px 0;color:var(--ink)}
+.rank-row:hover,.rank-row[aria-expanded="true"]{background:var(--accent-soft)}
+.rank-label{display:flex;gap:10px;min-width:0;align-items:center}.rank-position{width:20px;flex-shrink:0;color:var(--muted);font:12px var(--f-num);text-align:right}
+.rank-identity{min-width:0}.rank-code{font:13px var(--f-num);color:var(--accent)}.rank-name{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}
+.rank-track{display:block;height:18px;background:var(--row);border-left:1px solid var(--muted)}
+.rank-bar{display:block;height:100%;background:var(--up)}.rank-negative .rank-track{border-left:0;border-right:1px solid var(--muted)}
+.rank-negative .rank-bar{background:var(--down);margin-left:auto}.rank-value{text-align:right;font:14px var(--f-num);white-space:nowrap}
+.rank-empty{padding:36px 16px;color:var(--muted);text-align:center;border:1px dashed var(--line);font-size:13px}
+.rank-method{margin-top:24px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;line-height:1.8;color:var(--muted)}
+@media(max-width:1399px){.detail-open .rank-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:767px){.rankings{padding:16px}.rank-grid{grid-template-columns:minmax(0,1fr);gap:28px}.rank-controls{width:100%;gap:12px}.rank-controls label{flex:1;min-width:0;display:block}.rank-controls select{margin-top:6px}.rank-row{grid-template-columns:minmax(0,43%) minmax(0,1fr) 70px;gap:8px}.rank-axis{margin-left:43%;margin-right:78px}.rank-label{gap:6px}.rank-name{font-size:12px}.rank-value{font-size:13px}}
 @media(min-width:1200px){
   .detail-open{overflow:auto}.detail-open main,.detail-open footer{width:auto;margin-right:var(--panel-width)}
   .detail-panel{top:var(--header-height);width:var(--panel-width);height:calc(100dvh - var(--header-height));z-index:7}
@@ -265,7 +286,16 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
         <button class="reset" id="reset-filters" type="button">清除篩選</button>
       </div>
     </div>
-    <div class="view-switch" role="group" aria-label="資料檢視"><button type="button" id="view-market" aria-pressed="true">行情與配息</button><button type="button" id="view-flows" aria-pressed="false">週資金流</button><p class="view-note" id="view-note">點選 ETF 可查看數字解釋、官方資料與前十大持股／成分。</p></div>
+    <div class="view-switch" role="group" aria-label="資料檢視"><button type="button" id="view-market" aria-pressed="true">行情與配息</button><button type="button" id="view-flows" aria-pressed="false">週資金流</button><button type="button" id="view-rankings" aria-pressed="false" aria-controls="rankings">報酬排行榜</button><p class="view-note" id="view-note">點選 ETF 可查看數字解釋、官方資料與前十大持股／成分。</p></div>
+    <section class="rankings" id="rankings" aria-labelledby="rank-title" hidden>
+      <div class="rank-toolbar"><h2 id="rank-title">ETF 市價漲跌幅排行</h2><div class="rank-controls">
+        <label>比較期間<select class="select" id="rank-period" aria-label="排行榜期間"><option value="1d">日</option><option value="1w">近一週</option><option value="1m">近一月</option></select></label>
+        <label>排行榜<select class="select" id="rank-direction" aria-label="排行榜正負方向"><option value="both">正負各前 10 名</option><option value="positive">正報酬前 10 名</option><option value="negative">負報酬前 10 名</option></select></label>
+      </div></div>
+      <div class="rank-meta" id="rank-meta" role="status" aria-live="polite">資料載入中…</div>
+      <div class="rank-grid" id="rank-grid"></div>
+      <p class="rank-method">僅比較市價漲跌幅，不含配息。日排行採行情漲跌幅；週／月排行＝（期末收盤價 ÷ 期初收盤價 − 1）× 100%，採 Yahoo 股市分割還原日線，期末使用本站查核後收盤價。近一週／近一月為滾動區間，非本週／本月累計。未取得資料者不列入；持平不列入正負榜，少於 10 檔不補位。同值依 ETF 代號排序。不同商品類型及交易幣別未作調整，可用上方篩選縮小比較範圍。</p>
+    </section>
     <div class="table-help"><span>點選任一列查看詳情 · 欄位可排序</span><span class="legend"><span class="up">＋漲</span><span class="down">−跌</span><span class="premium">溢價</span><span class="discount">折價</span></span></div>
     <div class="table-box" tabindex="0" role="region" aria-label="ETF 資料表，可上下及左右捲動">
       <table aria-label="台股 ETF 行情與配息資料">
@@ -300,9 +330,9 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
   const $=id=>document.getElementById(id);
   const fmt=(v,d)=>typeof v!=="number"||!Number.isFinite(v)?"—":v.toLocaleString("zh-TW",{minimumFractionDigits:d,maximumFractionDigits:d});
   const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-  const state={type:"全部",q:"",alert:false,div:false,issuer:"",key:"volume_lots",dir:-1,view:"market"};
+  const state={type:"全部",q:"",alert:false,div:false,issuer:"",key:"volume_lots",dir:-1,view:"market",rankPeriod:"1d",rankDirection:"both"};
   const md=s=>s?s.slice(5).replace("-","/"):"—";
-  let DATA=[];
+  let DATA=[],returnsInfo={},dataFailed=false;
   // 外觀偏好讀寫失敗時仍可正常操作，auto 由系統媒體查詢決定。
   $("theme").value=document.documentElement.dataset.theme||"auto";
   $("theme").addEventListener("change",e=>{
@@ -434,6 +464,7 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
       row.classList.toggle("is-selected",selected);
       row.querySelector(".detail-trigger").setAttribute("aria-expanded",String(selected));
     });
+    $("rank-grid").querySelectorAll("button[data-rank-code]").forEach(button=>button.setAttribute("aria-expanded",String(button.dataset.rankCode===detailCode)));
   }
   function openDetailPanel(){
     detailPanel.setAttribute("aria-modal",String(!desktopDetail.matches));
@@ -470,7 +501,9 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
     // 直接帶代號進站也只清除目前網址，不用上一頁離開網站。
     if(hashCode()===code){const url=new URL(location.href);url.hash="";history.replaceState(history.state,"",url);}
     const row=Array.from($("rows").querySelectorAll("tr[data-code]")).find(r=>r.dataset.code===code);
-    const target=detailReturnFocus?.isConnected&&detailReturnFocus!==document.body?detailReturnFocus:row?.querySelector(".detail-trigger")||$("q");
+    const rankButton=Array.from($("rank-grid").querySelectorAll("button[data-rank-code]")).find(b=>b.dataset.rankCode===code);
+    const target=detailReturnFocus?.isConnected&&detailReturnFocus!==document.body&&detailReturnFocus.getClientRects().length?detailReturnFocus:
+      (state.view==="rankings"?rankButton||$("view-rankings"):row?.querySelector(".detail-trigger"))||$("q");
     target.focus({preventScroll:true});
     detailReturnFocus=null;
   }
@@ -494,6 +527,13 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
     showDetail(d,row.querySelector(".detail-trigger"));
   });
   $("detail-close").addEventListener("click",closeDetail);
+  $("rank-grid").addEventListener("click",e=>{
+    const button=e.target.closest("button[data-rank-code]");
+    const d=button&&DATA.find(item=>item.code===button.dataset.rankCode);
+    if(!d)return;
+    if(hashCode()!==d.code){const url=new URL(location.href);url.hash=d.code;history.pushState(null,"",url);}
+    showDetail(d,button);
+  });
   detailPanel.addEventListener("cancel",e=>{e.preventDefault();closeDetail();});
   detailPanel.addEventListener("close",finishDetailClose);
   let backdropPressed=false;
@@ -537,6 +577,7 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
     const rows=DATA.filter(d=>(state.type==="全部"||d.category===state.type)&&(!state.alert||(d.premium!=null&&Math.abs(d.premium)>1))&&
       (!state.issuer||d.issuer===state.issuer)&&(!state.div||d.ex_upcoming)&&
       (!q||String(d.code||"").toLowerCase().includes(q)||String(d.name||"").toLowerCase().includes(q)||String(d.issuer||"").toLowerCase().includes(q)));
+    if(state.view==="rankings")renderRankings(rows);
     const k=state.key;
     rows.sort((a,b)=>{const x=a[k],y=b[k];if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;
       return(typeof x==="string"?x.localeCompare(y,"zh-TW"):x-y)*state.dir;});
@@ -558,7 +599,7 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
     const valid=rows.filter(d=>d.premium!=null);
     const avg=valid.length?valid.reduce((s,d)=>s+d.premium,0)/valid.length:null;
     $("result-count").textContent=`${rows.length.toLocaleString("zh-TW")} / ${DATA.length.toLocaleString("zh-TW")} 檔`;
-    $("view-note").textContent=state.view==="flows"?`週資料截至 ${detailDate||"—"}；目前篩選中 ${rows.filter(d=>hasNumber(d.flow_net)).length} / ${rows.length} 檔可估算。近4週包含本週；缺值不代表零流入。`:"點選 ETF 可查看數字解釋、官方資料與前十大持股／成分。";
+    $("view-note").textContent=state.view==="rankings"?"依目前篩選結果排行 · 點選長條查看 ETF 詳情 · 市價漲跌幅，不含配息":state.view==="flows"?`週資料截至 ${detailDate||"—"}；目前篩選中 ${rows.filter(d=>hasNumber(d.flow_net)).length} / ${rows.length} 檔可估算。近4週包含本週；缺值不代表零流入。`:"點選 ETF 可查看數字解釋、官方資料與前十大持股／成分。";
     const filterCount=Number(state.type!=="全部")+Number(!!state.issuer)+Number(state.div)+Number(state.alert);
     $("filter-toggle").textContent=filterCount?`篩選 (${filterCount})`:"篩選";
     $("s-avg").textContent=avg==null?"—":(avg>=0?"+":"")+fmt(avg,2)+"%";
@@ -566,11 +607,43 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
     document.querySelectorAll("th[data-k]").forEach(th=>th.setAttribute("aria-sort",th.dataset.k===k?(state.dir>0?"ascending":"descending"):"none"));
   }
 
+  // 排行核心：只取有限數字；持平、缺值及無有效市價的資料不參與正負排序。
+  function rankReturns(items,period){
+    const valid=items.map(item=>({item,value:period==="1d"?item.change_pct:item.returns?.price?.[period]}))
+      .filter(row=>typeof row.value==="number"&&Number.isFinite(row.value)&&typeof row.item.price==="number"&&Number.isFinite(row.item.price)&&row.item.price>0);
+    const tie=(a,b)=>String(a.item.code).localeCompare(String(b.item.code));
+    const positive=valid.filter(r=>r.value>0).sort((a,b)=>b.value-a.value||tie(a,b)).slice(0,10);
+    const negative=valid.filter(r=>r.value<0).sort((a,b)=>a.value-b.value||tie(a,b)).slice(0,10);
+    return {positive,negative,valid:valid.length,flat:valid.filter(r=>r.value===0).length,missing:items.length-valid.length,
+      scale:Math.max(0,...positive.map(r=>r.value),...negative.map(r=>-r.value))};
+  }
+  // 排行核心結束。
+  function renderRankings(items){
+    const ranked=rankReturns(items,state.rankPeriod),day=detailDate||"—",start=returnsInfo.starts?.[state.rankPeriod];
+    const range=state.rankPeriod==="1d"?`交易日 ${day}，相對前一交易日收盤`:
+      `基準日 ${start||"待確認"} → ${day}（基準日非交易日時，採當日或之前最近收盤）`;
+    $("rank-meta").innerHTML=`<strong>${esc(range)}</strong><br>${detailIsDemo?"測試資料 · ":""}目前篩選 ${items.length} 檔 · 可比較 ${ranked.valid} 檔 · 缺資料 ${ranked.missing} 檔 · 持平 ${ranked.flat} 檔。兩榜使用相同比例尺。`;
+    const directions=state.rankDirection==="both"?["positive","negative"]:[state.rankDirection];
+    $("rank-grid").classList.toggle("single",directions.length===1);
+    $("rank-grid").innerHTML=directions.map(direction=>{
+      const positive=direction==="positive",rows=ranked[direction],title=positive?"正報酬前 10 名":"負報酬前 10 名";
+      const axis=ranked.scale?`${positive?"+":"−"}${fmt(ranked.scale,2)}%`:"—";
+      const empty=dataFailed?"資料載入失敗，請重新整理後再試。":!items.length?"沒有符合篩選條件的 ETF。":!ranked.valid?"此期間尚無可比較的市價資料。":`此篩選範圍沒有${positive?"正":"負"}報酬的 ETF。`;
+      return `<section class="rank-group ${positive?"rank-positive":"rank-negative"}" aria-label="${title}"><h3 class="${positive?"up":"down"}">${title}<small>顯示 ${rows.length} 檔</small></h3>`+
+        (rows.length?`<div class="rank-axis" aria-hidden="true"><span>${positive?"0%":axis}</span><span>${positive?axis:"0%"}</span></div><ol class="rank-list">`+rows.map(({item,value},i)=>
+          `<li><button class="rank-row" type="button" data-rank-code="${esc(item.code)}" aria-haspopup="dialog" aria-controls="etf-detail" aria-expanded="${item.code===detailCode}" aria-label="第 ${i+1} 名，${esc(item.code)} ${esc(item.name)}，${signed(value,"%")}，查看 ETF 詳情"><span class="rank-label"><span class="rank-position">${i+1}</span><span class="rank-identity"><span class="rank-code">${esc(item.code)}</span><span class="rank-name" title="${esc(item.name)} · ${esc(item.category)}">${detailText(item.name)}</span></span></span><span class="rank-track" aria-hidden="true"><span class="rank-bar" style="width:${Math.abs(value)/ranked.scale*100}%"></span></span><span class="rank-value ${positive?"up":"down"}">${signed(value,"%")}</span></button></li>`).join("")+`</ol>`:`<p class="rank-empty">${empty}</p>`)+`</section>`;
+    }).join("");
+  }
+  $("rank-period").addEventListener("change",e=>{state.rankPeriod=e.target.value;render();});
+  $("rank-direction").addEventListener("change",e=>{state.rankDirection=e.target.value;render();});
+
   const marketColumns=document.querySelector("colgroup").innerHTML;
-  for(const view of ["market","flows"]){$("view-"+view).addEventListener("click",()=>{
+  for(const view of ["market","flows","rankings"]){$("view-"+view).addEventListener("click",()=>{
     state.view=view;state.key=view==="flows"?"flow_net":"volume_lots";state.dir=-1;
     $("market-head").hidden=view!=="market";$("flow-head").hidden=view!=="flows";
-    $("view-market").setAttribute("aria-pressed",String(view==="market"));$("view-flows").setAttribute("aria-pressed",String(view==="flows"));
+    for(const name of ["market","flows","rankings"])$("view-"+name).setAttribute("aria-pressed",String(view===name));
+    $("rankings").hidden=view!=="rankings";
+    document.querySelectorAll(".table-help,.table-box,.table-footer").forEach(el=>el.hidden=view==="rankings");
     document.querySelector("table").classList.toggle("flow-table",view==="flows");
     document.querySelector("table").setAttribute("aria-label",view==="flows"?"台股 ETF 週資金流與基金規模資料":"台股 ETF 行情與配息資料");
     document.querySelector("colgroup").innerHTML=view==="market"?marketColumns:[100,200,100,160,150,175,150,180,160,185,150,170].map(w=>`<col style="width:${w}px">`).join("");
@@ -587,7 +660,7 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
   $("issuer").addEventListener("change",e=>{state.issuer=e.target.value;render();});
 
   fetch("data/latest.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(p=>{
-    detailDate=p.trade_date;detailIsDemo=p.source!=="live";
+    detailDate=p.trade_date;detailIsDemo=p.source!=="live";returnsInfo=p.returns_info||{};
     DATA=(p.items||[]).map(d=>{const ex=d.next_ex||d.last_ex;
       return{...d,aum:/投信官網|SITCA/.test(d.aum_source||"")?d.aum:null,units:/投信官網|SITCA/.test(d.units_source||"")?d.units:null,
         flow_net:d.flows?.net_amount??null,flow_rate:d.flows?.net_rate??null,flow_four:d.flows?.four_week_amount??null,
@@ -620,6 +693,8 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
     if(p.source!=="live"){$("banner").hidden=false;$("banner").textContent="目前顯示的是測試資料，不是實際行情。";}
     chips();render();syncDetailHash();
   }).catch(()=>{
+    dataFailed=true;
+    if(state.view==="rankings")renderRankings([]);
     $("h-date").textContent="尚無資料";
     $("result-count").textContent="載入失敗";
     $("checkline").textContent="資料暫時無法取得";
