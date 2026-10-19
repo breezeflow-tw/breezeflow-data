@@ -51,7 +51,9 @@ SOURCES = {
 
 # 市價與成交量的主要來源；上市代號加 .TW，上櫃加 .TWO
 YAHOO_CHART = "https://{host}/v8/finance/chart/{symbol}?range=10d&interval=1d"
-PROBE_SYMBOL = "0050.TW"  # 用來確認最新交易日：成交最活絡的 ETF，每個交易日都有日線
+PROBE_SYMBOL = "0050.TW"
+# 擁有者指示不收錄的代號：網站不顯示、資料庫不保存，資料來源出現時一律略過
+EXCLUDED = {"00847B"}  # 中信美國市政債：2026-10 起交易所沒有行情、中信官網也不再列出  # 用來確認最新交易日：成交最活絡的 ETF，每個交易日都有日線
 # 每個交易日抓一次五年日線（含配息紀錄）計算區間報酬，同一份資料也拿來比對收盤價
 YAHOO_HISTORY = "https://{host}/v8/finance/chart/{symbol}?period1={start}&period2={end}&interval=1d&events=div"
 YAHOO_HOSTS = ("query1.finance.yahoo.com", "query2.finance.yahoo.com")
@@ -172,8 +174,9 @@ def parse_nav(payload) -> dict[str, dict]:
             code = str(row.get("a", "")).strip()
             if not code:
                 continue
-            price, nav = num(row.get("e")), num(row.get("f"))
-            premium = num(row.get("g"))
+            # 沒有成交時市價是 0、尚未計算時淨值是 0，都不是真的數字
+            price, nav = num(row.get("e")) or None, num(row.get("f")) or None
+            premium = num(row.get("g")) if price and nav else None
             if premium is None and price and nav:
                 premium = (price - nav) / nav * 100
             result[code] = {
@@ -182,7 +185,7 @@ def parse_nav(payload) -> dict[str, dict]:
                 "price": price,
                 "nav": nav,
                 "premium": premium,
-                "nav_prev": num(row.get("h")),
+                "nav_prev": num(row.get("h")) or None,
                 "date": ymd(row.get("i")),
                 "source_date": str(row.get("i", "")).strip(),
                 "source_time": str(row.get("j", "")).strip(),
@@ -419,6 +422,19 @@ def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
         if it["holdings_top"]:
             it["holdings_source"] = src
             it["holdings_date"] = r.get("holdings_date") or r.get("pcf_date") or r.get("nav_date")
+
+
+def without_excluded(data: dict) -> dict:
+    return {code: v for code, v in data.items() if code not in EXCLUDED}
+
+
+def purge_excluded(con: sqlite3.Connection) -> None:
+    """不收錄的代號從資料庫各表移除（公會等來源仍會列出，在存檔前統一清掉）。"""
+    marks = ", ".join("?" * len(EXCLUDED))
+    for table in store.TABLES:
+        if "code" in {r[1] for r in con.execute(f"PRAGMA table_info({table})")}:
+            con.execute(f"DELETE FROM {table} WHERE code IN ({marks})", sorted(EXCLUDED))
+    con.commit()
 
 
 def trade_date(nav: dict, quotes: dict, now: datetime, probe: dict | None = None) -> str:
@@ -906,8 +922,8 @@ def main(argv=None) -> int:
     store.open_db(args.db, history).close()  # 資料庫檔不存在時，先從歷史 CSV 重建
 
     raw = load_sources(args.fixtures)
-    nav = parse_nav(raw["nav"])
-    exchange = {**parse_quotes(raw["tpex"], "上櫃"), **parse_quotes(raw["twse"], "上市")}
+    nav = without_excluded(parse_nav(raw["nav"]))
+    exchange = without_excluded({**parse_quotes(raw["tpex"], "上櫃"), **parse_quotes(raw["twse"], "上市")})
 
     # 市價與成交量：Yahoo 股市為主，交易所為查核。
     # 區間報酬：這個交易日還沒算過時抓五年日線（同一份資料也拿來比對收盤價），算過就沿用上次的結果
@@ -920,7 +936,7 @@ def main(argv=None) -> int:
     date = trade_date(nav, exchange, datetime.now(TW), parse_yahoo(probe_raw).get(PROBE_SYMBOL.split(".")[0]))
     source = "fixture" if args.fixtures else "live"
     reused = returns.previous(args.out, date, source)
-    markets = {**known_markets(args.db), **{c: q["market"] for c, q in exchange.items()}}
+    markets = without_excluded({**known_markets(args.db), **{c: q["market"] for c, q in exchange.items()}})
     symbols = [f"{c}.TWO" if markets.get(c) == "上櫃" else f"{c}.TW" for c in sorted(set(nav) | set(exchange) | set(markets))]
     history_raw = {}
     if args.fixtures:
@@ -941,7 +957,7 @@ def main(argv=None) -> int:
         print("警告：沒有淨值資料，本次只更新價格與成交量。", file=sys.stderr)
     quotes, diffs = reconcile(yahoo, exchange, date)
     items = merge(nav, quotes, load_meta(), date, parse_fund(raw["fund"]))
-    dividends = parse_dividends(raw["div_twse"], raw["div_tpex"])
+    dividends = [d for d in parse_dividends(raw["div_twse"], raw["div_tpex"]) if d["code"] not in EXCLUDED]
 
     # 各投信是不同網站，同時抓；同一個網站內仍逐筆、放慢速度
     def fetch_issuer(item):
@@ -964,7 +980,7 @@ def main(argv=None) -> int:
                                 SSL_CONTEXT) if any(plan.values()) else None)
         for mod, records in pool.map(fetch_issuer, ISSUER_MODULES.items()):
             print(f"{mod.SOURCE}：{sum(1 for r in records.values() if not r.get('delisted'))} 檔")
-            issuer.update(records)
+            issuer.update(without_excluded(records))
         fresh = fresh_info.result() if fresh_info else {}
         old = old_info.result() if old_info else {}
     if fresh:
@@ -998,6 +1014,7 @@ def main(argv=None) -> int:
         con.commit()
         apply_fund_month(items, load_fund_month(con))
         apply_fund_top(items, load_fund_top(con))
+        purge_excluded(con)
         store.dump(con, history)
     finally:
         con.close()

@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import fetch_etf as f  # noqa: E402
+import store  # noqa: E402
 
 FIX = ROOT / "tests" / "fixtures"
 
@@ -83,6 +84,34 @@ class ParseTest(unittest.TestCase):
         # Yahoo 抓不到時沿用交易所最多檔的日期，再沒有就用淨值資料的日期
         self.assertEqual(f.trade_date({}, stale, evening, None), "2026-10-16")
         self.assertEqual(f.trade_date({"0050": {"date": "2026-10-16"}}, {}, evening, {}), "2026-10-16")
+
+    def test_zero_price_is_missing(self):
+        # 沒有成交的 ETF，證交所即時資料的市價是 0；淨值尚未計算時也是 0
+        n = f.parse_nav({"a1": [{"msgArray": [{"a": "00999B", "b": "測試債", "e": "0.00", "f": "0", "g": "-100.00", "h": "0", "i": "20261019", "j": "13:30:00"},
+                                               {"a": "00998B", "b": "測試債二", "e": "0", "f": "23.29", "g": "-100.00", "h": "23.31", "i": "20261019", "j": "13:30:00"}]}]})
+        self.assertEqual({k: n["00999B"][k] for k in ("price", "nav", "premium", "nav_prev")}, {"price": None, "nav": None, "premium": None, "nav_prev": None})
+        self.assertEqual({k: n["00998B"][k] for k in ("price", "nav", "premium")}, {"price": None, "nav": 23.29, "premium": None})
+
+    def test_excluded_code(self):
+        """擁有者指示不收錄的代號：來源有資料也不進網站與資料庫，舊資料清掉。"""
+        code = sorted(f.EXCLUDED)[0]
+        with tempfile.TemporaryDirectory() as tmp:
+            fix = fixtures_without(tmp)
+            nav = json.loads((fix / "nav.json").read_text("utf-8"))
+            nav["a1"].append({"msgArray": [{"a": code, "b": "不收錄", "e": "0.00", "f": "23.29", "g": "", "h": "23.31", "i": "20261016", "j": "13:30:00"}]})
+            (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            con = store.open_db(db, Path(tmp) / "history")
+            con.execute("INSERT INTO etf(code, name) VALUES(?, '舊資料')", (code,))
+            con.execute("INSERT INTO dividend(code, ex_date, cash) VALUES(?, '2026-09-16', 0.1)", (code,))
+            con.commit()
+            con.close()
+            self.assertEqual(f.main(["--fixtures", str(fix), "--db", str(db), "--out", str(out)]), 0)
+            self.assertNotIn(code, {i["code"] for i in json.loads(out.read_text("utf-8"))["items"]})
+            con = sqlite3.connect(db)
+            for table in ("etf", "daily", "dividend"):
+                self.assertEqual(con.execute(f"SELECT COUNT(*) FROM {table} WHERE code = ?", (code,)).fetchone()[0], 0, table)
+            con.close()
 
     def test_reconcile_stale_exchange(self):
         yahoo = {"0050": {"2026-10-19": {"close": 108.15, "change_pct": -0.78, "volume_lots": 50000}}}
