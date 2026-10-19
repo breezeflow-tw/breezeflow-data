@@ -29,6 +29,7 @@
 | 成交量 | 證交所、櫃買中心官方總量 | Yahoo（實測系統性偏低 1～8%，只作備援） |
 
 - **絕對不可編造或估計數字。** 抓不到就留空（`None` / `—`），並在輸出中說明。
+  - 唯一例外是擁有者要求的週申贖 `flows`：用官方的單位數增減 × 同日正式淨值推算，一律標示「估算」並附公式，資料不齊就留空，不補零。
 - 新增來源時，資料庫要記錄來源，讓網站能標示出處。
 - 抓取要有禮貌：限制並行數、遇到被擋（HTTP 403 / 代理拒絕）就停止，不要狂重試。
 - 擁有者指示不收錄的代號列在 `scripts/fetch_etf.py` 的 `EXCLUDED`（目前是 00847B）：網站不顯示、資料庫不保存。
@@ -47,17 +48,22 @@
 | `code`、`name`、`issuer`、`category`、`market` | 代號、名稱、發行投信、類型、上市／上櫃 |
 | `price`、`change_pct`、`volume_lots`、`price_check` | 收盤價、漲跌幅 %、成交量（張）、市價查核結果 |
 | `nav`、`nav_source` | 淨值與出處；出處含「正式淨值」代表投信公告的正式淨值（投信官網，或投信投顧公會的每日基金淨值），其餘為預估淨值（投信官網公布或證交所轉載）。優先順序：投信官網正式淨值 → 投信投顧公會正式淨值 → 投信官網預估淨值 → 證交所轉載的預估淨值 |
+| `nav_date`、`nav_source_url` | 淨值的資料日期與原文連結（正式淨值才有連結） |
+| `source_time` | 證交所轉載的預估淨值資料時間（YYYYMMDD HH:MM:SS），沒有用到時為空字串 |
 | `nav_prev`、`premium` | 前一營業日淨值、折溢價 %（正數為溢價） |
-| `aum`、`aum_source`、`units` | 規模（億元）與出處、發行單位數 |
+| `aum`、`aum_source`、`aum_date`、`aum_source_url` | 規模（億元）、出處、資料日期與原文連結。只放官方數字：投信官網公告或投信投顧公會 ETF 月統計（月底），取資料日期較新的；都沒有時為 `null` |
+| `units`、`units_source`、`units_date`、`units_source_url` | 發行（受益權）單位數，來源規則同規模 |
 | `units_change` | 當天申購買回造成的發行單位數增減，正數為淨申購（資金流入）、負數為淨買回；只有部分投信提供 |
 | `mgmt_fee`、`mgmt_fee_text`、`custodian_fee_text`、`fee_source` | 經理費率 %（只有單一費率才有數字）、經理費與保管費原文（多為依規模分段）、原文出處。投信官網優先，沒有接入官網的 ETF 用投信投顧公會基金基本資料 |
 | `manager`、`risk_class`、`listed_date`、`index_name` | 經理人、風險等級（RR1～RR5）、上市日、追蹤指數 |
-| `beneficiaries`、`beneficiaries_month`、`beneficiaries_source` | 受益人數、資料年月與出處。投信官網與投信投顧公會基金資料彙總表取資料月份較新的，同月份用投信官網的 |
+| `beneficiaries`、`beneficiaries_month`、`beneficiaries_source`、`beneficiaries_source_url` | 受益人數、資料年月、出處與原文連結。投信官網與投信投顧公會（基金資料彙總表、ETF 月統計）取資料月份較新的，同月份用投信官網的 |
 | `stats` | 投資組合統計 `{date, div_yield, pe, pb, roe, beta, volatility}`，可能為 `null` |
-| `holdings_top`、`holdings_source`、`holdings_date` | 前 10 大成分 `[{asset_code, asset_name, kind, weight, qty}]`、出處與資料日期。`weight` 為 %，`kind` 為股票／債券／期貨／基金／其他。投信官網的申購買回清單優先（`holdings_date` 為 YYYY-MM-DD）；沒有接入官網的 ETF 用投信投顧公會的月底前十大（`holdings_date` 為 YYYY-MM，`qty` 為 `null`）。外幣交易線（代號結尾 K，例如 00625K、00636K）沿用主要交易線的成分股，出處註明「與 XXXX 同一檔基金」 |
+| `holdings_top`、`holdings_source`、`holdings_date`、`holdings_source_url` | 前 10 大成分 `[{asset_code, asset_name, kind, weight, qty}]`、出處、資料日期與原文連結。`weight` 為 %，`kind` 為股票／債券／期貨／基金／其他。投信官網的申購買回清單優先（`holdings_date` 為 YYYY-MM-DD）；沒有接入官網的 ETF 用投信投顧公會的月底前十大（`holdings_date` 為 YYYY-MM，`qty` 為 `null`）。外幣交易線（代號結尾 K，例如 00625K、00636K）沿用主要交易線的成分股，出處註明「與 XXXX 同一檔基金」 |
 | `next_ex`、`last_ex` | 下一次／最近一次除息 `{ex_date, cash, pay_date, source}`，`pay_date` 為配息發放日。`source` 依優先順序為投信官網、投信投顧公會（每月公布上個月的除息紀錄，含發放日）、交易所除權息預告 |
 | `fee` | 總費用率 %：人工填寫（`data/etf_meta.csv`）優先，否則用投信投顧公會年度費用比率的合計（含交易成本） |
 | `monthly` | 投信投顧公會基金資料彙總表（月）`{month, aum, nav, units, beneficiaries, beneficiaries_natural, beneficiaries_legal, subscribe, redeem, net, source}`：月底規模（億元）、單位淨值、受益權單位數、總／自然人／法人受益人數，以及當月申購、買回總金額與兩者相減的淨申購（億元，負數為淨買回）。每月第 10 個營業日公布上個月的資料；公會沒有列出的 ETF（例如外幣交易線、期貨信託基金）為 `null` |
+| `sitca_monthly` | 投信投顧公會 ETF 月統計（`SITCA_ETF/etf_statement2.aspx`，以證券代號對應）`{code, month, currency, aum, nav, units, subscriptions, redemptions, beneficiaries, net_amount, source, source_url, published_at}`：金額為億元，`net_amount` 為申購減買回，`published_at` 為公會公布日；非新台幣級別的 `nav` 為 `null`。只用截至交易日已經公布的月份 |
+| `flows` | 週申贖**估算**（擁有者要求的推算值，見資料來源規則的例外）：本週 `{start, end, baseline, net_amount, net_rate, units_rate, aum_change, aum_rate, status, reason, method, sources}`，加上 `as_of`、`latest_official_date`、近 4 週合計 `four_week_amount`、淨申購週數 `positive_weeks`、可計算週數 `available_weeks`、各週明細 `weeks[]`、已取得的特殊事件 `events[]` 與 `events_status`。`net_amount` 單位億元，為逐日「流通單位數增減 × 同日投信正式淨值」加總；前週末到本週任一天缺官方資料、幣別未確認或遇分割合併等事件時為 `null`，`reason` 說明原因 |
 | `expense` | 投信投顧公會公布的年度實際費用比率 `{year, mgmt, custodian, other, total, source}`，單位 %：經理費、保管費、其他費用與合計（含交易成本）。年中才成立的 ETF 沒有整年資料，為 `null` |
 | `returns` | 區間報酬 `{price: {...}, total: {...}}`，單位 %。`price` 是市價報酬，`total` 是含息報酬（配息再投入）。區間代號：`1w` 近一週、`1m` 近一月、`3m` 近三月、`6m` 近六月、`ytd` 今年以來、`1y` 近一年、`3y` 近三年、`5y` 近五年。期初是 `returns_info.starts` 那天或之前最近的交易日，期末是 `trade_date`。上市不到該區間、或配息紀錄核對不符時為 `null`；整檔沒有資料時 `returns` 為 `null` |
 
