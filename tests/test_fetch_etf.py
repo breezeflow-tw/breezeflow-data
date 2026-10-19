@@ -5,7 +5,7 @@ import sqlite3
 import sys
 import tempfile
 import unittest
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -70,6 +70,28 @@ class ParseTest(unittest.TestCase):
         it = next(i for i in items if i["code"] == "0050")
         self.assertEqual(it["name"], "元大台灣50")
         self.assertIsNone(it["premium"])
+
+    def test_trade_date(self):
+        TW = timezone(timedelta(hours=8))
+        evening, morning = datetime(2026, 10, 19, 18, 23, tzinfo=TW), datetime(2026, 10, 20, 9, 20, tzinfo=TW)
+        stale = {"0050": {"date": "2026-10-16"}, "0056": {"date": "2026-10-16"}, "00679B": {"date": "2026-10-19"}}
+        probe = {"2026-10-16": {}, "2026-10-19": {}}
+        # 傍晚：證交所開放資料還停在上週五，Yahoo 已有當天收盤
+        self.assertEqual(f.trade_date({}, stale, evening, probe), "2026-10-19")
+        # 隔天開盤後才跑：Yahoo 當天的盤中日線不算，用前一個交易日
+        self.assertEqual(f.trade_date({}, {"0050": {"date": "2026-10-19"}}, morning, {**probe, "2026-10-20": {}}), "2026-10-19")
+        # Yahoo 抓不到時沿用交易所最多檔的日期，再沒有就用淨值資料的日期
+        self.assertEqual(f.trade_date({}, stale, evening, None), "2026-10-16")
+        self.assertEqual(f.trade_date({"0050": {"date": "2026-10-16"}}, {}, evening, {}), "2026-10-16")
+
+    def test_reconcile_stale_exchange(self):
+        yahoo = {"0050": {"2026-10-19": {"close": 108.15, "change_pct": -0.78, "volume_lots": 50000}}}
+        exchange = {"0050": {"close": 109.0, "change_pct": 0.1, "volume_lots": 60000, "date": "2026-10-16"},
+                    "0056": {"close": 36.1, "change_pct": -0.3, "volume_lots": 18000, "date": "2026-10-16"}}
+        quotes, diffs = f.reconcile(yahoo, exchange, "2026-10-19")
+        # 交易所資料是別天的：價格不拿來查核，成交量也不能混用
+        self.assertEqual((quotes["0050"]["close"], quotes["0050"]["volume_lots"], quotes["0050"]["check"], diffs), (108.15, 50000, "未查核", []))
+        self.assertEqual((quotes["0056"]["close"], quotes["0056"]["volume_lots"]), (None, None))
 
     def test_clean_name(self):
         self.assertEqual(f.clean_name("國泰標普低波高息(本基金並無保證收益及配息)"), "國泰標普低波高息")
