@@ -22,6 +22,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import date as date_type, datetime, timedelta, timezone
 from pathlib import Path
 
+import active_changes
 import returns
 import sitca
 import store
@@ -290,6 +291,17 @@ def reconcile(yahoo: dict, exchange: dict, date: str) -> tuple[dict, list[dict]]
                      check=None)
         quotes[code] = q
     return quotes, diffs
+
+
+def parse_closes(twse_rows, tpex_rows) -> dict[str, tuple[str, float]]:
+    """交易所收盤行情的全部證券（含個股）：{代號: (日期, 收盤價)}，用來算主動式 ETF 持股異動的金額。"""
+    closes = {}
+    for rows, code_key, close_key in ((twse_rows, "Code", "ClosingPrice"), (tpex_rows, "SecuritiesCompanyCode", "Close")):
+        for row in rows if isinstance(rows, list) else []:
+            code, close, day = str(row.get(code_key) or "").strip(), num(row.get(close_key)), roc_date(row.get("Date"))
+            if code and close and day:
+                closes[code] = (day, close)
+    return closes
 
 
 def parse_fund(rows) -> dict[str, dict]:
@@ -924,7 +936,8 @@ def attach_returns(con: sqlite3.Connection, items: list[dict], date: str, reused
             history.get(it["code"]), date, it["price"], known.get(it["code"], []))
 
 
-def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, has_nav: bool = True) -> None:
+def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, has_nav: bool = True,
+              active: dict | None = None) -> None:
     """網站讀的唯一檔案。區間報酬的起始日與出處放在最上層 returns_info，各檔數字在 items[].returns。"""
     checks: dict[str, int] = {}
     for it in items:
@@ -938,6 +951,7 @@ def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, h
         "has_nav": has_nav,
         "price_check": checks,
         "returns_info": {"source": returns.SOURCE, "starts": returns.start_dates(date)},
+        "active_changes": active,
         "count": len(items),
         "items": items,
     }
@@ -1051,12 +1065,13 @@ def main(argv=None) -> int:
         fund_flows.attach(con, items, date)
         apply_fund_top(items, load_fund_top(con), date)
         apply_main_line_holdings(items)
+        active = active_changes.attach(con, items, date, issuer, parse_closes(raw["twse"], raw["tpex"]))
         con.commit()
         purge_excluded(con)
         store.dump(con, history)
     finally:
         con.close()
-    save_json(items, date, source, args.out, has_nav=any(it["nav"] is not None for it in items))
+    save_json(items, date, source, args.out, has_nav=any(it["nav"] is not None for it in items), active=active)
     flagged = sum(1 for it in items if it["premium"] is not None and abs(it["premium"]) >= 1)
     checks = {k: sum(1 for it in items if it["price_check"] == k) for k in ("一致", "已修正", "未查核", "交易所")}
     print(f"{date}：共 {len(items)} 檔 ETF，折溢價超過 ±1% 有 {flagged} 檔，除息預告 {len(dividends)} 筆 → {args.out}")
