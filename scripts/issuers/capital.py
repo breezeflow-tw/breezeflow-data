@@ -112,6 +112,7 @@ def parse_buyback(data) -> dict:
     twd = (pcf.get("dollar") or "").strip() == "TWD"
     return {
         "nav_official": pcf.get("pUnit") if twd else None,
+        "currency": "TWD" if twd else None,
         "nav_date": ymd(pcf.get("date2")),
         # 規模只收新台幣計價，外幣計價的不自行換算
         "aum": round(total / 1e8, 2) if total and twd else None,
@@ -192,6 +193,7 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
         except RuntimeError as exc:
             print(f"警告：{SOURCE} {code} 基金資料抓取失敗（{exc}）", file=sys.stderr)
         rec["dividends"] = dividends.get(code, [])
+        rec["source_url"] = f"https://www.capitalfund.com.tw/etf/product/detail/{fund_no}/buyback"
         records[code] = rec
     # 已下市基金的歷史配息也保留，研究時用得到
     for code, divs in dividends.items():

@@ -131,7 +131,8 @@ def fetch(get_json, fixtures: Path | None = None, context=None, **_) -> dict[str
         if rec["fund_id"]:
             stats = parse_factset(unwrap(load(f"factset_{rec['fund_id']}", "ETFBackstage",
                                               f"ETFInformation/FactSet/{rec['fund_id']}")))
-        return code, {**rec, **pcf, "stats": stats, "issuer": ISSUER, "source": SOURCE}
+        return code, {**rec, **pcf, "stats": stats, "issuer": ISSUER, "source": SOURCE,
+                      "source_url": f"https://www.yuantaetfs.com/tradeInfo/pcf/{code}"}
 
     with ThreadPoolExecutor(max_workers=2) as pool:
         return dict(pool.map(detail, sorted(info)))

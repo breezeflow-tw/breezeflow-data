@@ -198,6 +198,8 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
             continue
         ec001, currency, distributes = info.pop("ec001"), info.pop("currency"), info.pop("distributes")
         rec.update(info)
+        rec["currency"] = "TWD" if currency in ("新臺幣", "新台幣") else None
+        rec["source_url"] = f"{BASE}/assets?" + urllib.parse.urlencode({"fundID": fid, "qDate": (rec['nav_date'] or '').replace('-', '/')})
         nav_date = rec["nav_date"]
 
         if nav_date:

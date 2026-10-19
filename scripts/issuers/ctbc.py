@@ -197,7 +197,9 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
             print(f"警告：{SOURCE}擋下了請求，其餘 ETF 本次不抓。", file=sys.stderr)
             break
         code, twd = f["code"], f["currency"] in TWD
-        rec = {"code": code, "issuer": ISSUER, "source": SOURCE, "nav_estimate": None, "nav_estimate_date": None,
+        rec = {"code": code, "issuer": ISSUER, "source": SOURCE,
+               "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+               "currency": "TWD" if twd else None, "nav_estimate": None, "nav_estimate_date": None,
                "units_change": None, "aum": None, "units": None, "beneficiaries": None, "beneficiaries_month": None,
                "stats": None, "holdings": [], "dividends": [],
                "nav_official": f["nav_official"] if twd else None, "nav_date": f["nav_date"], "risk_class": f["risk_class"],

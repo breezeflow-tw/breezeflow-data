@@ -131,6 +131,7 @@ def parse_product(data, code: str) -> dict:
     mgmt = pct_text(fees.get("managementFee"))
     return {
         "twd": twd,
+        "asset_date": ymd(nav.get("date")),
         "nav_official": num(nav.get("price")) if twd else None,
         "nav_date": ymd(nav.get("date")),
         "aum": round(total / 1e8, 2) if total and twd else None,
@@ -205,7 +206,9 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
         except RuntimeError as exc:
             print(f"警告：{SOURCE} {code} 配息紀錄抓取失敗（{exc}）", file=sys.stderr)
             dividends = []
-        records[code] = {"code": code, "issuer": ISSUER, "source": SOURCE, "nav_estimate": None, "nav_estimate_date": None,
+        records[code] = {"code": code, "issuer": ISSUER, "source": SOURCE,
+                         "source_url": BASE + "product-data?" + urllib.parse.urlencode({"cusip": f["isin"], **PARAMS}),
+                         "currency": "TWD" if twd else None, "nav_estimate": None, "nav_estimate_date": None,
                          "index_name": None, "beneficiaries": None, "beneficiaries_month": None, "stats": None, **product,
                          **(estimates.get(code, {}) if twd else {}),
                          "dividends": dividends if twd else []}  # 外幣計價的配息金額不是新台幣，不收

@@ -205,6 +205,8 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
             continue
         rec = {"code": code, "issuer": ISSUER, "source": SOURCE, "beneficiaries": None, "beneficiaries_month": None,
                "stats": None, "units_change": None, "holdings": [], "dividends": [], **info, **nav}
+        rec["currency"] = "TWD" if currency in ("新臺幣", "新台幣") else None
+        rec["source_url"] = f"{BASE}/Fund/RedemptionList?fundNo={fid}"
         if currency not in (None, "新臺幣", "新台幣"):
             rec["nav_official"] = None  # 外幣計價的淨值不和新台幣市價比較
         # 申購買回清單：從明天往回找最新一份（週末、假日沒有清單）
@@ -218,7 +220,7 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
                 print(f"警告：{SOURCE} {code} 申購買回清單抓取失敗（{exc}）", file=sys.stderr)
                 break
             if pcf.get("code") == code:
-                rec.update({k_: pcf[k_] for k_ in ("pcf_date", "aum", "units", "units_change", "holdings")})
+                rec.update({k_: pcf[k_] for k_ in ("pcf_date", "pcf_nav", "aum", "units", "units_change", "holdings")})
                 break
         records[code] = rec
 

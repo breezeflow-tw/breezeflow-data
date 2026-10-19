@@ -207,7 +207,9 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
             print(f"警告：{SOURCE} {code} 基金資料格式改變，本次不使用這檔。", file=sys.stderr)
             continue
         twd = detail.pop("currency") in TWD
-        rec = {"code": code, "issuer": ISSUER, "source": SOURCE, "nav_estimate": None, "nav_estimate_date": None,
+        rec = {"code": code, "issuer": ISSUER, "source": SOURCE,
+               "source_url": f"{SITE}/ETFWEB/product-description?fundNo={code}&tab=basic",
+               "currency": "TWD" if twd else None, "nav_estimate": None, "nav_estimate_date": None,
                "units_change": None, "aum": None, "units": None, "beneficiaries": None, "beneficiaries_month": None,
                "stats": None, "holdings": [], **detail,
                "nav_official": f["nav_official"] if twd else None, "nav_date": f["nav_date"],

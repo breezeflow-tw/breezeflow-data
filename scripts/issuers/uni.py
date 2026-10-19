@@ -253,5 +253,6 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
             print(f"警告：{SOURCE} {code} 配息紀錄抓取失敗（{error}）", file=sys.stderr)
         else:
             rec["dividends"] = [d for d in divs if d["code"] == rec["code"]]
-        records[rec["code"]] = {**rec, "issuer": ISSUER, "source": SOURCE}
+        records[rec["code"]] = {**rec, "issuer": ISSUER, "source": SOURCE,
+                                "source_url": f"{BASE}/ETF/Fund/Info?fundCode={fund_code}"}
     return records

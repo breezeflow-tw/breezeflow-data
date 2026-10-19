@@ -227,7 +227,8 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
     for f in funds:
         code, twd = f["code"], f["currency"] == "TWD"
         rec = records[code] = {
-            "code": code, "issuer": ISSUER, "source": SOURCE, "nav_estimate": None, "nav_estimate_date": None,
+            "code": code, "issuer": ISSUER, "source": SOURCE,
+            "source_url": urllib.parse.urljoin(SITE, f["url"]), "currency": "TWD" if twd else None, "nav_estimate": None, "nav_estimate_date": None,
             "beneficiaries": None, "beneficiaries_month": None, "manager": None, "risk_class": None,
             "mgmt_fee": None, "mgmt_fee_text": None, "custodian_fee_text": None, "stats": None, "index_name": None,
             "list_date": None, "aum": None, "units": None, "units_change": None, "holdings": [],
@@ -245,6 +246,7 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
             continue
         aum, link = product.pop("aum_twd"), product.pop("holdings_url")
         rec.update(product)
+        rec["holdings_url"] = urllib.parse.urljoin(SITE, link) if link else None
         rec["aum"] = round(aum / 1e8, 2) if aum and twd else None
         if link:
             try:

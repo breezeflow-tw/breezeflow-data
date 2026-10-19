@@ -29,12 +29,15 @@ TABLES = {
     "price_check": (None, "date, code, field"),
     "daily": ("date", "code"),
     "holding": ("date", "code, kind, asset_code"),
+    "fund_daily": ("date", "code"),
+    "fund_monthly": ("month", "code"),
+    "fund_event": (None, "code, date, kind"),
     "fund_info": (None, "code"),
     "fund_month": (None, "code, month"),
     "fund_top": (None, "code, month, rank"),
     "fund_fetch": (None, "report, month"),
 }
-SPLIT_DIRS = {"daily": "daily", "holding": "holdings"}
+SPLIT_DIRS = {"daily": "daily", "holding": "holdings", "fund_daily": "fund_daily", "fund_monthly": "fund_monthly"}
 
 # 舊資料庫補上新欄位
 MIGRATIONS = {
@@ -45,6 +48,7 @@ MIGRATIONS = {
             "beneficiaries": "INTEGER", "beneficiaries_month": "TEXT", "stats_json": "TEXT",
             "fee_source": "TEXT", "expense_json": "TEXT"},
     "dividend": {"source": "TEXT"},
+    "holding": {"source_url": "TEXT"},
 }
 
 

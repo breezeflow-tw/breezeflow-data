@@ -25,6 +25,8 @@ from pathlib import Path
 import returns
 import sitca
 import store
+import fund_flows
+import sitca_etf
 from issuers import blackrock, capital, cathay, ctbc, fubon, fuhhwa, jpmorgan, kgi, nomura, uni, yuanta
 from issuers.common import flat_fee
 
@@ -392,7 +394,7 @@ def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
         if it["mgmt_fee_text"] or it["custodian_fee_text"] or it["mgmt_fee"] is not None:
             it["fee_source"] = src
         if it["beneficiaries"] is not None:
-            it["beneficiaries_source"] = src
+            it["beneficiaries_source"], it["beneficiaries_source_url"] = src, r.get("source_url")
         for field, key in (("listed_date", "list_date"), ("index_name", "index_name"), ("units", "units")):
             if r.get(key):
                 it[field] = r[key]
@@ -406,6 +408,8 @@ def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
             nav, label = r["nav_estimate"], "預估淨值"
         if nav:
             it["nav"], it["nav_source"] = nav, f"{src}（{label}）"
+            it["nav_date"] = date
+            it["nav_source_url"] = r.get("source_url") if label == "正式淨值" else None
             if it["price"]:
                 it["premium"] = round((it["price"] - nav) / nav * 100, 4)
         # 申購買回清單的資料日期可能和最新淨值不同（例如凱基晚一天），有提供就以清單日期為準
@@ -648,9 +652,9 @@ def save_issuer_detail(con: sqlite3.Connection, issuer: dict[str, dict]) -> None
         day = r.get("holdings_date") or r.get("pcf_date") or r.get("nav_date")
         con.execute("DELETE FROM holding WHERE code = ? AND date IS ?", (code, day))
         con.executemany(
-            """INSERT OR REPLACE INTO holding(code, date, asset_code, asset_name, kind, weight, qty, source)
-               VALUES(:code, :date, :asset_code, :asset_name, :kind, :weight, :qty, :source)""",
-            [{**h, "code": code, "date": day, "source": r["source"]} for h in r["holdings"]],
+            """INSERT OR REPLACE INTO holding(code, date, asset_code, asset_name, kind, weight, qty, source, source_url)
+               VALUES(:code, :date, :asset_code, :asset_name, :kind, :weight, :qty, :source, :source_url)""",
+            [{**h, "code": code, "date": day, "source": r["source"], "source_url": r.get("holdings_url") or r.get("source_url")} for h in r["holdings"]],
         )
 
 
@@ -740,13 +744,14 @@ def apply_fund_info(items: list[dict], info: dict) -> None:
                 it["fee"] = f["expense"]["total"]
 
 
-def apply_fund_nav(items: list[dict], navs: dict[str, float]) -> None:
+def apply_fund_nav(items: list[dict], navs: dict[str, float], as_of: str | None = None) -> None:
     """投信投顧公會的當日正式淨值：還沒有投信官網正式淨值的 ETF，用它取代預估淨值，折溢價跟著重算。"""
     for it in items:
         nav = navs.get(it["code"])
         if not nav or "正式淨值" in (it.get("nav_source") or ""):
             continue
         it["nav"], it["nav_source"] = nav, f"{sitca.SOURCE}（正式淨值）"
+        it["nav_date"], it["nav_source_url"] = as_of, sitca.BASE + sitca.NAV
         it["premium"] = round((it["price"] - nav) / nav * 100, 4) if it.get("price") else None
 
 
@@ -791,6 +796,7 @@ def apply_fund_month(items: list[dict], monthly: dict[str, dict]) -> None:
         if m["beneficiaries"] and (it.get("beneficiaries") is None or (it.get("beneficiaries_month") or "") < m["month"]):
             it["beneficiaries"], it["beneficiaries_month"] = m["beneficiaries"], m["month"]
             it["beneficiaries_source"] = f"{sitca.SOURCE}基金資料彙總表"
+            it["beneficiaries_source_url"] = sitca.BASE + sitca.SUMMARY
 
 
 def months_between(first: str, last: str) -> list[str]:
@@ -842,13 +848,16 @@ def load_fund_top(con: sqlite3.Connection) -> dict[str, tuple[str, list[dict]]]:
     return out
 
 
-def apply_fund_top(items: list[dict], top: dict[str, tuple[str, list[dict]]]) -> None:
+def apply_fund_top(items: list[dict], top: dict[str, tuple[str, list[dict]]], as_of: str | None = None) -> None:
     """投信官網沒有成分股的 ETF，用投信投顧公會的月底前十大（只有權重，沒有股數）。"""
     for it in items:
         if it.get("holdings_top") or it["code"] not in top:
             continue
         month, rows = top[it["code"]]
-        it["holdings_top"] = rows
+        if as_of and month >= as_of[:7]:
+            continue  # 當月未結束，不能將尚未公布的月末持股套用至截至日
+        it["holdings_top"] = sorted(rows, key=lambda h: -(h.get("weight") or 0))[:10]
+        it["holdings_source_url"] = sitca.BASE + sitca.TOP10
         it["holdings_source"] = f"{sitca.SOURCE}基金投資明細（月前十大）"
         it["holdings_date"] = month
 
@@ -958,9 +967,10 @@ def main(argv=None) -> int:
           f"費用比率 {fund_info.get('year') or '—'} 年度" + (f"、彙總表 {summary['month']} 共 {len(summary['funds'])} 檔" if summary else "")
           + "）" + ("" if fresh else "，沿用資料庫裡的資料"))
     apply_issuer(items, issuer, date)
+    monthly = sitca_etf.fetch(args.fixtures / "sitca" if args.fixtures else None, context=SSL_CONTEXT)
     apply_fund_info(items, fund_info)
     navs = fund_nav.result()
-    apply_fund_nav(items, navs)
+    apply_fund_nav(items, navs, date)
     print(f"{sitca.SOURCE}基金淨值：{date} 共 {len(navs)} 檔" if navs else f"{sitca.SOURCE}基金淨值：{date} 尚未公布")
 
     save_db(items, date, args.db, nav, dividends, diffs, issuer, (fresh.get("dividends") or []) + (old.get("dividends") or []), navs)
@@ -979,7 +989,10 @@ def main(argv=None) -> int:
                         [(r, m, today.isoformat()) for r, m in done])
         con.commit()
         apply_fund_month(items, load_fund_month(con))
-        apply_fund_top(items, load_fund_top(con))
+        fund_flows.save(con, issuer, monthly)
+        fund_flows.attach(con, items, date)
+        apply_fund_top(items, load_fund_top(con), date)
+        con.commit()
         store.dump(con, history)
     finally:
         con.close()
