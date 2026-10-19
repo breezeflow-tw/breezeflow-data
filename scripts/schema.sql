@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS etf (
   beneficiaries       INTEGER,    -- 受益人數
   beneficiaries_month TEXT,       -- 受益人數資料年月
   stats_json  TEXT,               -- 投資組合統計（現金殖利率、本益比等），JSON
+  fee_source  TEXT,               -- 經理費、保管費原文的出處（投信官網或投信投顧公會）
+  expense_json TEXT,              -- 投信投顧公會公布的年度實際費用比率，JSON
   updated_at  TEXT
 );
 
@@ -95,4 +97,59 @@ CREATE TABLE IF NOT EXISTS fund_monthly (
 CREATE TABLE IF NOT EXISTS fund_event (
   code TEXT NOT NULL, date TEXT NOT NULL, kind TEXT NOT NULL, description TEXT,
   source TEXT NOT NULL, source_url TEXT NOT NULL, PRIMARY KEY(code,date,kind)
+);
+
+-- 投信投顧公會的基金資料：契約費率、經理人、風險等級（每月更新），以及年度實際費用比率（%）
+CREATE TABLE IF NOT EXISTS fund_info (
+  code          TEXT PRIMARY KEY,   -- ETF 代號（公會的受益憑證代號）
+  fund_id       TEXT,               -- 基金統編
+  name          TEXT,               -- 基金全名
+  data_month    TEXT,               -- 基本資料年月 YYYY-MM
+  inception     TEXT,               -- 基金成立日
+  currency      TEXT,
+  manager       TEXT,
+  risk_class    TEXT,
+  mgmt_fee_text TEXT,               -- 契約經理費率原文
+  custodian_fee_text TEXT,          -- 契約保管費率原文
+  expense_year  INTEGER,            -- 實際費用比率的年度（年中才成立的基金不收）
+  exp_mgmt      REAL,
+  exp_custodian REAL,
+  exp_other     REAL,
+  exp_total     REAL,               -- 合計（含交易成本）
+  fetched       TEXT                -- 抓取日期
+);
+
+-- 投信投顧公會基金資料彙總表（月）：月底規模、受益人數與當月申購買回金額，依月份累積
+CREATE TABLE IF NOT EXISTS fund_month (
+  code          TEXT NOT NULL,      -- ETF 代號
+  month         TEXT NOT NULL,      -- 資料年月 YYYY-MM
+  aum_twd       REAL,               -- 月底基金規模（新台幣元）
+  nav           REAL,               -- 月底單位淨值（新台幣）
+  units         REAL,               -- 受益權單位數
+  beneficiaries INTEGER,            -- 總受益人數
+  beneficiaries_natural INTEGER,    -- 自然人受益人數
+  beneficiaries_legal   INTEGER,    -- 法人受益人數
+  subscribe_twd REAL,               -- 當月申購總金額（新台幣元）
+  redeem_twd    REAL,               -- 當月買回總金額（新台幣元）
+  PRIMARY KEY (code, month)
+);
+
+-- 投信投顧公會基金投資明細（月前十大）：每檔 ETF 月底前十大投資標的，依月份累積
+CREATE TABLE IF NOT EXISTS fund_top (
+  code        TEXT NOT NULL,      -- ETF 代號
+  month       TEXT NOT NULL,      -- 資料年月 YYYY-MM
+  rank        INTEGER NOT NULL,   -- 名次 1～10
+  asset_code  TEXT,               -- 標的代號（國內股票為證券代號，國外標的多為 ISIN）
+  asset_name  TEXT,
+  kind        TEXT,               -- 股票 / 債券 / 基金 / 期貨 / 其他
+  weight      REAL,               -- 占基金淨資產價值比例（%）
+  PRIMARY KEY (code, month, rank)
+);
+
+-- 投信投顧公會歷史資料的回補進度：哪些報表的哪些月份已經抓過
+CREATE TABLE IF NOT EXISTS fund_fetch (
+  report   TEXT NOT NULL,         -- summary（基金資料彙總表）/ dividend（基金配息資料）
+  month    TEXT NOT NULL,         -- 資料年月 YYYY-MM
+  fetched  TEXT,                  -- 抓取日期
+  PRIMARY KEY (report, month)
 );

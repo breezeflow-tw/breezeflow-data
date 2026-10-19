@@ -19,14 +19,16 @@ import sys
 import time
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime, timedelta, timezone
+from datetime import date as date_type, datetime, timedelta, timezone
 from pathlib import Path
 
 import returns
+import sitca
 import store
 import fund_flows
-import sitca
-from issuers import capital, cathay, fubon, fuhhwa, kgi, uni, yuanta
+import sitca_etf
+from issuers import blackrock, capital, cathay, ctbc, fubon, fuhhwa, jpmorgan, kgi, nomura, uni, yuanta
+from issuers.common import flat_fee
 
 ROOT = Path(__file__).resolve().parent.parent
 DB_PATH = ROOT / "data" / "etf.db"
@@ -57,7 +59,7 @@ YAHOO_HOSTS = ("query1.finance.yahoo.com", "query2.finance.yahoo.com")
 
 # 已接入的投信官網；淨值、規模、費用、成分股以這裡的資料為主
 ISSUER_MODULES = {"yuanta": yuanta, "uni": uni, "capital": capital, "fuhhwa": fuhhwa, "kgi": kgi, "fubon": fubon,
-                  "cathay": cathay}
+                  "cathay": cathay, "ctbc": ctbc, "nomura": nomura, "jpmorgan": jpmorgan, "blackrock": blackrock}
 
 
 # ---------- 下載 ----------
@@ -353,7 +355,7 @@ def issuer_from_name(name: str) -> str | None:
     name = re.sub(r"^(主動|期|平衡)", "", name)
     for brand in ISSUERS:
         if name.startswith(brand):
-            return {"中國信託": "中信", "FT": "第一金", "大華": "大華銀"}.get(brand, brand)
+            return {"中國信託": "中信", "FT": "富蘭克林華美", "大華": "大華銀"}.get(brand, brand)
     return None
 
 
@@ -379,14 +381,19 @@ def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
         for f in ISSUER_FIELDS:
             it.setdefault(f, None)
         it["holdings_top"] = []
+        it["holdings_source"] = it["holdings_date"] = None
         it["units_change"] = None
+        it["fee_source"] = None
+        it["beneficiaries_source"] = None
         r = issuer.get(it["code"])
         if not r:
             continue
         src = r["source"]
         for f in ISSUER_FIELDS:
             it[f] = r.get(f)
-        if r.get("beneficiaries") is not None:
+        if it["mgmt_fee_text"] or it["custodian_fee_text"] or it["mgmt_fee"] is not None:
+            it["fee_source"] = src
+        if it["beneficiaries"] is not None:
             it["beneficiaries_source"], it["beneficiaries_source_url"] = src, r.get("source_url")
         for field, key in (("listed_date", "list_date"), ("index_name", "index_name"), ("units", "units")):
             if r.get(key):
@@ -410,6 +417,9 @@ def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
             it["units_change"] = r.get("units_change")
         it["holdings_top"] = sorted((h for h in r.get("holdings") or [] if h.get("weight") is not None),
                                     key=lambda h: -h["weight"])[:10]
+        if it["holdings_top"]:
+            it["holdings_source"] = src
+            it["holdings_date"] = r.get("holdings_date") or r.get("pcf_date") or r.get("nav_date")
 
 
 def trade_date(nav: dict, quotes: dict, now: datetime) -> str:
@@ -497,17 +507,18 @@ def known_markets(db_path: Path) -> dict[str, str]:
 
 def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | None = None,
             dividends: list[dict] | None = None, diffs: list[dict] | None = None,
-            issuer: dict[str, dict] | None = None) -> None:
+            issuer: dict[str, dict] | None = None, fund_dividends: list[dict] | None = None,
+            fund_nav: dict[str, float] | None = None) -> None:
     con = store.open_db(db_path, None)
     try:
         now = datetime.now(TW).isoformat(timespec="seconds")
         con.executemany(
             """INSERT INTO etf(code, name, issuer, category, market, fee, aum, units, index_name, listed_date,
                                mgmt_fee, mgmt_fee_text, custodian_fee_text, manager, risk_class,
-                               beneficiaries, beneficiaries_month, stats_json, updated_at)
+                               beneficiaries, beneficiaries_month, stats_json, fee_source, expense_json, updated_at)
                VALUES(:code, :name, :issuer, :category, :market, :fee, :aum, :units, :index_name, :listed_date,
                       :mgmt_fee, :mgmt_fee_text, :custodian_fee_text, :manager, :risk_class,
-                      :beneficiaries, :beneficiaries_month, :stats_json, :now)
+                      :beneficiaries, :beneficiaries_month, :stats_json, :fee_source, :expense_json, :now)
                ON CONFLICT(code) DO UPDATE SET name=excluded.name,
                  issuer=COALESCE(excluded.issuer, etf.issuer), category=excluded.category,
                  market=COALESCE(excluded.market, etf.market), fee=COALESCE(excluded.fee, etf.fee),
@@ -520,8 +531,12 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
                  manager=COALESCE(excluded.manager, etf.manager), risk_class=COALESCE(excluded.risk_class, etf.risk_class),
                  beneficiaries=COALESCE(excluded.beneficiaries, etf.beneficiaries),
                  beneficiaries_month=COALESCE(excluded.beneficiaries_month, etf.beneficiaries_month),
-                 stats_json=COALESCE(excluded.stats_json, etf.stats_json), updated_at=excluded.updated_at""",
-            [{**it, "now": now, "stats_json": json.dumps(it["stats"], ensure_ascii=False) if it.get("stats") else None}
+                 stats_json=COALESCE(excluded.stats_json, etf.stats_json),
+                 fee_source=COALESCE(excluded.fee_source, etf.fee_source),
+                 expense_json=COALESCE(excluded.expense_json, etf.expense_json), updated_at=excluded.updated_at""",
+            [{**it, "now": now, "stats_json": json.dumps(it["stats"], ensure_ascii=False) if it.get("stats") else None,
+              "fee_source": it.get("fee_source"),
+              "expense_json": json.dumps(it["expense"], ensure_ascii=False) if it.get("expense") else None}
              for it in items],
         )
         # 同一天重跑會更新當天資料；這次沒抓到的欄位（例如 MIS 暫時連不上時的淨值）保留原值
@@ -548,20 +563,39 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
         )
         save_official_nav(con, nav or {})
         save_issuer_detail(con, issuer or {})
+        # 投信投顧公會的當日正式淨值：只補空白，投信官網公告的優先
+        con.executemany(
+            """UPDATE daily SET nav_official = :nav,
+                 premium_official = CASE WHEN price IS NOT NULL THEN (price - :nav) / :nav * 100 END
+               WHERE date = :date AND code = :code AND nav_official IS NULL""",
+            [{"nav": v, "date": date, "code": c} for c, v in (fund_nav or {}).items()],
+        )
         con.executemany(
             """INSERT OR REPLACE INTO price_check(date, code, field, yahoo, exchange, checked_at)
                VALUES(:date, :code, :field, :yahoo, :exchange, :now)""",
             [{**d, "date": date, "now": now} for d in diffs or []],
         )
-        # 交易所除權息預告：只補投信官網還沒有的資料，不覆蓋投信公告
+        # 交易所除權息預告：只補投信官網、投信投顧公會還沒有的資料，不覆蓋投信公告
         con.executemany(
             """INSERT INTO dividend(code, ex_date, cash, source, updated_at)
                VALUES(:code, :ex_date, :cash, '交易所除權息預告', :now)
                ON CONFLICT(code, ex_date) DO UPDATE SET
+                 cash=CASE WHEN dividend.source LIKE '%官網' OR dividend.source = :fund THEN dividend.cash
+                           ELSE COALESCE(excluded.cash, dividend.cash) END,
+                 source=CASE WHEN dividend.source LIKE '%官網' OR dividend.source = :fund THEN dividend.source ELSE excluded.source END,
+                 updated_at=excluded.updated_at""",
+            [{**d, "now": now, "fund": sitca.SOURCE} for d in dividends or []],
+        )
+        # 投信投顧公會的配息資料（含發放日）：取代交易所預告，不覆蓋投信官網
+        con.executemany(
+            """INSERT INTO dividend(code, ex_date, cash, pay_date, source, updated_at)
+               VALUES(:code, :ex_date, :cash, :pay_date, :source, :now)
+               ON CONFLICT(code, ex_date) DO UPDATE SET
                  cash=CASE WHEN dividend.source LIKE '%官網' THEN dividend.cash ELSE COALESCE(excluded.cash, dividend.cash) END,
+                 pay_date=COALESCE(dividend.pay_date, excluded.pay_date),
                  source=CASE WHEN dividend.source LIKE '%官網' THEN dividend.source ELSE excluded.source END,
                  updated_at=excluded.updated_at""",
-            [{**d, "now": now} for d in dividends or []],
+            [{**d, "source": sitca.SOURCE, "now": now} for d in fund_dividends or []],
         )
         # 投信官網的配息紀錄（含發放日）優先
         con.executemany(
@@ -614,7 +648,8 @@ def save_issuer_detail(con: sqlite3.Connection, issuer: dict[str, dict]) -> None
     for code, r in issuer.items():
         if not r.get("holdings"):
             continue
-        day = r.get("pcf_date") or r.get("nav_date")
+        # 持股有自己的資料日期時（例如海外 ETF 的持股比申購買回單位差異早一天）以持股日期為準
+        day = r.get("holdings_date") or r.get("pcf_date") or r.get("nav_date")
         con.execute("DELETE FROM holding WHERE code = ? AND date IS ?", (code, day))
         con.executemany(
             """INSERT OR REPLACE INTO holding(code, date, asset_code, asset_name, kind, weight, qty, source, source_url)
@@ -641,6 +676,190 @@ def save_official_nav(con: sqlite3.Connection, nav: dict) -> None:
                WHERE date = :date AND code = :code AND nav_official IS NULL""",
             [{"nav": n["nav_prev"], "date": prev, "code": n["code"]} for n in rows],
         )
+
+
+FUND_INFO_COLS = ("code", "fund_id", "name", "data_month", "inception", "currency", "manager", "risk_class",
+                  "mgmt_fee_text", "custodian_fee_text", "expense_year", "exp_mgmt", "exp_custodian", "exp_other",
+                  "exp_total", "fetched")
+
+
+def load_fund_info(db_path: Path) -> tuple[dict, str | None]:
+    """資料庫裡上一次抓的投信投顧公會資料（格式同 sitca.fetch 的回傳值）與抓取日期。"""
+    if not db_path.exists():
+        return {}, None
+    con = sqlite3.connect(db_path)
+    try:
+        rows = con.execute(f"SELECT {', '.join(FUND_INFO_COLS)} FROM fund_info").fetchall()
+    except sqlite3.OperationalError:
+        return {}, None
+    finally:
+        con.close()
+    funds, fetched = {}, None
+    for row in rows:
+        r = dict(zip(FUND_INFO_COLS, row))
+        fetched = max(fetched or "", r["fetched"] or "") or None
+        expense = ({"year": r["expense_year"], "mgmt": r["exp_mgmt"], "custodian": r["exp_custodian"],
+                    "other": r["exp_other"], "total": r["exp_total"]} if r["exp_total"] is not None else None)
+        funds[r["code"]] = {k: r[k] for k in ("fund_id", "name", "inception", "currency", "manager", "risk_class",
+                                               "mgmt_fee_text", "custodian_fee_text")} | {"expense": expense}
+    if not funds:
+        return {}, None
+    months = [r[3] for r in rows if r[3]]
+    years = [r[10] for r in rows if r[10]]
+    return {"month": max(months) if months else None, "year": max(years) if years else None, "funds": funds}, fetched
+
+
+def save_fund_info(con: sqlite3.Connection, info: dict, fetched: str) -> None:
+    """重新抓到的公會資料整批取代舊資料。"""
+    con.execute("DELETE FROM fund_info")
+    con.executemany(
+        f"INSERT INTO fund_info({', '.join(FUND_INFO_COLS)}) VALUES({', '.join('?' * len(FUND_INFO_COLS))})",
+        [(code, f["fund_id"], f["name"], info.get("month"), f["inception"], f["currency"], f["manager"], f["risk_class"],
+          f["mgmt_fee_text"], f["custodian_fee_text"], (f["expense"] or {}).get("year"), (f["expense"] or {}).get("mgmt"),
+          (f["expense"] or {}).get("custodian"), (f["expense"] or {}).get("other"), (f["expense"] or {}).get("total"), fetched)
+         for code, f in sorted(info["funds"].items())],
+    )
+
+
+def apply_fund_info(items: list[dict], info: dict) -> None:
+    """投信投顧公會的資料補在投信官網沒有提供的欄位，並附上年度實際費用比率。
+    外幣交易線（代號結尾 K，例如 00636K）和同代號去掉 K 的 ETF 是同一檔基金，沿用其資料。"""
+    funds = info.get("funds") or {}
+    for it in items:
+        code = it["code"]
+        f = funds.get(code) or (funds.get(code[:-1]) if code.endswith("K") else None)
+        it["expense"] = None
+        if not f:
+            continue
+        if not it.get("mgmt_fee_text") and not it.get("custodian_fee_text") and it.get("mgmt_fee") is None:
+            if f["mgmt_fee_text"] or f["custodian_fee_text"]:
+                it["mgmt_fee_text"], it["custodian_fee_text"] = f["mgmt_fee_text"], f["custodian_fee_text"]
+                it["mgmt_fee"] = flat_fee(f["mgmt_fee_text"])
+                it["fee_source"] = f"{sitca.SOURCE}基金基本資料（{info.get('month') or '最新'}）"
+        it["manager"] = it.get("manager") or f["manager"]
+        it["risk_class"] = it.get("risk_class") or f["risk_class"]
+        if f["expense"]:
+            it["expense"] = {**f["expense"], "source": f"{sitca.SOURCE}各項費用比率（{f['expense']['year']} 年度）"}
+            if it.get("fee") is None:
+                it["fee"] = f["expense"]["total"]
+
+
+def apply_fund_nav(items: list[dict], navs: dict[str, float], as_of: str | None = None) -> None:
+    """投信投顧公會的當日正式淨值：還沒有投信官網正式淨值的 ETF，用它取代預估淨值，折溢價跟著重算。"""
+    for it in items:
+        nav = navs.get(it["code"])
+        if not nav or "正式淨值" in (it.get("nav_source") or ""):
+            continue
+        it["nav"], it["nav_source"] = nav, f"{sitca.SOURCE}（正式淨值）"
+        it["nav_date"], it["nav_source_url"] = as_of, sitca.BASE + sitca.NAV
+        it["premium"] = round((it["price"] - nav) / nav * 100, 4) if it.get("price") else None
+
+
+FUND_MONTH_COLS = ("code", "month", "aum_twd", "nav", "units", "beneficiaries", "beneficiaries_natural",
+                   "beneficiaries_legal", "subscribe_twd", "redeem_twd")
+
+
+def save_fund_month(con: sqlite3.Connection, summary: dict) -> None:
+    """公會基金資料彙總表依月份累積；同一個月重抓時以新資料為準。"""
+    if not summary.get("month"):
+        return
+    con.executemany(
+        f"INSERT OR REPLACE INTO fund_month({', '.join(FUND_MONTH_COLS)}) VALUES({', '.join('?' * len(FUND_MONTH_COLS))})",
+        [(code, summary["month"], *(f[c] for c in FUND_MONTH_COLS[2:])) for code, f in sorted(summary["funds"].items())],
+    )
+
+
+def load_fund_month(con: sqlite3.Connection) -> dict[str, dict]:
+    """每檔 ETF 最新一個月的公會彙總表資料。"""
+    rows = con.execute(f"SELECT {', '.join(FUND_MONTH_COLS)} FROM fund_month f "
+                       "WHERE month = (SELECT MAX(month) FROM fund_month g WHERE g.code = f.code)").fetchall()
+    return {r[0]: dict(zip(FUND_MONTH_COLS, r)) for r in rows}
+
+
+def apply_fund_month(items: list[dict], monthly: dict[str, dict]) -> None:
+    """附上投信投顧公會基金資料彙總表（月）：月底規模、受益人數（自然人／法人）與當月申購、買回金額（億元）。
+    受益人數以資料月份較新的為準，月份相同時用投信官網的。外幣交易線（代號結尾 K）和主要交易線是同一檔基金，
+    公會只列一筆，不重複套用。"""
+    def yi(value):
+        return round(value / 1e8, 2) if value is not None else None
+
+    for it in items:
+        m = monthly.get(it["code"])
+        it["monthly"] = None
+        if not m:
+            continue
+        net = m["subscribe_twd"] - m["redeem_twd"] if None not in (m["subscribe_twd"], m["redeem_twd"]) else None
+        it["monthly"] = {"month": m["month"], "aum": yi(m["aum_twd"]), "nav": m["nav"], "units": m["units"],
+                         "beneficiaries": m["beneficiaries"], "beneficiaries_natural": m["beneficiaries_natural"],
+                         "beneficiaries_legal": m["beneficiaries_legal"], "subscribe": yi(m["subscribe_twd"]),
+                         "redeem": yi(m["redeem_twd"]), "net": yi(net), "source": f"{sitca.SOURCE}基金資料彙總表"}
+        if m["beneficiaries"] and (it.get("beneficiaries") is None or (it.get("beneficiaries_month") or "") < m["month"]):
+            it["beneficiaries"], it["beneficiaries_month"] = m["beneficiaries"], m["month"]
+            it["beneficiaries_source"] = f"{sitca.SOURCE}基金資料彙總表"
+            it["beneficiaries_source_url"] = sitca.BASE + sitca.SUMMARY
+
+
+def months_between(first: str, last: str) -> list[str]:
+    """YYYY-MM 到 YYYY-MM（含）的每個月。"""
+    y, m = map(int, first.split("-"))
+    out = []
+    while f"{y:04d}-{m:02d}" <= last:
+        out.append(f"{y:04d}-{m:02d}")
+        y, m = (y + 1, 1) if m == 12 else (y, m + 1)
+    return out
+
+
+def backfill_plan(db_path: Path) -> dict[str, list[str]]:
+    """要回補的月份：從 sitca.BACKFILL_FROM 到資料庫最新一個月之間還沒抓過的，由近到遠，每種最多 BACKFILL_MONTHS 個。"""
+    con = sqlite3.connect(db_path)
+    try:
+        latest = con.execute("SELECT MAX(month) FROM fund_month").fetchone()[0]
+        done = set(con.execute("SELECT report, month FROM fund_fetch").fetchall())
+    except sqlite3.OperationalError:
+        return {}
+    finally:
+        con.close()
+    if not latest:
+        return {}
+    return {report: [m for m in reversed(months_between(first, latest)) if (report, m) not in done][:sitca.BACKFILL_MONTHS]
+            for report, first in sitca.BACKFILL_FROM.items()}
+
+
+def save_fund_top(con: sqlite3.Connection, top10: dict) -> None:
+    """公會月前十大依月份累積；同一個月重抓時整批取代。"""
+    if not top10.get("month"):
+        return
+    con.execute("DELETE FROM fund_top WHERE month = ?", (top10["month"],))
+    con.executemany(
+        "INSERT OR REPLACE INTO fund_top(code, month, rank, asset_code, asset_name, kind, weight) VALUES(?, ?, ?, ?, ?, ?, ?)",
+        [(code, top10["month"], h["rank"], h["asset_code"], h["asset_name"], h["kind"], h["weight"])
+         for code, rows in sorted(top10["funds"].items()) for h in rows],
+    )
+
+
+def load_fund_top(con: sqlite3.Connection) -> dict[str, tuple[str, list[dict]]]:
+    """每檔 ETF 最新一個月的公會月前十大：{代號: (年月, 持股)}。"""
+    out: dict[str, tuple[str, list[dict]]] = {}
+    for code, month, asset_code, asset_name, kind, weight in con.execute(
+            "SELECT code, month, asset_code, asset_name, kind, weight FROM fund_top f "
+            "WHERE month = (SELECT MAX(month) FROM fund_top g WHERE g.code = f.code) ORDER BY code, rank"):
+        out.setdefault(code, (month, []))[1].append(
+            {"asset_code": asset_code, "asset_name": asset_name, "kind": kind, "weight": weight, "qty": None})
+    return out
+
+
+def apply_fund_top(items: list[dict], top: dict[str, tuple[str, list[dict]]], as_of: str | None = None) -> None:
+    """投信官網沒有成分股的 ETF，用投信投顧公會的月底前十大（只有權重，沒有股數）。"""
+    for it in items:
+        if it.get("holdings_top") or it["code"] not in top:
+            continue
+        month, rows = top[it["code"]]
+        if as_of and month >= as_of[:7]:
+            continue  # 當月未結束，不能將尚未公布的月末持股套用至截至日
+        it["holdings_top"] = sorted(rows, key=lambda h: -(h.get("weight") or 0))[:10]
+        it["holdings_source_url"] = sitca.BASE + sitca.TOP10
+        it["holdings_source"] = f"{sitca.SOURCE}基金投資明細（月前十大）"
+        it["holdings_date"] = month
 
 
 def attach_returns(con: sqlite3.Connection, items: list[dict], date: str, reused: dict, history: dict) -> None:
@@ -721,20 +940,58 @@ def main(argv=None) -> int:
         return mod, mod.fetch(http_get_json, fixtures=args.fixtures / name if args.fixtures else None, context=SSL_CONTEXT,
                               dividend_codes=known_dividend_codes(args.db, mod.SOURCE))
 
+    # 投信投顧公會的資料每月才更新：資料庫裡的資料超過一週才重抓，和各投信同時進行
+    fund_info, fetched = load_fund_info(args.db)
+    today = datetime.now(TW).date()
+    refresh = not fetched or date_type.fromisoformat(fetched) <= today - timedelta(days=sitca.REFRESH_DAYS)
+
     issuer: dict[str, dict] = {}
-    with ThreadPoolExecutor(max_workers=len(ISSUER_MODULES)) as pool:
+    with ThreadPoolExecutor(max_workers=len(ISSUER_MODULES) + 1) as pool:
+        fresh_info = pool.submit(sitca.fetch, args.fixtures / "sitca" if args.fixtures else None, SSL_CONTEXT, today) if refresh else None
+        fund_nav = pool.submit(sitca.fetch_nav, date, args.fixtures / "sitca" if args.fixtures else None, SSL_CONTEXT)
+        # 沒有重抓最新資料的那幾次，順便回補公會彙總表與配息資料的歷史月份
+        plan = {} if refresh or not fund_info.get("funds") else backfill_plan(args.db)
+        old_info = (pool.submit(sitca.backfill, plan, fund_info["funds"], args.fixtures / "sitca" if args.fixtures else None,
+                                SSL_CONTEXT) if any(plan.values()) else None)
         for mod, records in pool.map(fetch_issuer, ISSUER_MODULES.items()):
             print(f"{mod.SOURCE}：{sum(1 for r in records.values() if not r.get('delisted'))} 檔")
             issuer.update(records)
+        fresh = fresh_info.result() if fresh_info else {}
+        old = old_info.result() if old_info else {}
+    if fresh:
+        fund_info = fresh
+    if old.get("done"):
+        print(f"{sitca.SOURCE}歷史資料回補：" + "、".join(f"{'彙總表' if r == 'summary' else '配息'} {m}" for r, m in old["done"]))
+    summary = fresh.get("summary") or {}
+    print(f"{sitca.SOURCE}：{len(fund_info.get('funds') or {})} 檔（基本資料 {fund_info.get('month') or '—'}、"
+          f"費用比率 {fund_info.get('year') or '—'} 年度" + (f"、彙總表 {summary['month']} 共 {len(summary['funds'])} 檔" if summary else "")
+          + "）" + ("" if fresh else "，沿用資料庫裡的資料"))
     apply_issuer(items, issuer, date)
-    monthly = sitca.fetch(args.fixtures / "sitca" if args.fixtures else None, context=SSL_CONTEXT)
+    monthly = sitca_etf.fetch(args.fixtures / "sitca" if args.fixtures else None, context=SSL_CONTEXT)
+    apply_fund_info(items, fund_info)
+    navs = fund_nav.result()
+    apply_fund_nav(items, navs, date)
+    print(f"{sitca.SOURCE}基金淨值：{date} 共 {len(navs)} 檔" if navs else f"{sitca.SOURCE}基金淨值：{date} 尚未公布")
 
-    save_db(items, date, args.db, nav, dividends, diffs, issuer)
+    save_db(items, date, args.db, nav, dividends, diffs, issuer, (fresh.get("dividends") or []) + (old.get("dividends") or []), navs)
     con = sqlite3.connect(args.db)
     try:
         attach_returns(con, items, date, reused, returns.parse_history(history_raw))
+        if fresh:
+            save_fund_info(con, fresh, today.isoformat())
+            save_fund_month(con, fresh.get("summary") or {})
+            save_fund_top(con, fresh.get("top10") or {})
+        for month, funds in (old.get("summary") or {}).items():
+            save_fund_month(con, {"month": month, "funds": funds})
+        done = [("summary", fresh["summary"]["month"])] if (fresh.get("summary") or {}).get("month") else []
+        done += [("dividend", m) for m in fresh.get("dividend_months") or []] + list(old.get("done") or [])
+        con.executemany("INSERT OR REPLACE INTO fund_fetch(report, month, fetched) VALUES(?, ?, ?)",
+                        [(r, m, today.isoformat()) for r, m in done])
+        con.commit()
+        apply_fund_month(items, load_fund_month(con))
         fund_flows.save(con, issuer, monthly)
         fund_flows.attach(con, items, date)
+        apply_fund_top(items, load_fund_top(con), date)
         con.commit()
         store.dump(con, history)
     finally:

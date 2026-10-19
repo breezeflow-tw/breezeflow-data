@@ -1,0 +1,122 @@
+{
+ "345655": {
+  "productType": "ISHARES_FUND_DATA",
+  "localExchangeTicker": "009813",
+  "portfolioId": 345655,
+  "productPageUrl": "/tw/products/345655/blackrock-ishares-s-p-500-top-50-etf",
+  "navAmount": {
+   "d": "11.76",
+   "r": 11.76
+  },
+  "navAmountAsOf": {
+   "d": "2026年10月15日",
+   "r": 20261015
+  },
+  "totalNetAssets": {
+   "d": "3,632,399,023.00",
+   "r": 3632399023.0
+  },
+  "seriesBaseCurrencyCode": "TWD",
+  "fundName": "貝萊德 iShares 安碩標普500卓越50 ETF(基金之配息來源可能為收益平準金)",
+  "inceptionDate": {
+   "d": "2025年10月8日",
+   "r": 20251008
+  }
+ },
+ "351824": {
+  "productType": "ISHARES_FUND_DATA",
+  "localExchangeTicker": "009826",
+  "portfolioId": 351824,
+  "productPageUrl": "/tw/products/351824/blackrock-ishares-global-all-cap-etf",
+  "navAmount": {
+   "d": "10.14",
+   "r": 10.14
+  },
+  "navAmountAsOf": {
+   "d": "2026年10月15日",
+   "r": 20261015
+  },
+  "totalNetAssets": {
+   "d": "8,770,856,911.00",
+   "r": 8770856911.0
+  },
+  "seriesBaseCurrencyCode": "TWD",
+  "fundName": "貝萊德iShares安碩世界股票ETF",
+  "inceptionDate": {
+   "d": "2026年7月22日",
+   "r": 20260722
+  }
+ },
+ "351827": {
+  "productType": "ISHARES_FUND_DATA",
+  "localExchangeTicker": "00991B",
+  "portfolioId": 351827,
+  "productPageUrl": "/tw/products/351827/blackrock-ishares-10+-year-usd-a-rated-corporate-bond-etf",
+  "navAmount": {
+   "d": "14.8636",
+   "r": 14.8636
+  },
+  "navAmountAsOf": {
+   "d": "2026年10月15日",
+   "r": 20261015
+  },
+  "totalNetAssets": {
+   "d": "5,950,326,637.00",
+   "r": 5950326637.0
+  },
+  "seriesBaseCurrencyCode": "TWD",
+  "fundName": "貝萊德iShares安碩10年期以上A級美元公司債ETF(基金之配息來源可能為收益平準金)",
+  "inceptionDate": {
+   "d": "2026年7月22日",
+   "r": 20260722
+  }
+ },
+ "349339": {
+  "productType": "ISHARES_FUND_DATA",
+  "localExchangeTicker": "00985D",
+  "portfolioId": 349339,
+  "productPageUrl": "/tw/products/349339/blackrock-ishares-income-plus-active-etf",
+  "navAmount": {
+   "d": "9.7947",
+   "r": 9.7947
+  },
+  "navAmountAsOf": {
+   "d": "2026年10月15日",
+   "r": 20261015
+  },
+  "totalNetAssets": {
+   "d": "1,197,224,805.00",
+   "r": 1197224805.0
+  },
+  "seriesBaseCurrencyCode": "TWD",
+  "fundName": "貝萊德iShares安碩收益優化投資等級債主動式ETF（基金有一定比重投資於非投資等級之高風險債券，配息來源可能為收益平準金且並無保證收益及配息）",
+  "inceptionDate": {
+   "d": "2026年3月20日",
+   "r": 20260320
+  }
+ },
+ "228362": {
+  "productType": "BLK_MUTUAL_FUND_DATA",
+  "localExchangeTicker": "-",
+  "portfolioId": 228362,
+  "productPageUrl": "/tw/products/228362/blackrock-fixed-income-global-opp-a2-usd-fund",
+  "navAmount": {
+   "d": "17.53",
+   "r": 17.53
+  },
+  "navAmountAsOf": {
+   "d": "2026年10月16日",
+   "r": 20261016
+  },
+  "totalNetAssets": {
+   "d": "756,355,124.70",
+   "r": 756355124.7
+  },
+  "seriesBaseCurrencyCode": "USD",
+  "fundName": "貝萊德環球債券機會基金",
+  "inceptionDate": {
+   "d": "2007年1月31日",
+   "r": 20070131
+  }
+ }
+}

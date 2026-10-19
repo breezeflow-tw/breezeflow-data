@@ -8,8 +8,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 import fund_flows as f
-import sitca
+import sitca_etf as sitca
 import store
+import fetch_etf as pipeline
+from issuers import blackrock, ctbc, jpmorgan, nomura
 
 
 def rows():
@@ -153,6 +155,65 @@ class SitcaTest(unittest.TestCase):
     def test_latest_month_uses_published_options(self):
         self.assertEqual(sitca.latest_month('<select id="x_ddlYM"><option value="202608">8</option><option value="202609">9</option></select>'),'202609')
         self.assertIsNone(sitca.latest_month('<html>網站維護</html>'))
+
+
+class IntegrationTest(unittest.TestCase):
+    def test_new_issuers_keep_official_assets_and_links(self):
+        fixtures = Path(__file__).parent / 'fixtures'
+        con = sqlite3.connect(':memory:'); store.ensure_schema(con)
+        for module, code in ((ctbc, '00981D'), (nomura, '00935'), (jpmorgan, '00989A'), (blackrock, '009813')):
+            with self.subTest(issuer=module.ISSUER):
+                records = module.fetch(fixtures=fixtures / module.__name__.split('.')[-1])
+                record = records.get(code) or next(r for r in records.values() if r.get('aum'))
+                f.save(con, {record['code']: record}, {})
+                item = {'code': record['code']}
+                f.attach(con, [item], '2026-10-19')
+                self.assertEqual(item['aum'], record['aum'])
+                self.assertEqual(item['aum_source'], module.SOURCE)
+                self.assertTrue(item['aum_source_url'].startswith('https://'))
+        con.close()
+
+    def test_asset_date_is_not_replaced_by_later_pcf_date(self):
+        con = sqlite3.connect(':memory:'); store.ensure_schema(con)
+        record = {**rows()['2026-10-16'], 'nav_date': '2026-10-16', 'nav_official': 10,
+                  'asset_date': '2026-10-16', 'pcf_date': '2026-10-19'}
+        f.save(con, {'TEST': record}, {})
+        self.assertEqual(con.execute('SELECT units,units_change FROM fund_daily WHERE date=?', ('2026-10-16',)).fetchone(),
+                         (120_000_000, None))
+        self.assertEqual(con.execute('SELECT units,units_change FROM fund_daily WHERE date=?', ('2026-10-19',)).fetchone(),
+                         (None, 1_000_000))
+        con.close()
+
+    def test_public_holdings_fallback_survives_flow_attachment(self):
+        con = sqlite3.connect(':memory:'); store.ensure_schema(con)
+        items = [{'code': 'TEST'}]
+        f.attach(con, items, '2026-10-16')
+        monthly = {'TEST': ('2026-09', [{'asset_code': 'A', 'weight': 10}, {'asset_code': 'B', 'weight': 20}])}
+        pipeline.apply_fund_top(items, monthly, '2026-10-16')
+        self.assertEqual([h['asset_code'] for h in items[0]['holdings_top']], ['B', 'A'])
+        self.assertIn('IN2629', items[0]['holdings_source_url'])
+        self.assertEqual(items[0]['holdings_date'], '2026-09')
+        pipeline.apply_fund_top(items, {'TEST': ('2026-08', [{'asset_code': 'C', 'weight': 90}])}, '2026-10-16')
+        self.assertEqual(items[0]['holdings_top'][0]['asset_code'], 'B')
+        future = [{'code': 'TEST'}]
+        pipeline.apply_fund_top(future, {'TEST': ('2026-10', [])}, '2026-10-16')
+        self.assertNotIn('holdings_date', future[0]); con.close()
+
+    def test_sitca_nav_source_replaces_old_estimate_link(self):
+        item = {'code': 'TEST', 'price': 10, 'nav_source': '投信預估淨值', 'nav_source_url': 'https://old.example'}
+        pipeline.apply_fund_nav([item], {'TEST': 9.9}, '2026-10-16')
+        self.assertEqual(item['nav_date'], '2026-10-16')
+        self.assertIn('IN2106', item['nav_source_url'])
+        self.assertAlmostEqual(item['premium'], 1.0101)
+
+    def test_same_month_beneficiary_keeps_issuer_priority(self):
+        con = sqlite3.connect(':memory:'); store.ensure_schema(con)
+        f.save(con, {}, {'TEST': {'code': 'TEST', 'month': '2026-09', 'beneficiaries': 50,
+                                'source': sitca.SOURCE, 'source_url': sitca.BASE}})
+        item = {'code': 'TEST', 'beneficiaries': 60, 'beneficiaries_month': '2026-09', 'beneficiaries_source': '測試投信官網'}
+        f.attach(con, [item], '2026-10-16')
+        self.assertEqual(item['beneficiaries'], 60)
+        self.assertEqual(item['beneficiaries_source'], '測試投信官網'); con.close()
 
 
 if __name__=='__main__':unittest.main()

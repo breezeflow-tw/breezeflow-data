@@ -1,0 +1,59 @@
+{
+ "fundDistribution": [],
+ "historicalNAVList": [
+  {
+   "fundShareclassIdentifier": null,
+   "date": "2026-10-13",
+   "time": null,
+   "marketValueNavPrice": null,
+   "navPrice": 17.98,
+   "adjustedNavPrice": null,
+   "adjustedUsDollarNavPrice": null,
+   "constantVariableNAVDiff": null,
+   "marketBasedNAVBasisPointDifferenceValue": null,
+   "shareclassMarketBasedNAVBasisPointDifferenceValue": null,
+   "marketBasedNAVPrice": null,
+   "rebasedPriceIndicator": "N",
+   "regionCode": "TW",
+   "returnRate": null,
+   "belgianTisRate": null,
+   "epochDate": 1791849600000
+  },
+  {
+   "fundShareclassIdentifier": null,
+   "date": "2026-10-14",
+   "time": null,
+   "marketValueNavPrice": null,
+   "navPrice": 17.27,
+   "adjustedNavPrice": null,
+   "adjustedUsDollarNavPrice": null,
+   "constantVariableNAVDiff": null,
+   "marketBasedNAVBasisPointDifferenceValue": null,
+   "shareclassMarketBasedNAVBasisPointDifferenceValue": null,
+   "marketBasedNAVPrice": null,
+   "rebasedPriceIndicator": "N",
+   "regionCode": "TW",
+   "returnRate": null,
+   "belgianTisRate": null,
+   "epochDate": 1791936000000
+  },
+  {
+   "fundShareclassIdentifier": null,
+   "date": "2026-10-15",
+   "time": null,
+   "marketValueNavPrice": null,
+   "navPrice": 17.45,
+   "adjustedNavPrice": null,
+   "adjustedUsDollarNavPrice": null,
+   "constantVariableNAVDiff": null,
+   "marketBasedNAVBasisPointDifferenceValue": null,
+   "shareclassMarketBasedNAVBasisPointDifferenceValue": null,
+   "marketBasedNAVPrice": null,
+   "rebasedPriceIndicator": "N",
+   "regionCode": "TW",
+   "returnRate": null,
+   "belgianTisRate": null,
+   "epochDate": 1792022400000
+  }
+ ]
+}

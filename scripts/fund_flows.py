@@ -30,7 +30,7 @@ def save(con, issuer, monthly):
             continue
         # 每個數值依其資料日期保存，公告日期／更新時間不拿來充當交易日。
         nav_day = r.get("nav_date")
-        asset_day = r.get("pcf_date") or nav_day
+        asset_day = r.get("asset_date") or r.get("pcf_date") or nav_day
         currency = r.get("currency") or monthly.get(code, {}).get("currency")
         base = {"code": code, "currency": currency, "source": r["source"],
                 "source_url": r["source_url"], "observed_at": now}
@@ -38,6 +38,10 @@ def save(con, issuer, monthly):
             upsert(con, "fund_daily", ("code", "date"), {**base, "date": nav_day, "nav": r["nav_official"]})
         if asset_day:
             values = {key: r.get(key) for key in ("aum", "units", "units_change")}
+            if r.get("pcf_date") and r["pcf_date"] != asset_day:
+                values["units_change"] = None
+                if numeric(r.get("units_change")):
+                    upsert(con, "fund_daily", ("code", "date"), {**base, "date": r["pcf_date"], "units_change": r["units_change"]})
             if any(numeric(v) for v in values.values()):
                 upsert(con, "fund_daily", ("code", "date"), {**base, "date": asset_day, **values})
             # 凱基清單可能比最新淨值早一天；清單自身的正式淨值跟清單日期配對。
@@ -130,7 +134,7 @@ def attach(con, items, as_of):
         if month:
             year, mo = map(int, month["month"].split("-"))
             month_end = date(year, mo, calendar.monthrange(year, mo)[1]).isoformat()
-            if numeric(month["beneficiaries"]) and (not it.get("beneficiaries_month") or it["beneficiaries_month"] <= month["month"]):
+            if numeric(month["beneficiaries"]) and (not it.get("beneficiaries_month") or it["beneficiaries_month"] < month["month"]):
                 it["beneficiaries"], it["beneficiaries_month"] = month["beneficiaries"], month["month"]
                 it["beneficiaries_source"], it["beneficiaries_source_url"] = month["source"], month["source_url"]
         # 規模與流通單位沿用既有欄位，只提供官方值，並加上各自日期與來源。

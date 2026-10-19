@@ -7,6 +7,10 @@
     data/history/etf.csv                 ETF 基本資料（每檔一列）
     data/history/dividend.csv            配息紀錄
     data/history/price_check.csv         市價查核差異
+    data/history/fund_info.csv           投信投顧公會基金資料（最新一次）
+    data/history/fund_month.csv          投信投顧公會基金資料彙總表（依月份累積）
+    data/history/fund_top.csv            投信投顧公會月前十大投資標的（依月份累積）
+    data/history/fund_fetch.csv          投信投顧公會歷史資料的回補進度
     data/history/daily/YYYY-MM-DD.csv    每日快照（每天一檔）
     data/history/holdings/YYYY-MM-DD.csv 成分股（依清單日期分檔）
 """
@@ -28,6 +32,10 @@ TABLES = {
     "fund_daily": ("date", "code"),
     "fund_monthly": ("month", "code"),
     "fund_event": (None, "code, date, kind"),
+    "fund_info": (None, "code"),
+    "fund_month": (None, "code, month"),
+    "fund_top": (None, "code, month, rank"),
+    "fund_fetch": (None, "report, month"),
 }
 SPLIT_DIRS = {"daily": "daily", "holding": "holdings", "fund_daily": "fund_daily", "fund_monthly": "fund_monthly"}
 
@@ -37,7 +45,8 @@ MIGRATIONS = {
               "nav_source": "TEXT", "aum_source": "TEXT", "beneficiaries": "INTEGER", "units_change": "REAL"},
     "etf": {"units": "REAL", "index_name": "TEXT", "listed_date": "TEXT", "mgmt_fee": "REAL",
             "mgmt_fee_text": "TEXT", "custodian_fee_text": "TEXT", "manager": "TEXT", "risk_class": "TEXT",
-            "beneficiaries": "INTEGER", "beneficiaries_month": "TEXT", "stats_json": "TEXT"},
+            "beneficiaries": "INTEGER", "beneficiaries_month": "TEXT", "stats_json": "TEXT",
+            "fee_source": "TEXT", "expense_json": "TEXT"},
     "dividend": {"source": "TEXT"},
     "holding": {"source_url": "TEXT"},
 }

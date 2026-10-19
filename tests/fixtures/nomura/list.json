@@ -1,0 +1,72 @@
+{
+ "TotalPages": -1,
+ "TotalItems": 13,
+ "Entries": [
+  {
+   "CNo": "00935",
+   "CWarning": " (本基金之配息來源可能為收益平準金)",
+   "CFundType": 15,
+   "CCustodyBank": 24,
+   "CCustodyBankName": "永豐商業銀行",
+   "CShortName": "野村臺灣新科技50",
+   "CStockNo": "00935",
+   "CDataDt": "2026/10/16",
+   "CNetValue": "56.84",
+   "CChange": "0.42000",
+   "CChangeRatio": 0.00744,
+   "CChangeRatioStr": "0.74%",
+   "CCalendarDt": "-",
+   "CShowNavcompositionDt": "2024-12-02T00:00:00"
+  },
+  {
+   "CNo": "009812",
+   "CWarning": "",
+   "CFundType": 21,
+   "CCustodyBank": 1042,
+   "CCustodyBankName": "中國信託商業銀行",
+   "CShortName": "野村日本東證ETF",
+   "CStockNo": "009812",
+   "CDataDt": "2026/10/16",
+   "CNetValue": "13.20",
+   "CChange": "0.21000",
+   "CChangeRatio": 0.01617,
+   "CChangeRatioStr": "1.62%",
+   "CCalendarDt": "-",
+   "CShowNavcompositionDt": null
+  },
+  {
+   "CNo": "00987B",
+   "CWarning": " (本基金之配息來源可能為收益平準金)",
+   "CFundType": 1043,
+   "CCustodyBank": 17,
+   "CCustodyBankName": "第一銀行",
+   "CShortName": "野村10+澳洲公債",
+   "CStockNo": "00987B",
+   "CDataDt": "2026/10/15",
+   "CNetValue": "15.5401",
+   "CChange": "0.03830",
+   "CChangeRatio": 0.00247,
+   "CChangeRatioStr": "0.25%",
+   "CCalendarDt": "2026/11/16",
+   "CShowNavcompositionDt": "2026-01-13T00:00:00"
+  },
+  {
+   "CNo": "00420A",
+   "CWarning": "",
+   "CFundType": 2,
+   "CCustodyBank": 1044,
+   "CCustodyBankName": "合作金庫商業銀行",
+   "CShortName": "主動野村亞洲科技",
+   "CStockNo": "00420A",
+   "CDataDt": "-",
+   "CNetValue": "-",
+   "CChange": "-",
+   "CChangeRatio": 0,
+   "CChangeRatioStr": "-",
+   "CCalendarDt": "-",
+   "CShowNavcompositionDt": null
+  }
+ ],
+ "Message": "",
+ "StatusCode": 0
+}

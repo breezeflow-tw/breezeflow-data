@@ -1,0 +1,85 @@
+{
+ "TotalPages": -1,
+ "TotalItems": 0,
+ "Entries": {
+  "CId": 7970,
+  "CFundId": "009812",
+  "CFullName": "野村日本東證ETF證券投資信託基金",
+  "CFundShortName": "野村日本東證ETF",
+  "CPcfdate": "2026-10-19T00:00:00",
+  "CNavDt": "2026-10-16T00:00:00",
+  "CNavDtStr": "2026/10/16",
+  "CAnceTotalAv": 1213230334.0,
+  "CAnceTotalIssues": 91882000.0,
+  "CAnceIssuesDiff": 0.0,
+  "CAnceNav": "13.20",
+  "CAnceEstcValue": 6602111.0,
+  "CCtrlBasketValue": 7276000.0,
+  "CCtrlDiffBasketValue": -545986.0,
+  "CCtrlBasketValueP": 6614014.0,
+  "CCloseDt": null,
+  "CAnceTotalIssuesT1": 0.0,
+  "CEtfindexCurrency": "JPY",
+  "CExRate": 0.20502,
+  "CExRateDt": "2026-10-16T00:00:00",
+  "CEtfAcrossTime": "N",
+  "CAnceBaseValue": 500000.0,
+  "Stocks": [],
+  "Futures": [
+   {
+    "CtblTradeInfoId": 7970,
+    "CFuturesCode": "TP",
+    "CFuturesName": "Tokyo Stock Price Index",
+    "CQuantity": 3,
+    "CWeightsPct": 2.07,
+    "CContractYm": "2026/12"
+   }
+  ],
+  "Bonds": [],
+  "BondProperty": null,
+  "TradeInfoCurrencies": [
+   {
+    "CId": 0,
+    "CtblTradeInfoId": 7970,
+    "CFromCurrency": "JPY",
+    "CToCurrency": "TWD",
+    "CExchange": 0.20502,
+    "CExRateDt": "2026-10-16T00:00:00",
+    "CCreateDt": null
+   },
+   {
+    "CId": 0,
+    "CtblTradeInfoId": 7970,
+    "CFromCurrency": "TWD",
+    "CToCurrency": "TWD",
+    "CExchange": 1.0,
+    "CExRateDt": "2026-10-16T00:00:00",
+    "CCreateDt": null
+   }
+  ],
+  "Etfs": [
+   {
+    "CId": 0,
+    "CtblTradeInfoId": 7970,
+    "CStockCode": "1306 JP",
+    "CStockName": "NEXT FUNDS東證股價指數交易所",
+    "CQuantity": 13485320,
+    "CWeightsPct": 97.62,
+    "CPrice": 428.4,
+    "CCurrency": "JPY",
+    "CAmount": 5777111088.0,
+    "CCreator": null,
+    "CCreateDt": null
+   }
+  ],
+  "Options": [],
+  "CWarning": "",
+  "CCalendarDt": "-",
+  "CBeneficiariesCount": 6070,
+  "CIndexOrProductType": "2",
+  "CAnceTotalIssuesT1Date": null,
+  "CBeneficiariesCountDate": "2026-09-30T00:00:00"
+ },
+ "Message": "",
+ "StatusCode": 0
+}

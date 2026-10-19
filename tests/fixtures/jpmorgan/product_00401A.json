@@ -1,0 +1,280 @@
+{
+ "fundData": {
+  "currencyCode": "TWD",
+  "fundManagers": [
+   {
+    "fullName": "沈馨"
+   },
+   {
+    "fullName": "魏伯宇"
+   }
+  ],
+  "fundIndustryRiskRating": [
+   {
+    "fundIndustryRatingDate": "2026-03-31",
+    "fundRiskRatingSchemeCode": "RISK_RATING_TW",
+    "fundRiskRatingCode": "RISK_RATING_TW_RR4",
+    "fundRiskRatingValue": "RR4"
+   }
+  ],
+  "stringValueWrapper": {
+   "twEtfTPlusOneFund": false,
+   "holdingLatestDate": "2026-10-16"
+  },
+  "shareClass": {
+   "nav": {
+    "price": 13.76,
+    "date": "2026-10-16"
+   },
+   "netGrossAssetClass": 3811209572.0,
+   "grossAssetClassEffectiveDate": "2026-10-16",
+   "sharesOutstanding": 276895000.0,
+   "listingDate": "2026-04-10",
+   "currencyCode": "TWD",
+   "fees": {
+    "managementFee": 0.6,
+    "custodianFee": 0.045,
+    "totalExpenseRatio": 0.645
+   }
+  },
+  "breakdowns": {
+   "m12Details": {
+    "effectiveDate": "2026-10-19",
+    "data": [
+     {
+      "name": "預收申購總價金(元)",
+      "displayValue": "7,232,000"
+     },
+     {
+      "name": "2026/10/16 基金淨資產價值(元)",
+      "displayValue": "3,811,209,572"
+     },
+     {
+      "name": "2026/10/16 已發行受益權單位總數",
+      "displayValue": "276,895,000"
+     },
+     {
+      "name": "2026/10/16 與前日已發行單位差異數",
+      "displayValue": "0"
+     },
+     {
+      "name": "2026/10/16 每受益權單位淨資產價值(元)",
+      "displayValue": "13.76"
+     },
+     {
+      "name": "每現金申購/買回基數之受益權單位數",
+      "displayValue": "500,000"
+     },
+     {
+      "name": "每現金申購/買回基數約當市值(元)",
+      "displayValue": "6,882,048"
+     },
+     {
+      "name": "每現金申購/買回基數估計現金差額(元)",
+      "displayValue": "0"
+     },
+     {
+      "name": "2026/10/16 每基數申購總價金差異額(元)",
+      "displayValue": "-273,576"
+     },
+     {
+      "name": "2026/10/16 每基數實際申購總價金(元)",
+      "displayValue": "6,887,424"
+     }
+    ]
+   }
+  },
+  "holdings": {
+   "pcfEquityHoldings": {
+    "effectiveDate": "2026-10-16",
+    "data": [
+     {
+      "securityDescription": "台灣積體電路製造",
+      "securityTicker": "2330",
+      "securityType": "Equity",
+      "securityIsin": "TW0002330008",
+      "shares": 323960,
+      "marketValuePercent": 20.5705,
+      "marketValueBase": 783983200.0,
+      "navDate": "2026-10-16"
+     },
+     {
+      "securityDescription": "聯發科技",
+      "securityTicker": "2454",
+      "securityType": "Equity",
+      "securityIsin": "TW0002454006",
+      "shares": 54510,
+      "marketValuePercent": 6.0786,
+      "marketValueBase": 231667500.0,
+      "navDate": "2026-10-16"
+     },
+     {
+      "securityDescription": "日月光",
+      "securityTicker": "3711",
+      "securityType": "Equity",
+      "securityIsin": "TW0003711008",
+      "shares": 146000,
+      "marketValuePercent": 2.5705,
+      "marketValueBase": 97966000.0,
+      "navDate": "2026-10-16"
+     },
+     {
+      "securityDescription": "大立光電",
+      "securityTicker": "3008",
+      "securityType": "Equity",
+      "securityIsin": "TW0003008009",
+      "shares": 13804,
+      "marketValuePercent": 2.318,
+      "marketValueBase": 88345600.0,
+      "navDate": "2026-10-16"
+     },
+     {
+      "securityDescription": "欣興電子",
+      "securityTicker": "3037",
+      "securityType": "Equity",
+      "securityIsin": "TW0003037008",
+      "shares": 79700,
+      "marketValuePercent": 2.2794,
+      "marketValueBase": 86873000.0,
+      "navDate": "2026-10-16"
+     },
+     {
+      "securityDescription": "台達電子工業",
+      "securityTicker": "2308",
+      "securityType": "Equity",
+      "securityIsin": "TW0002308004",
+      "shares": 52990,
+      "marketValuePercent": 2.2733,
+      "marketValueBase": 86638650.0,
+      "navDate": "2026-10-16"
+     },
+     {
+      "securityDescription": "聯華電子",
+      "securityTicker": "2303",
+      "securityType": "Equity",
+      "securityIsin": "TW0002303005",
+      "shares": 651000,
+      "marketValuePercent": 2.2718,
+      "marketValueBase": 86583000.0,
+      "navDate": "2026-10-16"
+     },
+     {
+      "securityDescription": "富邦金融控股",
+      "securityTicker": "2881",
+      "securityType": "Equity",
+      "securityIsin": "TW0002881000",
+      "shares": 513000,
+      "marketValuePercent": 2.1738,
+      "marketValueBase": 82849500.0,
+      "navDate": "2026-10-16"
+     },
+     {
+      "securityDescription": "全新光電科技",
+      "securityTicker": "2455",
+      "securityType": "Equity",
+      "securityIsin": "TW0002455003",
+      "shares": 165000,
+      "marketValuePercent": 2.1344,
+      "marketValueBase": 81345000.0,
+      "navDate": "2026-10-16"
+     },
+     {
+      "securityDescription": "玉山金融控股",
+      "securityTicker": "2884",
+      "securityType": "Equity",
+      "securityIsin": "TW0002884004",
+      "shares": 1653000,
+      "marketValuePercent": 2.1317,
+      "marketValueBase": 81244950.0,
+      "navDate": "2026-10-16"
+     },
+     {
+      "securityDescription": "廣達電腦",
+      "securityTicker": "2382",
+      "securityType": "Equity",
+      "securityIsin": "TW0002382009",
+      "shares": 251000,
+      "marketValuePercent": 2.1206,
+      "marketValueBase": 80822000.0,
+      "navDate": "2026-10-16"
+     },
+     {
+      "securityDescription": "華碩電腦",
+      "securityTicker": "2357",
+      "securityType": "Equity",
+      "securityIsin": "TW0002357001",
+      "shares": 74000,
+      "marketValuePercent": 1.93,
+      "marketValueBase": 73556000.0,
+      "navDate": "2026-10-16"
+     }
+    ]
+   },
+   "pcfCashHoldings": {
+    "effectiveDate": "2026-10-16",
+    "data": [
+     {
+      "securityDescription": "NEW TAIWAN DOLLAR",
+      "securityTicker": null,
+      "securityType": "Curncy",
+      "securityIsin": null,
+      "shares": 264588632,
+      "marketValuePercent": 6.9572,
+      "marketValueBase": 265154356.0,
+      "navDate": "2026-10-16"
+     }
+    ]
+   },
+   "pcfFutureHoldings": {
+    "effectiveDate": "2026-10-16",
+    "data": [
+     {
+      "securityDescription": "台股期貨10/26",
+      "securityTicker": "FTV6",
+      "securityType": "Future",
+      "securityIsin": "TW000TXFJ601",
+      "shares": 28,
+      "marketValuePercent": 0.1817,
+      "marketValueBase": 6924400.0,
+      "navDate": "2026-10-16"
+     }
+    ]
+   },
+   "pcfOptionsHoldings": {
+    "effectiveDate": "2026-10-16",
+    "data": [
+     {
+      "securityDescription": "臺指選擇權10/26 46800 買權",
+      "securityTicker": "TWSE 10/21/26 C46800",
+      "securityType": "Option",
+      "securityIsin": "TWTXO680DJ60",
+      "shares": -20,
+      "marketValuePercent": -0.0186,
+      "marketValueBase": -710000.0,
+      "navDate": "2026-10-16"
+     },
+     {
+      "securityDescription": "臺指選擇權10/26 46000 買權",
+      "securityTicker": "TWSE 10/21/26 C46000",
+      "securityType": "Option",
+      "securityIsin": "TWTXO600DJ67",
+      "shares": -20,
+      "marketValuePercent": -0.0357,
+      "marketValueBase": -1360000.0,
+      "navDate": "2026-10-16"
+     },
+     {
+      "securityDescription": "臺指選擇權10/26 46400 買權",
+      "securityTicker": "TWSE 10/21/26 C46400",
+      "securityType": "Option",
+      "securityIsin": "TWTXO640DJ69",
+      "shares": -320,
+      "marketValuePercent": -0.4282,
+      "marketValueBase": -16320000.0,
+      "navDate": "2026-10-16"
+     }
+    ]
+   }
+  }
+ }
+}

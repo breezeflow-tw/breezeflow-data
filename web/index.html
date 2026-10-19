@@ -329,14 +329,15 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
   const detailMetric=(v,unit="")=>`<span class="detail-value">${detailNumber(v,unit)}</span>`;
   const detailSection=(title,body)=>`<section class="detail-section"><h3>${title}</h3>${body}</section>`;
   const signed=(v,unit="",digits=2)=>hasNumber(v)?`${v>0?"+":""}${fmt(v,digits)}${unit}`:"—";
-  const trustedHosts=["yuantaetfs.com","yuantaetf.com","fsit.com.tw","capitalfund.com.tw","ezmoney.com.tw","fhtrust.com.tw","kgifund.com.tw","cathaysite.com.tw","sitca.org.tw"];
+  const trustedHosts=["yuantaetfs.com","yuantaetf.com","fsit.com.tw","capitalfund.com.tw","ezmoney.com.tw","fhtrust.com.tw","kgifund.com.tw","cathaysite.com.tw","sitca.org.tw","ctbcinvestments.com.tw","ctbcinvestments.com","nomurafunds.com.tw","am.jpmorgan.com","blackrock.com"];
   function sourceLink(label,url){
     try{const u=new URL(url);if(u.protocol==="https:"&&trustedHosts.some(h=>u.hostname===h||u.hostname.endsWith("."+h)))return `<a href="${esc(u.href)}" target="_blank" rel="noopener noreferrer">${detailText(label||"查看原公告")}</a>`;}catch{}
     return detailText(label);
   }
   const provenance=(label,url,day)=>`<small class="detail-source">資料日：${detailText(day)}<br>出處：${sourceLink(label,url)}</small>`;
   function flowDetail(d){
-    const f=d.flows||{},m=d.sitca_monthly;
+    const f=d.flows||{},raw=d.monthly;
+    const m=d.sitca_monthly|| (raw?{...raw,subscriptions:raw.subscribe,redemptions:raw.redeem,net_amount:raw.net,source_url:"https://www.sitca.org.tw/ROC/Industry/IN2201.aspx?pid=IN2221_01"}:null);
     const value=(n,unit="")=>`<span class="detail-value flow-number">${signed(n,unit)}</span>`;
     let html=`<p class="metric-help">${detailText(f.start)} 至 ${detailText(f.end)}（含本週截至日）。正數代表淨申購、負數代表淨買回；資料不足顯示「—」，不是零流入。${detailText(f.reason||"尚未累積可核對的官方日資料。")}</p><dl class="detail-grid">`+
       detailField("本週淨申購估算（億元）",value(f.net_amount))+
@@ -372,7 +373,7 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
 
   function holdingsDetail(holdings){
     const rows=Array.isArray(holdings)?holdings.filter(h=>h&&typeof h==="object").slice(0,10):[];
-    if(!rows.length)return '<p class="detail-missing">尚未取得可核對的投信持股／成分公告，不以第三方持股或猜測數字補上。</p>';
+    if(!rows.length)return '<p class="detail-missing">尚未取得可核對的投信或公會持股／成分公告，不以猜測數字補上。</p>';
     // 橫條保留百分比刻度，不把前十大成分重新正規化為 100%。
     const scale=Math.max(100,...rows.map(h=>hasNumber(h.weight)?Math.abs(h.weight):0));
     return `<ol class="detail-holdings">`+rows.map(h=>`<li><div class="detail-holding-head">`+
@@ -404,8 +405,8 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
       detailField("受益人數",detailMetric(d.beneficiaries),{note:provenance(d.beneficiaries_source,d.beneficiaries_source_url,d.beneficiaries_month)})+
       detailField("經理人",detailText(d.manager))+detailField("風險等級",detailText(d.risk_class));
     const fees=detailField("經理費",hasNumber(d.mgmt_fee)?detailMetric(d.mgmt_fee,"%"):detailText(d.mgmt_fee_text),{wide:true,note:hasNumber(d.mgmt_fee)&&d.mgmt_fee_text?`<small class="detail-source">原文：${detailText(d.mgmt_fee_text)}</small>`:""})+
-      detailField("總費用率",detailMetric(d.fee,"%"),{wide:true})+
-      detailField("保管費",detailText(d.custodian_fee_text),{wide:true});
+      detailField("總費用率",detailMetric(d.fee,"%"),{wide:true,note:d.expense?detailSource(d.expense.source):""})+
+      detailField("保管費",detailText(d.custodian_fee_text),{wide:true,note:detailSource(d.fee_source)});
     const metrics=[["div_yield","現金殖利率","%"],["pe","本益比"," 倍"],["pb","股價淨值比"," 倍"],
       ["roe","ROE","%"],["beta","Beta",""],["volatility","年化波動度","%"]];
     const stats=d.stats&&metrics.some(([key])=>hasNumber(d.stats[key]))?
@@ -527,7 +528,7 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
     if(!hasNumber(d.nav))return "";
     const src=String(d.nav_source||"");
     const kind=src.includes("正式淨值")?"正式":"預估";
-    const origin=src.includes("官網")?"投信官網":src.includes("證交所")?"證交所":src.includes("櫃買")?"櫃買中心":"出處未提供";
+    const origin=src.includes("官網")?"投信官網":src.includes("投信投顧公會")?"投信公會":src.includes("證交所")?"證交所":src.includes("櫃買")?"櫃買中心":"出處未提供";
     return `<br><span class="nav-source">${kind} · ${origin}</span>`;
   }
 
