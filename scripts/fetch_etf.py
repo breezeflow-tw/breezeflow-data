@@ -51,6 +51,7 @@ SOURCES = {
 
 # 市價與成交量的主要來源；上市代號加 .TW，上櫃加 .TWO
 YAHOO_CHART = "https://{host}/v8/finance/chart/{symbol}?range=10d&interval=1d"
+PROBE_SYMBOL = "0050.TW"  # 用來確認最新交易日：成交最活絡的 ETF，每個交易日都有日線
 # 每個交易日抓一次五年日線（含配息紀錄）計算區間報酬，同一份資料也拿來比對收盤價
 YAHOO_HISTORY = "https://{host}/v8/finance/chart/{symbol}?period1={start}&period2={end}&interval=1d&events=div"
 YAHOO_HOSTS = ("query1.finance.yahoo.com", "query2.finance.yahoo.com")
@@ -279,7 +280,9 @@ def reconcile(yahoo: dict, exchange: dict, date: str) -> tuple[dict, list[dict]]
         elif e_ok:
             q.update(close=e["close"], change_pct=e["change_pct"], volume_lots=e["volume_lots"], check="交易所")
         else:
-            q.update(close=None, change_pct=None, volume_lots=e.get("volume_lots"), check=None)
+            # 交易所資料停在別天時（開放資料隔天才更新），成交量也不能拿來用
+            q.update(close=None, change_pct=None, volume_lots=e.get("volume_lots") if e.get("date") in (None, date) else None,
+                     check=None)
         quotes[code] = q
     return quotes, diffs
 
@@ -418,13 +421,22 @@ def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
             it["holdings_date"] = r.get("holdings_date") or r.get("pcf_date") or r.get("nav_date")
 
 
-def trade_date(nav: dict, quotes: dict, now: datetime) -> str:
-    """以收盤行情的日期為準（取最多檔的那天）；沒有行情時用淨值資料的日期。"""
-    for source, key in ((quotes, "date"), (nav, "date")):
-        dates = [v[key] for v in source.values() if v.get(key)]
-        if dates:
-            return max(set(dates), key=dates.count)
-    return now.strftime("%Y-%m-%d")
+def trade_date(nav: dict, quotes: dict, now: datetime, probe: dict | None = None) -> str:
+    """交易日：Yahoo 日線（probe，0050 的 {日期: ...}）與交易所收盤行情（取最多檔的那天）兩者較新的一天。
+    證交所的收盤行情開放資料隔天清晨才更新，傍晚那次排程只有 Yahoo 有當天的收盤；
+    Yahoo 當天的日線台灣時間 14:00 前不算，避免排程延遲到開盤後把盤中價格當成收盤價。
+    兩者都沒有時用淨值資料的日期。"""
+    local = now.astimezone(TW)
+    today = local.strftime("%Y-%m-%d")
+    closed = [d for d in probe or {} if d < today or local.hour >= 14]
+    candidates = [max(closed)] if closed else []
+    dates = [v["date"] for v in quotes.values() if v.get("date")]
+    if dates:
+        candidates.append(max(set(dates), key=dates.count))
+    if candidates:
+        return max(candidates)
+    dates = [v["date"] for v in nav.values() if v.get("date")]
+    return max(set(dates), key=dates.count) if dates else today
 
 
 def merge(nav: dict, quotes: dict, meta: dict, date: str, fund: dict | None = None) -> list[dict]:
@@ -899,7 +911,13 @@ def main(argv=None) -> int:
 
     # 市價與成交量：Yahoo 股市為主，交易所為查核。
     # 區間報酬：這個交易日還沒算過時抓五年日線（同一份資料也拿來比對收盤價），算過就沿用上次的結果
-    date = trade_date(nav, exchange, datetime.now(TW))
+    # 先用 Yahoo 的 0050 日線確認最新一個已收盤的交易日（證交所的開放資料隔天清晨才更新）
+    if args.fixtures:
+        probe_path = args.fixtures / "yahoo.json"
+        probe_raw = json.loads(probe_path.read_text("utf-8")) if probe_path.exists() else {}
+    else:
+        probe_raw = fetch_yahoo([PROBE_SYMBOL])
+    date = trade_date(nav, exchange, datetime.now(TW), parse_yahoo(probe_raw).get(PROBE_SYMBOL.split(".")[0]))
     source = "fixture" if args.fixtures else "live"
     reused = returns.previous(args.out, date, source)
     markets = {**known_markets(args.db), **{c: q["market"] for c, q in exchange.items()}}
