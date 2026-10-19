@@ -1,27 +1,27 @@
 """主動式 ETF 持股異動：比對投信官網每天公告的完整持股清單（申購買回清單）。
 
 - 主動式 ETF：代號結尾 A（股票型）或 D（債券型），投信投顧公會分類為主動式交易所交易基金
-- 每檔：最新一份清單和前一份清單逐一比對成分，分成新增、刪除、加碼、減碼（看實際股數增減）
-- 標記隨申購買回同比例的增減：股數增減的比例和發行單位數（投信公告）的增減比例相同時，多半是申購買回
-  帶動的照比例買賣，不是經理人主動調整。台灣的主動式 ETF 多為現金申購，經理人可以自己決定新資金買哪些股票，
-  所以只在比例相符時標記，不推算「應該買多少」
-- 全部 ETF 彙總（台股）：同一檔股票有幾檔主動式 ETF 加碼（含新增）、幾檔減碼（含刪除），以及股數與金額合計；
-  隨申購買回同比例的增減、以及股數變動不到 1% 的加碼減碼不算。金額＝增減股數 × 該日交易所收盤價，沒有收盤價時留空。
-  需要投信公告的發行單位數才能判斷是否同比例，沒有單位數的 ETF 不列入彙總
+- 每檔：最新一份清單和前一份清單逐一比對成分，依實際股數增減分成新增、刪除、加碼、減碼
+- 超出申購買回比例的部分：excess＝股數增減比例 − 發行單位數增減比例（單位數用投信公告的數字）。
+  例如當天申購讓單位數增加 7.2%、某檔股票增加 6.9%，excess 是 −0.3%，代表大致維持比重。
+  |excess| 不到 1 個百分點標記為 with_flow（隨申購買回大致同比例）
+- 全部 ETF 彙總（台股）：同一檔股票有幾檔主動式 ETF 加碼、幾檔減碼。加碼＝新增，或股數增加且 excess ≥ 1 個百分點；
+  減碼＝刪除，或股數減少且 excess ≤ −1 個百分點。股數沒變的不算減碼（台灣的主動式 ETF 多為現金申購，
+  沒有跟著買不等於賣出）。金額＝增減股數 × 該日交易所收盤價，沒有收盤價時留空。
+  需要投信公告的發行單位數才能算 excess，沒有單位數的 ETF 不列入彙總
 """
 from __future__ import annotations
 
 import re
 import sqlite3
 
-TOLERANCE = 0.001  # 股數和「前一份股數 × 單位數比例」差在 0.1% 以內，視為隨申購買回同比例增減
-LOT = 1000  # 台股一張；同比例增減的進位誤差在一張以內
-MATERIAL = 0.01  # 彙總時加碼、減碼的股數至少變動 1%（新增、刪除不受限），太小的多半是分配申購資金
+EXCESS = 1.0  # 超出申購買回比例至少 1 個百分點，才算主動加碼或減碼
 TOP = 30  # 彙總表每邊列幾檔
 PER_ETF = 50  # 每檔 ETF 最多列幾筆異動（依權重變化排序；筆數統計仍是全部）
 SOURCE = "各投信官網申購買回清單"
-METHOD = ("比對投信官網每天公告的完整持股清單，看實際股數增減。股數增減比例和發行單位數增減比例相同（差在 0.1% 或一張以內）"
-          "標記為隨申購買回同比例增減，彙總時不算，股數變動不到 1% 的加碼減碼也不算；金額＝增減股數 × 該日交易所收盤價。")
+METHOD = ("比對投信官網每天公告的完整持股清單，看實際股數增減。超出申購買回比例＝股數增減比例 − 發行單位數增減比例；"
+          "彙總時加碼＝新增或股數增加且超出比例至少 1 個百分點，減碼＝刪除或股數減少且超出比例至少 −1 個百分點，"
+          "股數沒變的不算；金額＝增減股數 × 該日交易所收盤價。")
 
 
 def is_active(code: str) -> bool:
@@ -74,7 +74,7 @@ def units_pair(con: sqlite3.Connection, code: str, day: str, prev: str, rec: dic
 
 def compare(cur: dict, old: dict, ratio: float | None) -> list[dict]:
     """逐一比對成分，回傳股數有變動的成分（新增、刪除、加碼、減碼）。ratio 是今天 ÷ 前一份的發行單位數，
-    有的話標記 with_flow：股數增減和單位數同比例（多半是申購買回帶動）。"""
+    有的話算出 excess（超出申購買回比例的百分點）與 with_flow。"""
     out = []
     for key in sorted(set(cur) | set(old)):
         c, o = cur.get(key) or {}, old.get(key) or {}
@@ -82,27 +82,31 @@ def compare(cur: dict, old: dict, ratio: float | None) -> list[dict]:
         if qty == qty_prev:
             continue
         action = "新增" if not qty_prev else "刪除" if not qty else "加碼" if qty > qty_prev else "減碼"
-        with_flow = None
-        if ratio is not None and qty and qty_prev:
-            expected = qty_prev * ratio
-            floor = LOT if taiwan_stock(key[0]) and key[1] == "股票" else 1
-            with_flow = abs(qty - expected) <= max(floor, expected * TOLERANCE)
+        excess = round((qty / qty_prev - ratio) * 100, 2) if ratio is not None and qty and qty_prev else None
         out.append({"asset_code": key[0], "asset_name": c.get("asset_name") or o.get("asset_name"), "kind": key[1],
                     "action": action, "qty_prev": qty_prev or None, "qty": qty or None, "qty_change": qty - qty_prev,
                     "weight_prev": o.get("weight"), "weight": c.get("weight"),
                     "weight_change": round(c["weight"] - o["weight"], 4)
                     if c.get("weight") is not None and o.get("weight") is not None else None,
-                    "with_flow": with_flow})
+                    "excess": excess, "with_flow": abs(excess) < EXCESS if excess is not None else None})
     order = {"新增": 0, "加碼": 1, "減碼": 2, "刪除": 3}
     return sorted(out, key=lambda r: (order[r["action"]], r["with_flow"] is True,
                                       -abs(r["weight_change"] or r["weight"] or r["weight_prev"] or 0)))
 
 
-def material(row: dict) -> bool:
-    """新增、刪除一律算；加碼、減碼的股數至少要變動 MATERIAL。"""
-    if row["action"] in ("新增", "刪除"):
-        return True
-    return abs(row["qty_change"]) >= row["qty_prev"] * MATERIAL
+def side(row: dict) -> str | None:
+    """彙總時這筆算加碼（buy）、減碼（sell）或都不算。股數增加但比重沒跟上申購的不算減碼，反之亦然。"""
+    if row["action"] == "新增":
+        return "buy"
+    if row["action"] == "刪除":
+        return "sell"
+    if row["excess"] is None or row["with_flow"]:
+        return None
+    if row["qty_change"] > 0 and row["excess"] > 0:
+        return "buy"
+    if row["qty_change"] < 0 and row["excess"] < 0:
+        return "sell"
+    return None
 
 
 def amount(row: dict, day: str, closes: dict[str, tuple[str, float]]) -> float | None:
@@ -142,7 +146,7 @@ def attach(con: sqlite3.Connection, items: list[dict], as_of: str, issuer: dict[
 
 def summarize(per_etf: list[tuple[dict, dict]]) -> dict | None:
     """全部主動式 ETF 的台股彙總：只用能判斷申購買回影響（有發行單位數）、且清單日期是最多檔那天的 ETF；
-    隨申購買回同比例的增減、以及股數變動不到 MATERIAL 的加碼減碼不算。"""
+    加碼、減碼依 side() 判斷。"""
     usable = [(it, ch) for it, ch in per_etf if ch["flow_checked"]]
     if not usable:
         return None
@@ -153,29 +157,29 @@ def summarize(per_etf: list[tuple[dict, dict]]) -> dict | None:
         if ch["date"] != day:
             continue
         for r in ch["changes"]:
-            if r["kind"] != "股票" or not taiwan_stock(r["asset_code"]) or r["with_flow"] or not material(r):
+            way = side(r)
+            if r["kind"] != "股票" or not taiwan_stock(r["asset_code"]) or not way:
                 continue
             s = stocks.setdefault(r["asset_code"], {"asset_code": r["asset_code"], "asset_name": r["asset_name"],
                                                      "buy_etfs": 0, "sell_etfs": 0, "buyers": [], "sellers": [],
                                                      "buy_shares": 0, "sell_shares": 0, "buy_amount": 0.0, "sell_amount": 0.0,
                                                      "complete": {"buy": True, "sell": True}})
-            side = "buy" if r["qty_change"] > 0 else "sell"
-            s[f"{side}_etfs"] += 1
-            s[f"{side}ers"].append(it["code"])
-            s[f"{side}_shares"] += abs(r["qty_change"])
+            s[f"{way}_etfs"] += 1
+            s[f"{way}ers"].append(it["code"])
+            s[f"{way}_shares"] += abs(r["qty_change"])
             if r["amount"] is None:
-                s["complete"][side] = False
+                s["complete"][way] = False
             else:
-                s[f"{side}_amount"] += abs(r["amount"])
+                s[f"{way}_amount"] += abs(r["amount"])
     for s in stocks.values():
         done = s.pop("complete")
-        for side in ("buy", "sell"):
-            s[f"{side}_amount"] = round(s[f"{side}_amount"], 4) if done[side] and s[f"{side}_etfs"] else None
+        for way in ("buy", "sell"):
+            s[f"{way}_amount"] = round(s[f"{way}_amount"], 4) if done[way] and s[f"{way}_etfs"] else None
         s["net_shares"] = s["buy_shares"] - s["sell_shares"]
 
-    def rank(side):
-        return sorted((s for s in stocks.values() if s[f"{side}_etfs"]),
-                      key=lambda s: (-s[f"{side}_etfs"], -(s[f"{side}_amount"] or 0), s["asset_code"]))[:TOP]
+    def rank(way):
+        return sorted((s for s in stocks.values() if s[f"{way}_etfs"]),
+                      key=lambda s: (-s[f"{way}_etfs"], -(s[f"{way}_amount"] or 0), s["asset_code"]))[:TOP]
 
     included = sorted(it["code"] for it, ch in usable if ch["date"] == day)
     return {"date": day, "etf_count": len(included), "etfs": included,

@@ -30,7 +30,8 @@
   - `action`：新增／加碼／減碼／刪除
   - `qty_prev` → `qty`、`qty_change`：股數
   - `weight_prev` → `weight`、`weight_change`：%
-  - `with_flow`：`true` 表示和申購買回同比例增減
+  - `excess`：超出申購買回比例的百分點
+  - `with_flow`：`true` 表示 |excess| 不到 1 個百分點，也就是大致隨申購買回同比例
   - `amount`：億元
 
 ## 介面需求
@@ -41,6 +42,7 @@
    - 點 ETF 代號打開該檔詳細面板。
 2. **詳細面板**新增「持股異動」區塊，依 `action` 分組。
    - `with_flow: true` 的那幾列淡化，並加註「隨申購買回同比例」。
+   - 顯示 `excess`，例如「超出申贖比例 +12.4 個百分點」。
    - `flow_checked: false` 時，在區塊上方註明「缺發行單位數，無法判斷申購買回影響」。
 3. **說明提示**放 `method` 的文字，並說明涵蓋範圍：已接入官網的投信才有每日清單；`not_included` 列出未列入的 ETF。
 4. **顏色**：加碼、新增用 `--up`，減碼、刪除用 `--down`（台股慣例：紅漲綠跌）。

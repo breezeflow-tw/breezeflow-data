@@ -41,7 +41,7 @@
 
 最上層：`generated_at`（產生時間）、`trade_date`（交易日）、`source`（`live` 或 `fixture`）、`has_nav`、`price_check`（市價查核統計）、`returns_info`（區間報酬的出處 `source` 與各區間起始日 `starts`）、`active_changes`（主動式 ETF 持股異動的台股彙總，見下）、`count`、`items`（每檔 ETF 一筆）。
 
-`active_changes`：全部主動式 ETF（代號結尾 A、D）同一天的台股持股異動彙總，沒有可比對的資料時為 `null`。`{date, etf_count, etfs, not_included, buys, sells, source, method}`：`buys`／`sells` 各列最多 30 檔股票 `{asset_code, asset_name, buy_etfs, sell_etfs, buyers, sellers, buy_shares, sell_shares, buy_amount, sell_amount, net_shares}`，依加碼（含新增）或減碼（含刪除）的 ETF 檔數排序，金額為億元（增減股數 × 該日交易所收盤價，缺收盤價時為 `null`）。只列入有投信公告發行單位數、能判斷申購買回影響的 ETF；隨申購買回同比例的增減，以及股數變動不到 1% 的加碼減碼不算。這是持股異動的統計，網站文字維持中立，不寫成買賣建議。
+`active_changes`：全部主動式 ETF（代號結尾 A、D）同一天的台股持股異動彙總，沒有可比對的資料時為 `null`。`{date, etf_count, etfs, not_included, buys, sells, source, method}`：`buys`／`sells` 各列最多 30 檔股票 `{asset_code, asset_name, buy_etfs, sell_etfs, buyers, sellers, buy_shares, sell_shares, buy_amount, sell_amount, net_shares}`，依加碼（含新增）或減碼（含刪除）的 ETF 檔數排序，金額為億元（增減股數 × 該日交易所收盤價，缺收盤價時為 `null`）。只列入有投信公告發行單位數、能判斷申購買回影響的 ETF。加碼＝新增，或股數增加且超出申購買回比例至少 1 個百分點；減碼＝刪除，或股數減少且超出比例至少 −1 個百分點；股數沒變的不算減碼。這是持股異動的統計，網站文字維持中立，不寫成買賣建議。
 
 `items[]` 每筆：
 
@@ -61,7 +61,7 @@
 | `beneficiaries`、`beneficiaries_month`、`beneficiaries_source`、`beneficiaries_source_url` | 受益人數、資料年月、出處與原文連結。投信官網與投信投顧公會（基金資料彙總表、ETF 月統計）取資料月份較新的，同月份用投信官網的 |
 | `stats` | 投資組合統計 `{date, div_yield, pe, pb, roe, beta, volatility}`，可能為 `null` |
 | `holdings_top`、`holdings_source`、`holdings_date`、`holdings_source_url` | 前 10 大成分 `[{asset_code, asset_name, kind, weight, qty}]`、出處、資料日期與原文連結。`weight` 為 %，`kind` 為股票／債券／期貨／基金／其他。投信官網的申購買回清單優先（`holdings_date` 為 YYYY-MM-DD）；沒有接入官網的 ETF 用投信投顧公會的月底前十大（`holdings_date` 為 YYYY-MM，`qty` 為 `null`）。外幣交易線（代號結尾 K，例如 00625K、00636K）沿用主要交易線的成分股，出處註明「與 XXXX 同一檔基金」 |
-| `holdings_changes` | 主動式 ETF 的持股異動（其他 ETF 為 `null`）：比對投信官網最新兩份完整持股清單 `{date, prev_date, units, units_prev, flow_checked, counts, changes, source}`。`changes` 最多 50 筆 `{asset_code, asset_name, kind, action, qty_prev, qty, qty_change, weight_prev, weight, weight_change, with_flow, amount}`，`action` 為新增／加碼／減碼／刪除（看實際股數），`with_flow` 為 `true` 表示股數和發行單位數同比例增減（多半是申購買回帶動），沒有單位數可判斷時為 `null`；`counts` 是全部筆數。`amount` 為億元（台股才有） |
+| `holdings_changes` | 主動式 ETF 的持股異動（其他 ETF 為 `null`）：比對投信官網最新兩份完整持股清單 `{date, prev_date, units, units_prev, flow_checked, counts, changes, source}`。`changes` 最多 50 筆 `{asset_code, asset_name, kind, action, qty_prev, qty, qty_change, weight_prev, weight, weight_change, excess, with_flow, amount}`，`action` 為新增／加碼／減碼／刪除（看實際股數）。`excess` 是超出申購買回比例的百分點（股數增減比例 − 發行單位數增減比例），`with_flow` 為 `true` 表示 |excess| 不到 1 個百分點、大致隨申購買回同比例；沒有單位數可判斷、或新增刪除時兩者為 `null`。`counts` 是全部筆數。`amount` 為億元（台股才有） |
 | `next_ex`、`last_ex` | 下一次／最近一次除息 `{ex_date, cash, pay_date, source}`，`pay_date` 為配息發放日。`source` 依優先順序為投信官網、投信投顧公會（每月公布上個月的除息紀錄，含發放日）、交易所除權息預告 |
 | `fee` | 總費用率 %：人工填寫（`data/etf_meta.csv`）優先，否則用投信投顧公會年度費用比率的合計（含交易成本） |
 | `monthly` | 投信投顧公會基金資料彙總表（月）`{month, aum, nav, units, beneficiaries, beneficiaries_natural, beneficiaries_legal, subscribe, redeem, net, source}`：月底規模（億元）、單位淨值、受益權單位數、總／自然人／法人受益人數，以及當月申購、買回總金額與兩者相減的淨申購（億元，負數為淨買回）。每月第 10 個營業日公布上個月的資料；公會沒有列出的 ETF（例如外幣交易線、期貨信託基金）為 `null` |

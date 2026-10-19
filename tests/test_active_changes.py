@@ -56,6 +56,8 @@ class ActiveChangesTest(unittest.TestCase):
                          {"2303": ("新增", 20000, None), "2330": ("加碼", 1000, True), "2454": ("加碼", 10000, False),
                           "1101": ("加碼", 50, True), "2317": ("刪除", -30000, None)})
         self.assertEqual(x["counts"], {"新增": 1, "加碼": 3, "減碼": 0, "刪除": 1})
+        # 超出申購比例的百分點：2454 增加 20%、單位數增加 1%，超出 19 個百分點
+        self.assertEqual((rows["2454"]["excess"], rows["2330"]["excess"], rows["1101"]["excess"], rows["2303"]["excess"]), (19.0, 0.0, -0.5, None))
         self.assertEqual((rows["2454"]["amount"], rows["2317"]["amount"]), (0.15, -0.06))
         # 單位數由「與前日已發行單位差異數」推回
         y = self.items[3]["holdings_changes"]
@@ -81,11 +83,19 @@ class ActiveChangesTest(unittest.TestCase):
         self.assertEqual((sells["1216"]["sell_shares"], sells["1216"]["sell_amount"]), (2714000, None))
         self.assertEqual(s["date"], DAY)
 
-    def test_material(self):
-        row = {"action": "加碼", "qty_prev": 3345000, "qty_change": 19000}  # 只多 0.57%，多半是分配申購資金
-        self.assertFalse(ac.material(row))
-        self.assertTrue(ac.material({**row, "qty_change": 50000}))
-        self.assertTrue(ac.material({"action": "新增", "qty_prev": None, "qty_change": 1000}))
+    def test_side(self):
+        row = lambda action, change, excess: {"action": action, "qty_change": change, "excess": excess,
+                                              "with_flow": abs(excess) < ac.EXCESS if excess is not None else None}
+        # 申購讓單位數增加 7.2%、股票增加 6.9%：大致維持比重，不算加碼
+        self.assertIsNone(ac.side(row("加碼", 69000, -0.3)))
+        # 股數增加但遠少於申購比例：沒有跟著買不等於賣出，也不算減碼
+        self.assertIsNone(ac.side(row("加碼", 20000, -5.2)))
+        self.assertEqual(ac.side(row("加碼", 50000, 6.0)), "buy")
+        self.assertEqual(ac.side(row("減碼", -30000, -8.0)), "sell")
+        # 買回讓單位數減少 5%、股票只減 2%：比重反而提高，也不算減碼
+        self.assertIsNone(ac.side(row("減碼", -20000, 3.0)))
+        self.assertEqual((ac.side(row("新增", 1000, None)), ac.side(row("刪除", -1000, None))), ("buy", "sell"))
+        self.assertIsNone(ac.side(row("加碼", 5000, None)))  # 沒有單位數可判斷
 
     def test_single_list(self):
         self.con.execute("DELETE FROM holding WHERE date = ?", (PREV,))
