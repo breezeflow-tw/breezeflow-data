@@ -749,13 +749,22 @@ def save_fund_info(con: sqlite3.Connection, info: dict, fetched: str) -> None:
     )
 
 
+# 外幣交易線（代號結尾 K）和主要交易線是同一檔基金；多半是去掉 K 的代號，例外列在這裡
+MAIN_LINES = {"00625K": "006205"}  # 富邦上証+R 是富邦上証 180（006205）的人民幣交易線
+
+
+def main_line(code: str) -> str | None:
+    """外幣交易線對應的主要交易線代號；不是外幣交易線時回傳 None。"""
+    return MAIN_LINES.get(code) or (code[:-1] if code.endswith("K") else None)
+
+
 def apply_fund_info(items: list[dict], info: dict) -> None:
     """投信投顧公會的資料補在投信官網沒有提供的欄位，並附上年度實際費用比率。
-    外幣交易線（代號結尾 K，例如 00636K）和同代號去掉 K 的 ETF 是同一檔基金，沿用其資料。"""
+    外幣交易線（例如 00636K）和主要交易線是同一檔基金，公會只列主要交易線，沿用其資料。"""
     funds = info.get("funds") or {}
     for it in items:
         code = it["code"]
-        f = funds.get(code) or (funds.get(code[:-1]) if code.endswith("K") else None)
+        f = funds.get(code) or funds.get(main_line(code) or "")
         it["expense"] = None
         if not f:
             continue
@@ -770,6 +779,21 @@ def apply_fund_info(items: list[dict], info: dict) -> None:
             it["expense"] = {**f["expense"], "source": f"{sitca.SOURCE}各項費用比率（{f['expense']['year']} 年度）"}
             if it.get("fee") is None:
                 it["fee"] = f["expense"]["total"]
+
+
+def apply_main_line_holdings(items: list[dict]) -> None:
+    """外幣交易線沒有自己的成分股時，沿用主要交易線的（同一檔基金、同一份投資組合）。
+    規模與受益人數是整檔基金合計，不沿用，避免重複計算。"""
+    by_code = {it["code"]: it for it in items}
+    for it in items:
+        main = by_code.get(main_line(it["code"]) or "")
+        if it.get("holdings_top") or not main or not main.get("holdings_top"):
+            continue
+        it["holdings_top"] = main["holdings_top"]
+        it["holdings_date"] = main.get("holdings_date")
+        it["holdings_source"] = f"{main.get('holdings_source')}（與 {main['code']} 同一檔基金）"
+        if "holdings_source_url" in main:
+            it["holdings_source_url"] = main["holdings_source_url"]
 
 
 def apply_fund_nav(items: list[dict], navs: dict[str, float], as_of: str | None = None) -> None:
@@ -1026,6 +1050,7 @@ def main(argv=None) -> int:
         fund_flows.save(con, issuer, monthly)
         fund_flows.attach(con, items, date)
         apply_fund_top(items, load_fund_top(con), date)
+        apply_main_line_holdings(items)
         con.commit()
         purge_excluded(con)
         store.dump(con, history)
