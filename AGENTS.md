@@ -54,7 +54,7 @@
 | `manager`、`risk_class`、`listed_date`、`index_name` | 經理人、風險等級（RR1～RR5）、上市日、追蹤指數 |
 | `beneficiaries`、`beneficiaries_month`、`beneficiaries_source` | 受益人數、資料年月與出處。投信官網與投信投顧公會基金資料彙總表取資料月份較新的，同月份用投信官網的 |
 | `stats` | 投資組合統計 `{date, div_yield, pe, pb, roe, beta, volatility}`，可能為 `null` |
-| `holdings_top`、`holdings_source`、`holdings_date` | 前 10 大成分 `[{asset_code, asset_name, kind, weight, qty}]`、出處與資料日期。`weight` 為 %，`kind` 為股票／債券／期貨／基金／其他。投信官網的申購買回清單優先（`holdings_date` 為 YYYY-MM-DD）；沒有接入官網的 ETF 用投信投顧公會的月底前十大（`holdings_date` 為 YYYY-MM，`qty` 為 `null`） |
+| `holdings_top`、`holdings_source`、`holdings_date` | 前 10 大成分 `[{asset_code, asset_name, kind, weight, qty}]`、出處與資料日期。`weight` 為 %，`kind` 為股票／債券／期貨／基金／其他。投信官網的申購買回清單優先（`holdings_date` 為 YYYY-MM-DD）；沒有接入官網的 ETF 用投信投顧公會的月底前十大（`holdings_date` 為 YYYY-MM，`qty` 為 `null`）。外幣交易線（代號結尾 K，例如 00625K、00636K）沿用主要交易線的成分股，出處註明「與 XXXX 同一檔基金」 |
 | `next_ex`、`last_ex` | 下一次／最近一次除息 `{ex_date, cash, pay_date, source}`，`pay_date` 為配息發放日。`source` 依優先順序為投信官網、投信投顧公會（每月公布上個月的除息紀錄，含發放日）、交易所除權息預告 |
 | `fee` | 總費用率 %：人工填寫（`data/etf_meta.csv`）優先，否則用投信投顧公會年度費用比率的合計（含交易成本） |
 | `monthly` | 投信投顧公會基金資料彙總表（月）`{month, aum, nav, units, beneficiaries, beneficiaries_natural, beneficiaries_legal, subscribe, redeem, net, source}`：月底規模（億元）、單位淨值、受益權單位數、總／自然人／法人受益人數，以及當月申購、買回總金額與兩者相減的淨申購（億元，負數為淨買回）。每月第 10 個營業日公布上個月的資料；公會沒有列出的 ETF（例如外幣交易線、期貨信託基金）為 `null` |

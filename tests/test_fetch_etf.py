@@ -960,6 +960,22 @@ class SitcaTest(unittest.TestCase):
         # 外幣交易線沿用同一檔基金的公會資料
         self.assertEqual((k_line["mgmt_fee"], k_line["custodian_fee_text"], k_line["fee"], k_line["manager"]), (0.4, "0.10%", 0.6, "甲"))
         self.assertEqual(k_line["fee_source"], "投信投顧公會基金基本資料（2026-09）")
+        # 主要交易線代號不是去掉 K 的例外：00625K 是 006205 的人民幣交易線
+        self.assertEqual((f.main_line("00625K"), f.main_line("00636K"), f.main_line("0050")), ("006205", "00636", None))
+        rmb = {**base, "code": "00625K"}
+        f.apply_fund_info([rmb], {"month": "2026-09", "funds": {"006205": {**info["funds"]["00636"], "manager": "乙"}}})
+        self.assertEqual((rmb["mgmt_fee_text"], rmb["manager"]), ("0.40%", "乙"))
+
+    def test_main_line_holdings(self):
+        hold = [{"asset_code": "600519", "asset_name": "貴州茅台", "kind": "股票", "weight": 5.0, "qty": 100.0}]
+        main = {"code": "006205", "holdings_top": hold, "holdings_date": "2026-10-19", "holdings_source": "富邦投信官網"}
+        k_line = {"code": "00625K", "holdings_top": [], "holdings_date": None, "holdings_source": None}
+        own = {"code": "00636K", "holdings_top": [{"asset_code": "X"}], "holdings_source": "國泰投信官網"}
+        f.apply_main_line_holdings([main, k_line, own, {"code": "00636", "holdings_top": []}])
+        # 外幣交易線沿用主要交易線的成分股並註明；已經有自己成分股的不覆蓋
+        self.assertEqual((k_line["holdings_top"], k_line["holdings_date"], k_line["holdings_source"]),
+                         (hold, "2026-10-19", "富邦投信官網（與 006205 同一檔基金）"))
+        self.assertEqual(own["holdings_source"], "國泰投信官網")
 
     def test_backfill(self):
         import sitca
