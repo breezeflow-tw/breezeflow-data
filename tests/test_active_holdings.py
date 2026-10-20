@@ -15,7 +15,7 @@ import store  # noqa: E402
 
 CAL = mc.Calendar(mc.parse(json.loads((ROOT / "tests" / "fixtures" / "calendar.json").read_text("utf-8"))), {2026})
 DAYS = ["2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16", "2026-10-19", "2026-10-20"]
-SITE = "測試投信官網"
+SITE = "野村投信官網"  # 合成樣本沿用已查核日期欄位的來源名稱；所有數值仍是測試資料
 
 
 def base_holdings():
@@ -76,7 +76,8 @@ class ActiveHoldingsTest(unittest.TestCase):
             for a, p in price.items():
                 p = 110.0 if (a, d) == ("2603", "2026-10-16") else p
                 closes.append((a, d, "上市", None if (a, d) == ("6666", "2026-10-20") else p, "11549"))
-        self.con.executemany("INSERT INTO stock_close(code, date, market, close, dataset) VALUES(?, ?, ?, ?, ?)", closes)
+        self.con.executemany("INSERT INTO stock_close(code, date, market, close, dataset, name) VALUES(?, ?, ?, ?, ?, ?)",
+                             [(*r, f"股票{r[0]}") for r in closes])
         self.con.execute("INSERT INTO stock_event(code, date, kind, stock_dividend_ratio, source, source_url) VALUES"
                          "('2002', '2026-10-01', '權', 0.1, '證交所除權除息預告', 'u')")
         # 發行單位數：00981A 10/19 → 10/20 增加 1%
@@ -187,6 +188,63 @@ class ActiveHoldingsTest(unittest.TestCase):
         f = ah.build(self.con, self.items, "2026-10-20", mc.Calendar({}, set()))
         self.assertEqual({p["reason_code"] for p in f["periods"].values()}, {"no_calendar"})
 
+    def test_invalid_close_and_quantity_never_become_flow(self):
+        for value in (-1, float("inf"), "NaN", "--", 0):
+            with self.subTest(close=value):
+                self.con.execute("UPDATE stock_close SET close=? WHERE code='2330' AND date='2026-10-20'", (value,))
+                self.flow = ah.build(self.con, self.items, "2026-10-20", CAL)
+                s = self.stock("1d", "2330")
+                self.assertIsNone(s["net_amount"])
+                self.assertTrue(s["counts_complete"])
+                self.assertEqual(s["prices"], [])
+                json.dumps(self.flow, allow_nan=False)
+        for value in (-1, float("inf"), "NaN"):
+            with self.subTest(qty=value):
+                self.con.execute("UPDATE holding SET qty=? WHERE code='00981A' AND asset_code='2330' AND date='2026-10-20'", (value,))
+                self.flow = ah.build(self.con, self.items, "2026-10-20", CAL)
+                s = self.stock("1d", "2330")
+                self.assertFalse(s["counts_complete"])
+                self.assertEqual([c["code"] for c in s["etfs"]], ["00985A"])
+                json.dumps(self.flow, allow_nan=False)
+
+    def test_foreign_numeric_code_cannot_borrow_taiwan_price(self):
+        self.con.execute("UPDATE holding SET asset_name='日本同碼公司' WHERE code='00981A' AND asset_code='2330'")
+        self.flow = ah.build(self.con, self.items, "2026-10-20", CAL)
+        s = self.stock("1d", "2330")
+        self.assertFalse(s["complete"])
+        self.assertFalse(s["counts_complete"])
+        self.assertEqual(s["net_shares"], 2000)
+        self.assertIn("台股身分", s["excluded_etfs"][0]["reason"])
+        self.assertTrue(ah.stock_identity("2330", "臺灣積體電路製造", {"2330": {"台積電"}}))
+        self.assertFalse(ah.stock_identity("2330", "台灣積體電路製造", {"2330": {"其他公司"}}))
+        self.assertFalse(ah.stock_identity("2330", "台積電", {}))
+
+    def test_unknown_list_date_is_excluded(self):
+        self.con.execute("UPDATE holding SET source='日期待確認投信官網' WHERE code='00981A'")
+        self.flow = ah.build(self.con, self.items, "2026-10-20", CAL)
+        p = self.flow["periods"]["1d"]
+        self.assertNotIn("00981A", p["included_etfs"])
+        self.assertTrue(any(e["code"] == "00981A" and "持股基準日" in e["reason"] for e in p["excluded_etfs"]))
+        self.assertTrue(all(e["date_basis"] for e in p["lists"]))
+
+    def test_single_holder_large_jump_and_price_adjustment(self):
+        self.con.execute("UPDATE holding SET qty=60000 WHERE code='00981A' AND asset_code='2882' AND date='2026-10-20'")
+        self.flow = ah.build(self.con, self.items, "2026-10-20", CAL)
+        self.assertIsNone(self.stock("1d", "2882"))
+        self.assertTrue(any(e["asset_code"] == "2882" and "重大跳變" in e["reason"] for e in self.flow["periods"]["1d"]["excluded_stocks"]))
+        # 小幅減資也可能沒有第二個持有者；股數與股價反向調整時保守排除。
+        self.con.execute("UPDATE holding SET qty=27000 WHERE code='00981A' AND asset_code='2882' AND date='2026-10-20'")
+        self.con.execute("UPDATE stock_close SET close=? WHERE code='2882' AND date='2026-10-20'", (60 / .9,))
+        self.flow = ah.build(self.con, self.items, "2026-10-20", CAL)
+        self.assertIsNone(self.stock("1d", "2882"))
+        self.assertTrue(any(e["asset_code"] == "2882" and "反向調整" in e["reason"] for e in self.flow["periods"]["1d"]["excluded_stocks"]))
+
+    def test_large_subscription_with_matching_shares_is_not_jump(self):
+        self.con.execute("UPDATE holding SET qty=60000 WHERE code='00981A' AND asset_code='2882' AND date='2026-10-20'")
+        self.con.execute("UPDATE fund_daily SET units=2000000 WHERE code='00981A' AND date='2026-10-20'")
+        self.flow = ah.build(self.con, self.items, "2026-10-20", CAL)
+        self.assertAlmostEqual(self.stock("1d", "2882")["net_amount"], .018)
+
 
 class PipelineTest(unittest.TestCase):
     def test_pipeline_outputs_contract_and_evidence(self):
@@ -212,6 +270,19 @@ class PipelineTest(unittest.TestCase):
 
 
 class ParseTest(unittest.TestCase):
+    def test_nonfinite_prices_and_legacy_schema(self):
+        rows = oq.parse_stocks([{"Date": "1151020", "Code": "2330", "Name": "台積電", "ClosingPrice": x}
+                                for x in ("-1", "NaN", "Infinity", "--", "0")], [], {"2330"})
+        self.assertEqual([r["close"] for r in rows], [None] * 5)
+        self.assertTrue(all(r["name"] == "台積電" for r in rows))
+        con = sqlite3.connect(":memory:")
+        con.execute("CREATE TABLE stock_close(code TEXT, date TEXT, market TEXT, close REAL, dataset TEXT, first_observed_at TEXT, observed_at TEXT, PRIMARY KEY(code,date))")
+        store.ensure_schema(con)
+        self.assertIn("name", {r[1] for r in con.execute("PRAGMA table_info(stock_close)")})
+        oq.save_stocks(con, rows[:1], "2026-10-20T20:00:00+08:00")
+        self.assertEqual(con.execute("SELECT name, close FROM stock_close").fetchone(), ("台積電", None))
+        con.close()
+
     def test_stock_prices_and_events(self):
         twse = [{"Date": "1151020", "Code": "2330", "ClosingPrice": "1,005.00"}, {"Date": "1151020", "Code": "0050", "ClosingPrice": "108"},
                 {"Date": "1151020", "Code": "2454", "ClosingPrice": "0.00"}, {"Date": "1151020", "Code": "9999", "ClosingPrice": "10"}]

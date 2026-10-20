@@ -58,6 +58,8 @@ MIGRATIONS = {
             "fee_source": "TEXT", "expense_json": "TEXT"},
     "dividend": {"source": "TEXT"},
     "holding": {"source_url": "TEXT"},
+    "stock_close": {"name": "TEXT"},
+    "holding_list": {"date_basis": "TEXT"},
     "fund_daily": {"announced": "TEXT", "first_observed_at": "TEXT"},
 }
 

@@ -17,14 +17,17 @@
   檔數與股數仍保留可靠的部分。buy_etfs、sell_etfs 是期間淨股數增加、減少的 ETF 檔數
 - 疑似公司行動：同一天持有同一檔股票的 ETF（至少兩檔）全部以相同比例增減（除權、分割、減資；有持有者股數沒變就不算），
   或股數剛好照除權預告的配股率增加（配股入帳），該股票在該期間整檔排除；同一檔 ETF 同一天刪除一檔、新增一檔且股數相同，視為疑似代碼變更，
-  排除這檔 ETF 的這兩筆。排除的都列在 excluded_stocks。只有一檔 ETF 持有的分割、減資偵測不到，是已知限制
+  排除這檔 ETF 的這兩筆。排除的都列在 excluded_stocks。另排除單一 ETF 的重大股數跳變及股數／股價反向調整；
+  異常偵測不是完整公司行動清冊，仍可能漏掉小幅、延後入帳的事件
 - 證據：每個期間附上列入 ETF 期初與期末清單的出處與完整度（列數、台股列數、缺股數列數、權重合計、取得時間），
   每檔股票附上用到的股價日期、收盤價、市場與資料集
 """
 from __future__ import annotations
 
 import math
+import re
 import sqlite3
+import unicodedata
 from collections import defaultdict
 from datetime import date, timedelta
 
@@ -42,6 +45,26 @@ METHOD = ("逐日比對相鄰兩個交易日的完整持股清單，台股股票
 RATIO_TOL = 0.0005  # 多檔 ETF 同日同比例變動的容許誤差
 DIVIDEND_TOL = 0.002  # 股數比例與 1＋配股率的容許誤差
 DIVIDEND_DAYS = 90  # 除權日之後多久內的股數跳增可能是配股入帳
+# 依既有投信解析器的明示資料欄位核對，不靠價格／權重吻合程度推定日期。
+DATE_BASIS = {
+    "野村投信官網": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
+    "安聯投信官網": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
+    "中信投信官網": "申購買回清單明示「淨值日期」",
+    "富邦投信官網": "基金資產頁明示「資料日期」",
+    "凱基投信官網": "淨值欄名明示資料日期",
+    "摩根投信官網": "持股列 navDate／effectiveDate",
+    "復華投信官網": "資產明細回傳日期與查詢的正式淨值日期一致",
+}
+# 只收實際官方清單與交易所名稱的已核對別名；不以字串模糊比對認定市場身分。
+NAME_ALIASES = {
+    "1101": {"台泥", "台灣水泥"}, "1301": {"台塑", "台灣塑膠工業"},
+    "1326": {"台化", "台灣化學纖維"}, "1560": {"中砂", "中國砂輪企業"},
+    "2303": {"聯電", "聯華電子"}, "2330": {"台積電", "台灣積體", "台灣積體電路製造"},
+    "2610": {"華航", "中華航空"}, "2851": {"中再保", "中央再保"},
+    "2891": {"中信金", "中國信託", "中國信託金融控股"},
+    "3533": {"嘉澤", "lotescoltd"}, "6442": {"光聖", "光紅建聖"},
+    "6510": {"精測", "中華精測科技"}, "8046": {"南電", "南亞電路", "南亞電路板"},
+}
 EVENT_SOURCES = {"上市": ("證交所除權除息預告", "https://openapi.twse.com.tw/v1/exchangeReport/TWT48U_ALL",
                           {"code": "Code", "date": "Date", "kind": "Exdividend", "stock": "StockDividendRatio",
                            "sub": "SubscriptionRatio"}),
@@ -67,11 +90,25 @@ def roc_date(value) -> str | None:
 
 def shares(x):
     """股數輸出成整數（整數股時），其他維持小數。"""
+    x = num(x)
     return int(x) if x is not None and float(x).is_integer() else x
 
 
 def money(x):
     return round(x, 6) if x is not None and math.isfinite(x) else None
+
+
+def normalized_name(value):
+    return re.sub(r"[\W_]", "", unicodedata.normalize("NFKC", str(value or "")).lower().replace("臺", "台"))
+
+
+def stock_identity(asset, name, official_names):
+    n = normalized_name(name)
+    known = {normalized_name(v) for v in official_names.get(asset, ()) if v}
+    if not n or not known:
+        return False
+    aliases = NAME_ALIASES.get(asset, set())
+    return n in known or (n in aliases and bool(known & aliases))
 
 
 # ---------- 保存 ----------
@@ -116,36 +153,45 @@ def save_list_evidence(con: sqlite3.Connection, code: str, day: str, source: str
                        now: str) -> None:
     """投信官網完整清單的清單層級證據；同一天重抓時更新內容，第一次取得時間保留。"""
     stocks = [h for h in holdings if h.get("kind") == "股票" and STOCK.fullmatch(h.get("asset_code") or "")]
-    weights = [h["weight"] for h in holdings if h.get("weight") is not None]
+    weights = [num(h.get("weight")) for h in holdings if num(h.get("weight")) is not None]
     con.execute(
         "INSERT INTO holding_list(code, date, source, source_url, rows, stock_rows, missing_qty, weight_sum, complete, "
-        "first_observed_at, observed_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?) ON CONFLICT(code, date) DO UPDATE SET "
+        "first_observed_at, observed_at, date_basis) VALUES(?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?) ON CONFLICT(code, date) DO UPDATE SET "
         "source=excluded.source, source_url=excluded.source_url, rows=excluded.rows, stock_rows=excluded.stock_rows, "
-        "missing_qty=excluded.missing_qty, weight_sum=excluded.weight_sum, observed_at=excluded.observed_at",
+        "missing_qty=excluded.missing_qty, weight_sum=excluded.weight_sum, observed_at=excluded.observed_at, date_basis=excluded.date_basis",
         (code, day, source, url, len(holdings), len(stocks), sum(1 for h in stocks if h.get("qty") is None),
-         round(sum(weights), 4) if weights else None, now, now))
+         round(sum(weights), 4) if weights and num(sum(weights)) is not None else None, now, now, DATE_BASIS.get(source)))
 
 
 # ---------- 讀取 ----------
 
-def load_lists(con: sqlite3.Connection, since: str) -> dict[str, dict[str, dict]]:
+def load_lists(con: sqlite3.Connection, since: str, until: str) -> dict[str, dict[str, dict]]:
     """主動式 ETF 的官網完整清單：{ETF: {日期: {"stocks": {股票: 列}, "missing": {缺股數的股票}, "evidence": {...}}}}。
     沒有台股股票的清單（例如債券型）也要記下日期，才知道那天有公告。完整度證據以清單內容計算，取得時間取自 holding_list。"""
     out: dict[str, dict[str, dict]] = defaultdict(dict)
+    official_names = defaultdict(set)
+    for asset, name in con.execute("SELECT code, name FROM stock_close WHERE date <= ? AND name IS NOT NULL", (until,)):
+        official_names[asset].add(name)
     for code, day, asset, name, kind, weight, qty, source, url in con.execute(
             "SELECT code, date, asset_code, asset_name, kind, weight, qty, source, source_url FROM holding "
-            "WHERE date >= ? AND source LIKE '%官網'", (since,)):
+            "WHERE date >= ? AND date <= ? AND source LIKE '%官網'", (since, until)):
         if not is_active(code):
             continue
         lst = out[code].setdefault(day, {"stocks": {}, "missing": set(), "source": source, "source_url": url, "rows": 0,
-                                         "weight_sum": 0.0})
+                                         "weight_sum": 0.0, "invalid": {}, "basis": DATE_BASIS.get(source)})
         lst["rows"] += 1
-        lst["weight_sum"] += weight or 0
+        lst["weight_sum"] += num(weight) or 0
         if kind == "股票" and STOCK.fullmatch(asset or ""):
-            if qty is None:
+            value = num(qty)
+            if not stock_identity(asset, name, official_names):
                 lst["missing"].add(asset)
+                lst["invalid"][asset] = "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+            elif value is None or value < 0:
+                lst["missing"].add(asset)
+                if qty is not None:
+                    lst["invalid"][asset] = "股數不是有限非負數字，不當成 0"
             else:
-                lst["stocks"][asset] = {"name": name, "qty": float(qty), "weight": weight}
+                lst["stocks"][asset] = {"name": name, "qty": value, "weight": num(weight)}
     seen = {}
     try:
         seen = {(c, d): (f, o) for c, d, f, o in con.execute(
@@ -157,7 +203,8 @@ def load_lists(con: sqlite3.Connection, since: str) -> dict[str, dict[str, dict]
             first, last = seen.get((code, day), (None, None))
             lst["evidence"] = {"code": code, "date": day, "source": lst["source"], "source_url": lst["source_url"],
                                "rows": lst["rows"], "stock_rows": len(lst["stocks"]) + len(lst["missing"]),
-                               "missing_qty": len(lst["missing"]), "weight_sum": round(lst["weight_sum"], 4),
+                               "missing_qty": len(lst["missing"]), "weight_sum": money(lst["weight_sum"]),
+                               "date_basis": lst["basis"], "unverified_rows": len(lst["invalid"]),
                                "first_observed_at": first, "observed_at": last}
     return out
 
@@ -167,7 +214,8 @@ def load_prices(con: sqlite3.Connection, since: str) -> tuple[dict, set[str], st
     prices, days = {}, set()
     for code, day, market, close, dataset in con.execute(
             "SELECT code, date, market, close, dataset FROM stock_close WHERE date >= ?", (since,)):
-        prices[(code, day)] = (close, market, dataset)
+        value = num(close)
+        prices[(code, day)] = (value if value is not None and value > 0 else None, market, dataset)
         if market == "上市":
             days.add(day)
     first = con.execute("SELECT MIN(date) FROM stock_close").fetchone()[0]
@@ -176,7 +224,8 @@ def load_prices(con: sqlite3.Connection, since: str) -> tuple[dict, set[str], st
 
 def load_units(con: sqlite3.Connection, since: str) -> dict[tuple[str, str], float]:
     try:
-        return {(c, d): u for c, d, u in con.execute("SELECT code, date, units FROM fund_daily WHERE date >= ? AND units > 0", (since,))}
+        return {(c, d): num(u) for c, d, u in con.execute("SELECT code, date, units FROM fund_daily WHERE date >= ? AND units > 0", (since,))
+                if num(u) is not None and num(u) > 0}
     except sqlite3.OperationalError:
         return {}
 
@@ -216,7 +265,8 @@ def qty(lst: dict, asset: str) -> float:
 
 def diff(prev: dict, cur: dict) -> dict[str, tuple[float, float]]:
     """兩份完整清單股數有變動的台股股票：{股票: (前一份股數, 這一份股數)}；沒列出的是 0。"""
-    return {a: (qty(prev, a), qty(cur, a)) for a in set(prev["stocks"]) | set(cur["stocks"]) if qty(prev, a) != qty(cur, a)}
+    return {a: (qty(prev, a), qty(cur, a)) for a in set(prev["stocks"]) | set(cur["stocks"])
+            if a not in prev["missing"] and a not in cur["missing"] and qty(prev, a) != qty(cur, a)}
 
 
 def corporate_actions(changes: dict[str, dict[str, dict]], events: dict, holders: dict | None = None) -> tuple[dict, dict]:
@@ -264,7 +314,7 @@ def contribution(etf: str, name: str | None, asset: str, have: dict, prices: dic
             continue
         moved.append(day)
         close = (prices.get((asset, day)) or (None,))[0]
-        if not close:
+        if num(close) is None or close <= 0:
             missing.append(day)
             buy_ok, sell_ok = (False, sell_ok) if q1 > q0 else (buy_ok, False)
             continue
@@ -278,7 +328,8 @@ def contribution(etf: str, name: str | None, asset: str, have: dict, prices: dic
 
     def per_unit(q, day):
         u = units.get((etf, day))
-        return round(q / u * 1e4, 4) if u else None
+        value = num(q / u * 1e4) if u else None
+        return round(value, 4) if value is not None else None
 
     unit_prev, unit_end = per_unit(q_prev, baseline), per_unit(q_end, end)
     row = have[end]["stocks"].get(asset) or have[baseline]["stocks"].get(asset) or {}
@@ -286,7 +337,7 @@ def contribution(etf: str, name: str | None, asset: str, have: dict, prices: dic
             "amount": money(buy - sell) if buy_ok and sell_ok else None, "action": action,
             "weight_prev": have[baseline]["stocks"].get(asset, {}).get("weight"), "weight": have[end]["stocks"].get(asset, {}).get("weight"),
             "unit_qty_prev": unit_prev, "unit_qty": unit_end,
-            "unit_qty_change": round(unit_end - unit_prev, 4) if unit_prev is not None and unit_end is not None else None,
+            "unit_qty_change": money(unit_end - unit_prev) if unit_prev is not None and unit_end is not None else None,
             "source": have[end]["source"], "source_url": have[end]["source_url"], "prev_date": baseline, "date": end,
             "reason": f"缺 {'、'.join(missing)} 的官方收盤價，金額無法估算" if missing else None,
             "_buy": buy if buy_ok else None, "_sell": sell if sell_ok else None, "_days": moved, "_missing": missing,
@@ -315,6 +366,10 @@ def build_period(period: str, cal, as_of: str | None, lists: dict, names: dict, 
         elif missing:
             more = f" 等 {len(missing)} 天" if len(missing) > 3 else ""
             out["excluded_etfs"].append({"code": etf, "reason": f"缺 {'、'.join(missing[:3])}{more}的完整持股清單"})
+        elif any(not have[d].get("basis") for d in chain):
+            out["excluded_etfs"].append({"code": etf, "reason": "尚未核實此投信清單日期是持股基準日，暫不比較"})
+        elif len({have[d]["source"] for d in chain}) > 1:
+            out["excluded_etfs"].append({"code": etf, "reason": "期間內持股來源改變，暫不比較"})
         else:
             out["included_etfs"].append(etf)
             out["lists"] += [have[baseline]["evidence"], have[as_of]["evidence"]]
@@ -333,12 +388,30 @@ def build_period(period: str, cal, as_of: str | None, lists: dict, names: dict, 
     steady: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
     for etf, have in lists.items():
         for prev, day in zip(chain, days):
-            if prev in have and day in have:
+            if prev in have and day in have and have[prev].get("basis") and have[day].get("basis"):
                 changes[day][etf] = diff(have[prev], have[day])
                 for asset in set(have[prev]["stocks"]) & set(have[day]["stocks"]):
                     if asset not in changes[day][etf]:
                         steady[day][asset] += 1
     stock_level, etf_level = corporate_actions(changes, events, steady)
+    # 單一持有者也保守處理；重大股數跳變可能是真實交易，但未核對前不放進排行。
+    for day, per_etf in changes.items():
+        prev = chain[chain.index(day) - 1]
+        for etf, assets in per_etf.items():
+            for asset, (q0, q1) in assets.items():
+                if q0 <= 0 or q1 <= 0:
+                    continue
+                ratio = q1 / q0
+                p0 = (prices.get((asset, prev)) or (None,))[0]
+                p1 = (prices.get((asset, day)) or (None,))[0]
+                if (p0 and p1 and abs(ratio - 1) >= .05 and (ratio - 1) * (p1 / p0 - 1) < 0
+                        and abs(ratio * p1 / p0 - 1) <= .02):
+                    affected = sorted(e for e, moves in per_etf.items() if asset in moves)
+                    stock_level[(asset, day)] = ("疑似分割、減資或配股：股數與股價反向調整，待核對", affected)
+                u0, u1 = units.get((etf, prev)), units.get((etf, day))
+                density_ratio = ratio / (u1 / u0) if u0 and u1 else ratio
+                if density_ratio >= 1.5 or density_ratio <= 2 / 3:
+                    etf_level[(etf, asset, day)] = "持股股數重大跳變，無法排除分割、減資或資料異常，暫不排名"
 
     excluded: dict[tuple, dict] = {}
     parts: dict[str, list[dict]] = defaultdict(list)
@@ -361,7 +434,7 @@ def build_period(period: str, cal, as_of: str | None, lists: dict, names: dict, 
             gap = [d for d in chain if asset in have[d]["missing"]]
             odd = [(day, etf_level[(etf, asset, day)]) for day in days if (etf, asset, day) in etf_level]
             if gap or odd:
-                for day, why in [(gap[0], "清單列了這檔股票卻缺股數，不當成 0")] if gap else odd:
+                for day, why in [(gap[0], have[gap[0]].get("invalid", {}).get(asset) or "清單列了這檔股票卻缺股數，不當成 0")] if gap else odd:
                     drop(asset, day, why, etf)
                     dropped[asset].append({"code": etf, "date": day, "reason": why})
                 continue
@@ -404,6 +477,7 @@ def build_period(period: str, cal, as_of: str | None, lists: dict, names: dict, 
                        "net_amount": money(buy - sell) if complete else None, "buy_amount": money(buy), "sell_amount": money(sell),
                        "buy_etfs": sum(1 for c in cs if c["qty_change"] > 0), "sell_etfs": sum(1 for c in cs if c["qty_change"] < 0),
                        "net_shares": shares(sum(c["qty_change"] for c in cs)), "complete": complete,
+                       "counts_complete": not bool(dropped.get(asset)),
                        "missing_price_dates": missing, "excluded_etfs": sorted(dropped.get(asset, []), key=lambda x: (x["date"], x["code"])),
                        "prices": price_rows, "etfs": cs})
     stocks.sort(key=lambda s: (s["net_amount"] is None, -(s["net_amount"] or 0), s["asset_code"]))
@@ -419,7 +493,7 @@ def build(con: sqlite3.Connection, items: list[dict], trade_date: str, cal) -> d
     row = con.execute("SELECT MAX(date) FROM stock_close WHERE market = '上市' AND date <= ?", (trade_date,)).fetchone()
     as_of = row[0] if row else None
     since = (date.fromisoformat(as_of or trade_date) - timedelta(days=45)).isoformat()
-    lists = load_lists(con, since)
+    lists = load_lists(con, since, as_of or trade_date)
     prices, price_days, first_price = load_prices(con, since)
     units, events = load_units(con, since), load_events(con)
     names = {it["code"]: it.get("name") for it in items}

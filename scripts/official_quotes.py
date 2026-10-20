@@ -11,6 +11,7 @@
 """
 from __future__ import annotations
 
+import math
 import re
 import sqlite3
 
@@ -40,7 +41,8 @@ COLUMNS = ("code", "date", "market", "name", "open", "high", "low", "close", "ch
 def num(value) -> float | None:
     s = re.sub(r"^[+＋]", "", str(value if value is not None else "").replace(",", "").strip())
     try:
-        return float(s) if s not in ("", "-", "--", "---", "X", "除息", "除權") else None
+        value = float(s) if s not in ("", "-", "--", "---", "X", "除息", "除權") else None
+        return value if value is not None and math.isfinite(value) else None
     except ValueError:
         return None
 
@@ -80,18 +82,20 @@ def parse_stocks(twse_rows, tpex_rows, codes: set[str]) -> list[dict]:
                 continue
             code, day = str(r.get(spec["fields"]["code"]) or "").strip(), roc_date(r.get("Date"))
             if code in codes and STOCK.fullmatch(code) and day:
+                close = num(r.get(spec["fields"]["close"]))
                 out.append({"code": code, "date": day, "market": market,
-                            "close": num(r.get(spec["fields"]["close"])) or None, "dataset": spec["dataset_id"]})
+                            "name": str(r.get(spec["fields"]["name"]) or "").strip() or None,
+                            "close": close if close is not None and close > 0 else None, "dataset": spec["dataset_id"]})
     return out
 
 
 def save_stocks(con: sqlite3.Connection, rows: list[dict], now: str) -> None:
     """同一天重抓時以新值為準；第一次取得時間保留原值。"""
     con.executemany(
-        "INSERT INTO stock_close(code, date, market, close, dataset, first_observed_at, observed_at) VALUES(?, ?, ?, ?, ?, ?, ?) "
+        "INSERT INTO stock_close(code, date, market, close, dataset, first_observed_at, observed_at, name) VALUES(?, ?, ?, ?, ?, ?, ?, ?) "
         "ON CONFLICT(code, date) DO UPDATE SET market=excluded.market, close=excluded.close, dataset=excluded.dataset, "
-        "observed_at=excluded.observed_at",
-        [(r["code"], r["date"], r["market"], r["close"], r["dataset"], now, now) for r in rows])
+        "observed_at=excluded.observed_at, name=excluded.name",
+        [(r["code"], r["date"], r["market"], r["close"], r["dataset"], now, now, r.get("name")) for r in rows])
 
 
 def save(con: sqlite3.Connection, rows: list[dict], now: str) -> None:

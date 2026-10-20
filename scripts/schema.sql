@@ -109,11 +109,13 @@ CREATE TABLE IF NOT EXISTS holding_list (
   rows INTEGER, stock_rows INTEGER, missing_qty INTEGER,   -- 全部列數、台股股票列數、其中缺股數的列數
   weight_sum REAL,                               -- 權重合計（%），現金、附買回等沒列在清單裡時會低於 100
   complete INTEGER NOT NULL,                     -- 1＝投信官網公告的完整清單
+  date_basis TEXT,                               -- 已核對的持股日期欄位；空值代表暫不排行
   first_observed_at TEXT, observed_at TEXT, PRIMARY KEY(code, date)
 );
 -- 主動式 ETF 持有的台股股票收盤價（資料集 11549 上市、11370 上櫃的原值），每次執行依交易所標示的資料日期增量保存；不回補
 CREATE TABLE IF NOT EXISTS stock_close (
   code TEXT NOT NULL, date TEXT NOT NULL,
+  name TEXT,                                    -- 交易所名稱，核對持股的市場身分
   market TEXT, close REAL,                       -- 收盤價（元）；沒有成交為空值
   dataset TEXT NOT NULL,                         -- 政府資料開放平臺資料集代號
   first_observed_at TEXT, observed_at TEXT, PRIMARY KEY(code, date)
