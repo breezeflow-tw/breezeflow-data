@@ -709,6 +709,15 @@ class NomuraTest(unittest.TestCase):
         c = recs["00420A"]
         self.assertEqual((c["nav_official"], c["aum"], c["holdings"], c["mgmt_fee"], "pcf_date" in c), (None, None, [], 0.99, False))
 
+    def test_units_change_date(self):
+        from issuers import nomura as n
+        pcf = {"pcf_date": "2026-10-14", "units_change": -1000000.0}
+        # 淨值日期早於前一份清單（投資海外）：單位差異記在前一份清單的日期，資產與持股維持淨值日期
+        self.assertEqual(n.date_units_change(pcf, "2026-10-15"),
+                         {"pcf_date": "2026-10-15", "asset_date": "2026-10-14", "holdings_date": "2026-10-14", "units_change": -1000000.0})
+        self.assertEqual(n.date_units_change({"pcf_date": "2026-10-15"}, "2026-10-15"), {"pcf_date": "2026-10-15"})  # 國內 ETF 不變
+        self.assertEqual(n.date_units_change({}, "2026-10-15"), {})
+
     def test_history(self):
         from issuers import nomura as n
         recs = n.fetch(fixtures=FIX / "nomura", history={"attempted": set(), "budget": 3})
@@ -744,8 +753,14 @@ class NomuraTest(unittest.TestCase):
             self.assertEqual(a["last_ex"], {"ex_date": "2026-09-16", "cash": 1.83, "pay_date": "2026-10-15", "source": "野村投信官網"})
             self.assertEqual(a["holdings_top"][0]["asset_code"], "2330")
             b = items["00987B"]
-            # 正式淨值與清單都是 10/15 的，當天用野村公布的預估淨值；單位增減屬於 10/15
-            self.assertEqual((b["nav"], b["nav_source"], b["units_change"]), (15.6529, "野村投信官網（預估淨值）", None))
+            # 正式淨值與清單資產都是 10/15 的，當天用野村公布的預估淨值；
+            # 投資海外的 ETF 單位差異是清單日期前一個交易日（10/16）的，記在當天
+            self.assertEqual((b["nav"], b["nav_source"], b["units_change"]), (15.6529, "野村投信官網（預估淨值）", 0.0))
+            con = sqlite3.connect(db)
+            self.assertEqual(con.execute("SELECT date, units, units_change FROM fund_daily WHERE code='00987B' ORDER BY date").fetchall(),
+                             [("2026-10-15", 76327000.0, None), ("2026-10-16", None, 0.0)])
+            self.assertEqual(con.execute("SELECT DISTINCT date FROM holding WHERE code='00987B'").fetchall(), [("2026-10-15",)])
+            con.close()
 
 
 class JpmorganTest(unittest.TestCase):

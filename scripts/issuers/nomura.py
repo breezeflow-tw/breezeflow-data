@@ -10,6 +10,9 @@
   Date 是清單適用的交易日，淨值與單位數是更早的淨值日期 CNavDtStr 那天的資料
 - 歷史清單：GetFundTradeInfoDate 的 AllDate 列出上市以來每一份清單的日期，回補時照這份清單查，
   只留淨資產、單位數、單位差異與淨值，不留成分
+- 投資海外的 ETF 淨值日期比清單日期早兩個交易日，但「與前日已發行單位差異數」是清單日期前一個交易日的
+  （例如 00987B 清單 10/16 的 −1,000,000 單位，要到 10/15 的單位數才看得到）。這時單位差異記在前一份清單的日期，
+  淨資產、單位數、淨值與成分仍是淨值日期（asset_date、holdings_date）
 """
 from __future__ import annotations
 
@@ -93,6 +96,13 @@ def index_name(value) -> str | None:
 
 
 # ---------- 解析 ----------
+
+def date_units_change(pcf: dict, previous: str | None) -> dict:
+    """清單的淨值日期早於前一份清單的日期（投資海外的 ETF）時，單位差異改記在前一份清單的日期。"""
+    if pcf.get("pcf_date") and previous and previous > pcf["pcf_date"]:
+        return {**pcf, "asset_date": pcf["pcf_date"], "holdings_date": pcf["pcf_date"], "pcf_date": previous}
+    return pcf
+
 
 def parse_list(entries) -> list[dict]:
     return [{"code": r["CNo"].strip(), "nav_official": num(r.get("CNetValue")), "nav_date": ymd(r.get("CDataDt"))}
@@ -227,6 +237,7 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
             latest = listing.get("LatestDate")
             pcf_dates[code] = {ymd(d): d for d in listing.get("AllDate") or [] if ymd(d) and d != latest}
             pcf = parse_pcf(call(f"trade_{code}", "Fund/GetFundTradeInfo", Type=1, FundNo=code, Keyword="", Date=latest)) if latest else {}
+            pcf = date_units_change(pcf, max(pcf_dates[code], default=None))
         except RuntimeError as exc:
             print(f"警告：{SOURCE} {code} 申購買回清單抓取失敗（{exc}）", file=sys.stderr)
             pcf = {}
@@ -244,6 +255,7 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
                                  Date=pcf_dates[code][day]))
             if pcf.get("code") != code:
                 return {}
+            pcf = date_units_change(pcf, max((d for d in pcf_dates[code] if d < day), default=None))
             return {k: v for k, v in pcf.items() if k not in ("code", "bond_index")}
 
         candidates = {c: sorted(pcf_dates.get(c, {}), reverse=True) for c, r in records.items() if r.get("currency") == "TWD"}
