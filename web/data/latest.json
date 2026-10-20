@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-20T22:03:37+08:00",
+ "generated_at": "2026-10-20T22:13:12+08:00",
  "trade_date": "2026-10-20",
  "source": "live",
  "has_nav": true,
@@ -5661,7 +5661,7 @@
    "index_name": "臺灣50指數",
    "listed_date": "2003-06-30",
    "source_time": "20261020 13:31:00",
-   "nav_source": "元大投信官網（正式淨值）",
+   "nav_source": "投信投顧公會（正式淨值）",
    "aum_source": "元大投信官網",
    "mgmt_fee": 0.0683,
    "mgmt_fee_text": "1. 1,000億(含)以下之部分：0.15%\n2. 逾1,000億(不含)~5,000億(含)之部分：0.10%\n3. 逾5,000億(不含)~1兆(含)之部分：0.08%\n4. 逾1兆(不含)之部分：0.05%\n依規模計算上述1.至4.總和，即為經理費用",
@@ -5775,10 +5775,7 @@
    "holdings_date": "2026-10-20",
    "units_change": 41500000.0,
    "fee_source": "元大投信官網",
-   "beneficiaries_source": "元大投信官網",
-   "beneficiaries_source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/0050",
-   "nav_date": "2026-10-20",
-   "nav_source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/0050",
+   "beneficiaries_source": "投信投顧公會基金資料彙總表",
    "expense": {
     "year": 2025,
     "mgmt": 0.11,
@@ -5787,6 +5784,8 @@
     "total": 0.22,
     "source": "投信投顧公會各項費用比率（2025 年度）"
    },
+   "nav_date": "2026-10-20",
+   "nav_source_url": "https://www.sitca.org.tw/ROC/Industry/IN2106.aspx?pid=IN2213_02",
    "next_ex": null,
    "last_ex": {
     "ex_date": "2026-07-21",
@@ -5829,6 +5828,7 @@
     "net": -255.04,
     "source": "投信投顧公會基金資料彙總表"
    },
+   "beneficiaries_source_url": "https://www.sitca.org.tw/ROC/Industry/IN2201.aspx?pid=IN2221_01",
    "flows": {
     "start": "2026-10-19",
     "end": "2026-10-20",
@@ -7673,7 +7673,7 @@
    "index_name": "標智滬深300中國指數基金",
    "listed_date": "2009-08-17",
    "source_time": "20261020 17:00:00",
-   "nav_source": "元大投信官網（正式淨值）",
+   "nav_source": "投信投顧公會（正式淨值）",
    "aum_source": "元大投信官網",
    "mgmt_fee": 0.3,
    "mgmt_fee_text": "0.3%",
@@ -7707,10 +7707,7 @@
    "holdings_date": "2026-10-20",
    "units_change": 0.0,
    "fee_source": "元大投信官網",
-   "beneficiaries_source": "元大投信官網",
-   "beneficiaries_source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/0061",
-   "nav_date": "2026-10-20",
-   "nav_source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/0061",
+   "beneficiaries_source": "投信投顧公會基金資料彙總表",
    "expense": {
     "year": 2025,
     "mgmt": 0.3,
@@ -7719,6 +7716,8 @@
     "total": 0.4,
     "source": "投信投顧公會各項費用比率（2025 年度）"
    },
+   "nav_date": "2026-10-20",
+   "nav_source_url": "https://www.sitca.org.tw/ROC/Industry/IN2106.aspx?pid=IN2213_02",
    "next_ex": null,
    "last_ex": null,
    "returns": {
@@ -7756,6 +7755,7 @@
     "net": 0.0,
     "source": "投信投顧公會基金資料彙總表"
    },
+   "beneficiaries_source_url": "https://www.sitca.org.tw/ROC/Industry/IN2201.aspx?pid=IN2221_01",
    "flows": {
     "start": "2026-10-19",
     "end": "2026-10-20",
