@@ -101,6 +101,35 @@ CREATE TABLE IF NOT EXISTS exchange_daily (
   dataset TEXT NOT NULL, source_url TEXT NOT NULL,           -- 資料集名稱與取得的端點
   first_observed_at TEXT, observed_at TEXT, PRIMARY KEY(code, date)
 );
+-- 投信官網完整持股清單（申購買回清單）的清單層級證據：出處、列數、台股列數、缺股數列數、權重合計與取得時間。
+-- 只記投信官網公告的完整清單；投信投顧公會的月前十大不是完整清單，不記在這裡
+CREATE TABLE IF NOT EXISTS holding_list (
+  code TEXT NOT NULL, date TEXT NOT NULL,        -- ETF 代號、清單的資料日期
+  source TEXT NOT NULL, source_url TEXT,
+  rows INTEGER, stock_rows INTEGER, missing_qty INTEGER,   -- 全部列數、台股股票列數、其中缺股數的列數
+  weight_sum REAL,                               -- 權重合計（%），現金、附買回等沒列在清單裡時會低於 100
+  complete INTEGER NOT NULL,                     -- 1＝投信官網公告的完整清單
+  date_basis TEXT,                               -- 已核對的持股日期欄位；空值代表暫不排行
+  first_observed_at TEXT, observed_at TEXT, PRIMARY KEY(code, date)
+);
+-- 主動式 ETF 持有的台股股票收盤價（資料集 11549 上市、11370 上櫃的原值），每次執行依交易所標示的資料日期增量保存；不回補
+CREATE TABLE IF NOT EXISTS stock_close (
+  code TEXT NOT NULL, date TEXT NOT NULL,
+  name TEXT,                                    -- 交易所名稱，核對持股的市場身分
+  market TEXT, close REAL,                       -- 收盤價（元）；沒有成交為空值
+  dataset TEXT NOT NULL,                         -- 政府資料開放平臺資料集代號
+  first_observed_at TEXT, observed_at TEXT, PRIMARY KEY(code, date)
+);
+-- 台股除權預告（證交所 TWT48U_ALL、櫃買中心 tpex_exright_prepost 標示「權」的列）：預告表只列即將除權的股票，
+-- 每次執行保存下來，供持股資金動向排除配股入帳造成的股數變動
+CREATE TABLE IF NOT EXISTS stock_event (
+  code TEXT NOT NULL, date TEXT NOT NULL,        -- 除權交易日
+  kind TEXT NOT NULL,                            -- 官方原文：權、權息、除權、除權息
+  stock_dividend_ratio REAL,                     -- 無償配股率（每股配發股數）
+  subscription_ratio REAL,                       -- 現金增資認購率
+  source TEXT NOT NULL, source_url TEXT NOT NULL, first_observed_at TEXT, observed_at TEXT,
+  PRIMARY KEY(code, date, kind)
+);
 -- 投信官網歷史申購買回清單的回補紀錄：查過的清單日期不再重查
 CREATE TABLE IF NOT EXISTS fund_backfill (
   code TEXT NOT NULL, pcf_date TEXT NOT NULL,   -- 查詢的清單日期
