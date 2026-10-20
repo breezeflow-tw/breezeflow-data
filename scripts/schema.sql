@@ -84,10 +84,12 @@ CREATE TABLE IF NOT EXISTS holding (
 );
 
 -- 投信原公告快照，與交易所預估資料分開保存，避免混用日期及來源計算資金流。
+-- 官方基金日快照：date 是資料日期；announced 是投信標示的公告日期（申購買回清單的清單日期，沒有標示時為空）；
+-- first_observed_at／observed_at 是第一次與最近一次取得的時間
 CREATE TABLE IF NOT EXISTS fund_daily (
   code TEXT NOT NULL, date TEXT NOT NULL, nav REAL, aum REAL,
   units REAL, units_change REAL, currency TEXT, source TEXT NOT NULL,
-  source_url TEXT NOT NULL, observed_at TEXT, PRIMARY KEY(code,date)
+  source_url TEXT NOT NULL, observed_at TEXT, announced TEXT, first_observed_at TEXT, PRIMARY KEY(code,date)
 );
 CREATE TABLE IF NOT EXISTS fund_monthly (
   code TEXT NOT NULL, month TEXT NOT NULL, currency TEXT, aum REAL, nav REAL, units REAL,
