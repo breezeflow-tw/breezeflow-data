@@ -1,0 +1,61 @@
+{
+ "TotalPages": -1,
+ "TotalItems": 4,
+ "Entries": [
+  {
+   "CFundNo": "E0001",
+   "CSecuritiesCode": "00984A",
+   "CLatestNAV": 15.26,
+   "CLatestNAVStr": "15.26",
+   "CLatestNAVDate": "2026-10-16T00:00:00",
+   "CLatestNAVDateStr": "2026/10/16",
+   "CLatestChange": -0.66,
+   "CLatestChangeStr": "-0.66",
+   "CLatestChangeRatio": -4.15,
+   "CLatestChangeRatioStr": "-4.15%",
+   "CCalendarDt": "-"
+  },
+  {
+   "CFundNo": "E0002",
+   "CSecuritiesCode": "00993A",
+   "CLatestNAV": 13.29,
+   "CLatestNAVStr": "13.29",
+   "CLatestNAVDate": "2026-10-16T00:00:00",
+   "CLatestNAVDateStr": "2026/10/16",
+   "CLatestChange": -0.04,
+   "CLatestChangeStr": "-0.04",
+   "CLatestChangeRatio": -0.3,
+   "CLatestChangeRatioStr": "-0.30%",
+   "CCalendarDt": "-"
+  },
+  {
+   "CFundNo": "E0003",
+   "CSecuritiesCode": "00402A",
+   "CLatestNAV": 9.48,
+   "CLatestNAVStr": "9.48",
+   "CLatestNAVDate": "2026-10-15T00:00:00",
+   "CLatestNAVDateStr": "2026/10/15",
+   "CLatestChange": -0.32,
+   "CLatestChangeStr": "-0.32",
+   "CLatestChangeRatio": -3.27,
+   "CLatestChangeRatioStr": "-3.27%",
+   "CCalendarDt": "-"
+  },
+  {
+   "CFundNo": "E0004",
+   "CSecuritiesCode": "00412A",
+   "CLatestNAV": 9.05,
+   "CLatestNAVStr": "9.05",
+   "CLatestNAVDate": "2026-10-15T00:00:00",
+   "CLatestNAVDateStr": "2026/10/15",
+   "CLatestChange": 0.0,
+   "CLatestChangeStr": "0.00",
+   "CLatestChangeRatio": 0.0,
+   "CLatestChangeRatioStr": "0.00%",
+   "CCalendarDt": "-"
+  }
+ ],
+ "Message": "",
+ "StatusCode": 0,
+ "RedirectUrl": null
+}

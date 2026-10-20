@@ -1,0 +1,23 @@
+{
+ "TotalPages": -1,
+ "TotalItems": 0,
+ "Entries": {
+  "CFundNo": "E0002",
+  "CSecuritiesCode": "00993A",
+  "CShortName": "主動安聯台灣",
+  "CCgCurrencyTypeStr": "新台幣",
+  "CCgRiskLevelStr": "RR4",
+  "CCgFundTypeStr": "主動式交易所交易基金",
+  "CCgDividendFrequencyStr": "年配",
+  "CManagerFee": "0.80%",
+  "CCustodyFee": "0.035%",
+  "CManager": "郭勁甫",
+  "CSetUpDt": "2026/01/20",
+  "CListingDt": "2026/02/03",
+  "CIndexCode": "",
+  "CPerformanceMetrics": "績效指標名稱：\r\n臺灣證券交易所發行量加權股價指數"
+ },
+ "Message": "",
+ "StatusCode": 0,
+ "RedirectUrl": null
+}

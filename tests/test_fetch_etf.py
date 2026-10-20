@@ -841,6 +841,88 @@ class BlackrockTest(unittest.TestCase):
         a = recs["00991B"]
         self.assertEqual((a["aum"], a["units_change"], a["pcf_date"], a["holdings_date"], len(a["holdings"])), (59.5, 34500000.0, "2026-10-15", "2026-10-16", 12))
 
+
+class AllianzTest(unittest.TestCase):
+    def load(self, name: str):
+        from issuers import allianz as a
+        return a.unwrap(json.loads((FIX / "allianz" / f"{name}.json").read_text("utf-8")), name)
+
+    def test_parse(self):
+        from issuers import allianz as a
+        funds = a.parse_overview(self.load("overview"))
+        self.assertEqual([(x["fund_no"], x["code"], x["nav_official"], x["nav_date"]) for x in funds][:3],
+                         [("E0001", "00984A", 15.26, "2026-10-16"), ("E0002", "00993A", 13.29, "2026-10-16"),
+                          ("E0003", "00402A", 9.48, "2026-10-15")])
+        self.assertEqual(a.parse_estimates(self.load("inav"))["00412A"], {"nav_estimate": 9.03, "nav_estimate_date": "2026-10-16"})
+        d = a.parse_detail(self.load("detail_00984A"), "00984A")
+        self.assertEqual((d["list_date"], d["manager"], d["risk_class"], d["mgmt_fee"], d["custodian_fee_text"]),
+                         ("2025-07-14", "廖本隆", "RR4", 0.7, "0.04%"))
+        # 分段費率不換算
+        self.assertEqual(a.parse_detail(self.load("detail_00412A"), "00412A")["mgmt_fee"], None)
+        self.assertEqual(a.parse_detail(self.load("detail_00984A"), "00993A"), {})
+        self.assertEqual(a.parse_dividends(self.load("yield"))["00984A"][1],
+                         {"code": "00984A", "ex_date": "2026-07-16", "pay_date": "2026-08-11", "cash": 0.415})
+        p = a.parse_pcf(self.load("trade_00984A"))
+        self.assertEqual((p["pcf_date"], p["aum"], p["units"], p["units_change"], p["beneficiaries"], p["beneficiaries_month"]),
+                         ("2026-10-16", 104.14, 682458000.0, 9500000.0, 63210.0, "2026-09"))
+        self.assertEqual(p["holdings"][0], {"asset_code": "3017", "asset_name": "奇鋐", "kind": "股票", "weight": 4.39, "qty": 138000.0})
+        # 期貨代號加上契約年月
+        self.assertEqual(a.parse_pcf(self.load("trade_00993A"))["holdings"][-1],
+                         {"asset_code": "TX-202611", "asset_name": "台指期貨", "kind": "期貨", "weight": 1.9, "qty": 19.0})
+        # 投資海外的 ETF：清單資料晚兩個交易日；附買回債券沒有代號與權重，不收
+        r = a.parse_pcf(self.load("trade_00412A"))
+        self.assertEqual((r["pcf_date"], [h["asset_code"] for h in r["holdings"]]), ("2026-10-15", ["2330", "3008", "6857 JP", "3443"]))
+        # 舊清單沒有序號欄，代號與名稱有多餘空白
+        self.assertEqual(a.parse_pcf(self.load("trade_old"))["holdings"][1],
+                         {"asset_code": "1210", "asset_name": "大成", "kind": "股票", "weight": 0.21, "qty": 42000.0})
+        # 查無資料（StatusCode 1）
+        self.assertIsNone(self.load("trade_00402A"))
+        self.assertEqual(a.parse_pcf(None), {})
+        with self.assertRaises(RuntimeError):
+            a.unwrap({"StatusCode": 2, "Message": "錯誤"})
+
+    def test_fetch(self):
+        from issuers import allianz as a
+        recs = a.fetch(fixtures=FIX / "allianz")
+        self.assertEqual(sorted(recs), ["00402A", "00412A", "00984A", "00993A"])
+        # 查不到申購買回清單的 ETF 仍保留官網的淨值與基金資料
+        b = recs["00402A"]
+        self.assertEqual((b["nav_official"], b["aum"], b["holdings"], b["manager"], "pcf_date" in b), (9.48, None, [], "洪華珍", False))
+        self.assertEqual(recs["00984A"]["source_url"], "https://etf.allianzgi.com.tw/etf-info/E0001")
+
+    def fixtures(self, tmp: str) -> Path:
+        """在共用測試資料加上兩檔安聯 ETF 的交易所資料。"""
+        fix = fixtures_without(tmp)
+        nav = json.loads((fix / "nav.json").read_text("utf-8"))
+        nav["a1"].append({"msgArray": [
+            {"a": "00984A", "b": "主動安聯台灣高息", "e": "15.30", "f": "15.25", "g": "", "h": "15.92", "i": "20261016", "j": "13:30:00"},
+            {"a": "00412A", "b": "主動安聯亞半導體", "e": "9.10", "f": "9.02", "g": "", "h": "9.05", "i": "20261016", "j": "13:30:00"}]})
+        (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
+        twse = json.loads((fix / "twse.json").read_text("utf-8"))
+        twse += [{"Code": "00984A", "Name": "主動安聯台灣高息", "TradeVolume": "20,000,000", "ClosingPrice": "15.30", "Change": "-0.6200"},
+                 {"Code": "00412A", "Name": "主動安聯亞半導體", "TradeVolume": "5,000,000", "ClosingPrice": "9.10", "Change": "0.0500"}]
+        (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
+        return fix
+
+    def test_pipeline(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            self.assertEqual(f.main(["--fixtures", str(self.fixtures(tmp)), "--db", str(db), "--out", str(out)]), 0)
+            items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            a = items["00984A"]
+            self.assertEqual((a["issuer"], a["nav"], a["nav_source"]), ("安聯", 15.26, "安聯投信官網（正式淨值）"))
+            self.assertEqual((a["aum"], a["units_change"], a["beneficiaries"], a["mgmt_fee"], a["fee_source"], a["manager"]),
+                             (104.14, 9500000.0, 63210.0, 0.7, "安聯投信官網", "廖本隆"))
+            self.assertEqual(a["last_ex"], {"ex_date": "2026-10-16", "cash": 0.473, "pay_date": "2026-11-13", "source": "安聯投信官網"})
+            self.assertEqual((a["holdings_top"][0]["asset_code"], a["holdings_date"]), ("3017", "2026-10-16"))
+            b = items["00412A"]
+            # 正式淨值與清單都是 10/15 的，當天用安聯公布的預估淨值；單位增減屬於 10/15
+            self.assertEqual((b["nav"], b["nav_source"], b["units_change"]), (9.03, "安聯投信官網（預估淨值）", None))
+            con = sqlite3.connect(db)
+            self.assertEqual(con.execute("SELECT DISTINCT date FROM holding WHERE code='00412A'").fetchall(), [("2026-10-15",)])
+            con.close()
+
+
 class ReturnsTest(unittest.TestCase):
     def history(self):
         import returns

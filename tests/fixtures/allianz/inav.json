@@ -1,0 +1,57 @@
+{
+ "TotalPages": -1,
+ "TotalItems": 0,
+ "Entries": [
+  {
+   "CDataDt": "2026-10-16T16:59:45",
+   "CFundId": "E0001",
+   "CStockNo": "00984A",
+   "CLastDayNav": 15.92,
+   "CEstimateNav": 15.26,
+   "CLatestMarketPrice": 15.27,
+   "CDiffPct": 0.07,
+   "CEtfcurrency": "TWD",
+   "CLastDayNAVDT": "2026/10/15",
+   "CDealingDay": "Y"
+  },
+  {
+   "CDataDt": "2026-10-16T16:59:45",
+   "CFundId": "E0002",
+   "CStockNo": "00993A",
+   "CLastDayNav": 13.33,
+   "CEstimateNav": 13.28,
+   "CLatestMarketPrice": 13.27,
+   "CDiffPct": -0.08,
+   "CEtfcurrency": "TWD",
+   "CLastDayNAVDT": "2026/10/15",
+   "CDealingDay": "Y"
+  },
+  {
+   "CDataDt": "2026-10-16T16:59:45",
+   "CFundId": "E0003",
+   "CStockNo": "00402A",
+   "CLastDayNav": 9.48,
+   "CEstimateNav": 9.53,
+   "CLatestMarketPrice": 9.67,
+   "CDiffPct": 1.47,
+   "CEtfcurrency": "TWD",
+   "CLastDayNAVDT": "2026/10/15",
+   "CDealingDay": "Y"
+  },
+  {
+   "CDataDt": "2026-10-16T14:59:50",
+   "CFundId": "E0004",
+   "CStockNo": "00412A",
+   "CLastDayNav": 9.05,
+   "CEstimateNav": 9.03,
+   "CLatestMarketPrice": 9.03,
+   "CDiffPct": 0.0,
+   "CEtfcurrency": "TWD",
+   "CLastDayNAVDT": "2026/10/15",
+   "CDealingDay": "Y"
+  }
+ ],
+ "Message": "",
+ "StatusCode": 0,
+ "RedirectUrl": null
+}

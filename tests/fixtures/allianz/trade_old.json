@@ -1,0 +1,67 @@
+{
+ "TotalPages": -1,
+ "TotalItems": 0,
+ "Entries": {
+  "CFundId": "E0001",
+  "CFundShortName": "主動安聯台灣高息",
+  "CPcfdate": "2025-07-15T00:00:00",
+  "CNavDt": "2025-07-14T00:00:00",
+  "CAnceTotalAv": 1250898670.0,
+  "CAnceTotalIssues": 125958000.0,
+  "CAnceIssuesDiff": 13000000.0,
+  "CAnceNav": 9.93,
+  "CAnceTotalIssuesT1": null,
+  "CAnceTotalIssuesT1Date": null,
+  "CEtfindexCurrency": "TWD",
+  "CAnceBaseValue": 500000.0,
+  "DynamicTableData": [
+   {
+    "TableTitle": "股票",
+    "Columns": [
+     {
+      "Name": "股票代號",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "股票名稱",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "股數",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "權重(%)",
+      "TextAlign": "center"
+     }
+    ],
+    "Rows": [
+     [
+      "1102 ",
+      "亞泥",
+      "628,000",
+      "2.02%"
+     ],
+     [
+      "1210 ",
+      "大成 ",
+      "42,000",
+      "0.21%"
+     ],
+     [
+      "1215 ",
+      "卜蜂",
+      "41,000",
+      "0.41%"
+     ]
+    ]
+   }
+  ],
+  "CBeneficiariesCount": 1430,
+  "CBeneficiariesCountDate": "2025-07-02T00:00:00",
+  "CSecuritiesCode": "00984A"
+ },
+ "Message": "",
+ "StatusCode": 0,
+ "RedirectUrl": null
+}

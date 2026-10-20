@@ -1,0 +1,50 @@
+{
+ "TotalPages": -1,
+ "TotalItems": 0,
+ "Entries": [
+  {
+   "CFundNo": "E0001",
+   "CSecuritiesCode": "00984A",
+   "CUnitDigit": 4,
+   "FundYieldList": [
+    {
+     "CBaseDate": "2026-10-15T00:00:00",
+     "CPerShare": 0.473,
+     "CCurrentDy": 0.02971,
+     "CValuationDate": "2026-09-30T00:00:00",
+     "CExDate": "2026-10-16T00:00:00",
+     "CPayableDate": "2026-11-13T00:00:00"
+    },
+    {
+     "CBaseDate": "2026-07-15T00:00:00",
+     "CPerShare": 0.415,
+     "CCurrentDy": 0.02554,
+     "CValuationDate": "2026-06-30T00:00:00",
+     "CExDate": "2026-07-16T00:00:00",
+     "CPayableDate": "2026-08-11T00:00:00"
+    }
+   ]
+  },
+  {
+   "CFundNo": "E0002",
+   "CSecuritiesCode": "00993A",
+   "CUnitDigit": 4,
+   "FundYieldList": []
+  },
+  {
+   "CFundNo": "E0003",
+   "CSecuritiesCode": "00402A",
+   "CUnitDigit": 4,
+   "FundYieldList": []
+  },
+  {
+   "CFundNo": "E0004",
+   "CSecuritiesCode": "00412A",
+   "CUnitDigit": 4,
+   "FundYieldList": []
+  }
+ ],
+ "Message": "",
+ "StatusCode": 0,
+ "RedirectUrl": null
+}

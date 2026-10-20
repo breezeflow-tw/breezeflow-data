@@ -1,0 +1,23 @@
+{
+ "TotalPages": -1,
+ "TotalItems": 0,
+ "Entries": {
+  "CFundNo": "E0001",
+  "CSecuritiesCode": "00984A",
+  "CShortName": "主動安聯台灣高息",
+  "CCgCurrencyTypeStr": "新台幣",
+  "CCgRiskLevelStr": "RR4",
+  "CCgFundTypeStr": "主動式交易所交易基金",
+  "CCgDividendFrequencyStr": "季配",
+  "CManagerFee": "0.70%",
+  "CCustodyFee": "0.04%",
+  "CManager": "廖本隆",
+  "CSetUpDt": "2025/07/03",
+  "CListingDt": "2025/07/14",
+  "CIndexCode": "",
+  "CPerformanceMetrics": ""
+ },
+ "Message": "",
+ "StatusCode": 0,
+ "RedirectUrl": null
+}
