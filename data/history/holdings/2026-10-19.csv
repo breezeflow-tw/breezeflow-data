@@ -109,6 +109,56 @@ code,date,asset_code,asset_name,kind,weight,qty,source,source_url
 00401A,2026-10-19,7828,創新服務,股票,1.4556,37270.0,摩根投信官網,https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false
 00401A,2026-10-19,7856,漢測,股票,0.7231,8030.0,摩根投信官網,https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false
 00401A,2026-10-19,8464,億豐綜合工業,股票,0.985,105000.0,摩根投信官網,https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false
+00402A,2026-10-19,AAPL US,Apple Inc,股票,8.07,39400.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,ADI US,Analog Devices Inc,股票,1.96,8300.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,AMD US,Advanced Micro Devices Inc,股票,5.79,18000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,AMZN US,Amazon.com Inc,股票,4.61,29400.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,ANET US,Arista Networks Inc,股票,0.8,7300.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,ARM US,ARM Holdings PLC,股票,0.82,6000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,ASML US,ASML Holding NV,股票,1.18,1200.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,AVGO US,Broadcom Inc,股票,2.18,10900.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,AXON US,Axon Enterprise Inc,股票,0.55,2400.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,BABA US,Alibaba Group Holding Ltd,股票,0.5,7700.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,BKNG US,Booking Holdings Inc,股票,0.54,5600.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,CDNS US,Cadence Design Systems Inc,股票,1.52,7800.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,CIEN US,Ciena Corp,股票,1.13,5500.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,CLS US,Celestica Inc,股票,1.22,6800.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,COHR US,Coherent Corp,股票,1.14,8200.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,CRWD US,Crowdstrike Holdings Inc,股票,1.53,11200.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,DASH US,DoorDash Inc,股票,0.5,4300.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,FSLY US,Fastly Inc,股票,0.34,25100.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,GOOG US,Alphabet Inc,股票,3.48,17100.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,GOOGL US,Alphabet Inc,股票,3.5,17000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,INTC US,Intel Corp,股票,1.44,26200.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,IOT US,Samsara Inc,股票,0.54,22600.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,KLAC US,KLA Corp,股票,1.52,15300.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,LITE US,Lumentum Holdings Inc,股票,1.7,3400.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,LRCX US,Lam Research Corp,股票,2.49,15300.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,MCHP US,Microchip Technology Inc,股票,1.36,30500.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,MDB US,MongoDB Inc,股票,0.38,1800.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,META US,Meta Platforms Inc,股票,3.84,9100.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,MRVL US,Marvell Technology Inc,股票,1.64,11600.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,MSFT US,Microsoft Corp,股票,5.55,17400.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,MU US,Micron Technology Inc,股票,5.68,10500.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,NFLX US,Netflix Inc,股票,1.01,24100.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,NOW US,ServiceNow Inc,股票,1.16,13300.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,NVDA US,NVIDIA Corp,股票,8.74,67700.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,PANW US,Palo Alto Networks Inc,股票,2.74,13200.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,PLTR US,Palantir Technologies Inc,股票,2.2,19000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,SHOP US,Shopify Inc,股票,1.24,12100.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,SIMO US,Silicon Motion Technology Corp,股票,0.49,3800.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,SKHY US,SK hynix Inc,股票,0.79,9200.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,SNOW US,Snowflake Inc,股票,1.3,6900.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,SPCX US,Space Exploration Technologies Corp,股票,0.75,8500.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,SPOT US,Spotify Technology SA,股票,0.37,1200.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,STX US,Seagate Technology Holdings PLC,股票,1.03,2600.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,TER US,Teradyne Inc,股票,0.76,3800.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,TSM US,Taiwan Semiconductor Manufacturing Co Ltd,股票,1.51,6000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,TTWO US,Take-Two Interactive Software Inc,股票,0.6,4900.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,TXN US,Texas Instruments Inc,股票,2.41,14600.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,UBER US,Uber Technologies Inc,股票,0.32,7700.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,V US,Visa Inc,股票,1.25,5200.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
+00402A,2026-10-19,WDC US,Western Digital Corp,股票,1.77,8400.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003
 00403A,2026-10-19,1303,南亞,股票,2.66,11500000.0,統一投信官網,https://www.ezmoney.com.tw/ETF/Fund/Info?fundCode=63YTW
 00403A,2026-10-19,1560,中砂,股票,0.2,300000.0,統一投信官網,https://www.ezmoney.com.tw/ETF/Fund/Info?fundCode=63YTW
 00403A,2026-10-19,1717,長興,股票,0.05,900000.0,統一投信官網,https://www.ezmoney.com.tw/ETF/Fund/Info?fundCode=63YTW
@@ -400,6 +450,62 @@ code,date,asset_code,asset_name,kind,weight,qty,source,source_url
 00411A,2026-10-19,TSLA US,TESLA INC(特斯拉公司),股票,1.07,3983.0,統一投信官網,https://www.ezmoney.com.tw/ETF/Fund/Info?fundCode=64YTW
 00411A,2026-10-19,TWST US,TWIST BIOSCIENCE CORP,股票,0.47,4659.0,統一投信官網,https://www.ezmoney.com.tw/ETF/Fund/Info?fundCode=64YTW
 00411A,2026-10-19,ZS US,ZSCALER INC,股票,0.95,6137.0,統一投信官網,https://www.ezmoney.com.tw/ETF/Fund/Info?fundCode=64YTW
+00412A,2026-10-19,000660 KS,SK Hynix Inc,股票,1.28,2954.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,002463 C2,WUS Printed Circuit Kunshan Co Ltd,股票,2.17,287300.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,005930 KS,Samsung Electronics Co Ltd,股票,1.06,14362.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,2059,川湖,股票,0.73,5275.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,2303,聯電,股票,1.51,822000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,2308,台達電子,股票,2.49,109000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,2330,台積電,股票,7.94,235000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,2345,智邦,股票,1.15,41000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,2360,致茂,股票,0.95,34000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,2383,台光電子,股票,0.71,10000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,2454,聯發科,股票,2.64,45000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,300476 C2,Victory Giant Technology Huizhou Co Ltd,股票,0.77,64000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,3008,大立光電,股票,4.09,47000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,3017,奇鋐,股票,3.2,69000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,3081,聯亞光電,股票,1.36,38000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,3264,欣銓,股票,0.75,207000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,3324,雙鴻科技,股票,0.69,36000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,3374,精材,股票,1.53,250000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,3406,玉晶光,股票,2.1,144000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,3436 JP,SUMCO Corp,股票,1.28,168100.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,3443,創意電子,股票,4.26,39000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,3529,力旺,股票,1.02,27000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,3653,健策,股票,2.47,27000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,3711,日月光投控,股票,1.4,150000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,4004 JP,Resonac Holdings Corp,股票,0.84,19000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,4062 JP,Ibiden Co Ltd,股票,1.82,67000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,4958,臻鼎-KY,股票,1.64,215000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,5274,信驊科技,股票,2.01,9000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,5706 JP,Mitsui Mining & Smelting Co Ltd,股票,0.74,113000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,5801 JP,Furukawa Electric Co Ltd,股票,0.64,67000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,5802 JP,Sumitomo Electric Industries Ltd,股票,1.09,184200.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,600183 C1,Shengyi Technology Co Ltd,股票,2.08,261400.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,6146 JP,Disco Corp,股票,0.75,4900.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,6187,萬潤科技,股票,1.96,100000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,6223,旺矽,股票,1.31,18000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,6274,台燿,股票,0.82,36000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,6415,矽力*-KY,股票,1.23,185000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,6669,緯穎,股票,0.63,24000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,6805,富世達,股票,1.95,60000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,6857 JP,Advantest Corp,股票,3.65,37100.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,6976 JP,Taiyo Yuden Co Ltd,股票,1.62,59100.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,6981 JP,Murata Manufacturing Co Ltd,股票,1.35,69600.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,7734,印能科技,股票,0.34,10000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,8046,南電,股票,0.44,23000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,8996,高力,股票,1.62,76000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,AMD US,Advanced Micro Devices Inc,股票,1.58,6500.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,AVGO US,Broadcom Inc,股票,1.97,13000.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,CRDO US,Credo Technology Group Holding Ltd,股票,0.68,8700.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,GLW US,Corning Inc,股票,1.09,18200.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,LITE US,Lumentum Holdings Inc,股票,1.28,3400.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,LSCC US,Lattice Semiconductor Corp,股票,0.74,15100.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,MXL US,MaxLinear Inc,股票,0.69,19800.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,NVDA US,NVIDIA Corp,股票,1.6,16300.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,SITM US,SiTime Corp,股票,0.74,3280.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,SMTC US,Semtech Corp,股票,0.95,14700.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
+00412A,2026-10-19,TXN US,Texas Instruments Inc,股票,0.8,6400.0,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0004
 00415A,2026-10-19,1303,南亞,股票,2.2118,839000.0,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/504/buyback
 00415A,2026-10-19,1560,中砂,股票,0.0225,3000.0,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/504/buyback
 00415A,2026-10-19,2059,川湖,股票,2.3265,27000.0,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/504/buyback
