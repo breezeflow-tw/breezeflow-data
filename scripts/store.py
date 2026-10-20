@@ -39,8 +39,10 @@ TABLES = {
     "market_calendar": (None, "date"),
     "market_calendar_year": (None, "year"),
     "fund_backfill": (None, "code, pcf_date"),
+    "exchange_daily": ("date", "code"),
 }
-SPLIT_DIRS = {"daily": "daily", "holding": "holdings", "fund_daily": "fund_daily", "fund_monthly": "fund_monthly"}
+SPLIT_DIRS = {"daily": "daily", "holding": "holdings", "fund_daily": "fund_daily", "fund_monthly": "fund_monthly",
+              "exchange_daily": "exchange_daily"}
 
 # 舊資料庫補上新欄位
 MIGRATIONS = {

@@ -28,6 +28,7 @@ import sitca
 import store
 import fund_flows
 import market_calendar
+import official_quotes
 import sitca_etf
 from issuers import allianz, blackrock, capital, cathay, ctbc, fubon, fuhhwa, jpmorgan, kgi, nomura, uni, yuanta
 from issuers.common import flat_fee
@@ -941,7 +942,7 @@ def attach_returns(con: sqlite3.Connection, items: list[dict], date: str, reused
 
 
 def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, has_nav: bool = True,
-              active: dict | None = None) -> None:
+              active: dict | None = None, attributions: list[dict] | None = None) -> None:
     """網站讀的唯一檔案。區間報酬的起始日與出處放在最上層 returns_info，各檔數字在 items[].returns。"""
     checks: dict[str, int] = {}
     for it in items:
@@ -956,6 +957,7 @@ def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, h
         "price_check": checks,
         "returns_info": {"source": returns.SOURCE, "starts": returns.start_dates(date)},
         "active_changes": active,
+        "attributions": attributions or [],
         "count": len(items),
         "items": items,
     }
@@ -1089,12 +1091,15 @@ def main(argv=None) -> int:
         apply_fund_top(items, load_fund_top(con), date)
         apply_main_line_holdings(items)
         active = active_changes.attach(con, items, date, issuer, parse_closes(raw["twse"], raw["tpex"]))
+        official = [q for q in official_quotes.parse(raw["twse"], raw["tpex"]) if q["code"] not in EXCLUDED]
+        official_quotes.save(con, official, datetime.now(TW).isoformat(timespec="seconds"))
         con.commit()
         purge_excluded(con)
         store.dump(con, history)
     finally:
         con.close()
-    save_json(items, date, source, args.out, has_nav=any(it["nav"] is not None for it in items), active=active)
+    save_json(items, date, source, args.out, has_nav=any(it["nav"] is not None for it in items), active=active,
+              attributions=official_quotes.attributions(official))
     flagged = sum(1 for it in items if it["premium"] is not None and abs(it["premium"]) >= 1)
     checks = {k: sum(1 for it in items if it["price_check"] == k) for k in ("一致", "已修正", "未查核", "交易所")}
     print(f"{date}：共 {len(items)} 檔 ETF，折溢價超過 ±1% 有 {flagged} 檔，除息預告 {len(dividends)} 筆 → {args.out}")
