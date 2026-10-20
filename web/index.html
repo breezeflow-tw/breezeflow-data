@@ -204,6 +204,16 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
 .rank-negative .rank-bar{background:var(--down);margin-left:auto}.rank-value{text-align:right;font:14px var(--f-num);white-space:nowrap}
 .rank-empty{padding:36px 16px;color:var(--muted);text-align:center;border:1px dashed var(--line);font-size:13px}
 .rank-method{margin-top:24px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;line-height:1.8;color:var(--muted)}
+.quality-panel{grid-column:1/-1;border-top:1px solid var(--line);padding:12px 24px;font-size:12px;color:var(--muted)}
+.quality-panel summary{cursor:pointer;color:var(--ink);line-height:1.8}.quality-panel summary span{color:var(--muted);margin-left:14px}
+.quality-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:16px 0}
+.quality-grid dt{color:var(--ink);font-size:13px;margin-bottom:6px}.quality-grid dd{margin:0;line-height:1.8}
+.quality-grid strong{color:var(--ink);font-family:var(--f-num);font-weight:500}.quality-note{line-height:1.8}
+.date-note{color:var(--muted)}.date-note.review{color:var(--prem)}
+.flow-weeks{list-style:none;padding:0;margin:12px 0}.flow-weeks li{padding:12px 0;border-bottom:1px solid var(--line)}
+.flow-week-title{display:flex;justify-content:space-between;gap:12px;color:var(--ink)}
+.flow-weeks p{margin:6px 0 0;font-size:12px;line-height:1.8;color:var(--muted)}
+@media(max-width:767px){.quality-panel{padding:12px 16px}.quality-panel summary span{display:block;margin-left:0}.quality-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px}}
 @media(max-width:1399px){.detail-open .rank-grid{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:767px){.rankings{padding:16px}.rank-grid{grid-template-columns:minmax(0,1fr);gap:28px}.rank-controls{width:100%;gap:12px}.rank-controls label{flex:1;min-width:0;display:block}.rank-controls select{margin-top:6px}.rank-row{grid-template-columns:minmax(0,43%) minmax(0,1fr) 70px;gap:8px}.rank-axis{margin-left:43%;margin-right:78px}.rank-label{gap:6px}.rank-name{font-size:12px}.rank-value{font-size:13px}}
 @media(min-width:1200px){
@@ -286,6 +296,7 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
         <button class="reset" id="reset-filters" type="button">清除篩選</button>
       </div>
     </div>
+    <details class="quality-panel" id="data-quality"><summary>資料完整度<span id="quality-summary">載入中…</span></summary><div id="quality-content"></div></details>
     <div class="view-switch" role="group" aria-label="資料檢視"><button type="button" id="view-market" aria-pressed="true">行情與配息</button><button type="button" id="view-flows" aria-pressed="false">週資金流</button><button type="button" id="view-rankings" aria-pressed="false" aria-controls="rankings">報酬排行榜</button><p class="view-note" id="view-note">點選 ETF 可查看數字解釋、官方資料與前十大持股／成分。</p></div>
     <section class="rankings" id="rankings" aria-labelledby="rank-title" hidden>
       <div class="rank-toolbar"><h2 id="rank-title">ETF 市價漲跌幅排行</h2><div class="rank-controls">
@@ -364,7 +375,39 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
     try{const u=new URL(url);if(u.protocol==="https:"&&trustedHosts.some(h=>u.hostname===h||u.hostname.endsWith("."+h)))return `<a href="${esc(u.href)}" target="_blank" rel="noopener noreferrer">${detailText(label||"查看原公告")}</a>`;}catch{}
     return detailText(label);
   }
-  const provenance=(label,url,day)=>`<small class="detail-source">資料日：${detailText(day)}<br>出處：${sourceLink(label,url)}</small>`;
+  // 日期與完整度：只檢查已提供欄位，不推測公告頻率或交易日。
+  function dateState(day,asOf,source=""){
+    if(typeof day!=="string")return {kind:"missing",label:"日期待確認"};
+    const month=/^\d{4}-(0[1-9]|1[0-2])$/.test(day);
+    const daily=/^\d{4}-\d{2}-\d{2}$/.test(day)&&Number.isFinite(Date.parse(day+"T00:00:00Z"))&&new Date(day+"T00:00:00Z").toISOString().slice(0,10)===day;
+    if(!month&&!daily)return {kind:"invalid",label:"日期待確認"};
+    const limit=typeof asOf==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(asOf)?asOf:null;
+    if(limit&&day>(month?limit.slice(0,7):limit))return {kind:"future",label:"晚於行情日，待核對"};
+    if(month||/月統計|月資料|月前十大|基金資料彙總/.test(source))return {kind:"monthly",label:"月公告，與日行情不同頻率"};
+    if(limit&&day<limit)return {kind:"earlier",label:"較早公告，請核對日期"};
+    return {kind:limit?"current":"dated",label:limit?"與行情日相同":"已提供日期"};
+  }
+  function fieldCoverage(items,asOf){
+    const fields=[['nav','淨值'],['aum','基金規模'],['units','流通單位數'],['holdings','前十大持股／成分']];
+    return fields.map(([key,label])=>{
+      const rows=items.map(item=>{
+        const value=key==="holdings"?item.holdings_top:item[key];
+        const present=key==="holdings"?Array.isArray(value)&&value.length>0:typeof value==="number"&&Number.isFinite(value)&&value>0;
+        const day=dateState(item[key+"_date"],asOf,item[key+"_source"]),source=typeof item[key+"_source"]==="string"&&item[key+"_source"].trim().length>0;
+        return {present,day,complete:present&&source&&!["missing","invalid","future"].includes(day.kind)};
+      });
+      return {key,label,present:rows.filter(r=>r.present).length,complete:rows.filter(r=>r.complete).length,
+        earlier:rows.filter(r=>r.present&&r.day.kind==="earlier").length,monthly:rows.filter(r=>r.present&&r.day.kind==="monthly").length};
+    });
+  }
+  // 日期與完整度結束。
+  const provenance=(label,url,day)=>{const status=dateState(day,detailDate,label);return `<small class="detail-source">資料日：${detailText(day)} <span class="date-note ${["future","missing","invalid"].includes(status.kind)?"review":""}">（${status.label}）</span><br>出處：${sourceLink(label,url)}</small>`;};
+  function renderQuality(items){
+    if(dataFailed){$("quality-summary").textContent="資料載入失敗";$("quality-content").innerHTML='<p class="quality-note">本次無法取得資料，請稍後重新整理。</p>';return;}
+    const weeks=items.filter(d=>hasNumber(d.flows?.net_amount)).length,full=items.filter(d=>hasNumber(d.flows?.four_week_amount)).length;
+    $("quality-summary").textContent=`目前篩選 ${items.length} 檔 · 本週可估算 ${weeks} 檔 · 近4週齊備 ${full} 檔`;
+    $("quality-content").innerHTML=`<dl class="quality-grid">${fieldCoverage(items,detailDate).map(f=>`<div><dt>${f.label}</dt><dd>有數值 <strong>${f.present} / ${items.length}</strong><br>數值、日期、來源齊備 <strong>${f.complete} / ${items.length}</strong><br>較早日公告 ${f.earlier} 檔 · 月公告 ${f.monthly} 檔</dd></div>`).join("")}</dl><p class="quality-note">依目前篩選範圍統計，缺資料不當作零。日期與來源齊備只代表欄位已提供，不保證數值無誤或公告已是最新；月公告與日行情更新頻率不同。點選 ETF 可核對原始公告。本週及近4週數字須有足夠的可比官方日資料；休市與特殊事件尚未完整確認時維持待核對。</p>`;
+  }
   function flowDetail(d){
     const f=d.flows||{},raw=d.monthly;
     const m=d.sitca_monthly|| (raw?{...raw,subscriptions:raw.subscribe,redemptions:raw.redeem,net_amount:raw.net,source_url:"https://www.sitca.org.tw/ROC/Industry/IN2201.aspx?pid=IN2221_01"}:null);
@@ -373,9 +416,11 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
       detailField("本週淨申購估算（億元）",value(f.net_amount))+
       detailField("本週淨流入率（%）",value(f.net_rate),{note:'<small class="detail-source">本週淨申購估算 ÷ 前週末基金規模</small>'})+
       detailField("近4週累計淨申購（億元）",value(f.four_week_amount))+
-      detailField("近4週正流入週數",hasNumber(f.positive_weeks)?`${f.positive_weeks} / 4 週`:"—",{note:`<small class="detail-source">已具足夠資料：${fmt(f.available_weeks||0,0)} / 4 週；缺週不補零。</small>`})+
+      detailField("近4週正流入週數",hasNumber(f.positive_weeks)?`${f.positive_weeks} / 4 週`:"—",{note:`<small class="detail-source">已具足夠資料：${hasNumber(f.available_weeks)?fmt(f.available_weeks,0)+" / 4 週":"待確認"}；缺週不補零。</small>`})+
       detailField("流通單位數週增減率（%）",value(f.units_rate))+
       detailField("官方日資料最新日期",detailText(f.latest_official_date))+`</dl>`;
+    const periods=Array.isArray(f.weeks)?f.weeks.slice(0,4):[];
+    html+=`<details class="flow-method"><summary>逐週資料與缺漏原因</summary>`+(periods.length?`<ol class="flow-weeks">${periods.map(w=>`<li><div class="flow-week-title"><span>${detailText(w.start)} 至 ${detailText(w.end)}</span><strong>${hasNumber(w.net_amount)?"可估算":"待確認"}</strong></div><p>比較期初 ${detailText(w.baseline)} · 淨申購估算 ${signed(w.net_amount," 億元")}</p><p>${detailText(w.reason||"請核對逐日來源與特殊事件公告。")}</p></li>`).join("")}</ol>`:'<p>尚未取得逐週明細；可用週數待確認。</p>')+`<p>四週都具備可比資料才顯示累計及正流入週數；不跨缺漏週加總。</p></details>`;
     html+=`<details class="flow-method"><summary>計算方式、逐日來源與特殊事件</summary><p>每日流通單位數增減 × 同日投信正式淨值，逐日加總後換算億元。這是本站依官方數據計算的申贖對價估算，包含實物申贖，不等於實際現金流。近4週包含本週；本週尚未結束時只計至截至日。</p><p>缺少日期、正式淨值、幣別或可比單位資料時暫停計算；公會月資料不拆成週數字。${detailText(f.events_status||"特殊事件公告待核對。")}</p>`+
       `<ul class="flow-sources">${(f.sources||[]).map(s=>`<li>${detailText(s.date)} · ${sourceLink(s.source,s.url)}</li>`).join("")||'<li>本週官方來源尚不完整。</li>'}</ul>`+
       `<p>特殊事件：${(f.events||[]).map(e=>`${detailText(e.date)} ${detailText(e.kind)} ${sourceLink(e.description||"公告",e.source_url)}`).join("；")||"未取得可列示公告，不代表無特殊事件。"}</p></details>`;
@@ -422,7 +467,7 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
     const navLabel=hasNumber(d.nav)?`<span class="detail-badge">${String(d.nav_source??"").includes("正式淨值")?"正式淨值":"預估淨值"}</span>`:"";
     const premium=hasNumber(d.premium)?`<span class="detail-value ${d.premium>0?"premium":d.premium<0?"discount":""}" title="${esc(d.premium)}%">${d.premium>0?"+":""}${fmt(d.premium,2)}%</span>`:"—";
     const price=detailField("收盤價（每單位／元）",`<span class="detail-value quote-value">${fmt(d.price,2)}</span>${hasNumber(d.price)?" 元":""}`+change,{note:'<small class="detail-source">下方百分比＝收盤價相較前一交易日的漲跌幅。</small>'})+
-      detailField("每單位基金淨值（元）",detailMetric(d.nav)+navLabel,{note:provenance(d.nav_source,d.nav_source_url,d.nav_date||detailDate)})+
+      detailField("每單位基金淨值（元）",detailMetric(d.nav)+navLabel,{note:provenance(d.nav_source,d.nav_source_url,d.nav_date)})+
       detailField("前一營業日淨值（元）",detailMetric(d.nav_prev))+detailField("市價相對淨值折溢價（%）",premium)+
       detailField("成交量（張）",detailMetric(d.volume_lots))+
       detailField("市價查核",detailText(d.price_check),{note:d.price_check==="已修正"?'<small class="detail-source">Yahoo 股市與交易所數字不一致，已採用交易所資料。</small>':d.price_check==="交易所"?'<small class="detail-source">Yahoo 缺資料，直接採用交易所資料。</small>':""});
@@ -577,6 +622,7 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
     const rows=DATA.filter(d=>(state.type==="全部"||d.category===state.type)&&(!state.alert||(d.premium!=null&&Math.abs(d.premium)>1))&&
       (!state.issuer||d.issuer===state.issuer)&&(!state.div||d.ex_upcoming)&&
       (!q||String(d.code||"").toLowerCase().includes(q)||String(d.name||"").toLowerCase().includes(q)||String(d.issuer||"").toLowerCase().includes(q)));
+    renderQuality(rows);
     if(state.view==="rankings")renderRankings(rows);
     const k=state.key;
     rows.sort((a,b)=>{const x=a[k],y=b[k];if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;
@@ -694,6 +740,7 @@ table.flow-table{min-width:1870px}.detail-panel .detail-value.flow-number{font-s
     chips();render();syncDetailHash();
   }).catch(()=>{
     dataFailed=true;
+    renderQuality([]);
     if(state.view==="rankings")renderRankings([]);
     $("h-date").textContent="尚無資料";
     $("result-count").textContent="載入失敗";
