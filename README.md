@@ -26,6 +26,7 @@
 | 收盤價、成交量（主要） | Yahoo 股市日線 `query1.finance.yahoo.com/v8/finance/chart/{代號}.TW`（上櫃為 `.TWO`） |
 | 收盤價、成交量（查核） | 證交所 OpenAPI `exchangeReport/STOCK_DAY_ALL`、櫃買 `tpex_mainboard_daily_close_quotes`。與 Yahoo 不一致時採用交易所數字，差異記錄在 `price_check` 表 |
 | 規模、流通單位數 | 各投信公告；缺日資料時使用投信投顧公會月統計並標示月末日期，不再顯示交易所單位數乘預估淨值的推算規模 |
+| 交易日曆（週申贖區分休市與缺資料） | 證交所 OpenAPI `holidaySchedule/holidaySchedule`（有價證券集中交易市場開（休）市日期），依年度保存在 `market_calendar` 表；官方表沒涵蓋的年度不判定休市 |
 | 週淨申購估算、淨流入率、近 4 週累計及正流入週數 | 依使用者要求，使用每日投信正式淨值與流通單位數推算申贖對價，明確標示「本站估算」；缺漏或不可比時留空，公式與限制見 [週資金流資料說明](docs/tasks/etf-weekly-flows.md) |
 | 月申購、買回與月末規模、單位數、受益人數 | [投信投顧公會 ETF 月統計](https://www.sitca.org.tw/ROC/SITCA_ETF/etf_statement.aspx)，保留月份、發布日及原表連結；月資料不拆成週資料 |
 | 除息日、每單位配息、發放日 | 投信官網配息紀錄為主（統一、群益、復華、凱基、富邦、國泰、中信、野村、摩根、貝萊德，含發放日）；證交所 `exchangeReport/TWT48U_ALL`、櫃買 `tpex_exright_prepost` 除權息預告補充尚未公布的部分 |

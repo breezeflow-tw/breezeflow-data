@@ -36,6 +36,8 @@ TABLES = {
     "fund_month": (None, "code, month"),
     "fund_top": (None, "code, month, rank"),
     "fund_fetch": (None, "report, month"),
+    "market_calendar": (None, "date"),
+    "market_calendar_year": (None, "year"),
 }
 SPLIT_DIRS = {"daily": "daily", "holding": "holdings", "fund_daily": "fund_daily", "fund_monthly": "fund_monthly"}
 

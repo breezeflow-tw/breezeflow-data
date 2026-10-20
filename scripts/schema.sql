@@ -94,6 +94,22 @@ CREATE TABLE IF NOT EXISTS fund_monthly (
   subscriptions REAL, redemptions REAL, beneficiaries REAL,
   source TEXT NOT NULL, source_url TEXT NOT NULL, published_at TEXT, PRIMARY KEY(code,month)
 );
+-- 證交所有價證券集中交易市場開（休）市日期：官方表列出的日子（休市日、開始／最後交易日），上市、上櫃共用
+CREATE TABLE IF NOT EXISTS market_calendar (
+  date        TEXT PRIMARY KEY,   -- YYYY-MM-DD
+  is_open     INTEGER NOT NULL,   -- 1＝當天有交易（開始交易日、最後交易日），0＝休市或僅辦理結算交割
+  name        TEXT,               -- 官方名稱，例如「國慶日」「農曆春節前最後交易日」
+  description TEXT,               -- 官方說明
+  source_url  TEXT,
+  fetched_at  TEXT                -- 取得時間
+);
+-- 官方開休市日期涵蓋的年度；不在這張表的年份一律視為未知，不能把沒有資料的日子當成休市
+CREATE TABLE IF NOT EXISTS market_calendar_year (
+  year        INTEGER PRIMARY KEY,
+  entries     INTEGER,            -- 該年度官方表列出的筆數
+  source_url  TEXT,
+  fetched_at  TEXT
+);
 CREATE TABLE IF NOT EXISTS fund_event (
   code TEXT NOT NULL, date TEXT NOT NULL, kind TEXT NOT NULL, description TEXT,
   source TEXT NOT NULL, source_url TEXT NOT NULL, PRIMARY KEY(code,date,kind)
