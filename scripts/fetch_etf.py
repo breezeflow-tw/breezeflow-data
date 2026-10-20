@@ -1010,11 +1010,22 @@ def main(argv=None) -> int:
     items = merge(nav, quotes, load_meta(), date, parse_fund(raw["fund"]))
     dividends = [d for d in parse_dividends(raw["div_twse"], raw["div_tpex"]) if d["code"] not in EXCLUDED]
 
+    # 回補歷史申購買回清單要用的開休市日期（資料庫裡的加上這次抓到的）與已查過的清單日期
+    con = sqlite3.connect(args.db)
+    try:
+        stored = market_calendar.load(con)
+        attempted = fund_flows.backfill_done(con)
+    finally:
+        con.close()
+    fresh_days = market_calendar.parse(raw["calendar"])
+    calendar = market_calendar.Calendar({**stored.entries, **fresh_days}, stored.years | {int(d[:4]) for d in fresh_days})
+    backfill = {"calendar": calendar, "attempted": attempted}
+
     # 各投信是不同網站，同時抓；同一個網站內仍逐筆、放慢速度
     def fetch_issuer(item):
         name, mod = item
         return mod, mod.fetch(http_get_json, fixtures=args.fixtures / name if args.fixtures else None, context=SSL_CONTEXT,
-                              dividend_codes=known_dividend_codes(args.db, mod.SOURCE))
+                              dividend_codes=known_dividend_codes(args.db, mod.SOURCE), history=backfill)
 
     # 投信投顧公會的資料每月才更新：資料庫裡的資料超過一週才重抓，和各投信同時進行
     fund_info, fetched = load_fund_info(args.db)
@@ -1065,12 +1076,15 @@ def main(argv=None) -> int:
                         [(r, m, today.isoformat()) for r, m in done])
         con.commit()
         apply_fund_month(items, load_fund_month(con))
-        calendar = market_calendar.parse(raw["calendar"])
-        if calendar:
-            market_calendar.save(con, calendar, datetime.now(TW).isoformat(timespec="seconds"))
+        if fresh_days:
+            market_calendar.save(con, fresh_days, datetime.now(TW).isoformat(timespec="seconds"))
         else:
             print(f"警告：{market_calendar.SOURCE}沒有抓到，週申贖沿用資料庫裡的日曆。", file=sys.stderr)
         fund_flows.save(con, issuer, monthly)
+        fund_flows.save_history(con, issuer)
+        backfilled = sum(len(r.get("history") or []) for r in issuer.values())
+        if backfilled:
+            print(f"投信官網歷史申購買回清單回補：{backfilled} 份")
         fund_flows.attach(con, items, date, market_calendar.load(con))
         apply_fund_top(items, load_fund_top(con), date)
         apply_main_line_holdings(items)

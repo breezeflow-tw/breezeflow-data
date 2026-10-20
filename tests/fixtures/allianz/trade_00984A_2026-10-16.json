@@ -1,0 +1,65 @@
+{
+ "TotalPages": -1,
+ "TotalItems": 0,
+ "Entries": {
+  "CFundId": "E0001",
+  "CFundShortName": "主動安聯台灣高息",
+  "CPcfdate": "2026-10-16T00:00:00",
+  "CNavDt": "2026-10-15T00:00:00",
+  "CAnceTotalAv": 10714201123.0,
+  "CAnceTotalIssues": 672958000.0,
+  "CAnceIssuesDiff": 5000000.0,
+  "CAnceNav": 15.92,
+  "CEtfindexCurrency": "TWD",
+  "CAnceBaseValue": 500000.0,
+  "DynamicTableData": [
+   {
+    "TableTitle": "股票 (97.31%)",
+    "Columns": [
+     {
+      "Name": "序號",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "股票代號",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "股票名稱",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "股數",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "權重(%)",
+      "TextAlign": "center"
+     }
+    ],
+    "Rows": [
+     [
+      "1",
+      "2881",
+      "富邦金控",
+      "2,851,000",
+      "4.31%"
+     ],
+     [
+      "2",
+      "3017",
+      "奇鋐",
+      "138,000",
+      "4.27%"
+     ]
+    ]
+   }
+  ],
+  "CBeneficiariesCount": 63210,
+  "CBeneficiariesCountDate": "2026-09-30T00:00:00",
+  "CSecuritiesCode": "00984A"
+ },
+ "Message": "",
+ "StatusCode": 0,
+ "RedirectUrl": null
+}

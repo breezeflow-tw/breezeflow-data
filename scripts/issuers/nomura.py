@@ -8,6 +8,11 @@
 - Fund/GetFundTradeInfoDate（FundNo）：有申購買回清單的日期，LatestDate 是最新一份；還沒上市的 ETF 沒有
 - Fund/GetFundTradeInfo（FundNo、Date）：申購買回清單，含淨資產、已發行單位數、與前日單位差異、受益人數與全部成分。
   Date 是清單適用的交易日，淨值與單位數是更早的淨值日期 CNavDtStr 那天的資料
+- 歷史清單：GetFundTradeInfoDate 的 AllDate 列出上市以來每一份清單的日期，回補時照這份清單查，
+  只留淨資產、單位數、單位差異與淨值，不留成分
+- 投資海外的 ETF 淨值日期比清單日期早兩個交易日，但「與前日已發行單位差異數」是清單日期前一個交易日的
+  （例如 00987B 清單 10/16 的 −1,000,000 單位，要到 10/15 的單位數才看得到）。這時單位差異記在前一份清單的日期，
+  淨資產、單位數、淨值與成分仍是淨值日期（asset_date、holdings_date）
 """
 from __future__ import annotations
 
@@ -21,7 +26,7 @@ import urllib.request
 from datetime import date
 from pathlib import Path
 
-from .common import flat_fee, num, ymd
+from .common import HISTORY_BUDGET, backfill_pcfs, flat_fee, num, ymd
 
 ISSUER = "野村"
 SOURCE = "野村投信官網"
@@ -92,6 +97,13 @@ def index_name(value) -> str | None:
 
 # ---------- 解析 ----------
 
+def date_units_change(pcf: dict, previous: str | None) -> dict:
+    """清單的淨值日期早於前一份清單的日期（投資海外的 ETF）時，單位差異改記在前一份清單的日期。"""
+    if pcf.get("pcf_date") and previous and previous > pcf["pcf_date"]:
+        return {**pcf, "asset_date": pcf["pcf_date"], "holdings_date": pcf["pcf_date"], "pcf_date": previous}
+    return pcf
+
+
 def parse_list(entries) -> list[dict]:
     return [{"code": r["CNo"].strip(), "nav_official": num(r.get("CNetValue")), "nav_date": ymd(r.get("CDataDt"))}
             for r in entries or [] if isinstance(r, dict) and r.get("CNo")]
@@ -152,6 +164,7 @@ def parse_pcf(entries) -> dict:
         "aum": round(total / 1e8, 2) if total else None,
         "units": num(t.get("CAnceTotalIssues")),
         "units_change": num(t.get("CAnceIssuesDiff")),
+        "pcf_nav": num(t.get("CAnceNav")) or None,  # 淨值日期那天的正式淨值
         "beneficiaries": num(t.get("CBeneficiariesCount")),
         "beneficiaries_month": counted[:7] if counted else None,
         # 債券 ETF 的基金資料頁只寫指數代碼，指數名稱在清單的債券指標裡
@@ -163,7 +176,8 @@ def parse_pcf(entries) -> dict:
 # ---------- 抓取 ----------
 
 def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext | None = None,
-          today: date | None = None, **_) -> dict[str, dict]:
+          today: date | None = None, history: dict | None = None, **_) -> dict[str, dict]:
+    """history 是 {"attempted", "budget"}：給了就照 AllDate 順便回補歷史申購買回清單（見 backfill_pcfs）。"""
     today = today or date.today()
     api = None
     if fixtures:
@@ -193,6 +207,7 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
         estimates = {}
 
     records = {}
+    pcf_dates: dict[str, dict[str, str]] = {}  # {代號: {YYYY-MM-DD: 官網原本的日期字串}}
     for f in funds:
         if api and api.blocked:
             print(f"警告：{SOURCE}擋下了請求，其餘 ETF 本次不抓。", file=sys.stderr)
@@ -218,15 +233,33 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
         if not twd:
             rec["dividends"] = []  # 外幣計價的配息金額不是新台幣，不收
         try:
-            latest = (call(f"tradedate_{code}", "Fund/GetFundTradeInfoDate", Type=1, FundNo=code, Keyword="") or {}).get("LatestDate")
+            listing = call(f"tradedate_{code}", "Fund/GetFundTradeInfoDate", Type=1, FundNo=code, Keyword="") or {}
+            latest = listing.get("LatestDate")
+            pcf_dates[code] = {ymd(d): d for d in listing.get("AllDate") or [] if ymd(d) and d != latest}
             pcf = parse_pcf(call(f"trade_{code}", "Fund/GetFundTradeInfo", Type=1, FundNo=code, Keyword="", Date=latest)) if latest else {}
+            pcf = date_units_change(pcf, max(pcf_dates[code], default=None))
         except RuntimeError as exc:
             print(f"警告：{SOURCE} {code} 申購買回清單抓取失敗（{exc}）", file=sys.stderr)
             pcf = {}
         if pcf.get("code") == code:
             rec["index_name"] = rec["index_name"] or pcf["bond_index"]
             if not twd:
-                pcf["aum"] = None  # 規模只收新台幣計價，外幣計價的不自行換算
+                pcf["aum"] = pcf["pcf_nav"] = None  # 規模與淨值只收新台幣計價，外幣計價的不自行換算
             rec.update({k: v for k, v in pcf.items() if k not in ("code", "bond_index")})
         records[code] = rec
+    if history and records and not (api and api.blocked):
+        def one(code, day):
+            if api and api.blocked:
+                raise RuntimeError("已被網站擋下")
+            pcf = parse_pcf(call(f"trade_{code}_{day}", "Fund/GetFundTradeInfo", Type=1, FundNo=code, Keyword="",
+                                 Date=pcf_dates[code][day]))
+            if pcf.get("code") != code:
+                return {}
+            pcf = date_units_change(pcf, max((d for d in pcf_dates[code] if d < day), default=None))
+            return {k: v for k, v in pcf.items() if k not in ("code", "bond_index")}
+
+        candidates = {c: sorted(pcf_dates.get(c, {}), reverse=True) for c, r in records.items() if r.get("currency") == "TWD"}
+        for code, got in backfill_pcfs(candidates, history.get("attempted") or set(), one,
+                                       history.get("budget", HISTORY_BUDGET)).items():
+            records[code]["history"], records[code]["history_attempts"] = got["history"], got["attempts"]
     return records

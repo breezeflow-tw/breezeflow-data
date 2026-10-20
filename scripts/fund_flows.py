@@ -57,6 +57,26 @@ def save(con, issuer, monthly):
                 upsert(con, "fund_event", ("code", "date", "kind"), {"code": code, **e})
 
 
+def save_history(con, issuer):
+    """投信官網回補的歷史申購買回清單：依資料日期寫入 fund_daily（公告日期是清單日期），並記下查過的清單日期。"""
+    now = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    for code, r in issuer.items():
+        for h in r.get("history") or []:
+            save(con, {code: {**h, "source": r["source"], "source_url": r.get("source_url"), "currency": r.get("currency")}}, {})
+        for a in r.get("history_attempts") or []:
+            upsert(con, "fund_backfill", ("code", "pcf_date"),
+                   {"code": code, **a, "source": r["source"], "fetched_at": now})
+
+
+def backfill_done(con) -> set:
+    """已經有的清單：查過的清單日期，加上 fund_daily 已記下公告日期的。"""
+    try:
+        done = set(con.execute("SELECT code, pcf_date FROM fund_backfill"))
+        return done | set(con.execute("SELECT code, announced FROM fund_daily WHERE announced IS NOT NULL"))
+    except sqlite3.OperationalError:
+        return set()
+
+
 def weekdays(start, end):
     return [(start + timedelta(days=i)).isoformat() for i in range((end-start).days+1)
             if (start + timedelta(days=i)).weekday() < 5]
