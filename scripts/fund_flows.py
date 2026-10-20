@@ -57,42 +57,58 @@ def weekdays(start, end):
             if (start + timedelta(days=i)).weekday() < 5]
 
 
-def week(rows, start, end, events=()):
-    """無法辨識的假日亦保守留空；不把缺漏抓取日當休市。四週與本週均不跨缺口加總。"""
-    baseline = start - timedelta(days=3)  # 前週五；若無官方快照，期初未確認
-    result = {"start": start.isoformat(), "end": end.isoformat(), "baseline": baseline.isoformat(),
+def week(rows, start, end, events=(), cal=None):
+    """一週的申贖估算。有官方開休市日期（cal）時，期初是本週第一天之前最近的交易日，只比較本週的交易日；
+    日曆沒涵蓋的日期保守留空。沒有日曆時沿用前週五與週一到週五，休市日會被當成缺資料。
+    不把缺漏抓取日當休市；四週與本週均不跨缺口加總。reason_code 是機器可讀的原因。"""
+    result = {"start": start.isoformat(), "end": end.isoformat(), "baseline": None,
               "net_amount": None, "net_rate": None, "units_rate": None, "aum_change": None,
-              "aum_rate": None, "status": "待確認", "reason": None, "method": "估算", "sources": []}
-    days = [baseline.isoformat(), *weekdays(start, end)]
+              "aum_rate": None, "status": "待確認", "reason": None, "method": "估算", "sources": [],
+              "reason_code": None, "calendar": "未使用", "trading_days": None, "closed_days": None}
+
+    def stop(code, reason):
+        result.update(reason_code=code, reason=reason)
+        return result
+
+    if cal is None:
+        baseline = (start - timedelta(days=3)).isoformat()  # 前週五；若無官方快照，期初未確認
+        trading = weekdays(start, end)
+        holiday_note = "；休市日亦須核對"
+    else:
+        trading = cal.trading_days(start.isoformat(), end.isoformat())
+        baseline = cal.previous_trading_day(start.isoformat())
+        if trading is None or baseline is None:
+            result["calendar"] = "未涵蓋"
+            return stop("calendar_unknown", "官方開休市日期未涵蓋本週或前一個交易日，無法區分休市與缺資料。")
+        result.update(calendar="官方開休市日期", trading_days=trading,
+                      closed_days=[d for d in weekdays(start, end) if d not in trading])
+        holiday_note = ""
+    result["baseline"] = baseline
+    if not trading:
+        result["status"] = "休市"
+        return stop("market_closed", "本週全部休市（官方開休市日期），沒有可比較的交易日。")
+    days = [baseline, *trading]
     missing = [d for d in days if d not in rows]
     if missing:
-        result["reason"] = "官方日資料不足（缺 " + "、".join(missing) + "）；休市日亦須核對，不補零。"
-        return result
+        return stop("missing_official", "官方日資料不足（缺 " + "、".join(missing) + f"）{holiday_note}，不補零。")
     data = [rows[d] for d in days]
     if any(r.get("currency") != "TWD" for r in data):
-        result["reason"] = "尚未確認全期為新臺幣同一受益權級別。"
-        return result
-    if any(e["kind"] in ("分割", "反分割", "合併", "級別轉換", "清算") and
-           baseline.isoformat() < e["date"] <= end.isoformat() for e in events):
-        result["reason"] = "區間包含分割、合併或級別等特殊事件，暫停比較。"
-        return result
+        return stop("currency_unconfirmed", "尚未確認全期為新臺幣同一受益權級別。")
+    if any(e["kind"] in ("分割", "反分割", "合併", "級別轉換", "清算") and baseline < e["date"] <= end.isoformat() for e in events):
+        return stop("special_event", "區間包含分割、合併或級別等特殊事件，暫停比較。")
     if any(not numeric(r.get("units")) or r["units"] <= 0 or not numeric(r.get("nav")) or r["nav"] <= 0 for r in data):
-        result["reason"] = "流通單位數或同日正式淨值不完整。"
-        return result
+        return stop("incomplete", "流通單位數或同日正式淨值不完整。")
     amount = 0
     for previous, current in zip(data, data[1:]):
         delta = current["units"] - previous["units"]
         stated = current.get("units_change")
         if numeric(stated) and not math.isclose(delta, stated, rel_tol=1e-8, abs_tol=1):
-            result["reason"] = "相鄰快照與投信公告單位增減不一致，須核對日期或特殊事件。"
-            return result
+            return stop("units_mismatch", "相鄰快照與投信公告單位增減不一致，須核對日期或特殊事件。")
         ratio = current["units"] / previous["units"]
         if (ratio >= 1.5 or ratio <= 2/3) and abs(ratio * current["nav"] / previous["nav"] - 1) < .15:
-            result["reason"] = "單位數與淨值出現疑似分割／反分割變動，暫停估算。"
-            return result
+            return stop("split_suspected", "單位數與淨值出現疑似分割／反分割變動，暫停估算。")
         if previous.get("source") != current.get("source"):
-            result["reason"] = "日資料來源不同，尚未確認相同口徑。"
-            return result
+            return stop("source_changed", "日資料來源不同，尚未確認相同口徑。")
         amount += delta * current["nav"] / 1e8
     first, last = data[0], data[-1]
     result.update(net_amount=round(amount, 6), units_rate=round((last["units"] / first["units"] - 1)*100, 4),
@@ -106,7 +122,8 @@ def week(rows, start, end, events=()):
     return result
 
 
-def attach(con, items, as_of):
+def attach(con, items, as_of, cal=None):
+    """cal 是官方開休市日期（market_calendar.Calendar）；沒有時各週沿用前週五、週一到週五。"""
     old_factory = con.row_factory
     con.row_factory = sqlite3.Row
     end = date.fromisoformat(as_of)
@@ -116,7 +133,7 @@ def attach(con, items, as_of):
         snapshots = [dict(r) for r in con.execute("SELECT * FROM fund_daily WHERE code=? AND date<=? ORDER BY date", (code, as_of))]
         rows = {r["date"]: r for r in snapshots}
         events = [dict(r) for r in con.execute("SELECT * FROM fund_event WHERE code=? AND date<=? ORDER BY date DESC", (code, as_of))]
-        periods = [week(rows, monday-timedelta(weeks=i), min(end, monday-timedelta(weeks=i)+timedelta(days=4)), events)
+        periods = [week(rows, monday-timedelta(weeks=i), min(end, monday-timedelta(weeks=i)+timedelta(days=4)), events, cal)
                    for i in range(4)]
         complete = all(numeric(p["net_amount"]) for p in periods)
         it["flows"] = {**periods[0], "as_of": as_of, "latest_official_date": snapshots[-1]["date"] if snapshots else None,

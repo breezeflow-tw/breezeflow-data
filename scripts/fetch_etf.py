@@ -27,6 +27,7 @@ import returns
 import sitca
 import store
 import fund_flows
+import market_calendar
 import sitca_etf
 from issuers import allianz, blackrock, capital, cathay, ctbc, fubon, fuhhwa, jpmorgan, kgi, nomura, uni, yuanta
 from issuers.common import flat_fee
@@ -50,6 +51,8 @@ SOURCES = {
     # 除權除息預告表
     "div_twse": "https://openapi.twse.com.tw/v1/exchangeReport/TWT48U_ALL",
     "div_tpex": "https://www.tpex.org.tw/openapi/v1/tpex_exright_prepost",
+    # 有價證券集中交易市場開（休）市日期：區分休市與缺資料
+    "calendar": market_calendar.URL,
 }
 
 # 市價與成交量的主要來源；上市代號加 .TW，上櫃加 .TWO
@@ -1062,8 +1065,13 @@ def main(argv=None) -> int:
                         [(r, m, today.isoformat()) for r, m in done])
         con.commit()
         apply_fund_month(items, load_fund_month(con))
+        calendar = market_calendar.parse(raw["calendar"])
+        if calendar:
+            market_calendar.save(con, calendar, datetime.now(TW).isoformat(timespec="seconds"))
+        else:
+            print(f"警告：{market_calendar.SOURCE}沒有抓到，週申贖沿用資料庫裡的日曆。", file=sys.stderr)
         fund_flows.save(con, issuer, monthly)
-        fund_flows.attach(con, items, date)
+        fund_flows.attach(con, items, date, market_calendar.load(con))
         apply_fund_top(items, load_fund_top(con), date)
         apply_main_line_holdings(items)
         active = active_changes.attach(con, items, date, issuer, parse_closes(raw["twse"], raw["tpex"]))
