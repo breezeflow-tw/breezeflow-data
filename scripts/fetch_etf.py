@@ -23,6 +23,7 @@ from datetime import date as date_type, datetime, timedelta, timezone
 from pathlib import Path
 
 import active_changes
+import active_holdings
 import returns
 import sitca
 import store
@@ -690,17 +691,21 @@ def save_issuer_detail(con: sqlite3.Connection, issuer: dict[str, dict]) -> None
         [{"chg": r["units_change"], "date": r.get("pcf_date") or r["nav_date"], "code": c}
          for c, r in issuer.items() if r.get("units_change") is not None and (r.get("pcf_date") or r.get("nav_date"))],
     )
+    now = datetime.now(TW).isoformat(timespec="seconds")
     for code, r in issuer.items():
         if not r.get("holdings"):
             continue
         # 持股有自己的資料日期時（例如海外 ETF 的持股比申購買回單位差異早一天）以持股日期為準
         day = r.get("holdings_date") or r.get("pcf_date") or r.get("nav_date")
+        url = r.get("holdings_url") or r.get("source_url")
         con.execute("DELETE FROM holding WHERE code = ? AND date IS ?", (code, day))
         con.executemany(
             """INSERT OR REPLACE INTO holding(code, date, asset_code, asset_name, kind, weight, qty, source, source_url)
                VALUES(:code, :date, :asset_code, :asset_name, :kind, :weight, :qty, :source, :source_url)""",
-            [{**h, "code": code, "date": day, "source": r["source"], "source_url": r.get("holdings_url") or r.get("source_url")} for h in r["holdings"]],
+            [{**h, "code": code, "date": day, "source": r["source"], "source_url": url} for h in r["holdings"]],
         )
+        # 完整清單的出處與完整度證據（列數、權重合計、取得時間）
+        active_holdings.save_list_evidence(con, code, day, r["source"], url, r["holdings"], now)
 
 
 def save_official_nav(con: sqlite3.Connection, nav: dict) -> None:
@@ -942,7 +947,7 @@ def attach_returns(con: sqlite3.Connection, items: list[dict], date: str, reused
 
 
 def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, has_nav: bool = True,
-              active: dict | None = None, attributions: list[dict] | None = None) -> None:
+              active: dict | None = None, attributions: list[dict] | None = None, holdings_flow: dict | None = None) -> None:
     """網站讀的唯一檔案。區間報酬的起始日與出處放在最上層 returns_info，各檔數字在 items[].returns。"""
     checks: dict[str, int] = {}
     for it in items:
@@ -958,6 +963,7 @@ def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, h
         "returns_info": {"source": returns.SOURCE, "starts": returns.start_dates(date)},
         "active_changes": active,
         "attributions": attributions or [],
+        "active_holdings": holdings_flow,
         "count": len(items),
         "items": items,
     }
@@ -1092,14 +1098,21 @@ def main(argv=None) -> int:
         apply_main_line_holdings(items)
         active = active_changes.attach(con, items, date, issuer, parse_closes(raw["twse"], raw["tpex"]))
         official = [q for q in official_quotes.parse(raw["twse"], raw["tpex"]) if q["code"] not in EXCLUDED]
-        official_quotes.save(con, official, datetime.now(TW).isoformat(timespec="seconds"))
+        now = datetime.now(TW).isoformat(timespec="seconds")
+        official_quotes.save(con, official, now)
+        # 主動式 ETF 持股資金動向：先增量保存持有股票的官方收盤價與除權預告，再估值
+        stocks = official_quotes.parse_stocks(raw["twse"], raw["tpex"], active_holdings.held_stocks(con))
+        official_quotes.save_stocks(con, stocks, now)
+        active_holdings.save_events(con, active_holdings.parse_events(raw["div_twse"], raw["div_tpex"]), now)
+        holdings_flow = active_holdings.build(con, items, date, market_calendar.load(con))
+        official += stocks
         con.commit()
         purge_excluded(con)
         store.dump(con, history)
     finally:
         con.close()
     save_json(items, date, source, args.out, has_nav=any(it["nav"] is not None for it in items), active=active,
-              attributions=official_quotes.attributions(official))
+              attributions=official_quotes.attributions(official), holdings_flow=holdings_flow)
     flagged = sum(1 for it in items if it["premium"] is not None and abs(it["premium"]) >= 1)
     checks = {k: sum(1 for it in items if it["price_check"] == k) for k in ("一致", "已修正", "未查核", "交易所")}
     print(f"{date}：共 {len(items)} 檔 ETF，折溢價超過 ±1% 有 {flagged} 檔，除息預告 {len(dividends)} 筆 → {args.out}")

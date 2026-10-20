@@ -5,6 +5,7 @@
 - 兩個端點都只有最新一天，沒有可依日期查的歷史：每次執行保存當下的原值，日期用交易所標示的資料日期
 - 價格是 0、空白或「--」代表沒有成交或沒有資料，存成空值；成交股數 0 照存
 - 這張表只放交易所原值，不改變網站目前採用的收盤價（daily 表）
+- 主動式 ETF 持有的台股股票另存 stock_close（只有收盤價），供持股資金動向估值；同樣從開始保存那天起逐日累積，不回補
 - 兩個資料集在政府資料開放平臺列為政府資料開放授權條款第 1 版（docs/data-licensing.md 證據 10、11），
   利用時須標示提供機關、年份、資料名稱與版本、授權聲明連結：latest.json 的 attributions 列出這些資訊
 """
@@ -18,17 +19,20 @@ LICENSE_URL = "https://data.gov.tw/license"
 # 市場 → 提供機關、資料集名稱、資料集頁、取得的端點、欄位名稱
 DATASETS = {
     "上市": {"provider": "臺灣證券交易所", "dataset": "盤後資訊 > 個股日成交資訊", "dataset_url": "https://data.gov.tw/dataset/11549",
+             "dataset_id": "11549",
              "source_url": "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL",
              "fields": {"code": "Code", "name": "Name", "open": "OpeningPrice", "high": "HighestPrice", "low": "LowestPrice",
                         "close": "ClosingPrice", "change": "Change", "volume_shares": "TradeVolume", "trade_value": "TradeValue",
                         "transactions": "Transaction"}},
     "上櫃": {"provider": "證券櫃檯買賣中心", "dataset": "上櫃股票行情", "dataset_url": "https://data.gov.tw/dataset/11370",
+             "dataset_id": "11370",
              "source_url": "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes",
              "fields": {"code": "SecuritiesCompanyCode", "name": "CompanyName", "open": "Open", "high": "High", "low": "Low",
                         "close": "Close", "change": "Change", "volume_shares": "TradingShares", "trade_value": "TransactionAmount",
                         "transactions": "TransactionNumber"}},
 }
 PRICES = ("open", "high", "low", "close")
+STOCK = re.compile(r"[1-9]\d{3}[A-Z]?")  # 台股股票代號：4 碼（特別股另加 1 個英文字母）；00 開頭是 ETF
 COLUMNS = ("code", "date", "market", "name", "open", "high", "low", "close", "change", "volume_shares", "trade_value",
            "transactions", "dataset", "source_url", "first_observed_at", "observed_at")
 
@@ -64,6 +68,30 @@ def parse(twse_rows, tpex_rows) -> list[dict]:
                 rec[k] = rec[k] or None  # 價格 0 是沒有成交
             out.append(rec)
     return out
+
+
+def parse_stocks(twse_rows, tpex_rows, codes: set[str]) -> list[dict]:
+    """台股股票的收盤價，只收 codes 裡的代號（主動式 ETF 持有的股票）；沒有成交（0、空白）存成空值。"""
+    out = []
+    for market, rows in (("上市", twse_rows), ("上櫃", tpex_rows)):
+        spec = DATASETS[market]
+        for r in rows if isinstance(rows, list) else []:
+            if not isinstance(r, dict):
+                continue
+            code, day = str(r.get(spec["fields"]["code"]) or "").strip(), roc_date(r.get("Date"))
+            if code in codes and STOCK.fullmatch(code) and day:
+                out.append({"code": code, "date": day, "market": market,
+                            "close": num(r.get(spec["fields"]["close"])) or None, "dataset": spec["dataset_id"]})
+    return out
+
+
+def save_stocks(con: sqlite3.Connection, rows: list[dict], now: str) -> None:
+    """同一天重抓時以新值為準；第一次取得時間保留原值。"""
+    con.executemany(
+        "INSERT INTO stock_close(code, date, market, close, dataset, first_observed_at, observed_at) VALUES(?, ?, ?, ?, ?, ?, ?) "
+        "ON CONFLICT(code, date) DO UPDATE SET market=excluded.market, close=excluded.close, dataset=excluded.dataset, "
+        "observed_at=excluded.observed_at",
+        [(r["code"], r["date"], r["market"], r["close"], r["dataset"], now, now) for r in rows])
 
 
 def save(con: sqlite3.Connection, rows: list[dict], now: str) -> None:
