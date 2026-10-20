@@ -10,6 +10,8 @@ cookie 與 X-XSRF-TOKEN 標頭；回應格式為 {StatusCode, Message, Entries}�
   與前日已發行單位差異數、受益人數與全部成分。CPcfdate 是清單適用的交易日，淨資產、單位數與成分是更早的
   淨值日期 CNavDt 那天的資料（投資海外的 ETF 晚兩個交易日）。成分表依表頭名稱對應欄位
   （舊清單沒有「序號」欄，代號與名稱有多餘空白）；附買回債券只有名稱與金額，沒有代號與權重，不收
+- 歷史清單：Date 給清單日期就查得到上市以來的每一份（週末、假日查無資料）。回補時清單日期取最新一份之前的
+  交易日（依證交所開休市日期），只留淨資產、單位數、單位差異與淨值，不留成分
 """
 from __future__ import annotations
 
@@ -24,7 +26,7 @@ import urllib.request
 from datetime import date
 from pathlib import Path
 
-from .common import flat_fee, num, ymd
+from .common import HISTORY_BUDGET, HISTORY_WINDOW, backfill_pcfs, flat_fee, num, ymd
 
 ISSUER = "安聯"
 SOURCE = "安聯投信官網"
@@ -194,8 +196,21 @@ def parse_pcf(entries) -> dict:
 
 # ---------- 抓取 ----------
 
+def history_dates(latest: str | None, calendar, listed: str | None = None) -> list[str]:
+    """最新一份清單之前的交易日（新到舊，最多 HISTORY_WINDOW 個），作為要回補的清單日期；
+    日曆沒涵蓋或早於上市日就停止。"""
+    days, day = [], latest
+    while day and calendar and len(days) < HISTORY_WINDOW:
+        day = calendar.previous_trading_day(day)
+        if not day or (listed and day < listed):
+            break
+        days.append(day)
+    return days
+
+
 def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext | None = None,
-          today: date | None = None, **_) -> dict[str, dict]:
+          today: date | None = None, history: dict | None = None, **_) -> dict[str, dict]:
+    """history 是 {"calendar", "attempted", "budget"}：給了就順便回補歷史申購買回清單（見 backfill_pcfs）。"""
     today = today or date.today()
     api = None
     if fixtures:
@@ -263,4 +278,22 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
                 pcf["aum"] = pcf["pcf_nav"] = None  # 規模與淨值只收新台幣計價，外幣計價的不自行換算
             rec.update({k: v for k, v in pcf.items() if k not in ("code", "currency")})
         records[code] = rec
+    if history and records and not (api and api.blocked):
+        nos = {f["code"]: f["fund_no"] for f in funds}
+
+        def one(code, day):
+            if api and api.blocked:
+                raise RuntimeError("已被網站擋下")
+            pcf = parse_pcf(call(f"trade_{code}_{day}", "Fund/GetFundTradeInfo", FundNo=nos[code], Date=day))
+            if pcf.get("code") != code:
+                return {}
+            if pcf["currency"] not in TWD:
+                pcf["aum"] = pcf["pcf_nav"] = None
+            return {k: v for k, v in pcf.items() if k not in ("code", "currency")}
+
+        candidates = {c: history_dates(r.get("pcf_announced"), history.get("calendar"), r.get("list_date"))
+                      for c, r in records.items() if r.get("currency") == "TWD"}
+        for code, got in backfill_pcfs(candidates, history.get("attempted") or set(), one,
+                                       history.get("budget", HISTORY_BUDGET)).items():
+            records[code]["history"], records[code]["history_attempts"] = got["history"], got["attempts"]
     return records

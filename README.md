@@ -25,6 +25,7 @@
 | 尚未接入投信的 ETF：正式淨值 | 投信投顧公會基金淨值（日）`IN2106.aspx`，查詢當天交易日；公會收到投信申報後才有，有的話取代預估淨值重算折溢價 |
 | 收盤價、成交量（主要） | Yahoo 股市日線 `query1.finance.yahoo.com/v8/finance/chart/{代號}.TW`（上櫃為 `.TWO`） |
 | 收盤價、成交量（查核） | 證交所 OpenAPI `exchangeReport/STOCK_DAY_ALL`、櫃買 `tpex_mainboard_daily_close_quotes`。與 Yahoo 不一致時採用交易所數字，差異記錄在 `price_check` 表 |
+| 官方日資料歷史（週申贖用） | 安聯、野村官網可依日期查詢歷史申購買回清單：每次執行回補最近 25 份中還沒查過的，每家最多 60 個請求，依資料日期寫入 `fund_daily`（公告日期是清單日期），查過的清單日期記在 `fund_backfill` |
 | 規模、流通單位數 | 各投信公告；缺日資料時使用投信投顧公會月統計並標示月末日期，不再顯示交易所單位數乘預估淨值的推算規模 |
 | 交易日曆（週申贖區分休市與缺資料） | 證交所 OpenAPI `holidaySchedule/holidaySchedule`（有價證券集中交易市場開（休）市日期），依年度保存在 `market_calendar` 表；官方表沒涵蓋的年度不判定休市 |
 | 週淨申購估算、淨流入率、近 4 週累計及正流入週數 | 依使用者要求，使用每日投信正式淨值與流通單位數推算申贖對價，明確標示「本站估算」；缺漏或不可比時留空，公式與限制見 [週資金流資料說明](docs/tasks/etf-weekly-flows.md) |

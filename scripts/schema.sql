@@ -91,6 +91,13 @@ CREATE TABLE IF NOT EXISTS fund_daily (
   units REAL, units_change REAL, currency TEXT, source TEXT NOT NULL,
   source_url TEXT NOT NULL, observed_at TEXT, announced TEXT, first_observed_at TEXT, PRIMARY KEY(code,date)
 );
+-- 投信官網歷史申購買回清單的回補紀錄：查過的清單日期不再重查
+CREATE TABLE IF NOT EXISTS fund_backfill (
+  code TEXT NOT NULL, pcf_date TEXT NOT NULL,   -- 查詢的清單日期
+  data_date TEXT,                                -- 清單裡的資料日期（淨值日期）；查無資料時為空
+  status TEXT NOT NULL,                          -- ok／empty（查無資料）
+  source TEXT NOT NULL, fetched_at TEXT, PRIMARY KEY(code, pcf_date)
+);
 CREATE TABLE IF NOT EXISTS fund_monthly (
   code TEXT NOT NULL, month TEXT NOT NULL, currency TEXT, aum REAL, nav REAL, units REAL,
   subscriptions REAL, redemptions REAL, beneficiaries REAL,

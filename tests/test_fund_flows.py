@@ -108,6 +108,19 @@ class FlowTest(unittest.TestCase):
         self.assertEqual((src['date'],src['announced'],src['first_observed_at']),('2026-10-16','2026-10-19','2026-10-19T10:00:00+00:00'))
         con.close()
 
+    def test_history_backfill_rows_and_attempts(self):
+        con=sqlite3.connect(':memory:');store.ensure_schema(con)
+        self.assertEqual(f.backfill_done(sqlite3.connect(':memory:')),set())  # 舊資料庫沒有這些表
+        issuer={'TEST':{'source':'測試投信官網','source_url':'https://www.yuantaetfs.com/test','currency':'TWD',
+            'history':[{'pcf_date':'2026-10-15','pcf_announced':'2026-10-16','aum':10,'units':100_000_000,'units_change':0,'pcf_nav':10}],
+            'history_attempts':[{'pcf_date':'2026-10-16','data_date':'2026-10-15','status':'ok'},
+                                {'pcf_date':'2026-10-14','data_date':None,'status':'empty'}]}}
+        f.save_history(con,issuer)
+        self.assertEqual(con.execute('SELECT date,units,nav,announced,source FROM fund_daily').fetchall(),
+                         [('2026-10-15',100_000_000,10,'2026-10-16','測試投信官網')])
+        self.assertEqual(f.backfill_done(con),{('TEST','2026-10-16'),('TEST','2026-10-14')})
+        con.close()
+
     def test_snapshot_dates_and_issuer_only(self):
         con=sqlite3.connect(':memory:');store.ensure_schema(con)
         issuer={'TEST':{'source':'測試投信官網','source_url':'https://www.yuantaetfs.com/test','nav_date':'2026-10-16',

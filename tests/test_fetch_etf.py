@@ -709,6 +709,15 @@ class NomuraTest(unittest.TestCase):
         c = recs["00420A"]
         self.assertEqual((c["nav_official"], c["aum"], c["holdings"], c["mgmt_fee"], "pcf_date" in c), (None, None, [], 0.99, False))
 
+    def test_history(self):
+        from issuers import nomura as n
+        recs = n.fetch(fixtures=FIX / "nomura", history={"attempted": set(), "budget": 3})
+        # 照 AllDate 由新到舊：10/16 依序查 00987B、009812（查無資料）與 00935
+        self.assertEqual([(c, [x["status"] for x in r.get("history_attempts", [])]) for c, r in sorted(recs.items())],
+                         [("00420A", []), ("00935", ["ok"]), ("009812", ["empty"]), ("00987B", ["empty"])])
+        h = recs["00935"]["history"][0]
+        self.assertEqual((h["pcf_announced"], h["pcf_date"], h["units"], h["pcf_nav"]), ("2026-10-16", "2026-10-15", 903004000.0, 56.48))
+
     def fixtures(self, tmp: str) -> Path:
         """在共用測試資料加上兩檔野村 ETF 的交易所資料。"""
         fix = fixtures_without(tmp)
@@ -843,6 +852,29 @@ class BlackrockTest(unittest.TestCase):
         self.assertEqual((a["aum"], a["units_change"], a["pcf_date"], a["holdings_date"], len(a["holdings"])), (59.5, 34500000.0, "2026-10-15", "2026-10-16", 12))
 
 
+class BackfillTest(unittest.TestCase):
+    def test_order_budget_and_errors(self):
+        from issuers import common
+        calls = []
+
+        def one(code, day):
+            calls.append((code, day))
+            if day == "2026-10-13":
+                raise RuntimeError("連線失敗")
+            return {"pcf_date": day, "units": 1.0, "holdings": [1]} if code == "A" else {}
+
+        out = common.backfill_pcfs({"A": ["2026-10-16", "2026-10-15", "2026-10-14", "2026-10-13"], "B": ["2026-10-16", "2026-10-15"]},
+                                   {("A", "2026-10-15")}, one, budget=10)
+        # 新到舊、同一天各檔輪流；查過的跳過；連線失敗就停，那一筆不算查過
+        self.assertEqual(calls, [("B", "2026-10-16"), ("A", "2026-10-16"), ("B", "2026-10-15"), ("A", "2026-10-14"), ("A", "2026-10-13")])
+        self.assertEqual([a["status"] for a in out["B"]["attempts"]], ["empty", "empty"])
+        self.assertEqual([x["pcf_date"] for x in out["A"]["history"]], ["2026-10-16", "2026-10-14"])
+        self.assertNotIn("holdings", out["A"]["history"][0])
+        calls.clear()
+        common.backfill_pcfs({"A": ["2026-10-16", "2026-10-15"]}, set(), one, budget=1)
+        self.assertEqual(calls, [("A", "2026-10-16")])
+
+
 class AllianzTest(unittest.TestCase):
     def load(self, name: str):
         from issuers import allianz as a
@@ -893,6 +925,27 @@ class AllianzTest(unittest.TestCase):
         self.assertEqual((b["nav_official"], b["aum"], b["holdings"], b["manager"], "pcf_date" in b), (9.48, None, [], "洪華珍", False))
         self.assertEqual(recs["00984A"]["source_url"], "https://etf.allianzgi.com.tw/etf-info/E0001")
 
+    def test_history(self):
+        from issuers import allianz as a
+        import market_calendar as mc
+        cal = mc.Calendar(mc.parse(json.loads((FIX / "calendar.json").read_text("utf-8"))), {2026})
+        self.assertEqual(a.history_dates("2026-10-19", cal, "2026-10-13"), ["2026-10-16", "2026-10-15", "2026-10-14", "2026-10-13"])
+        self.assertEqual(a.history_dates("2026-10-13", cal)[:2], ["2026-10-12", "2026-10-08"])  # 10/9 補假
+        recs = a.fetch(fixtures=FIX / "allianz", history={"calendar": cal, "attempted": set(), "budget": 3})
+        # 清單日期由新到舊、各檔輪流：10/16 先查 00993A（查無資料）、00984A、00412A
+        self.assertEqual(recs["00993A"]["history_attempts"], [{"pcf_date": "2026-10-16", "data_date": None, "status": "empty"}])
+        h = recs["00984A"]["history"]
+        self.assertEqual([(x["pcf_announced"], x["pcf_date"], x["units"], x["units_change"]) for x in h],
+                         [("2026-10-16", "2026-10-15", 672958000.0, 5000000.0)])
+        self.assertNotIn("holdings", h[0])
+        # 投資海外的 00412A：清單日期 10/16 的資料日期是 10/14
+        self.assertEqual(recs["00412A"]["history"][0]["pcf_date"], "2026-10-14")
+        # 查過的不再查；預算用完就停
+        again = a.fetch(fixtures=FIX / "allianz", history={"calendar": cal, "budget": 1,
+                                                          "attempted": {("00993A", "2026-10-16"), ("00984A", "2026-10-16")}})
+        self.assertEqual([c for c, r in again.items() if r.get("history_attempts")], ["00412A"])
+        self.assertNotIn("history", a.fetch(fixtures=FIX / "allianz")["00984A"])  # 沒給 history 就不回補
+
     def fixtures(self, tmp: str) -> Path:
         """在共用測試資料加上兩檔安聯 ETF 的交易所資料。"""
         fix = fixtures_without(tmp)
@@ -923,6 +976,11 @@ class AllianzTest(unittest.TestCase):
             self.assertEqual((b["nav"], b["nav_source"], b["units_change"]), (9.03, "安聯投信官網（預估淨值）", None))
             con = sqlite3.connect(db)
             self.assertEqual(con.execute("SELECT DISTINCT date FROM holding WHERE code='00412A'").fetchall(), [("2026-10-15",)])
+            # 回補的歷史清單依資料日期寫入，公告日期是清單日期；查過的清單日期記在 fund_backfill
+            self.assertEqual(con.execute("SELECT date, units, announced FROM fund_daily WHERE code='00984A' ORDER BY date").fetchall(),
+                             [("2026-10-15", 672958000.0, "2026-10-16"), ("2026-10-16", 682458000.0, "2026-10-19")])
+            self.assertEqual(con.execute("SELECT status FROM fund_backfill WHERE code='00993A' AND pcf_date='2026-10-16'").fetchone(),
+                             ("empty",))
             con.close()
 
 

@@ -1,0 +1,94 @@
+{
+ "TotalPages": -1,
+ "TotalItems": 0,
+ "Entries": {
+  "CFundId": "E0004",
+  "CFundShortName": "主動安聯亞半導體",
+  "CPcfdate": "2026-10-16T00:00:00",
+  "CNavDt": "2026-10-14T00:00:00",
+  "CAnceTotalAv": 6609015219.0,
+  "CAnceTotalIssues": 729988000.0,
+  "CAnceIssuesDiff": 61000000.0,
+  "CAnceNav": 9.05,
+  "CEtfindexCurrency": "TWD",
+  "CAnceBaseValue": 500000.0,
+  "DynamicTableData": [
+   {
+    "TableTitle": "股票 (90.57%)",
+    "Columns": [
+     {
+      "Name": "序號",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "股票代號",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "股票名稱",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "股數",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "權重(%)",
+      "TextAlign": "center"
+     }
+    ],
+    "Rows": [
+     [
+      "1",
+      "2330",
+      "台積電",
+      "235,000",
+      "8.64%"
+     ],
+     [
+      "2",
+      "3008",
+      "大立光電",
+      "47,000",
+      "4.70%"
+     ]
+    ]
+   },
+   {
+    "TableTitle": "附買回債券",
+    "Columns": [
+     {
+      "Name": "序號",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "RP名稱",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "金額",
+      "TextAlign": "center"
+     }
+    ],
+    "Rows": [
+     [
+      "1",
+      "P11台泥1A",
+      "TWD $ 4,300,000.00"
+     ],
+     [
+      "2",
+      "P14南亞1",
+      "TWD $ 50,000,000.00"
+     ]
+    ]
+   }
+  ],
+  "CBeneficiariesCount": 3892,
+  "CBeneficiariesCountDate": "2026-09-23T00:00:00",
+  "CSecuritiesCode": "00412A"
+ },
+ "Message": "",
+ "StatusCode": 0,
+ "RedirectUrl": null
+}
