@@ -1,0 +1,113 @@
+{
+ "TotalPages": -1,
+ "TotalItems": 0,
+ "Entries": {
+  "CFundId": "E0002",
+  "CFundShortName": "主動安聯台灣",
+  "CPcfdate": "2026-10-19T00:00:00",
+  "CNavDt": "2026-10-16T00:00:00",
+  "CAnceTotalAv": 9480255982.0,
+  "CAnceTotalIssues": 713591000.0,
+  "CAnceIssuesDiff": 0.0,
+  "CAnceNav": 13.29,
+  "CAnceTotalIssuesT1": null,
+  "CAnceTotalIssuesT1Date": null,
+  "CEtfindexCurrency": "TWD",
+  "CAnceBaseValue": 500000.0,
+  "DynamicTableData": [
+   {
+    "TableTitle": "股票 (97.01%)",
+    "Columns": [
+     {
+      "Name": "序號",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "股票代號",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "股票名稱",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "股數",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "權重(%)",
+      "TextAlign": "center"
+     }
+    ],
+    "Rows": [
+     [
+      "1",
+      "2330",
+      "台積電",
+      "333,000",
+      "8.48%"
+     ],
+     [
+      "2",
+      "3037",
+      "欣興",
+      "526,000",
+      "6.21%"
+     ],
+     [
+      "3",
+      "3017",
+      "奇鋐",
+      "176,000",
+      "6.16%"
+     ]
+    ]
+   },
+   {
+    "TableTitle": "期貨",
+    "Columns": [
+     {
+      "Name": "序號",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "期貨代號",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "期貨名稱",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "口數",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "權重(%)",
+      "TextAlign": "center"
+     },
+     {
+      "Name": "契約年月",
+      "TextAlign": "center"
+     }
+    ],
+    "Rows": [
+     [
+      "1",
+      "TX",
+      "台指期貨",
+      "19",
+      "1.90%",
+      "2026/11"
+     ]
+    ]
+   }
+  ],
+  "CBeneficiariesCount": 46575,
+  "CBeneficiariesCountDate": "2026-09-30T00:00:00",
+  "CSecuritiesCode": "00993A"
+ },
+ "Message": "",
+ "StatusCode": 0,
+ "RedirectUrl": null
+}

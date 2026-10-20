@@ -1,0 +1,23 @@
+{
+ "TotalPages": -1,
+ "TotalItems": 0,
+ "Entries": {
+  "CFundNo": "E0004",
+  "CSecuritiesCode": "00412A",
+  "CShortName": "主動安聯亞半導體",
+  "CCgCurrencyTypeStr": "新台幣",
+  "CCgRiskLevelStr": "RR4",
+  "CCgFundTypeStr": "主動式交易所交易基金",
+  "CCgDividendFrequencyStr": "不配",
+  "CManagerFee": "200億(含)以下時1.2%；200億以上時1%",
+  "CCustodyFee": "0.15%",
+  "CManager": "蕭惠中",
+  "CSetUpDt": "2026/09/23",
+  "CListingDt": "2026/10/13",
+  "CIndexCode": "",
+  "CPerformanceMetrics": ""
+ },
+ "Message": "",
+ "StatusCode": 0,
+ "RedirectUrl": null
+}

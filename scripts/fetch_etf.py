@@ -28,7 +28,7 @@ import sitca
 import store
 import fund_flows
 import sitca_etf
-from issuers import blackrock, capital, cathay, ctbc, fubon, fuhhwa, jpmorgan, kgi, nomura, uni, yuanta
+from issuers import allianz, blackrock, capital, cathay, ctbc, fubon, fuhhwa, jpmorgan, kgi, nomura, uni, yuanta
 from issuers.common import flat_fee
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -54,16 +54,17 @@ SOURCES = {
 
 # 市價與成交量的主要來源；上市代號加 .TW，上櫃加 .TWO
 YAHOO_CHART = "https://{host}/v8/finance/chart/{symbol}?range=10d&interval=1d"
-PROBE_SYMBOL = "0050.TW"
+PROBE_SYMBOL = "0050.TW"  # 用來確認最新交易日：成交最活絡的 ETF，每個交易日都有日線
 # 擁有者指示不收錄的代號：網站不顯示、資料庫不保存，資料來源出現時一律略過
-EXCLUDED = {"00847B"}  # 中信美國市政債：2026-10 起交易所沒有行情、中信官網也不再列出  # 用來確認最新交易日：成交最活絡的 ETF，每個交易日都有日線
+EXCLUDED = {"00847B"}  # 中信美國市政債：2026-10 起交易所沒有行情、中信官網也不再列出
 # 每個交易日抓一次五年日線（含配息紀錄）計算區間報酬，同一份資料也拿來比對收盤價
 YAHOO_HISTORY = "https://{host}/v8/finance/chart/{symbol}?period1={start}&period2={end}&interval=1d&events=div"
 YAHOO_HOSTS = ("query1.finance.yahoo.com", "query2.finance.yahoo.com")
 
 # 已接入的投信官網；淨值、規模、費用、成分股以這裡的資料為主
 ISSUER_MODULES = {"yuanta": yuanta, "uni": uni, "capital": capital, "fuhhwa": fuhhwa, "kgi": kgi, "fubon": fubon,
-                  "cathay": cathay, "ctbc": ctbc, "nomura": nomura, "jpmorgan": jpmorgan, "blackrock": blackrock}
+                  "cathay": cathay, "ctbc": ctbc, "nomura": nomura, "jpmorgan": jpmorgan, "blackrock": blackrock,
+                  "allianz": allianz}
 
 
 # ---------- 下載 ----------

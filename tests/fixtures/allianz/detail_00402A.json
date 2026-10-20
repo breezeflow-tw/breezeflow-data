@@ -1,0 +1,23 @@
+{
+ "TotalPages": -1,
+ "TotalItems": 0,
+ "Entries": {
+  "CFundNo": "E0003",
+  "CSecuritiesCode": "00402A",
+  "CShortName": "主動安聯美國科技",
+  "CCgCurrencyTypeStr": "新台幣",
+  "CCgRiskLevelStr": "RR4",
+  "CCgFundTypeStr": "主動式交易所交易基金",
+  "CCgDividendFrequencyStr": "年配",
+  "CManagerFee": "1.00%",
+  "CCustodyFee": "0.150%",
+  "CManager": "洪華珍",
+  "CSetUpDt": "2026/05/29",
+  "CListingDt": "2026/06/09",
+  "CIndexCode": "",
+  "CPerformanceMetrics": ""
+ },
+ "Message": "",
+ "StatusCode": 0,
+ "RedirectUrl": null
+}
