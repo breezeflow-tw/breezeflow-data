@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-20T22:48:46+08:00",
+ "generated_at": "2026-10-21T00:05:21+08:00",
  "trade_date": "2026-10-20",
  "source": "live",
  "has_nav": true,
@@ -764,6 +764,3138 @@
    "license_url": "https://data.gov.tw/license"
   }
  ],
+ "active_holdings": {
+  "version": 1,
+  "as_of": "2026-10-19",
+  "source": "各投信官網申購買回清單（完整持股）；證交所、櫃買中心收盤行情（政府資料開放平臺資料集 11549、11370）",
+  "method": "逐日比對相鄰兩個交易日的完整持股清單，台股股票的股數增減 × 當日官方收盤價為日值（億元），近一週、近一月為逐日日值加總。這是估算，不是經理人的實際成交金額，也未扣除申購買回的影響；每萬單位持股的變化只是配置密度。",
+  "price_history_from": "2026-10-19",
+  "attributions": [
+   {
+    "provider": "臺灣證券交易所",
+    "dataset": "盤後資訊 > 個股日成交資訊",
+    "dataset_url": "https://data.gov.tw/dataset/11549",
+    "source_url": "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL",
+    "data_date": "2026-10-19",
+    "license": "政府資料開放授權條款－第1版",
+    "license_url": "https://data.gov.tw/license"
+   }
+  ],
+  "periods": {
+   "1d": {
+    "start": "2026-10-19",
+    "end": "2026-10-19",
+    "baseline": "2026-10-16",
+    "status": "可計算",
+    "reason": "股數增減 × 當日官方收盤價的估算，不是實際成交金額，也未扣除申購買回影響。其中 7 檔股票因缺股價或部分 ETF 被排除，金額為空值。",
+    "reason_code": null,
+    "days": [
+     "2026-10-19"
+    ],
+    "included_etfs": [
+     "00401A",
+     "00405A",
+     "00406A",
+     "00407A",
+     "00409A",
+     "00980A",
+     "00981D",
+     "00982D",
+     "00983A",
+     "00983D",
+     "00985A",
+     "00986D",
+     "00989A",
+     "00991A",
+     "00995A",
+     "00998A",
+     "00999A"
+    ],
+    "excluded_etfs": [
+     {
+      "code": "00400A",
+      "reason": "尚未核實此投信清單日期是持股基準日，暫不比較"
+     },
+     {
+      "code": "00402A",
+      "reason": "缺 2026-10-16的完整持股清單"
+     },
+     {
+      "code": "00403A",
+      "reason": "尚未核實此投信清單日期是持股基準日，暫不比較"
+     },
+     {
+      "code": "00404A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00408A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00410A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00411A",
+      "reason": "尚未核實此投信清單日期是持股基準日，暫不比較"
+     },
+     {
+      "code": "00412A",
+      "reason": "缺 2026-10-16的完整持股清單"
+     },
+     {
+      "code": "00415A",
+      "reason": "缺 2026-10-16的完整持股清單"
+     },
+     {
+      "code": "00980D",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00981A",
+      "reason": "尚未核實此投信清單日期是持股基準日，暫不比較"
+     },
+     {
+      "code": "00982A",
+      "reason": "尚未核實此投信清單日期是持股基準日，暫不比較"
+     },
+     {
+      "code": "00984A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00984D",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00985D",
+      "reason": "尚未核實此投信清單日期是持股基準日，暫不比較"
+     },
+     {
+      "code": "00986A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00987A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00987D",
+      "reason": "尚未核實此投信清單日期是持股基準日，暫不比較"
+     },
+     {
+      "code": "00988A",
+      "reason": "尚未核實此投信清單日期是持股基準日，暫不比較"
+     },
+     {
+      "code": "00990A",
+      "reason": "尚未核實此投信清單日期是持股基準日，暫不比較"
+     },
+     {
+      "code": "00992A",
+      "reason": "尚未核實此投信清單日期是持股基準日，暫不比較"
+     },
+     {
+      "code": "00993A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00994A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00996A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00997A",
+      "reason": "尚未核實此投信清單日期是持股基準日，暫不比較"
+     }
+    ],
+    "excluded_stocks": [
+     {
+      "asset_code": "1216",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00985A"
+      ]
+     },
+     {
+      "asset_code": "1303",
+      "asset_name": "南亞",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A",
+       "00409A",
+       "00980A",
+       "00991A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "1402",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00985A"
+      ]
+     },
+     {
+      "asset_code": "1477",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A"
+      ]
+     },
+     {
+      "asset_code": "1504",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00985A"
+      ]
+     },
+     {
+      "asset_code": "1605",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00985A"
+      ]
+     },
+     {
+      "asset_code": "2027",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00985A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2059",
+      "asset_name": "川湖",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A",
+       "00980A",
+       "00985A",
+       "00991A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2308",
+      "asset_name": "台達電",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A",
+       "00409A",
+       "00980A",
+       "00985A",
+       "00991A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2313",
+      "asset_name": "華通",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00991A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "2317",
+      "asset_name": "鴻海",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A",
+       "00980A",
+       "00985A",
+       "00991A"
+      ]
+     },
+     {
+      "asset_code": "2327",
+      "asset_name": "國巨",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00991A"
+      ]
+     },
+     {
+      "asset_code": "2344",
+      "asset_name": "華邦電",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00980A",
+       "00985A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "2345",
+      "asset_name": "智邦",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A",
+       "00980A",
+       "00985A",
+       "00991A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2357",
+      "asset_name": "華碩",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00991A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2360",
+      "asset_name": "致茂",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A",
+       "00980A",
+       "00991A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2368",
+      "asset_name": "金像電",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00980A",
+       "00985A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2376",
+      "asset_name": "技嘉",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00980A",
+       "00985A"
+      ]
+     },
+     {
+      "asset_code": "2377",
+      "asset_name": "微星",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00985A"
+      ]
+     },
+     {
+      "asset_code": "2379",
+      "asset_name": "瑞昱",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00991A"
+      ]
+     },
+     {
+      "asset_code": "2382",
+      "asset_name": "廣達",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00980A",
+       "00991A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2383",
+      "asset_name": "台光電",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A",
+       "00409A",
+       "00980A",
+       "00985A",
+       "00991A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2408",
+      "asset_name": "南亞科",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00980A",
+       "00985A",
+       "00991A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2412",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00985A",
+       "00991A"
+      ]
+     },
+     {
+      "asset_code": "2441",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2451",
+      "asset_name": "創見",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2454",
+      "asset_name": "聯發科",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A",
+       "00980A",
+       "00985A",
+       "00991A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2455",
+      "asset_name": "全新",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "2467",
+      "asset_name": "志聖",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "2472",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "2486",
+      "asset_name": "一詮",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "2603",
+      "asset_name": "長榮",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00985A",
+       "00991A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2609",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00985A"
+      ]
+     },
+     {
+      "asset_code": "2618",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2880",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00991A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2881",
+      "asset_name": "富邦金",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00985A",
+       "00991A",
+       "00998A"
+      ]
+     },
+     {
+      "asset_code": "2882",
+      "asset_name": "國泰金",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00991A",
+       "00998A"
+      ]
+     },
+     {
+      "asset_code": "2883",
+      "asset_name": "凱基金",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00991A"
+      ]
+     },
+     {
+      "asset_code": "2884",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00980A",
+       "00991A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2885",
+      "asset_name": "元大金",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A",
+       "00409A",
+       "00991A",
+       "00995A",
+       "00998A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2886",
+      "asset_name": "兆豐金",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A",
+       "00991A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2887",
+      "asset_name": "台新新光金",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00991A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2890",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00991A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2892",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "2912",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A"
+      ]
+     },
+     {
+      "asset_code": "3008",
+      "asset_name": "大立光",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A",
+       "00980A",
+       "00985A",
+       "00991A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "3017",
+      "asset_name": "奇鋐",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00409A",
+       "00980A",
+       "00985A",
+       "00991A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "3023",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "3026",
+      "asset_name": "禾伸堂",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00409A",
+       "00980A",
+       "00991A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "3034",
+      "asset_name": "聯詠",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A"
+      ]
+     },
+     {
+      "asset_code": "3036",
+      "asset_name": "文曄",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00980A",
+       "00985A",
+       "00991A"
+      ]
+     },
+     {
+      "asset_code": "3037",
+      "asset_name": "欣興",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A",
+       "00980A",
+       "00985A",
+       "00991A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "3044",
+      "asset_name": "健鼎",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00980A",
+       "00991A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "3081",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00407A",
+       "00980A",
+       "00985A",
+       "00991A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "3105",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00985A"
+      ]
+     },
+     {
+      "asset_code": "3131",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A",
+       "00407A"
+      ]
+     },
+     {
+      "asset_code": "3167",
+      "asset_name": "大 量",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A"
+      ]
+     },
+     {
+      "asset_code": "3189",
+      "asset_name": "景碩",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00409A",
+       "00980A",
+       "00985A",
+       "00991A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "3227",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "3231",
+      "asset_name": "緯創",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00980A",
+       "00991A"
+      ]
+     },
+     {
+      "asset_code": "3260",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00407A"
+      ]
+     },
+     {
+      "asset_code": "3264",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00405A",
+       "00406A",
+       "00980A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "3293",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00407A",
+       "00980A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "3363",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A"
+      ]
+     },
+     {
+      "asset_code": "3443",
+      "asset_name": "創意",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00407A",
+       "00980A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "3450",
+      "asset_name": "聯鈞",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "3491",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00405A",
+       "00406A",
+       "00407A",
+       "00985A"
+      ]
+     },
+     {
+      "asset_code": "3529",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00407A",
+       "00980A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "3653",
+      "asset_name": "健策",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00409A",
+       "00980A",
+       "00985A",
+       "00991A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "3661",
+      "asset_name": "世芯-KY",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00985A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "3665",
+      "asset_name": "貿聯-KY",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00980A",
+       "00985A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "3702",
+      "asset_name": "大聯大",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "3706",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "3711",
+      "asset_name": "日月光投控",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A",
+       "00980A",
+       "00985A",
+       "00991A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "4551",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "4746",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "4904",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00985A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "4938",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A"
+      ]
+     },
+     {
+      "asset_code": "4958",
+      "asset_name": "臻鼎-KY",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "4991",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A"
+      ]
+     },
+     {
+      "asset_code": "5274",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00405A",
+       "00406A",
+       "00407A",
+       "00409A",
+       "00980A",
+       "00991A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "5289",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00407A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "5347",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00405A",
+       "00991A"
+      ]
+     },
+     {
+      "asset_code": "5434",
+      "asset_name": "崇越",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "5439",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "5534",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "5904",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00980A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "6121",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "6138",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "6139",
+      "asset_name": "亞翔",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A"
+      ]
+     },
+     {
+      "asset_code": "6147",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "6187",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00405A",
+       "00406A",
+       "00407A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "6213",
+      "asset_name": "聯茂",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00980A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "6223",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00405A",
+       "00406A",
+       "00407A",
+       "00980A",
+       "00991A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "6274",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00405A",
+       "00406A",
+       "00407A",
+       "00980A",
+       "00991A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "6285",
+      "asset_name": "啟碁",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A",
+       "00406A"
+      ]
+     },
+     {
+      "asset_code": "6446",
+      "asset_name": "藥華藥",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00985A"
+      ]
+     },
+     {
+      "asset_code": "6488",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00985A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "6505",
+      "asset_name": "台塑化",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00409A",
+       "00991A"
+      ]
+     },
+     {
+      "asset_code": "6510",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00405A",
+       "00406A",
+       "00407A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "6515",
+      "asset_name": "穎崴",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00980A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "6526",
+      "asset_name": "達發",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00985A"
+      ]
+     },
+     {
+      "asset_code": "6531",
+      "asset_name": "愛普",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00985A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "6669",
+      "asset_name": "緯穎",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00980A",
+       "00985A",
+       "00991A",
+       "00995A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "6715",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "6805",
+      "asset_name": "富世達",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "6831",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00980A"
+      ]
+     },
+     {
+      "asset_code": "7750",
+      "asset_name": "新 代",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00985A"
+      ]
+     },
+     {
+      "asset_code": "7751",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00980A"
+      ]
+     },
+     {
+      "asset_code": "7769",
+      "asset_name": "鴻 勁",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00980A",
+       "00985A",
+       "00991A",
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "7828",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A"
+      ]
+     },
+     {
+      "asset_code": "7856",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A"
+      ]
+     },
+     {
+      "asset_code": "8150",
+      "asset_name": "南茂",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "8210",
+      "asset_name": "勤誠",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00980A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "8299",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00407A",
+       "00980A",
+       "00991A"
+      ]
+     },
+     {
+      "asset_code": "8358",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "8464",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00401A"
+      ]
+     },
+     {
+      "asset_code": "8996",
+      "asset_name": "高力",
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00406A",
+       "00980A",
+       "00985A",
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "9941",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00999A"
+      ]
+     },
+     {
+      "asset_code": "9958",
+      "asset_name": null,
+      "date": "2026-10-16",
+      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "etfs": [
+       "00999A"
+      ]
+     }
+    ],
+    "lists": [
+     {
+      "code": "00401A",
+      "date": "2026-10-16",
+      "source": "摩根投信官網",
+      "source_url": null,
+      "rows": 57,
+      "stock_rows": 56,
+      "missing_qty": 43,
+      "weight_sum": 93.5256,
+      "date_basis": "持股列 navDate／effectiveDate",
+      "unverified_rows": 43,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00401A",
+      "date": "2026-10-19",
+      "source": "摩根投信官網",
+      "source_url": "https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false",
+      "rows": 57,
+      "stock_rows": 56,
+      "missing_qty": 43,
+      "weight_sum": 92.5729,
+      "date_basis": "持股列 navDate／effectiveDate",
+      "unverified_rows": 43,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00405A",
+      "date": "2026-10-16",
+      "source": "富邦投信官網",
+      "source_url": null,
+      "rows": 47,
+      "stock_rows": 47,
+      "missing_qty": 8,
+      "weight_sum": 95.5274,
+      "date_basis": "基金資產頁明示「資料日期」",
+      "unverified_rows": 8,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00405A",
+      "date": "2026-10-19",
+      "source": "富邦投信官網",
+      "source_url": "https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00405A",
+      "rows": 47,
+      "stock_rows": 47,
+      "missing_qty": 8,
+      "weight_sum": 95.5381,
+      "date_basis": "基金資產頁明示「資料日期」",
+      "unverified_rows": 8,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00406A",
+      "date": "2026-10-16",
+      "source": "中信投信官網",
+      "source_url": null,
+      "rows": 64,
+      "stock_rows": 62,
+      "missing_qty": 52,
+      "weight_sum": 106.12,
+      "date_basis": "申購買回清單明示「淨值日期」",
+      "unverified_rows": 52,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00406A",
+      "date": "2026-10-19",
+      "source": "中信投信官網",
+      "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+      "rows": 64,
+      "stock_rows": 62,
+      "missing_qty": 52,
+      "weight_sum": 106.94,
+      "date_basis": "申購買回清單明示「淨值日期」",
+      "unverified_rows": 52,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00407A",
+      "date": "2026-10-16",
+      "source": "凱基投信官網",
+      "source_url": null,
+      "rows": 50,
+      "stock_rows": 50,
+      "missing_qty": 14,
+      "weight_sum": 95.76,
+      "date_basis": "淨值欄名明示資料日期",
+      "unverified_rows": 14,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00407A",
+      "date": "2026-10-19",
+      "source": "凱基投信官網",
+      "source_url": "https://www.kgifund.com.tw/Fund/RedemptionList?fundNo=J024",
+      "rows": 50,
+      "stock_rows": 50,
+      "missing_qty": 14,
+      "weight_sum": 95.54,
+      "date_basis": "淨值欄名明示資料日期",
+      "unverified_rows": 14,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00409A",
+      "date": "2026-10-16",
+      "source": "復華投信官網",
+      "source_url": null,
+      "rows": 50,
+      "stock_rows": 11,
+      "missing_qty": 10,
+      "weight_sum": 97.383,
+      "date_basis": "資產明細回傳日期與查詢的正式淨值日期一致",
+      "unverified_rows": 10,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00409A",
+      "date": "2026-10-19",
+      "source": "復華投信官網",
+      "source_url": "https://www.fhtrust.com.tw/api/assets?fundID=ETF26&qDate=2026%2F10%2F19",
+      "rows": 50,
+      "stock_rows": 10,
+      "missing_qty": 9,
+      "weight_sum": 98.772,
+      "date_basis": "資產明細回傳日期與查詢的正式淨值日期一致",
+      "unverified_rows": 9,
+      "first_observed_at": "2026-10-21T00:05:20+08:00",
+      "observed_at": "2026-10-21T00:05:20+08:00"
+     },
+     {
+      "code": "00980A",
+      "date": "2026-10-16",
+      "source": "野村投信官網",
+      "source_url": null,
+      "rows": 51,
+      "stock_rows": 50,
+      "missing_qty": 43,
+      "weight_sum": 97.35,
+      "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
+      "unverified_rows": 43,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00980A",
+      "date": "2026-10-19",
+      "source": "野村投信官網",
+      "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+      "rows": 51,
+      "stock_rows": 50,
+      "missing_qty": 43,
+      "weight_sum": 97.04,
+      "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
+      "unverified_rows": 43,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00981D",
+      "date": "2026-10-16",
+      "source": "中信投信官網",
+      "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+      "rows": 108,
+      "stock_rows": 0,
+      "missing_qty": 0,
+      "weight_sum": 95.1,
+      "date_basis": "申購買回清單明示「淨值日期」",
+      "unverified_rows": 0,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00981D",
+      "date": "2026-10-19",
+      "source": "中信投信官網",
+      "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+      "rows": 108,
+      "stock_rows": 0,
+      "missing_qty": 0,
+      "weight_sum": 96.14,
+      "date_basis": "申購買回清單明示「淨值日期」",
+      "unverified_rows": 0,
+      "first_observed_at": "2026-10-21T00:05:20+08:00",
+      "observed_at": "2026-10-21T00:05:20+08:00"
+     },
+     {
+      "code": "00982D",
+      "date": "2026-10-16",
+      "source": "富邦投信官網",
+      "source_url": null,
+      "rows": 66,
+      "stock_rows": 0,
+      "missing_qty": 0,
+      "weight_sum": 104.7181,
+      "date_basis": "基金資產頁明示「資料日期」",
+      "unverified_rows": 0,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00982D",
+      "date": "2026-10-19",
+      "source": "富邦投信官網",
+      "source_url": "https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00982D",
+      "rows": 66,
+      "stock_rows": 0,
+      "missing_qty": 0,
+      "weight_sum": 105.4008,
+      "date_basis": "基金資產頁明示「資料日期」",
+      "unverified_rows": 0,
+      "first_observed_at": "2026-10-21T00:05:20+08:00",
+      "observed_at": "2026-10-21T00:05:20+08:00"
+     },
+     {
+      "code": "00983A",
+      "date": "2026-10-16",
+      "source": "中信投信官網",
+      "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+      "rows": 43,
+      "stock_rows": 0,
+      "missing_qty": 0,
+      "weight_sum": 93.3,
+      "date_basis": "申購買回清單明示「淨值日期」",
+      "unverified_rows": 0,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00983A",
+      "date": "2026-10-19",
+      "source": "中信投信官網",
+      "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+      "rows": 43,
+      "stock_rows": 0,
+      "missing_qty": 0,
+      "weight_sum": 93.13,
+      "date_basis": "申購買回清單明示「淨值日期」",
+      "unverified_rows": 0,
+      "first_observed_at": "2026-10-21T00:05:20+08:00",
+      "observed_at": "2026-10-21T00:05:20+08:00"
+     },
+     {
+      "code": "00983D",
+      "date": "2026-10-16",
+      "source": "富邦投信官網",
+      "source_url": null,
+      "rows": 83,
+      "stock_rows": 0,
+      "missing_qty": 0,
+      "weight_sum": 95.62,
+      "date_basis": "基金資產頁明示「資料日期」",
+      "unverified_rows": 0,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00983D",
+      "date": "2026-10-19",
+      "source": "富邦投信官網",
+      "source_url": "https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00983D",
+      "rows": 83,
+      "stock_rows": 0,
+      "missing_qty": 0,
+      "weight_sum": 95.9009,
+      "date_basis": "基金資產頁明示「資料日期」",
+      "unverified_rows": 0,
+      "first_observed_at": "2026-10-21T00:05:20+08:00",
+      "observed_at": "2026-10-21T00:05:20+08:00"
+     },
+     {
+      "code": "00985A",
+      "date": "2026-10-16",
+      "source": "野村投信官網",
+      "source_url": null,
+      "rows": 52,
+      "stock_rows": 50,
+      "missing_qty": 41,
+      "weight_sum": 82.83,
+      "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
+      "unverified_rows": 41,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00985A",
+      "date": "2026-10-19",
+      "source": "野村投信官網",
+      "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+      "rows": 52,
+      "stock_rows": 50,
+      "missing_qty": 41,
+      "weight_sum": 91.15,
+      "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
+      "unverified_rows": 41,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00986D",
+      "date": "2026-10-16",
+      "source": "復華投信官網",
+      "source_url": "https://www.fhtrust.com.tw/api/assets?fundID=ETF25&qDate=2026%2F10%2F16",
+      "rows": 26,
+      "stock_rows": 0,
+      "missing_qty": 0,
+      "weight_sum": 109.663,
+      "date_basis": "資產明細回傳日期與查詢的正式淨值日期一致",
+      "unverified_rows": 0,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00986D",
+      "date": "2026-10-19",
+      "source": "復華投信官網",
+      "source_url": "https://www.fhtrust.com.tw/api/assets?fundID=ETF25&qDate=2026%2F10%2F19",
+      "rows": 26,
+      "stock_rows": 0,
+      "missing_qty": 0,
+      "weight_sum": 109.711,
+      "date_basis": "資產明細回傳日期與查詢的正式淨值日期一致",
+      "unverified_rows": 0,
+      "first_observed_at": "2026-10-21T00:05:20+08:00",
+      "observed_at": "2026-10-21T00:05:20+08:00"
+     },
+     {
+      "code": "00989A",
+      "date": "2026-10-16",
+      "source": "摩根投信官網",
+      "source_url": null,
+      "rows": 69,
+      "stock_rows": 0,
+      "missing_qty": 0,
+      "weight_sum": 97.0934,
+      "date_basis": "持股列 navDate／effectiveDate",
+      "unverified_rows": 0,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00989A",
+      "date": "2026-10-19",
+      "source": "摩根投信官網",
+      "source_url": "https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000989A5&country=tw&role=twetf&language=zh&userLoggedIn=false",
+      "rows": 69,
+      "stock_rows": 0,
+      "missing_qty": 0,
+      "weight_sum": 97.3472,
+      "date_basis": "持股列 navDate／effectiveDate",
+      "unverified_rows": 0,
+      "first_observed_at": "2026-10-21T00:05:20+08:00",
+      "observed_at": "2026-10-21T00:05:20+08:00"
+     },
+     {
+      "code": "00991A",
+      "date": "2026-10-16",
+      "source": "復華投信官網",
+      "source_url": null,
+      "rows": 50,
+      "stock_rows": 50,
+      "missing_qty": 44,
+      "weight_sum": 98.159,
+      "date_basis": "資產明細回傳日期與查詢的正式淨值日期一致",
+      "unverified_rows": 44,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00991A",
+      "date": "2026-10-19",
+      "source": "復華投信官網",
+      "source_url": "https://www.fhtrust.com.tw/api/assets?fundID=ETF23&qDate=2026%2F10%2F19",
+      "rows": 50,
+      "stock_rows": 50,
+      "missing_qty": 44,
+      "weight_sum": 98.515,
+      "date_basis": "資產明細回傳日期與查詢的正式淨值日期一致",
+      "unverified_rows": 44,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00995A",
+      "date": "2026-10-16",
+      "source": "中信投信官網",
+      "source_url": null,
+      "rows": 55,
+      "stock_rows": 55,
+      "missing_qty": 47,
+      "weight_sum": 95.35,
+      "date_basis": "申購買回清單明示「淨值日期」",
+      "unverified_rows": 47,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00995A",
+      "date": "2026-10-19",
+      "source": "中信投信官網",
+      "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+      "rows": 54,
+      "stock_rows": 54,
+      "missing_qty": 46,
+      "weight_sum": 97.82,
+      "date_basis": "申購買回清單明示「淨值日期」",
+      "unverified_rows": 46,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00998A",
+      "date": "2026-10-16",
+      "source": "復華投信官網",
+      "source_url": null,
+      "rows": 61,
+      "stock_rows": 3,
+      "missing_qty": 3,
+      "weight_sum": 97.3,
+      "date_basis": "資產明細回傳日期與查詢的正式淨值日期一致",
+      "unverified_rows": 3,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00998A",
+      "date": "2026-10-19",
+      "source": "復華投信官網",
+      "source_url": "https://www.fhtrust.com.tw/api/assets?fundID=ETF24&qDate=2026%2F10%2F19",
+      "rows": 61,
+      "stock_rows": 3,
+      "missing_qty": 3,
+      "weight_sum": 98.173,
+      "date_basis": "資產明細回傳日期與查詢的正式淨值日期一致",
+      "unverified_rows": 3,
+      "first_observed_at": "2026-10-21T00:05:20+08:00",
+      "observed_at": "2026-10-21T00:05:20+08:00"
+     },
+     {
+      "code": "00999A",
+      "date": "2026-10-16",
+      "source": "野村投信官網",
+      "source_url": null,
+      "rows": 57,
+      "stock_rows": 56,
+      "missing_qty": 53,
+      "weight_sum": 97.45,
+      "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
+      "unverified_rows": 53,
+      "first_observed_at": null,
+      "observed_at": null
+     },
+     {
+      "code": "00999A",
+      "date": "2026-10-19",
+      "source": "野村投信官網",
+      "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
+      "rows": 55,
+      "stock_rows": 54,
+      "missing_qty": 50,
+      "weight_sum": 97.53,
+      "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
+      "unverified_rows": 50,
+      "first_observed_at": null,
+      "observed_at": null
+     }
+    ],
+    "stocks": [
+     {
+      "asset_code": "2330",
+      "asset_name": "台灣積體電路製造",
+      "net_amount": 16.06396,
+      "buy_amount": 16.06396,
+      "sell_amount": 0.0,
+      "buy_etfs": 2,
+      "sell_etfs": 0,
+      "net_shares": 663800,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-19",
+        "close": 2420.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 3374000,
+        "qty": 4034000,
+        "qty_change": 660000,
+        "amount": 15.972,
+        "action": "加碼",
+        "weight_prev": 8.5,
+        "weight": 9.49,
+        "unit_qty_prev": null,
+        "unit_qty": 3.6421,
+        "unit_qty_change": null,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       },
+       {
+        "code": "00401A",
+        "name": "主動摩根台灣鑫收",
+        "qty_prev": 323960,
+        "qty": 327760,
+        "qty_change": 3800,
+        "amount": 0.09196,
+        "action": "加碼",
+        "weight_prev": 20.5705,
+        "weight": 20.5831,
+        "unit_qty_prev": null,
+        "unit_qty": 11.627,
+        "unit_qty_change": null,
+        "source": "摩根投信官網",
+        "source_url": "https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "8046",
+      "asset_name": "南亞電路板",
+      "net_amount": 2.1942,
+      "buy_amount": 2.1942,
+      "sell_amount": 0.0,
+      "buy_etfs": 2,
+      "sell_etfs": 0,
+      "net_shares": 159000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-19",
+        "close": 1380.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 2091000,
+        "qty": 2191000,
+        "qty_change": 100000,
+        "amount": 1.38,
+        "action": "加碼",
+        "weight_prev": 2.95,
+        "weight": 2.95,
+        "unit_qty_prev": null,
+        "unit_qty": 1.9781,
+        "unit_qty_change": null,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       },
+       {
+        "code": "00999A",
+        "name": "主動野村臺灣高息",
+        "qty_prev": 0,
+        "qty": 59000,
+        "qty_change": 59000,
+        "amount": 0.8142,
+        "action": "新增",
+        "weight_prev": null,
+        "weight": 0.76,
+        "unit_qty_prev": 0.0,
+        "unit_qty": 0.5924,
+        "unit_qty_change": 0.5924,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2303",
+      "asset_name": "聯華電子",
+      "net_amount": 1.32552,
+      "buy_amount": 1.32552,
+      "sell_amount": 0.0,
+      "buy_etfs": 2,
+      "sell_etfs": 0,
+      "net_shares": 1008000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-19",
+        "close": 131.5,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 13068000,
+        "qty": 14068000,
+        "qty_change": 1000000,
+        "amount": 1.315,
+        "action": "加碼",
+        "weight_prev": 1.81,
+        "weight": 1.81,
+        "unit_qty_prev": null,
+        "unit_qty": 12.7013,
+        "unit_qty_change": null,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       },
+       {
+        "code": "00401A",
+        "name": "主動摩根台灣鑫收",
+        "qty_prev": 651000,
+        "qty": 659000,
+        "qty_change": 8000,
+        "amount": 0.01052,
+        "action": "加碼",
+        "weight_prev": 2.2718,
+        "weight": 2.2488,
+        "unit_qty_prev": null,
+        "unit_qty": 23.3775,
+        "unit_qty_change": null,
+        "source": "摩根投信官網",
+        "source_url": "https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2449",
+      "asset_name": "京元電子",
+      "net_amount": 1.3175,
+      "buy_amount": 1.3175,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 500000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-19",
+        "close": 263.5,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 1310000,
+        "qty": 1810000,
+        "qty_change": 500000,
+        "amount": 1.3175,
+        "action": "加碼",
+        "weight_prev": 0.38,
+        "weight": 0.47,
+        "unit_qty_prev": null,
+        "unit_qty": 1.6342,
+        "unit_qty_change": null,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "1326",
+      "asset_name": "台灣化學纖維",
+      "net_amount": 1.1325,
+      "buy_amount": 1.1325,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 1500000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-19",
+        "close": 75.5,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 4500000,
+        "qty": 6000000,
+        "qty_change": 1500000,
+        "amount": 1.1325,
+        "action": "加碼",
+        "weight_prev": 0.37,
+        "weight": 0.44,
+        "unit_qty_prev": null,
+        "unit_qty": 5.4171,
+        "unit_qty_change": null,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2891",
+      "asset_name": "中國信託金融控股",
+      "net_amount": 0.00734,
+      "buy_amount": 0.00734,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 10000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-19",
+        "close": 73.4,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00401A",
+        "name": "主動摩根台灣鑫收",
+        "qty_prev": 863000,
+        "qty": 873000,
+        "qty_change": 10000,
+        "amount": 0.00734,
+        "action": "加碼",
+        "weight_prev": 1.6666,
+        "weight": 1.6628,
+        "unit_qty_prev": null,
+        "unit_qty": 30.969,
+        "unit_qty_change": null,
+        "source": "摩根投信官網",
+        "source_url": "https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "5871",
+      "asset_name": "中租-KY",
+      "net_amount": 0.001065,
+      "buy_amount": 0.001065,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 1000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-19",
+        "close": 106.5,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00401A",
+        "name": "主動摩根台灣鑫收",
+        "qty_prev": 48920,
+        "qty": 49920,
+        "qty_change": 1000,
+        "amount": 0.001065,
+        "action": "加碼",
+        "weight_prev": 0.1386,
+        "weight": 0.138,
+        "unit_qty_prev": null,
+        "unit_qty": 1.7709,
+        "unit_qty_change": null,
+        "source": "摩根投信官網",
+        "source_url": "https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2327",
+      "asset_name": "國巨",
+      "net_amount": null,
+      "buy_amount": null,
+      "sell_amount": null,
+      "buy_etfs": 3,
+      "sell_etfs": 0,
+      "net_shares": 580000,
+      "complete": false,
+      "counts_complete": false,
+      "missing_price_dates": [],
+      "excluded_etfs": [
+       {
+        "code": "00991A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       }
+      ],
+      "prices": [
+       {
+        "date": "2026-10-19",
+        "close": 534.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 3258000,
+        "qty": 3608000,
+        "qty_change": 350000,
+        "amount": 1.869,
+        "action": "加碼",
+        "weight_prev": 1.93,
+        "weight": 1.88,
+        "unit_qty_prev": null,
+        "unit_qty": 3.2575,
+        "unit_qty_change": null,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       },
+       {
+        "code": "00985A",
+        "name": "主動野村台灣50",
+        "qty_prev": 770000,
+        "qty": 999000,
+        "qty_change": 229000,
+        "amount": 1.22286,
+        "action": "加碼",
+        "weight_prev": 1.37,
+        "weight": 1.81,
+        "unit_qty_prev": 5.5564,
+        "unit_qty": 6.9895,
+        "unit_qty_change": 1.4331,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       },
+       {
+        "code": "00401A",
+        "name": "主動摩根台灣鑫收",
+        "qty_prev": 43000,
+        "qty": 44000,
+        "qty_change": 1000,
+        "amount": 0.00534,
+        "action": "加碼",
+        "weight_prev": 0.6397,
+        "weight": 0.6097,
+        "unit_qty_prev": null,
+        "unit_qty": 1.5609,
+        "unit_qty_change": null,
+        "source": "摩根投信官網",
+        "source_url": "https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2883",
+      "asset_name": "凱基金",
+      "net_amount": null,
+      "buy_amount": null,
+      "sell_amount": null,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 20000,
+      "complete": false,
+      "counts_complete": false,
+      "missing_price_dates": [],
+      "excluded_etfs": [
+       {
+        "code": "00991A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       }
+      ],
+      "prices": [
+       {
+        "date": "2026-10-19",
+        "close": 38.2,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00401A",
+        "name": "主動摩根台灣鑫收",
+        "qty_prev": 1683000,
+        "qty": 1703000,
+        "qty_change": 20000,
+        "amount": 0.00764,
+        "action": "加碼",
+        "weight_prev": 1.7266,
+        "weight": 1.6882,
+        "unit_qty_prev": null,
+        "unit_qty": 60.4126,
+        "unit_qty_change": null,
+        "source": "摩根投信官網",
+        "source_url": "https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2887",
+      "asset_name": "台新新光金",
+      "net_amount": null,
+      "buy_amount": null,
+      "sell_amount": null,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 12000,
+      "complete": false,
+      "counts_complete": false,
+      "missing_price_dates": [],
+      "excluded_etfs": [
+       {
+        "code": "00991A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       },
+       {
+        "code": "00999A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       }
+      ],
+      "prices": [
+       {
+        "date": "2026-10-19",
+        "close": 42.35,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00401A",
+        "name": "主動摩根台灣鑫收",
+        "qty_prev": 997160,
+        "qty": 1009160,
+        "qty_change": 12000,
+        "amount": 0.005082,
+        "action": "加碼",
+        "weight_prev": 1.1107,
+        "weight": 1.1091,
+        "unit_qty_prev": null,
+        "unit_qty": 35.7991,
+        "unit_qty_change": null,
+        "source": "摩根投信官網",
+        "source_url": "https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "3231",
+      "asset_name": "緯創",
+      "net_amount": null,
+      "buy_amount": null,
+      "sell_amount": null,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 4000,
+      "complete": false,
+      "counts_complete": false,
+      "missing_price_dates": [],
+      "excluded_etfs": [
+       {
+        "code": "00980A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       },
+       {
+        "code": "00991A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       }
+      ],
+      "prices": [
+       {
+        "date": "2026-10-19",
+        "close": 180.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00401A",
+        "name": "主動摩根台灣鑫收",
+        "qty_prev": 349000,
+        "qty": 353000,
+        "qty_change": 4000,
+        "amount": 0.0072,
+        "action": "加碼",
+        "weight_prev": 1.6712,
+        "weight": 1.6489,
+        "unit_qty_prev": null,
+        "unit_qty": 12.5224,
+        "unit_qty_change": null,
+        "source": "摩根投信官網",
+        "source_url": "https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "4958",
+      "asset_name": "臻鼎-KY",
+      "net_amount": null,
+      "buy_amount": null,
+      "sell_amount": null,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 1000,
+      "complete": false,
+      "counts_complete": false,
+      "missing_price_dates": [],
+      "excluded_etfs": [
+       {
+        "code": "00406A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       },
+       {
+        "code": "00995A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       }
+      ],
+      "prices": [
+       {
+        "date": "2026-10-19",
+        "close": 547.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00401A",
+        "name": "主動摩根台灣鑫收",
+        "qty_prev": 99000,
+        "qty": 100000,
+        "qty_change": 1000,
+        "amount": 0.00547,
+        "action": "加碼",
+        "weight_prev": 1.4469,
+        "weight": 1.4195,
+        "unit_qty_prev": null,
+        "unit_qty": 3.5474,
+        "unit_qty_change": null,
+        "source": "摩根投信官網",
+        "source_url": "https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "6531",
+      "asset_name": "愛普",
+      "net_amount": null,
+      "buy_amount": null,
+      "sell_amount": null,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 1000,
+      "complete": false,
+      "counts_complete": false,
+      "missing_price_dates": [],
+      "excluded_etfs": [
+       {
+        "code": "00406A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       },
+       {
+        "code": "00985A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       },
+       {
+        "code": "00995A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       }
+      ],
+      "prices": [
+       {
+        "date": "2026-10-19",
+        "close": 821.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00401A",
+        "name": "主動摩根台灣鑫收",
+        "qty_prev": 68000,
+        "qty": 69000,
+        "qty_change": 1000,
+        "amount": 0.00821,
+        "action": "加碼",
+        "weight_prev": 1.5737,
+        "weight": 1.47,
+        "unit_qty_prev": null,
+        "unit_qty": 2.4477,
+        "unit_qty_change": null,
+        "source": "摩根投信官網",
+        "source_url": "https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "6669",
+      "asset_name": "緯穎",
+      "net_amount": null,
+      "buy_amount": null,
+      "sell_amount": null,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 400,
+      "complete": false,
+      "counts_complete": false,
+      "missing_price_dates": [],
+      "excluded_etfs": [
+       {
+        "code": "00406A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       },
+       {
+        "code": "00980A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       },
+       {
+        "code": "00985A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       },
+       {
+        "code": "00991A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       },
+       {
+        "code": "00995A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       },
+       {
+        "code": "00999A",
+        "date": "2026-10-16",
+        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+       }
+      ],
+      "prices": [
+       {
+        "date": "2026-10-19",
+        "close": 1885.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00401A",
+        "name": "主動摩根台灣鑫收",
+        "qty_prev": 34183,
+        "qty": 34583,
+        "qty_change": 400,
+        "amount": 0.00754,
+        "action": "加碼",
+        "weight_prev": 1.6548,
+        "weight": 1.6917,
+        "unit_qty_prev": null,
+        "unit_qty": 1.2268,
+        "unit_qty_change": null,
+        "source": "摩根投信官網",
+        "source_url": "https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false",
+        "prev_date": "2026-10-16",
+        "date": "2026-10-19",
+        "reason": null
+       }
+      ]
+     }
+    ]
+   },
+   "1w": {
+    "start": "2026-10-13",
+    "end": "2026-10-19",
+    "baseline": "2026-10-12",
+    "status": "資料不足",
+    "reason": "官方收盤價自 2026-10-19 起保存，缺 2026-10-13、2026-10-14、2026-10-15 等的股價，期間不估值、不排行。",
+    "reason_code": "no_prices",
+    "days": [
+     "2026-10-13",
+     "2026-10-14",
+     "2026-10-15",
+     "2026-10-16",
+     "2026-10-19"
+    ],
+    "included_etfs": [],
+    "excluded_etfs": [
+     {
+      "code": "00400A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00401A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00402A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 5 天的完整持股清單"
+     },
+     {
+      "code": "00403A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00404A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00405A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00406A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00407A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00408A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00409A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14的完整持股清單"
+     },
+     {
+      "code": "00410A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00411A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14的完整持股清單"
+     },
+     {
+      "code": "00412A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 5 天的完整持股清單"
+     },
+     {
+      "code": "00415A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 5 天的完整持股清單"
+     },
+     {
+      "code": "00980A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00980D",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00981A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00981D",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14的完整持股清單"
+     },
+     {
+      "code": "00982A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00982D",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00983A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14的完整持股清單"
+     },
+     {
+      "code": "00983D",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00984A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00984D",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00985A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00985D",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00986A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00986D",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14的完整持股清單"
+     },
+     {
+      "code": "00987A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00987D",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14的完整持股清單"
+     },
+     {
+      "code": "00988A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14的完整持股清單"
+     },
+     {
+      "code": "00989A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00990A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14的完整持股清單"
+     },
+     {
+      "code": "00991A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00992A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00993A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00994A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00995A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00996A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00997A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14的完整持股清單"
+     },
+     {
+      "code": "00998A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     },
+     {
+      "code": "00999A",
+      "reason": "缺 2026-10-12、2026-10-13、2026-10-14 等 4 天的完整持股清單"
+     }
+    ],
+    "excluded_stocks": [],
+    "lists": [],
+    "stocks": []
+   },
+   "1m": {
+    "start": "2026-09-21",
+    "end": "2026-10-19",
+    "baseline": "2026-09-18",
+    "status": "資料不足",
+    "reason": "官方收盤價自 2026-10-19 起保存，缺 2026-09-21、2026-09-22、2026-09-23 等的股價，期間不估值、不排行。",
+    "reason_code": "no_prices",
+    "days": [
+     "2026-09-21",
+     "2026-09-22",
+     "2026-09-23",
+     "2026-09-24",
+     "2026-09-29",
+     "2026-09-30",
+     "2026-10-01",
+     "2026-10-02",
+     "2026-10-05",
+     "2026-10-06",
+     "2026-10-07",
+     "2026-10-08",
+     "2026-10-12",
+     "2026-10-13",
+     "2026-10-14",
+     "2026-10-15",
+     "2026-10-16",
+     "2026-10-19"
+    ],
+    "included_etfs": [],
+    "excluded_etfs": [
+     {
+      "code": "00400A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00401A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00402A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 18 天的完整持股清單"
+     },
+     {
+      "code": "00403A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00404A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00405A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00406A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00407A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00408A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00409A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 16 天的完整持股清單"
+     },
+     {
+      "code": "00410A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00411A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 16 天的完整持股清單"
+     },
+     {
+      "code": "00412A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 18 天的完整持股清單"
+     },
+     {
+      "code": "00415A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 18 天的完整持股清單"
+     },
+     {
+      "code": "00980A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00980D",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00981A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00981D",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 16 天的完整持股清單"
+     },
+     {
+      "code": "00982A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00982D",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00983A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 16 天的完整持股清單"
+     },
+     {
+      "code": "00983D",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00984A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00984D",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00985A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00985D",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00986A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00986D",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 16 天的完整持股清單"
+     },
+     {
+      "code": "00987A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00987D",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 16 天的完整持股清單"
+     },
+     {
+      "code": "00988A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 16 天的完整持股清單"
+     },
+     {
+      "code": "00989A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00990A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 16 天的完整持股清單"
+     },
+     {
+      "code": "00991A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00992A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00993A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00994A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00995A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00996A",
+      "reason": "沒有投信官網的完整持股清單（投信投顧公會的前十大不是完整清單）"
+     },
+     {
+      "code": "00997A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 16 天的完整持股清單"
+     },
+     {
+      "code": "00998A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     },
+     {
+      "code": "00999A",
+      "reason": "缺 2026-09-18、2026-09-21、2026-09-22 等 17 天的完整持股清單"
+     }
+    ],
+    "excluded_stocks": [],
+    "lists": [],
+    "stocks": []
+   }
+  }
+ },
  "count": 360,
  "items": [
   {
@@ -77746,7 +80878,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00935&tab=basic",
       "announced": "2026-10-21",
       "first_observed_at": "2026-10-20T14:48:45+00:00",
-      "observed_at": "2026-10-20T14:48:45+00:00"
+      "observed_at": "2026-10-20T16:05:20+00:00"
      }
     ],
     "reason_code": null,
@@ -77760,7 +80892,7 @@
     "latest_official_date": "2026-10-20",
     "four_week_amount": null,
     "positive_weeks": null,
-    "available_weeks": 1,
+    "available_weeks": 2,
     "weeks": [
      {
       "start": "2026-10-19",
@@ -77797,7 +80929,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00935&tab=basic",
         "announced": "2026-10-21",
         "first_observed_at": "2026-10-20T14:48:45+00:00",
-        "observed_at": "2026-10-20T14:48:45+00:00"
+        "observed_at": "2026-10-20T16:05:20+00:00"
        }
       ],
       "reason_code": null,
@@ -77812,16 +80944,65 @@
       "start": "2026-10-12",
       "end": "2026-10-16",
       "baseline": "2026-10-08",
-      "net_amount": null,
-      "net_rate": null,
-      "units_rate": null,
-      "aum_change": null,
-      "aum_rate": null,
-      "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-08、2026-10-12），不補零。",
+      "net_amount": 24.6489,
+      "net_rate": 4.5333,
+      "units_rate": 4.9171,
+      "aum_change": -22.2,
+      "aum_rate": -4.0829,
+      "status": "可估算",
+      "reason": "特殊事件公告未保證完整；請併同原公告核對。",
       "method": "估算",
-      "sources": [],
-      "reason_code": "missing_official",
+      "sources": [
+       {
+        "date": "2026-10-08",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00935&tab=basic",
+        "announced": "2026-10-12",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-12",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00935&tab=basic",
+        "announced": "2026-10-13",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-13",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00935&tab=basic",
+        "announced": "2026-10-14",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-14",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00935&tab=basic",
+        "announced": "2026-10-15",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-15",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00935&tab=basic",
+        "announced": "2026-10-16",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-16",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00935&tab=basic",
+        "announced": "2026-10-19",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       }
+      ],
+      "reason_code": null,
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-12",
@@ -77842,7 +81023,7 @@
       "aum_change": null,
       "aum_rate": null,
       "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-02、2026-10-05、2026-10-06、2026-10-07、2026-10-08），不補零。",
+      "reason": "官方日資料不足（缺 2026-10-02），不補零。",
       "method": "估算",
       "sources": [],
       "reason_code": "missing_official",
@@ -80685,7 +83866,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
       "announced": "2026-10-21",
       "first_observed_at": "2026-10-20T14:48:45+00:00",
-      "observed_at": "2026-10-20T14:48:45+00:00"
+      "observed_at": "2026-10-20T16:05:20+00:00"
      }
     ],
     "reason_code": null,
@@ -80699,7 +83880,7 @@
     "latest_official_date": "2026-10-20",
     "four_week_amount": null,
     "positive_weeks": null,
-    "available_weeks": 1,
+    "available_weeks": 3,
     "weeks": [
      {
       "start": "2026-10-19",
@@ -80736,7 +83917,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
         "announced": "2026-10-21",
         "first_observed_at": "2026-10-20T14:48:45+00:00",
-        "observed_at": "2026-10-20T14:48:45+00:00"
+        "observed_at": "2026-10-20T16:05:20+00:00"
        }
       ],
       "reason_code": null,
@@ -80751,16 +83932,65 @@
       "start": "2026-10-12",
       "end": "2026-10-16",
       "baseline": "2026-10-08",
-      "net_amount": null,
-      "net_rate": null,
-      "units_rate": null,
-      "aum_change": null,
-      "aum_rate": null,
-      "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-08、2026-10-12），不補零。",
+      "net_amount": 0.0,
+      "net_rate": 0.0,
+      "units_rate": 0.0,
+      "aum_change": 0.22,
+      "aum_rate": 1.8771,
+      "status": "可估算",
+      "reason": "特殊事件公告未保證完整；請併同原公告核對。",
       "method": "估算",
-      "sources": [],
-      "reason_code": "missing_official",
+      "sources": [
+       {
+        "date": "2026-10-08",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
+        "announced": "2026-10-12",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-12",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
+        "announced": "2026-10-13",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-13",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
+        "announced": "2026-10-14",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-14",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
+        "announced": "2026-10-15",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-15",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
+        "announced": "2026-10-16",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-16",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
+        "announced": "2026-10-19",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       }
+      ],
+      "reason_code": null,
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-12",
@@ -80775,16 +84005,57 @@
       "start": "2026-10-05",
       "end": "2026-10-09",
       "baseline": "2026-10-02",
-      "net_amount": null,
-      "net_rate": null,
-      "units_rate": null,
-      "aum_change": null,
-      "aum_rate": null,
-      "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-02、2026-10-05、2026-10-06、2026-10-07、2026-10-08），不補零。",
+      "net_amount": 0.0,
+      "net_rate": 0.0,
+      "units_rate": 0.0,
+      "aum_change": -0.01,
+      "aum_rate": -0.0853,
+      "status": "可估算",
+      "reason": "特殊事件公告未保證完整；請併同原公告核對。",
       "method": "估算",
-      "sources": [],
-      "reason_code": "missing_official",
+      "sources": [
+       {
+        "date": "2026-10-02",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
+        "announced": "2026-10-05",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-05",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
+        "announced": "2026-10-06",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-06",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
+        "announced": "2026-10-07",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-07",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
+        "announced": "2026-10-08",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-08",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
+        "announced": "2026-10-12",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       }
+      ],
+      "reason_code": null,
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-05",
@@ -80806,7 +84077,7 @@
       "aum_change": null,
       "aum_rate": null,
       "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30、2026-10-01、2026-10-02），不補零。",
+      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30、2026-10-01），不補零。",
       "method": "估算",
       "sources": [],
       "reason_code": "missing_official",
@@ -85859,7 +89130,7 @@
     "latest_official_date": "2026-10-20",
     "four_week_amount": null,
     "positive_weeks": null,
-    "available_weeks": 0,
+    "available_weeks": 1,
     "weeks": [
      {
       "start": "2026-10-19",
@@ -85892,10 +89163,10 @@
       "aum_change": null,
       "aum_rate": null,
       "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-12），不補零。",
+      "reason": "流通單位數或同日正式淨值不完整。",
       "method": "估算",
       "sources": [],
-      "reason_code": "missing_official",
+      "reason_code": "incomplete",
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-12",
@@ -85910,16 +89181,57 @@
       "start": "2026-10-05",
       "end": "2026-10-09",
       "baseline": "2026-10-02",
-      "net_amount": null,
-      "net_rate": null,
-      "units_rate": null,
-      "aum_change": null,
-      "aum_rate": null,
-      "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-02、2026-10-05、2026-10-06、2026-10-07），不補零。",
+      "net_amount": 0.11265,
+      "net_rate": 0.8619,
+      "units_rate": 0.8696,
+      "aum_change": 0.22,
+      "aum_rate": 1.6832,
+      "status": "可估算",
+      "reason": "特殊事件公告未保證完整；請併同原公告核對。",
       "method": "估算",
-      "sources": [],
-      "reason_code": "missing_official",
+      "sources": [
+       {
+        "date": "2026-10-02",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00960&tab=basic",
+        "announced": "2026-10-06",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-05",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00960&tab=basic",
+        "announced": "2026-10-07",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-06",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00960&tab=basic",
+        "announced": "2026-10-08",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-07",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00960&tab=basic",
+        "announced": "2026-10-12",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-08",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00960&tab=basic",
+        "announced": "2026-10-13",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       }
+      ],
+      "reason_code": null,
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-05",
@@ -85941,7 +89253,7 @@
       "aum_change": null,
       "aum_rate": null,
       "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30、2026-10-01、2026-10-02），不補零。",
+      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30），不補零。",
       "method": "估算",
       "sources": [],
       "reason_code": "missing_official",
@@ -89397,7 +92709,7 @@
     "latest_official_date": "2026-10-20",
     "four_week_amount": null,
     "positive_weeks": null,
-    "available_weeks": 0,
+    "available_weeks": 2,
     "weeks": [
      {
       "start": "2026-10-19",
@@ -89424,16 +92736,65 @@
       "start": "2026-10-12",
       "end": "2026-10-16",
       "baseline": "2026-10-08",
-      "net_amount": null,
-      "net_rate": null,
-      "units_rate": null,
-      "aum_change": null,
-      "aum_rate": null,
-      "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-08），不補零。",
+      "net_amount": -0.09165,
+      "net_rate": -0.9627,
+      "units_rate": -0.9492,
+      "aum_change": -0.19,
+      "aum_rate": -1.9958,
+      "status": "可估算",
+      "reason": "特殊事件公告未保證完整；請併同原公告核對。",
       "method": "估算",
-      "sources": [],
-      "reason_code": "missing_official",
+      "sources": [
+       {
+        "date": "2026-10-08",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00971&tab=basic",
+        "announced": "2026-10-13",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-12",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00971&tab=basic",
+        "announced": "2026-10-14",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-13",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00971&tab=basic",
+        "announced": "2026-10-15",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-14",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00971&tab=basic",
+        "announced": "2026-10-16",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-15",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00971&tab=basic",
+        "announced": "2026-10-19",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-16",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00971&tab=basic",
+        "announced": "2026-10-20",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       }
+      ],
+      "reason_code": null,
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-12",
@@ -89448,16 +92809,57 @@
       "start": "2026-10-05",
       "end": "2026-10-09",
       "baseline": "2026-10-02",
-      "net_amount": null,
-      "net_rate": null,
-      "units_rate": null,
-      "aum_change": null,
-      "aum_rate": null,
-      "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-02、2026-10-05、2026-10-06、2026-10-07、2026-10-08），不補零。",
+      "net_amount": -0.1823,
+      "net_rate": -1.8891,
+      "units_rate": -1.863,
+      "aum_change": -0.13,
+      "aum_rate": -1.3472,
+      "status": "可估算",
+      "reason": "特殊事件公告未保證完整；請併同原公告核對。",
       "method": "估算",
-      "sources": [],
-      "reason_code": "missing_official",
+      "sources": [
+       {
+        "date": "2026-10-02",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00971&tab=basic",
+        "announced": "2026-10-06",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-05",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00971&tab=basic",
+        "announced": "2026-10-07",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-06",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00971&tab=basic",
+        "announced": "2026-10-08",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-07",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00971&tab=basic",
+        "announced": "2026-10-12",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-08",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00971&tab=basic",
+        "announced": "2026-10-13",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       }
+      ],
+      "reason_code": null,
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-05",
@@ -89479,7 +92881,7 @@
       "aum_change": null,
       "aum_rate": null,
       "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30、2026-10-01、2026-10-02），不補零。",
+      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30），不補零。",
       "method": "估算",
       "sources": [],
       "reason_code": "missing_official",
@@ -89735,7 +93137,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00972&tab=basic",
       "announced": "2026-10-21",
       "first_observed_at": "2026-10-20T14:48:45+00:00",
-      "observed_at": "2026-10-20T14:48:45+00:00"
+      "observed_at": "2026-10-20T16:05:20+00:00"
      }
     ],
     "reason_code": null,
@@ -89749,7 +93151,7 @@
     "latest_official_date": "2026-10-20",
     "four_week_amount": null,
     "positive_weeks": null,
-    "available_weeks": 1,
+    "available_weeks": 2,
     "weeks": [
      {
       "start": "2026-10-19",
@@ -89786,7 +93188,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00972&tab=basic",
         "announced": "2026-10-21",
         "first_observed_at": "2026-10-20T14:48:45+00:00",
-        "observed_at": "2026-10-20T14:48:45+00:00"
+        "observed_at": "2026-10-20T16:05:20+00:00"
        }
       ],
       "reason_code": null,
@@ -89807,10 +93209,10 @@
       "aum_change": null,
       "aum_rate": null,
       "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-08、2026-10-12），不補零。",
+      "reason": "流通單位數或同日正式淨值不完整。",
       "method": "估算",
       "sources": [],
-      "reason_code": "missing_official",
+      "reason_code": "incomplete",
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-12",
@@ -89825,16 +93227,57 @@
       "start": "2026-10-05",
       "end": "2026-10-09",
       "baseline": "2026-10-02",
-      "net_amount": null,
-      "net_rate": null,
-      "units_rate": null,
-      "aum_change": null,
-      "aum_rate": null,
-      "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-02、2026-10-05、2026-10-06、2026-10-07、2026-10-08），不補零。",
+      "net_amount": 0.0,
+      "net_rate": 0.0,
+      "units_rate": 0.0,
+      "aum_change": 0.03,
+      "aum_rate": 0.9288,
+      "status": "可估算",
+      "reason": "特殊事件公告未保證完整；請併同原公告核對。",
       "method": "估算",
-      "sources": [],
-      "reason_code": "missing_official",
+      "sources": [
+       {
+        "date": "2026-10-02",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00972&tab=basic",
+        "announced": "2026-10-05",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-05",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00972&tab=basic",
+        "announced": "2026-10-06",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-06",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00972&tab=basic",
+        "announced": "2026-10-07",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-07",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00972&tab=basic",
+        "announced": "2026-10-08",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-08",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00972&tab=basic",
+        "announced": "2026-10-12",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       }
+      ],
+      "reason_code": null,
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-05",
@@ -89856,7 +93299,7 @@
       "aum_change": null,
       "aum_rate": null,
       "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30、2026-10-01、2026-10-02），不補零。",
+      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30、2026-10-01），不補零。",
       "method": "估算",
       "sources": [],
       "reason_code": "missing_official",
@@ -93164,7 +96607,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
       "announced": "2026-10-21",
       "first_observed_at": "2026-10-20T14:48:45+00:00",
-      "observed_at": "2026-10-20T14:48:45+00:00"
+      "observed_at": "2026-10-20T16:05:20+00:00"
      }
     ],
     "reason_code": null,
@@ -93178,7 +96621,7 @@
     "latest_official_date": "2026-10-20",
     "four_week_amount": null,
     "positive_weeks": null,
-    "available_weeks": 1,
+    "available_weeks": 3,
     "weeks": [
      {
       "start": "2026-10-19",
@@ -93215,7 +96658,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
         "announced": "2026-10-21",
         "first_observed_at": "2026-10-20T14:48:45+00:00",
-        "observed_at": "2026-10-20T14:48:45+00:00"
+        "observed_at": "2026-10-20T16:05:20+00:00"
        }
       ],
       "reason_code": null,
@@ -93230,16 +96673,65 @@
       "start": "2026-10-12",
       "end": "2026-10-16",
       "baseline": "2026-10-08",
-      "net_amount": null,
-      "net_rate": null,
-      "units_rate": null,
-      "aum_change": null,
-      "aum_rate": null,
-      "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-08、2026-10-12），不補零。",
+      "net_amount": 0.734,
+      "net_rate": 0.3632,
+      "units_rate": 0.3936,
+      "aum_change": -14.7,
+      "aum_rate": -7.2747,
+      "status": "可估算",
+      "reason": "特殊事件公告未保證完整；請併同原公告核對。",
       "method": "估算",
-      "sources": [],
-      "reason_code": "missing_official",
+      "sources": [
+       {
+        "date": "2026-10-08",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "announced": "2026-10-12",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-12",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "announced": "2026-10-13",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-13",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "announced": "2026-10-14",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-14",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "announced": "2026-10-15",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-15",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "announced": "2026-10-16",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-16",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "announced": "2026-10-19",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       }
+      ],
+      "reason_code": null,
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-12",
@@ -93254,16 +96746,57 @@
       "start": "2026-10-05",
       "end": "2026-10-09",
       "baseline": "2026-10-02",
-      "net_amount": null,
-      "net_rate": null,
-      "units_rate": null,
-      "aum_change": null,
-      "aum_rate": null,
-      "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-02、2026-10-05、2026-10-06、2026-10-07、2026-10-08），不補零。",
+      "net_amount": -4.1704,
+      "net_rate": -2.0634,
+      "units_rate": -1.993,
+      "aum_change": -0.04,
+      "aum_rate": -0.0198,
+      "status": "可估算",
+      "reason": "特殊事件公告未保證完整；請併同原公告核對。",
       "method": "估算",
-      "sources": [],
-      "reason_code": "missing_official",
+      "sources": [
+       {
+        "date": "2026-10-02",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "announced": "2026-10-05",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-05",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "announced": "2026-10-06",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-06",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "announced": "2026-10-07",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-07",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "announced": "2026-10-08",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-08",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "announced": "2026-10-12",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       }
+      ],
+      "reason_code": null,
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-05",
@@ -93285,7 +96818,7 @@
       "aum_change": null,
       "aum_rate": null,
       "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30、2026-10-01、2026-10-02），不補零。",
+      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30、2026-10-01），不補零。",
       "method": "估算",
       "sources": [],
       "reason_code": "missing_official",
@@ -95017,7 +98550,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009812&tab=basic",
       "announced": "2026-10-21",
       "first_observed_at": "2026-10-20T14:48:45+00:00",
-      "observed_at": "2026-10-20T14:48:45+00:00"
+      "observed_at": "2026-10-20T16:05:20+00:00"
      }
     ],
     "reason_code": null,
@@ -95031,7 +98564,7 @@
     "latest_official_date": "2026-10-20",
     "four_week_amount": null,
     "positive_weeks": null,
-    "available_weeks": 1,
+    "available_weeks": 2,
     "weeks": [
      {
       "start": "2026-10-19",
@@ -95068,7 +98601,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009812&tab=basic",
         "announced": "2026-10-21",
         "first_observed_at": "2026-10-20T14:48:45+00:00",
-        "observed_at": "2026-10-20T14:48:45+00:00"
+        "observed_at": "2026-10-20T16:05:20+00:00"
        }
       ],
       "reason_code": null,
@@ -95107,16 +98640,57 @@
       "start": "2026-10-05",
       "end": "2026-10-09",
       "baseline": "2026-10-02",
-      "net_amount": null,
-      "net_rate": null,
-      "units_rate": null,
-      "aum_change": null,
-      "aum_rate": null,
-      "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-02、2026-10-05、2026-10-06、2026-10-07），不補零。",
+      "net_amount": 0.0,
+      "net_rate": 0.0,
+      "units_rate": 0.0,
+      "aum_change": -0.04,
+      "aum_rate": -0.3328,
+      "status": "可估算",
+      "reason": "特殊事件公告未保證完整；請併同原公告核對。",
       "method": "估算",
-      "sources": [],
-      "reason_code": "missing_official",
+      "sources": [
+       {
+        "date": "2026-10-02",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009812&tab=basic",
+        "announced": "2026-10-05",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-05",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009812&tab=basic",
+        "announced": "2026-10-06",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-06",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009812&tab=basic",
+        "announced": "2026-10-07",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-07",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009812&tab=basic",
+        "announced": "2026-10-08",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-08",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009812&tab=basic",
+        "announced": "2026-10-12",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       }
+      ],
+      "reason_code": null,
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-05",
@@ -95138,7 +98712,7 @@
       "aum_change": null,
       "aum_rate": null,
       "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30、2026-10-01、2026-10-02），不補零。",
+      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30、2026-10-01），不補零。",
       "method": "估算",
       "sources": [],
       "reason_code": "missing_official",
@@ -99163,7 +102737,7 @@
     "latest_official_date": "2026-10-20",
     "four_week_amount": null,
     "positive_weeks": null,
-    "available_weeks": 0,
+    "available_weeks": 1,
     "weeks": [
      {
       "start": "2026-10-19",
@@ -99214,16 +102788,57 @@
       "start": "2026-10-05",
       "end": "2026-10-09",
       "baseline": "2026-10-02",
-      "net_amount": null,
-      "net_rate": null,
-      "units_rate": null,
-      "aum_change": null,
-      "aum_rate": null,
-      "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-02、2026-10-05、2026-10-06、2026-10-07），不補零。",
+      "net_amount": 2.1938,
+      "net_rate": 3.018,
+      "units_rate": 3.0502,
+      "aum_change": 0.36,
+      "aum_rate": 0.4953,
+      "status": "可估算",
+      "reason": "特殊事件公告未保證完整；請併同原公告核對。",
       "method": "估算",
-      "sources": [],
-      "reason_code": "missing_official",
+      "sources": [
+       {
+        "date": "2026-10-02",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009821&tab=basic",
+        "announced": "2026-10-06",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-05",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009821&tab=basic",
+        "announced": "2026-10-07",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-06",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009821&tab=basic",
+        "announced": "2026-10-08",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-07",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009821&tab=basic",
+        "announced": "2026-10-12",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-08",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009821&tab=basic",
+        "announced": "2026-10-13",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       }
+      ],
+      "reason_code": null,
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-05",
@@ -99245,7 +102860,7 @@
       "aum_change": null,
       "aum_rate": null,
       "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30、2026-10-01、2026-10-02），不補零。",
+      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30），不補零。",
       "method": "估算",
       "sources": [],
       "reason_code": "missing_official",
@@ -104376,7 +107991,7 @@
       "url": "https://etf.allianzgi.com.tw/etf-info/E0001",
       "announced": "2026-10-21",
       "first_observed_at": "2026-10-20T14:48:45+00:00",
-      "observed_at": "2026-10-20T14:48:45+00:00"
+      "observed_at": "2026-10-20T16:05:20+00:00"
      }
     ],
     "reason_code": null,
@@ -104427,7 +108042,7 @@
         "url": "https://etf.allianzgi.com.tw/etf-info/E0001",
         "announced": "2026-10-21",
         "first_observed_at": "2026-10-20T14:48:45+00:00",
-        "observed_at": "2026-10-20T14:48:45+00:00"
+        "observed_at": "2026-10-20T16:05:20+00:00"
        }
       ],
       "reason_code": null,
@@ -105483,7 +109098,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
       "announced": "2026-10-21",
       "first_observed_at": "2026-10-20T14:48:45+00:00",
-      "observed_at": "2026-10-20T14:48:45+00:00"
+      "observed_at": "2026-10-20T16:05:20+00:00"
      }
     ],
     "reason_code": null,
@@ -105497,7 +109112,7 @@
     "latest_official_date": "2026-10-20",
     "four_week_amount": null,
     "positive_weeks": null,
-    "available_weeks": 1,
+    "available_weeks": 3,
     "weeks": [
      {
       "start": "2026-10-19",
@@ -105534,7 +109149,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
         "announced": "2026-10-21",
         "first_observed_at": "2026-10-20T14:48:45+00:00",
-        "observed_at": "2026-10-20T14:48:45+00:00"
+        "observed_at": "2026-10-20T16:05:20+00:00"
        }
       ],
       "reason_code": null,
@@ -105549,16 +109164,65 @@
       "start": "2026-10-12",
       "end": "2026-10-16",
       "baseline": "2026-10-08",
-      "net_amount": null,
-      "net_rate": null,
-      "units_rate": null,
-      "aum_change": null,
-      "aum_rate": null,
-      "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-08），不補零。",
+      "net_amount": 154.0273,
+      "net_rate": 87.4608,
+      "units_rate": 90.5417,
+      "aum_change": 142.17,
+      "aum_rate": 80.728,
+      "status": "可估算",
+      "reason": "特殊事件公告未保證完整；請併同原公告核對。",
       "method": "估算",
-      "sources": [],
-      "reason_code": "missing_official",
+      "sources": [
+       {
+        "date": "2026-10-08",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "announced": "2026-10-12",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-12",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "announced": "2026-10-13",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-13",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "announced": "2026-10-14",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-14",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "announced": "2026-10-15",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-15",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "announced": "2026-10-16",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-16",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "announced": "2026-10-19",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       }
+      ],
+      "reason_code": null,
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-12",
@@ -105573,16 +109237,57 @@
       "start": "2026-10-05",
       "end": "2026-10-09",
       "baseline": "2026-10-02",
-      "net_amount": null,
-      "net_rate": null,
-      "units_rate": null,
-      "aum_change": null,
-      "aum_rate": null,
-      "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-02、2026-10-05、2026-10-06、2026-10-07、2026-10-08），不補零。",
+      "net_amount": 42.8495,
+      "net_rate": 32.3637,
+      "units_rate": 31.8056,
+      "aum_change": 43.71,
+      "aum_rate": 33.0136,
+      "status": "可估算",
+      "reason": "特殊事件公告未保證完整；請併同原公告核對。",
       "method": "估算",
-      "sources": [],
-      "reason_code": "missing_official",
+      "sources": [
+       {
+        "date": "2026-10-02",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "announced": "2026-10-05",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-05",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "announced": "2026-10-06",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-06",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "announced": "2026-10-07",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-07",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "announced": "2026-10-08",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-08",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "announced": "2026-10-12",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       }
+      ],
+      "reason_code": null,
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-05",
@@ -105604,7 +109309,7 @@
       "aum_change": null,
       "aum_rate": null,
       "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30、2026-10-01、2026-10-02），不補零。",
+      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30、2026-10-01），不補零。",
       "method": "估算",
       "sources": [],
       "reason_code": "missing_official",
@@ -107909,7 +111614,7 @@
     "latest_official_date": "2026-10-20",
     "four_week_amount": null,
     "positive_weeks": null,
-    "available_weeks": 1,
+    "available_weeks": 2,
     "weeks": [
      {
       "start": "2026-10-19",
@@ -107951,7 +111656,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00987B&tab=basic",
         "announced": "2026-10-13",
         "first_observed_at": "2026-10-20T14:48:45+00:00",
-        "observed_at": "2026-10-20T14:48:45+00:00"
+        "observed_at": "2026-10-20T16:05:20+00:00"
        },
        {
         "date": "2026-10-12",
@@ -108009,16 +111714,57 @@
       "start": "2026-10-05",
       "end": "2026-10-09",
       "baseline": "2026-10-02",
-      "net_amount": null,
-      "net_rate": null,
-      "units_rate": null,
-      "aum_change": null,
-      "aum_rate": null,
-      "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-02、2026-10-05、2026-10-06、2026-10-07），不補零。",
+      "net_amount": 0.151987,
+      "net_rate": 1.3102,
+      "units_rate": 1.3102,
+      "aum_change": 0.11,
+      "aum_rate": 0.9483,
+      "status": "可估算",
+      "reason": "特殊事件公告未保證完整；請併同原公告核對。",
       "method": "估算",
-      "sources": [],
-      "reason_code": "missing_official",
+      "sources": [
+       {
+        "date": "2026-10-02",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00987B&tab=basic",
+        "announced": "2026-10-06",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-05",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00987B&tab=basic",
+        "announced": "2026-10-07",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-06",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00987B&tab=basic",
+        "announced": "2026-10-08",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-07",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00987B&tab=basic",
+        "announced": "2026-10-12",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-08",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00987B&tab=basic",
+        "announced": "2026-10-13",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       }
+      ],
+      "reason_code": null,
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-05",
@@ -108040,7 +111786,7 @@
       "aum_change": null,
       "aum_rate": null,
       "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30、2026-10-01、2026-10-02），不補零。",
+      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30），不補零。",
       "method": "估算",
       "sources": [],
       "reason_code": "missing_official",
@@ -111921,7 +115667,7 @@
       "url": "https://etf.allianzgi.com.tw/etf-info/E0002",
       "announced": "2026-10-21",
       "first_observed_at": "2026-10-20T14:48:45+00:00",
-      "observed_at": "2026-10-20T14:48:45+00:00"
+      "observed_at": "2026-10-20T16:05:20+00:00"
      }
     ],
     "reason_code": null,
@@ -111972,7 +115718,7 @@
         "url": "https://etf.allianzgi.com.tw/etf-info/E0002",
         "announced": "2026-10-21",
         "first_observed_at": "2026-10-20T14:48:45+00:00",
-        "observed_at": "2026-10-20T14:48:45+00:00"
+        "observed_at": "2026-10-20T16:05:20+00:00"
        }
       ],
       "reason_code": null,
@@ -114101,7 +117847,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
       "announced": "2026-10-21",
       "first_observed_at": "2026-10-20T14:48:45+00:00",
-      "observed_at": "2026-10-20T14:48:45+00:00"
+      "observed_at": "2026-10-20T16:05:20+00:00"
      }
     ],
     "reason_code": null,
@@ -114115,7 +117861,7 @@
     "latest_official_date": "2026-10-20",
     "four_week_amount": null,
     "positive_weeks": null,
-    "available_weeks": 1,
+    "available_weeks": 3,
     "weeks": [
      {
       "start": "2026-10-19",
@@ -114152,7 +117898,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
         "announced": "2026-10-21",
         "first_observed_at": "2026-10-20T14:48:45+00:00",
-        "observed_at": "2026-10-20T14:48:45+00:00"
+        "observed_at": "2026-10-20T16:05:20+00:00"
        }
       ],
       "reason_code": null,
@@ -114167,16 +117913,65 @@
       "start": "2026-10-12",
       "end": "2026-10-16",
       "baseline": "2026-10-08",
-      "net_amount": null,
-      "net_rate": null,
-      "units_rate": null,
-      "aum_change": null,
-      "aum_rate": null,
-      "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-08），不補零。",
+      "net_amount": -0.1704,
+      "net_rate": -0.1478,
+      "units_rate": -0.1508,
+      "aum_change": -7.08,
+      "aum_rate": -6.1426,
+      "status": "可估算",
+      "reason": "特殊事件公告未保證完整；請併同原公告核對。",
       "method": "估算",
-      "sources": [],
-      "reason_code": "missing_official",
+      "sources": [
+       {
+        "date": "2026-10-08",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
+        "announced": "2026-10-12",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-12",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
+        "announced": "2026-10-13",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-13",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
+        "announced": "2026-10-14",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-14",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
+        "announced": "2026-10-15",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-15",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
+        "announced": "2026-10-16",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       },
+       {
+        "date": "2026-10-16",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
+        "announced": "2026-10-19",
+        "first_observed_at": "2026-10-20T14:48:45+00:00",
+        "observed_at": "2026-10-20T14:48:45+00:00"
+       }
+      ],
+      "reason_code": null,
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-12",
@@ -114191,16 +117986,57 @@
       "start": "2026-10-05",
       "end": "2026-10-09",
       "baseline": "2026-10-02",
-      "net_amount": null,
-      "net_rate": null,
-      "units_rate": null,
-      "aum_change": null,
-      "aum_rate": null,
-      "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-10-02、2026-10-05、2026-10-06、2026-10-07、2026-10-08），不補零。",
+      "net_amount": -2.53865,
+      "net_rate": -2.1785,
+      "units_rate": -2.1151,
+      "aum_change": -1.27,
+      "aum_rate": -1.0898,
+      "status": "可估算",
+      "reason": "特殊事件公告未保證完整；請併同原公告核對。",
       "method": "估算",
-      "sources": [],
-      "reason_code": "missing_official",
+      "sources": [
+       {
+        "date": "2026-10-02",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
+        "announced": "2026-10-05",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-05",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
+        "announced": "2026-10-06",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-06",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
+        "announced": "2026-10-07",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-07",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
+        "announced": "2026-10-08",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       },
+       {
+        "date": "2026-10-08",
+        "source": "野村投信官網",
+        "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
+        "announced": "2026-10-12",
+        "first_observed_at": "2026-10-20T16:05:20+00:00",
+        "observed_at": "2026-10-20T16:05:20+00:00"
+       }
+      ],
+      "reason_code": null,
       "calendar": "官方開休市日期",
       "trading_days": [
        "2026-10-05",
@@ -114222,7 +118058,7 @@
       "aum_change": null,
       "aum_rate": null,
       "status": "待確認",
-      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30、2026-10-01、2026-10-02），不補零。",
+      "reason": "官方日資料不足（缺 2026-09-24、2026-09-29、2026-09-30、2026-10-01），不補零。",
       "method": "估算",
       "sources": [],
       "reason_code": "missing_official",
