@@ -91,6 +91,16 @@ CREATE TABLE IF NOT EXISTS fund_daily (
   units REAL, units_change REAL, currency TEXT, source TEXT NOT NULL,
   source_url TEXT NOT NULL, observed_at TEXT, announced TEXT, first_observed_at TEXT, PRIMARY KEY(code,date)
 );
+-- 交易所 OpenAPI 的 ETF 收盤行情原值（上市 STOCK_DAY_ALL、上櫃 tpex_mainboard_daily_close_quotes），逐筆記錄來源與取得時間；
+-- 兩個端點都只有最新一天，本站逐日累積。價格是空值代表沒有成交
+CREATE TABLE IF NOT EXISTS exchange_daily (
+  code TEXT NOT NULL, date TEXT NOT NULL,       -- 交易所標示的資料日期
+  market TEXT, name TEXT,
+  open REAL, high REAL, low REAL, close REAL, change REAL,   -- 交易所原值（元）
+  volume_shares REAL, trade_value REAL, transactions REAL,   -- 成交股數、成交金額（元）、成交筆數
+  dataset TEXT NOT NULL, source_url TEXT NOT NULL,           -- 資料集名稱與取得的端點
+  first_observed_at TEXT, observed_at TEXT, PRIMARY KEY(code, date)
+);
 -- 投信官網歷史申購買回清單的回補紀錄：查過的清單日期不再重查
 CREATE TABLE IF NOT EXISTS fund_backfill (
   code TEXT NOT NULL, pcf_date TEXT NOT NULL,   -- 查詢的清單日期

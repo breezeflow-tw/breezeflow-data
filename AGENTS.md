@@ -40,7 +40,9 @@
 
 網站只讀這一個檔案。欄位沒有資料時一律是 `null`，畫面請顯示「—」，**不可自行估算或補值**。
 
-最上層：`generated_at`（產生時間）、`trade_date`（交易日）、`source`（`live` 或 `fixture`）、`has_nav`、`price_check`（市價查核統計）、`returns_info`（區間報酬的出處 `source` 與各區間起始日 `starts`）、`active_changes`（主動式 ETF 持股異動的台股彙總，見下）、`count`、`items`（每檔 ETF 一筆）。
+最上層：`generated_at`（產生時間）、`trade_date`（交易日）、`source`（`live` 或 `fixture`）、`has_nav`、`price_check`（市價查核統計）、`returns_info`（區間報酬的出處 `source` 與各區間起始日 `starts`）、`active_changes`（主動式 ETF 持股異動的台股彙總，見下）、`attributions`（顯名資訊，見下）、`count`、`items`（每檔 ETF 一筆）。
+
+`attributions`：這次用到、已在政府資料開放平臺列為政府資料開放授權條款第 1 版的資料集，依條款顯名用 `[{provider, dataset, dataset_url, source_url, data_date, license, license_url}]`：提供機關、資料名稱、資料集頁、取得的端點、資料日期（年份取這個日期）、授權條款名稱與連結。目前只有交易所的收盤行情（上市資料集 11549、上櫃資料集 11370）；沒有用到時為空陣列。其他來源的授權狀態見 `docs/data-licensing.md`，不在此列不代表已取得授權。
 
 `active_changes`：全部主動式 ETF（代號結尾 A、D）同一天的台股持股異動彙總，沒有可比對的資料時為 `null`。`{date, etf_count, etfs, not_included, buys, sells, source, method}`：`buys`／`sells` 各列最多 30 檔股票 `{asset_code, asset_name, buy_etfs, sell_etfs, buyers, sellers, buy_shares, sell_shares, buy_amount, sell_amount, net_shares}`，依加碼（含新增）或減碼（含刪除）的 ETF 檔數排序，金額為億元（增減股數 × 該日交易所收盤價，缺收盤價時為 `null`）。只列入有投信公告發行單位數、能判斷申購買回影響的 ETF。加碼＝新增，或股數增加且超出申購買回比例至少 1 個百分點；減碼＝刪除，或股數減少且超出比例至少 −1 個百分點；股數沒變的不算減碼。這是持股異動的統計，網站文字維持中立，不寫成買賣建議。
 
