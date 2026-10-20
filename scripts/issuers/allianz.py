@@ -180,6 +180,7 @@ def parse_pcf(entries) -> dict:
     return {
         "code": code,
         "pcf_date": day,
+        "pcf_announced": ymd(t.get("CPcfdate")),  # 清單日期（清單適用的交易日，前一個營業日傍晚公告）
         "currency": text(t.get("CEtfindexCurrency")),
         "aum": round(total / 1e8, 2) if total else None,
         "units": num(t.get("CAnceTotalIssues")),

@@ -13,12 +13,14 @@ def numeric(value):
     return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
 
 
-def upsert(con, table, keys, record):
+def upsert(con, table, keys, record, keep=()):
+    """新值優先、沒有新值時保留原值；keep 裡的欄位反過來以原值優先（例如第一次取得時間）。"""
     columns = list(record)
     update = [k for k in columns if k not in keys]
     con.execute(f"INSERT INTO {table}({','.join(columns)}) VALUES({','.join('?' for _ in columns)}) "
                 f"ON CONFLICT({','.join(keys)}) DO UPDATE SET " +
-                ",".join(f"{k}=COALESCE(excluded.{k},{table}.{k})" for k in update), list(record.values()))
+                ",".join(f"{k}=COALESCE({table}.{k},excluded.{k})" if k in keep else f"{k}=COALESCE(excluded.{k},{table}.{k})"
+                         for k in update), list(record.values()))
 
 
 def save(con, issuer, monthly):
@@ -33,20 +35,23 @@ def save(con, issuer, monthly):
         asset_day = r.get("asset_date") or r.get("pcf_date") or nav_day
         currency = r.get("currency") or monthly.get(code, {}).get("currency")
         base = {"code": code, "currency": currency, "source": r["source"],
-                "source_url": r["source_url"], "observed_at": now}
+                "source_url": r["source_url"], "observed_at": now, "first_observed_at": now}
+        keep = ("first_observed_at",)
         if nav_day and numeric(r.get("nav_official")) and r["nav_official"] > 0:
-            upsert(con, "fund_daily", ("code", "date"), {**base, "date": nav_day, "nav": r["nav_official"]})
+            upsert(con, "fund_daily", ("code", "date"), {**base, "date": nav_day, "nav": r["nav_official"]}, keep)
         if asset_day:
             values = {key: r.get(key) for key in ("aum", "units", "units_change")}
             if r.get("pcf_date") and r["pcf_date"] != asset_day:
                 values["units_change"] = None
                 if numeric(r.get("units_change")):
-                    upsert(con, "fund_daily", ("code", "date"), {**base, "date": r["pcf_date"], "units_change": r["units_change"]})
+                    upsert(con, "fund_daily", ("code", "date"), {**base, "date": r["pcf_date"], "units_change": r["units_change"]}, keep)
             if any(numeric(v) for v in values.values()):
-                upsert(con, "fund_daily", ("code", "date"), {**base, "date": asset_day, **values})
+                # 公告日期：投信標示的申購買回清單日期（清單適用的交易日），只屬於清單裡的規模與單位數
+                upsert(con, "fund_daily", ("code", "date"), {**base, "date": asset_day, **values,
+                                                            "announced": r.get("pcf_announced")}, keep)
             # 凱基清單可能比最新淨值早一天；清單自身的正式淨值跟清單日期配對。
             if numeric(r.get("pcf_nav")) and r["pcf_nav"] > 0 and currency == "TWD":
-                upsert(con, "fund_daily", ("code", "date"), {**base, "date": asset_day, "nav": r["pcf_nav"]})
+                upsert(con, "fund_daily", ("code", "date"), {**base, "date": asset_day, "nav": r["pcf_nav"]}, keep)
         for e in r.get("events") or []:
             if e.get("date") and e.get("kind") and e.get("source_url"):
                 upsert(con, "fund_event", ("code", "date", "kind"), {"code": code, **e})
@@ -118,7 +123,8 @@ def week(rows, start, end, events=(), cal=None):
         if numeric(last.get("aum")):
             result["aum_change"] = round(last["aum"] - first["aum"], 6)
             result["aum_rate"] = round((last["aum"] / first["aum"] - 1)*100, 4)
-    result["sources"] = [{"date": r["date"], "source": r["source"], "url": r["source_url"]} for r in data]
+    result["sources"] = [{"date": r["date"], "source": r["source"], "url": r["source_url"], "announced": r.get("announced"),
+                          "first_observed_at": r.get("first_observed_at"), "observed_at": r.get("observed_at")} for r in data]
     return result
 
 

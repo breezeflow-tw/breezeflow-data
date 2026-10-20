@@ -685,6 +685,7 @@ class NomuraTest(unittest.TestCase):
         p = n.parse_pcf(self.load("trade_00935"))
         self.assertEqual((p["pcf_date"], p["aum"], p["units"], p["units_change"], p["beneficiaries"], p["beneficiaries_month"]),
                          ("2026-10-16", 521.53, 917504000.0, 14500000.0, 130102.0, "2026-09"))
+        self.assertEqual(p["pcf_announced"], "2026-10-19")
         # 期貨代號加上契約年月
         self.assertEqual(p["holdings"][-1], {"asset_code": "TX-202610", "asset_name": "台灣證交所加權股價指數", "kind": "期貨",
                                              "weight": 2.92, "qty": 161.0})
@@ -866,6 +867,8 @@ class AllianzTest(unittest.TestCase):
         self.assertEqual((p["pcf_date"], p["aum"], p["units"], p["units_change"], p["beneficiaries"], p["beneficiaries_month"]),
                          ("2026-10-16", 104.14, 682458000.0, 9500000.0, 63210.0, "2026-09"))
         self.assertEqual(p["holdings"][0], {"asset_code": "3017", "asset_name": "奇鋐", "kind": "股票", "weight": 4.39, "qty": 138000.0})
+        # 清單日期（公告日期）是下一個交易日，資料日期是淨值日期
+        self.assertEqual((p["pcf_announced"], p["pcf_date"]), ("2026-10-19", "2026-10-16"))
         # 期貨代號加上契約年月
         self.assertEqual(a.parse_pcf(self.load("trade_00993A"))["holdings"][-1],
                          {"asset_code": "TX-202611", "asset_name": "台指期貨", "kind": "期貨", "weight": 1.9, "qty": 19.0})

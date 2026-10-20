@@ -88,6 +88,26 @@ class FlowTest(unittest.TestCase):
         self.assertIsNone(items[0]['flows']['positive_weeks'])
         con.close()
 
+    def test_provenance_announced_and_observation_times(self):
+        con=sqlite3.connect(':memory:');store.ensure_schema(con)
+        record={'source':'測試投信官網','source_url':'https://www.yuantaetfs.com/test','nav_date':'2026-10-16','nav_official':10,
+                'pcf_date':'2026-10-16','pcf_announced':'2026-10-19','aum':10,'units':100_000_000,'units_change':0,'currency':'TWD'}
+        f.save(con,{'TEST':record},{})
+        first=con.execute('SELECT announced,first_observed_at,observed_at FROM fund_daily').fetchone()
+        self.assertEqual(first[0],'2026-10-19')
+        self.assertEqual(first[1],first[2])
+        # 重抓同一天：第一次取得時間保留，最近一次取得時間更新；公告日期沒有新值時保留原值
+        con.execute("UPDATE fund_daily SET first_observed_at='2026-10-19T10:00:00+00:00',observed_at='2026-10-19T10:00:00+00:00'")
+        f.save(con,{'TEST':{**record,'pcf_announced':None}},{})
+        again=con.execute('SELECT announced,first_observed_at,observed_at FROM fund_daily').fetchone()
+        self.assertEqual(again[:2],('2026-10-19','2026-10-19T10:00:00+00:00'))
+        self.assertGreater(again[2],'2026-10-19T10:00:00+00:00')
+        # 週申贖逐日來源附上公告日期與取得時間
+        data=rows();data['2026-10-16'].update(announced='2026-10-19',first_observed_at='2026-10-19T10:00:00+00:00')
+        src=f.week(data,date(2026,10,12),date(2026,10,16))['sources'][-1]
+        self.assertEqual((src['date'],src['announced'],src['first_observed_at']),('2026-10-16','2026-10-19','2026-10-19T10:00:00+00:00'))
+        con.close()
+
     def test_snapshot_dates_and_issuer_only(self):
         con=sqlite3.connect(':memory:');store.ensure_schema(con)
         issuer={'TEST':{'source':'測試投信官網','source_url':'https://www.yuantaetfs.com/test','nav_date':'2026-10-16',
