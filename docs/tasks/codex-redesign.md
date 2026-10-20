@@ -66,7 +66,7 @@ git fetch origin && git merge origin/codex/etf-detail
 **真實資料（建議）**：從線上網站下載最新 JSON。週一 08:50 排程跑完後就會是含 6 家投信資料的新格式；擁有者也可以先到 GitHub Actions 手動執行一次「每日更新 ETF 資料」。
 
 ```bash
-curl -o web/data/latest.json https://htc20025-oss.github.io/breezeflow-data/data/latest.json
+curl -o web/data/latest.json https://breezeflow-tw.github.io/breezeflow-data/data/latest.json
 python -m http.server -d web 8000      # 開 http://localhost:8000
 git checkout -- web/data/latest.json   # 用完一定要還原
 ```

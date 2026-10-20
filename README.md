@@ -2,6 +2,8 @@
 
 免費、公開的台股全市場 ETF 研究資料庫。每個交易日收盤後自動抓取市價、預估淨值、折溢價與成交量，存進 SQLite 累積成歷史資料，並發布成一頁式 ETF 總覽網站。
 
+正式網站：[微風流動](https://breezeflow-tw.github.io/breezeflow-data/)。
+
 ## 資料夾
 
 | 路徑 | 內容 |
@@ -39,8 +41,8 @@
 
 ## 資料下載
 
-- 最新總覽：`https://htc20025-oss.github.io/breezeflow-data/data/latest.json`
-- 完整 SQLite 資料庫：`https://htc20025-oss.github.io/breezeflow-data/data/etf.db`
+- 最新總覽：`https://breezeflow-tw.github.io/breezeflow-data/data/latest.json`
+- 完整 SQLite 資料庫：`https://breezeflow-tw.github.io/breezeflow-data/data/etf.db`
 - 歷史 CSV：本 repo 的 `data/history/`
 
 ## 本機執行
