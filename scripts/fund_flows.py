@@ -186,8 +186,12 @@ def attach(con, items, as_of, cal=None):
             chosen = candidates[-1] if candidates else None
             if chosen and (not month or not numeric(month[key]) or chosen["date"] >= month_end):
                 it[key], it[key+"_date"], it[key+"_source"], it[key+"_source_url"] = chosen[key], chosen["date"], chosen["source"], chosen["source_url"]
+                if key == "aum":
+                    it["aum_currency"] = chosen.get("currency")
             elif month and numeric(month[key]):
                 it[key], it[key+"_date"], it[key+"_source"], it[key+"_source_url"] = month[key], month_end, month["source"], month["source_url"]
+                if key == "aum":
+                    it["aum_currency"] = month["currency"]
             else:
                 it[key] = it[key+"_date"] = it[key+"_source"] = it[key+"_source_url"] = None
         held = con.execute("SELECT MAX(date) FROM holding WHERE code=? AND date<=? AND source LIKE '%官網%'", (code, as_of)).fetchone()[0]

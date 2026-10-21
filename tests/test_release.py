@@ -104,6 +104,13 @@ class ReleaseTest(unittest.TestCase):
         self.assertEqual(before, self.run_git(self.remote, "rev-parse", "main"))
         self.assertFalse((self.a / ".git/rebase-merge").exists())
 
+    def test_product_override_change_refreshes_data(self):
+        self.data(self.a, 21)
+        self.remote_change("data/product_overrides.json", '{"00984D": {"category": "主動式"}}')
+        self.publish()
+        self.assertEqual(len(self.verified), 1)
+        self.assertEqual(len(self.refreshed), 1)
+
     def test_workflow_change_requires_new_run(self):
         self.data(self.a, 21)
         self.remote_change(".github/workflows/daily.yml", "# 新工作流程\n")

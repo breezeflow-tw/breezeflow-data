@@ -25,6 +25,7 @@ SCHEMA_PATH = Path(__file__).resolve().parent / "schema.sql"
 # 資料表 → (分檔欄位或 None, 排序欄位)
 TABLES = {
     "etf": (None, "code"),
+    "product_profile": (None, "code"),
     "dividend": (None, "code, ex_date"),
     "price_check": (None, "date, code, field"),
     "daily": ("date", "code"),
@@ -50,6 +51,7 @@ SPLIT_DIRS = {"daily": "daily", "holding": "holdings", "fund_daily": "fund_daily
 
 # 舊資料庫補上新欄位
 MIGRATIONS = {
+    "product_profile": {},  # 新表由 schema.sql 的 CREATE IF NOT EXISTS 建立，不改寫舊日行情。
     "daily": {"nav_official": "REAL", "premium_official": "REAL", "aum": "REAL", "price_check": "TEXT",
               "nav_source": "TEXT", "aum_source": "TEXT", "beneficiaries": "INTEGER", "units_change": "REAL"},
     "etf": {"units": "REAL", "index_name": "TEXT", "listed_date": "TEXT", "mgmt_fee": "REAL",

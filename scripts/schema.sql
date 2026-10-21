@@ -23,6 +23,12 @@ CREATE TABLE IF NOT EXISTS etf (
   updated_at  TEXT
 );
 
+-- 商品維度、交易單位及欄位幣別；與日行情分開，來源與查閱日存於 JSON。
+CREATE TABLE IF NOT EXISTS product_profile (
+  code TEXT PRIMARY KEY,
+  profile_json TEXT NOT NULL
+);
+
 -- 每日快照：每檔每天一列，持續累積成歷史資料
 CREATE TABLE IF NOT EXISTS daily (
   date         TEXT NOT NULL,     -- 交易日 YYYY-MM-DD
@@ -32,7 +38,7 @@ CREATE TABLE IF NOT EXISTS daily (
   nav          REAL,              -- 投信預估淨值
   nav_prev     REAL,              -- 前一營業日淨值
   premium      REAL,              -- 折溢價（%），正數為溢價
-  volume_lots  INTEGER,           -- 成交量（張）
+  volume_lots  INTEGER,           -- 成交受益權單位數除以 1000 後取整數；外幣交易線不等於張數
   source_time  TEXT,              -- 淨值資料時間
   nav_official     REAL,          -- 投信公告的正式淨值（隔天才會有）
   premium_official REAL,          -- 收盤價對正式淨值的折溢價（%）

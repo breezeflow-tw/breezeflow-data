@@ -8,6 +8,7 @@ on:
       - 'scripts/**'
       - 'tests/**'
       - 'data/etf_meta.csv'
+      - 'data/product_overrides.json'
       - '.github/workflows/daily.yml'
   schedule:
     # GitHub 排程用 UTC（台灣時間減 8 小時），週一到週五

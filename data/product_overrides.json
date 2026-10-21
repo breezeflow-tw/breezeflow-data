@@ -1,0 +1,7 @@
+{
+  "0050": {"region":"臺灣","strategy":"市值型","category":"市值型","source":"元大投信商品資訊","source_url":"https://www.yuantaetfs.com/product/detail/0050/Basic_information","checked_at":"2026-10-21"},
+  "00875": {"region":"全球","strategy":"科技主題","category":"主題型","source":"證交所 ETF e添富商品資訊","source_url":"https://www.twse.com.tw/zh/ETFortune/etfInfo/00875","checked_at":"2026-10-21"},
+  "009828": {"region":"臺灣、日本、韓國","strategy":"科技主題","category":"主題型","source":"證交所 ETF e添富商品資訊","source_url":"https://wwwc.twse.com.tw/zh/ETFortune/etfInfo/009828","checked_at":"2026-10-21"},
+  "00984D": {"region":"全球","strategy":"非投資等級債","category":"主動式","source":"聯博投信商品資訊","source_url":"https://www.abfunds.com.tw/campaign/apac/tw/product/etf/active-etf-00984d/active-etf-00984d.html","checked_at":"2026-10-21"},
+  "00687C": {"region":"美國","strategy":"長天期公債","category":"債券","main_code":"00687B","trading_currency":"USD","trading_unit":100,"source":"櫃買中心國泰20年美債美元加掛公告","source_url":"https://www.tpex.org.tw/storage/about_otc_news/2025/01/1736401405_3084_news.pdf","checked_at":"2026-10-21"}
+}
