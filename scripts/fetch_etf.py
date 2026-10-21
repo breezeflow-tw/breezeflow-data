@@ -470,22 +470,32 @@ def purge_excluded(con: sqlite3.Connection) -> None:
     con.commit()
 
 
-def trade_date(nav: dict, quotes: dict, now: datetime, probe: dict | None = None) -> str:
-    """交易日：Yahoo 日線（probe，0050 的 {日期: ...}）與交易所收盤行情（取最多檔的那天）兩者較新的一天。
-    證交所的收盤行情開放資料隔天清晨才更新，傍晚那次排程只有 Yahoo 有當天的收盤；
-    Yahoo 當天的日線台灣時間 14:00 前不算，避免排程延遲到開盤後把盤中價格當成收盤價。
-    兩者都沒有時用淨值資料的日期。"""
+def trade_date(nav: dict, quotes: dict, now: datetime, probe: dict | None = None,
+               calendar: market_calendar.Calendar | None = None) -> str:
+    """取 Yahoo、交易所收盤行情及 MIS 市價中最新的已收盤日期。
+    交易所與 MIS 各採最多檔的日期，避免單一異常值推進整站日期。
+    MIS 時間戳另外須通過官方開休市日曆；所有來源排除未來及當日 14:00 前的資料。"""
     local = now.astimezone(TW)
     today = local.strftime("%Y-%m-%d")
-    closed = [d for d in probe or {} if d < today or local.hour >= 14]
+
+    def completed(day):
+        return bool(nav_provenance.valid_day(day) and (day < today or (day == today and local.hour >= 14)))
+
+    def majority(days):
+        return max(set(days), key=lambda day: (days.count(day), day))
+
+    closed = [d for d in probe or {} if completed(d)]
     candidates = [max(closed)] if closed else []
-    dates = [v["date"] for v in quotes.values() if v.get("date")]
+    dates = [v["date"] for v in quotes.values() if completed(v.get("date"))]
     if dates:
-        candidates.append(max(set(dates), key=dates.count))
+        candidates.append(majority(dates))
+    dates = [v["date"] for v in nav.values() if completed(v.get("date")) and v.get("price") is not None
+             and calendar is not None and calendar.is_open(v["date"]) is True]
+    if dates:
+        candidates.append(majority(dates))
     if candidates:
         return max(candidates)
-    dates = [v["date"] for v in nav.values() if v.get("date")]
-    return max(set(dates), key=dates.count) if dates else today
+    raise ValueError("無法確認已收盤的交易日期，停止更新。")
 
 
 def merge(nav: dict, quotes: dict, meta: dict, date: str, fund: dict | None = None) -> list[dict]:
@@ -1000,15 +1010,26 @@ def main(argv=None) -> int:
     nav = without_excluded(parse_nav(raw["nav"]))
     exchange = without_excluded({**parse_quotes(raw["tpex"], "上櫃"), **parse_quotes(raw["twse"], "上市")})
 
+    # 判定 MIS 日期與回補歷史清單都使用同一份官方開休市日曆。
+    con = sqlite3.connect(args.db)
+    try:
+        stored = market_calendar.load(con)
+        attempted = fund_flows.backfill_done(con)
+    finally:
+        con.close()
+    fresh_days = market_calendar.parse(raw["calendar"])
+    calendar = market_calendar.Calendar({**stored.entries, **fresh_days}, stored.years | {int(d[:4]) for d in fresh_days})
+    backfill = {"calendar": calendar, "attempted": attempted}
+
     # 市價與成交量：Yahoo 股市為主，交易所為查核。
     # 區間報酬：這個交易日還沒算過時抓五年日線（同一份資料也拿來比對收盤價），算過就沿用上次的結果
-    # 先用 Yahoo 的 0050 日線確認最新一個已收盤的交易日（證交所的開放資料隔天清晨才更新）
+    # Yahoo 日線、交易所收盤行情、MIS 市價的日期一起比較，避免單一來源延遲使日期倒退。
     if args.fixtures:
         probe_path = args.fixtures / "yahoo.json"
         probe_raw = json.loads(probe_path.read_text("utf-8")) if probe_path.exists() else {}
     else:
         probe_raw = fetch_yahoo([PROBE_SYMBOL])
-    date = trade_date(nav, exchange, datetime.now(TW), parse_yahoo(probe_raw).get(PROBE_SYMBOL.split(".")[0]))
+    date = trade_date(nav, exchange, datetime.now(TW), parse_yahoo(probe_raw).get(PROBE_SYMBOL.split(".")[0]), calendar)
     source = "fixture" if args.fixtures else "live"
     reused = returns.previous(args.out, date, source)
     markets = without_excluded({**known_markets(args.db), **{c: q["market"] for c, q in exchange.items()}})
@@ -1033,17 +1054,6 @@ def main(argv=None) -> int:
     quotes, diffs = reconcile(yahoo, exchange, date)
     items = merge(nav, quotes, load_meta(), date, parse_fund(raw["fund"]))
     dividends = [d for d in parse_dividends(raw["div_twse"], raw["div_tpex"]) if d["code"] not in EXCLUDED]
-
-    # 回補歷史申購買回清單要用的開休市日期（資料庫裡的加上這次抓到的）與已查過的清單日期
-    con = sqlite3.connect(args.db)
-    try:
-        stored = market_calendar.load(con)
-        attempted = fund_flows.backfill_done(con)
-    finally:
-        con.close()
-    fresh_days = market_calendar.parse(raw["calendar"])
-    calendar = market_calendar.Calendar({**stored.entries, **fresh_days}, stored.years | {int(d[:4]) for d in fresh_days})
-    backfill = {"calendar": calendar, "attempted": attempted}
 
     # 各投信是不同網站，同時抓；同一個網站內仍逐筆、放慢速度
     def fetch_issuer(item):

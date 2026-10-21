@@ -81,9 +81,56 @@ class ParseTest(unittest.TestCase):
         self.assertEqual(f.trade_date({}, stale, evening, probe), "2026-10-19")
         # 隔天開盤後才跑：Yahoo 當天的盤中日線不算，用前一個交易日
         self.assertEqual(f.trade_date({}, {"0050": {"date": "2026-10-19"}}, morning, {**probe, "2026-10-20": {}}), "2026-10-19")
-        # Yahoo 抓不到時沿用交易所最多檔的日期，再沒有就用淨值資料的日期
+        # Yahoo 抓不到時沿用交易所最多檔的日期；MIS 日期另需官方日曆與市價
         self.assertEqual(f.trade_date({}, stale, evening, None), "2026-10-16")
-        self.assertEqual(f.trade_date({"0050": {"date": "2026-10-16"}}, {}, evening, {}), "2026-10-16")
+        calendar = f.market_calendar.Calendar({}, {2026})
+        self.assertEqual(f.trade_date({"0050": {"date": "2026-10-16", "price": 20}}, {}, evening, {}, calendar), "2026-10-16")
+
+    def test_midnight_uses_newer_mis_and_same_day_issuer_nav(self):
+        now = datetime(2026, 10, 22, 0, 30, tzinfo=f.TW)
+        calendar = f.market_calendar.Calendar({}, {2026})
+        nav = f.parse_nav({"a1": [{"msgArray": [{"a": "0050", "b": "測試基金", "e": "22", "f": "21.9",
+                                                "h": "21.2", "i": "20261021", "j": "17:00:00"}]}]})
+        exchange = {"0050": {"date": "2026-10-20", "close": 20, "name": "測試基金"}}
+        yahoo = {"0050": {"2026-10-20": {"close": 20}}}
+        day = f.trade_date(nav, exchange, now, yahoo["0050"], calendar)
+        self.assertEqual(day, "2026-10-21")
+        quotes, _ = f.reconcile(yahoo, exchange, day)
+        items = f.merge(nav, quotes, {}, day)
+        f.apply_issuer(items, {"0050": {"source": "測試投信官網", "nav_estimate": 21.8,
+                                       "nav_estimate_date": "2026-10-21"}}, day)
+        self.assertEqual(items[0]["price"], 22)  # 不把前天收盤價貼上昨天日期
+        self.assertEqual((items[0]["nav"], items[0]["nav_date"]), (21.8, "2026-10-21"))
+
+    def test_mis_intraday_future_and_invalid_dates_are_not_candidates(self):
+        now = datetime(2026, 10, 22, 13, 0, tzinfo=f.TW)
+        calendar = f.market_calendar.Calendar({}, {2026})
+        probe = {"2026-10-21": {}, "2026-10-22": {}, "2026-10-23": {}, "invalid": {}}
+        for day in ("2026-10-22", "2026-10-23", "2026-02-30", "20261021", None):
+            with self.subTest(day=day):
+                nav = {"0050": {"date": day, "price": 20}}
+                self.assertEqual(f.trade_date(nav, {}, now, probe, calendar), "2026-10-21")
+
+    def test_mis_needs_open_calendar_day_and_price(self):
+        now = datetime(2026, 10, 27, 0, 30, tzinfo=f.TW)
+        calendar = f.market_calendar.Calendar({"2026-10-26": {"is_open": False}}, {2026})
+        for day, cal, price in (("2026-10-26", calendar, 20), ("2026-10-25", calendar, 20),
+                                ("2026-10-23", f.market_calendar.Calendar({}, set()), 20),
+                                ("2026-10-23", None, 20), ("2026-10-23", calendar, None)):
+            with self.subTest(day=day, calendar=cal, price=price):
+                nav = {"0050": {"date": day, "price": price}}
+                self.assertEqual(f.trade_date(nav, {}, now, {"2026-10-22": {}}, cal), "2026-10-22")
+
+    def test_mis_uses_majority_date(self):
+        now = datetime(2026, 10, 22, 18, 0, tzinfo=f.TW)
+        nav = {"0050": {"date": "2026-10-21", "price": 20}, "0056": {"date": "2026-10-21", "price": 30},
+               "00999": {"date": "2026-10-22", "price": 40}}
+        self.assertEqual(f.trade_date(nav, {}, now, {"2026-10-20": {}}, f.market_calendar.Calendar({}, {2026})),
+                         "2026-10-21")
+
+    def test_missing_dates_do_not_become_today(self):
+        with self.assertRaisesRegex(ValueError, "無法確認已收盤"):
+            f.trade_date({}, {}, datetime(2026, 10, 22, 0, 30, tzinfo=f.TW), {})
 
     def test_zero_price_is_missing(self):
         # 沒有成交的 ETF，證交所即時資料的市價是 0；淨值尚未計算時也是 0

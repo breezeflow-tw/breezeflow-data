@@ -34,7 +34,10 @@ def validate_data(root):
         raise ValueError("ETF 代號缺漏或重複，停止發布。")
     if payload.get("count") != len(items):
         raise ValueError("ETF 筆數與清單不一致，停止發布。")
-    date.fromisoformat(payload["trade_date"])
+    published_day = date.fromisoformat(payload["trade_date"])
+    history_days = [date.fromisoformat(path.stem) for path in (root / "data/history/daily").glob("*.csv")]
+    if history_days and published_day < max(history_days):
+        raise ValueError(f"交易日期 {published_day} 早於已保存行情 {max(history_days)}，停止發布。")
     return payload
 
 
@@ -80,6 +83,7 @@ def publish_data(root, *, verify_fn=verify, refresh_fn=refresh, attempts=3):
                 refresh_fn(root)
                 commit_data(root)
             baseline = remote
+        validate_data(root)  # 同步可能帶回較新行情；推送前再檢查一次日期。
         pushed = git(root, "push", "origin", "HEAD:refs/heads/main", check=False)
         if pushed.returncode == 0:
             return git(root, "rev-parse", "HEAD").stdout.strip()
