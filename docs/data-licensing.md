@@ -203,3 +203,15 @@ Codex 於 2026-10-20 讀取，Claude 的執行環境無法連線：
 | [聯博 00984D 商品介紹](https://www.abfunds.com.tw/campaign/apac/tw/product/etf/active-etf-00984d/active-etf-00984d.html)，2026-10-21 | 全球非投資等級債、主動式管理 | 聯博網站專用授權待確認；只提供原文連結與分類事實 |
 
 未核實商品的地域、策略保留空值。基金規模與淨值幣別沿用既有投信／公會資料所採用的同一來源，不新增換匯估算。資料來源規則與第六節來源遷移提案均維持原狀。
+
+## 九、既有商品基本資料欄位補全（2026-10-21）
+
+- [證交所國際證券辨識號碼（ISIN）上櫃 ETF 清單](https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2)：核對缺漏上櫃日期及證券代號，只補靜態商品日期並保留原文連結；不是基金成立日。使用條款沿用證交所網站條款，未取得本清單獨立再散布授權，不新增定時抓取。
+- 公會既有 `IN2105.aspx?pid=IN2212_02` 基金基本資料「標準」表含「類型代號、投資地區、投資標的、計價幣別」。本次保留這些原已取得但被解析器捨棄的欄位，不新增高頻抓取。來源及著作權狀態沿用本文件公會條款，未取得額外授權。
+- 商品策略以官方追蹤指數、投資標的及逐檔核實的商品定位呈現；本站整理標籤附原始依據，不將美元計價解讀為美國投資，也不將指數公司名稱解讀為投資地域。
+- [證交所 ETF 交易規則](https://www.twse.com.tw/zh/products/securities/etf/overview/rules.html)及[雙幣交易機制](https://www.twse.com.tw/zh/products/system/dual-etf/introduction.html)於本日人工查閱。後者明定外幣交易單位可選 100 或其整倍數，因此交易單位須逐檔核實，不對全部外幣線套用 100。頁面使用條款同證據 8，非收盤價開放資料授權範圍。
+- [證交所證券市場月訊第 14 期](https://www.twse.com.tw/rwd/staticFiles/product/publication/0005000014.pdf)逐檔交易規格：00625K、00643K 為 1,000 單位；00636K、00657K、00668K 為 100 單位。這是歷史規格公告的核對，不將歷史行情或規模當成現在數值。
+- [群益 00415A 基本資料](https://www.capitalfund.com.tw/etf/product/detail/504/basic)：台股核心產業、主動管理，補入尚未列入公會 9 月月表的新基金。
+- [富蘭克林華美 00982B](https://www.ftft.com.tw/etf/product/details/?id=173)及[00986B 商品 DM](https://www.ftft.com.tw/Areas/00986b/00986bdm.pdf)：追蹤指數以成熟市場公司債／金融債為範圍，不能以美元歸成單一美國市場。只留分類事實與連結，富蘭克林華美專用再散布授權待確認。
+- 元大既有 `tradeInfo/pcf/{code}` 原始公告核對 11 檔期貨基金的淨資產及每單位淨值均標 `NTD`。逐檔原始連結存於 `product_overrides.json` 的 `value_currency_url`；只補幣別，不搬用網頁較舊的金額。沿用元大授權狀態，不新增排程端點。
+- 街口官方月報：[00693U（2025/09）](https://www.jkoam.com/webapi/File/345676ee-865d-4254-a721-486178d94346/34_%E6%9C%88%E5%A0%B1.pdf)、[00715L（2025/08）](https://www.jkoam.com/webapi/File/e7477c60-e68f-4e7e-aec5-63c7e363fdb0/39_%E6%9C%88%E5%A0%B1.pdf)、[00763U（2025/09）](https://www.jkoam.com/webapi/File/5e4ae474-36b2-47e4-995f-915d51d2e124/51_%E6%9C%88%E5%A0%B1.pdf)：只核對商品類型、追蹤標的及計價幣別新臺幣，保留月報日期；不將其中規模、持倉及費率當成當期資料。街口官網未取得獨立公開展示／再散布授權，仍待確認；本次不新增自動爬取。

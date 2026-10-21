@@ -45,6 +45,8 @@ CREATE TABLE IF NOT EXISTS daily (
   aum          REAL,              -- 當天規模（億元）
   price_check  TEXT,              -- 市價查核結果：一致 / 已修正 / 未查核 / 交易所
   nav_source   TEXT,              -- 淨值出處
+  nav_date     TEXT,              -- 所採用淨值的來源日期，與數值一起保存
+  nav_source_url TEXT,
   aum_source   TEXT,              -- 規模出處
   beneficiaries INTEGER,          -- 受益人數
   units_change REAL,              -- 當日申購買回造成的發行單位數增減（正數為淨申購，可看資金流向）
@@ -186,7 +188,9 @@ CREATE TABLE IF NOT EXISTS fund_info (
   exp_custodian REAL,
   exp_other     REAL,
   exp_total     REAL,               -- 合計（含交易成本）
-  fetched       TEXT                -- 抓取日期
+  fetched       TEXT,               -- 抓取日期
+  class_code    TEXT,               -- 公會基金類型代號
+  investment_region TEXT           -- 公會原始申報投資範圍
 );
 
 -- 投信投顧公會基金資料彙總表（月）：月底規模、受益人數與當月申購買回金額，依月份累積

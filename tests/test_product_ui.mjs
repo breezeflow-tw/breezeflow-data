@@ -6,6 +6,23 @@ const html=readFileSync(new URL('../web/index.html',import.meta.url),'utf8');
 const context=vm.createContext({});
 vm.runInContext(html.match(/  function profileOf\([\s\S]*?  \/\/ 商品與口徑核心結束。/)[0],context);
 
+test('不存在的數值與存在但缺日期的數值分開標示',()=>{
+  assert.equal(context.fieldStamp({nav:null},'nav'),'尚未取得官方數值');
+  assert.equal(context.fieldStamp({nav:10},'nav'),'日期待確認');
+  assert.equal(context.fieldStamp({nav:10,nav_date:'2026-10-20'},'nav'),'2026-10-20');
+  assert.equal(context.fieldStamp({aum:20,aum_date:'2026-09-30',aum_source:'公會月統計'},'aum'),'2026-09-30 · 月資料');
+  assert.equal(context.fieldStamp({aum:null,product:{main_code:'00636'}},'aum'),'同基金交易線，未另列規模');
+  assert.equal(context.fieldCurrency({nav:null},'nav'),'');
+  assert.equal(context.fieldCurrency({nav:10},'nav'),'幣別待確認');
+});
+test('預估淨值已有日期時不再宣稱日期待確認',()=>{
+  const d={nav:10,nav_source:'證交所（投信預估淨值）',nav_date:'2026-10-21'};
+  assert.equal(context.premiumNote(d,'2026-10-21'),'同日預估淨值');
+  assert.equal(context.premiumNote(d,'2026-10-22'),'跨日預估淨值');
+  assert.equal(context.premiumNote({...d,nav_date:null},'2026-10-21'),'淨值日期待確認');
+  assert.equal(context.premiumNote({nav:null},'2026-10-21'),'尚未取得淨值');
+});
+
 test('固定、上限、分段及原文四種語意分開',()=>{
   assert.equal(context.feeDisplay({mgmt_fee_text:'每年基金淨資產價值之 1%'}).label,'1%');
   assert.equal(context.feeDisplay({mgmt_fee_text:'最高為 1.00%'}).label,'最高 1%');

@@ -72,7 +72,7 @@ class Site:
                     return resp.read().decode("utf-8", "replace")
             except Exception as exc:  # noqa: BLE001
                 last = exc
-                if "Tunnel connection failed: 403" in str(exc):
+                if getattr(exc, "code", None) == 403 or "403" in str(exc):
                     break
         raise RuntimeError(f"{path}：{last}")
 
@@ -176,6 +176,8 @@ def parse_basic(std_page: str, fee_page: str) -> dict[str, dict]:
             "manager": blank(column(r, "經理人姓名")),
             "risk_class": blank(column(r, "風險等級")),
             "currency": blank(column(r, "計價幣別")),
+            "class_code": blank(column(r, "類型代號")),
+            "investment_region": blank(column(r, "投資地區")),
             "inception": "-".join(inception.groups()) if inception else None,
             "mgmt_fee_text": blank(column(fee, "基金管理費率")),
             "custodian_fee_text": blank(column(fee, "基金保管費率")),

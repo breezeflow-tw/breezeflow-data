@@ -1,0 +1,2388 @@
+{
+  "source": "投信投顧公會基金基本資料",
+  "source_url": "https://www.sitca.org.tw/ROC/Industry/IN2105.aspx?pid=IN2212_02",
+  "data_month": "2026-09",
+  "checked_at": "2026-10-21",
+  "funds": {
+    "00400A": {
+      "fund_id": "00669040",
+      "name": "國泰台股動能高息主動式ETF基金 (基金之配息來源可能為收益平準金且並無保證收益及配息)",
+      "class_code": "AL11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00401A": {
+      "fund_id": "00668844",
+      "name": "摩根台灣鑫收益主動式ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AL11",
+      "investment_region": "本基金投資於中華民國境內",
+      "currency": "新台幣"
+    },
+    "00402A": {
+      "fund_id": "00670200",
+      "name": "安聯美國科技領航主動式ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AL21",
+      "investment_region": "美國、中華民國、加拿大、英國、德國、盧森堡、愛爾蘭",
+      "currency": "新台幣"
+    },
+    "00403A": {
+      "fund_id": "00670969",
+      "name": "統一台股升級50主動式ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AL11",
+      "investment_region": "中華民國",
+      "currency": "新台幣"
+    },
+    "00404A": {
+      "fund_id": "00675444",
+      "name": "聯博台灣動能收益50 主動式ETF基金 (本基金配息來源可能為收益平準金)",
+      "class_code": "AL11",
+      "investment_region": "中華民國",
+      "currency": "新台幣"
+    },
+    "00405A": {
+      "fund_id": "00675654",
+      "name": "富邦台灣龍耀主動式ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AL11",
+      "investment_region": "投資國內",
+      "currency": "新台幣"
+    },
+    "00406A": {
+      "fund_id": "00682450",
+      "name": "中國信託台灣收益成長主動式ETF基金 (基金之配息來源可能為收益平準金且基金並無保證收益及配息)",
+      "class_code": "AL11",
+      "investment_region": "中華民國之有價證券",
+      "currency": "新台幣"
+    },
+    "00407A": {
+      "fund_id": "00684611",
+      "name": "凱基台灣主動式ETF基金",
+      "class_code": "AL11",
+      "investment_region": "國內",
+      "currency": "新台幣"
+    },
+    "00408A": {
+      "fund_id": "00685061",
+      "name": "第一金台股趨勢優股息主動式ETF基金 (本基金並無保證收益及配息且配息來源可能為收益平準金)",
+      "class_code": "AL11",
+      "investment_region": "中華民國",
+      "currency": "新台幣"
+    },
+    "00409A": {
+      "fund_id": "00672586",
+      "name": "復華全球未來50主動式ETF基金",
+      "class_code": "AL21",
+      "investment_region": "全球",
+      "currency": "新台幣"
+    },
+    "00410A": {
+      "fund_id": "00687032",
+      "name": "永豐台灣科技趨勢主動式ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AL11",
+      "investment_region": "國內",
+      "currency": "新台幣"
+    },
+    "00411A": {
+      "fund_id": "00721313",
+      "name": "統一股債傘型基金之統一前沿科技主動式ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AL21",
+      "investment_region": "主要投資於國內外股票等",
+      "currency": "新台幣"
+    },
+    "00412A": {
+      "fund_id": "00723403",
+      "name": "安聯亞洲半導體主動式ETF基金",
+      "class_code": "AL21",
+      "investment_region": "中華民國、韓國、日本、新加坡、香港、中國大陸(含滬深港通交易)、美國、加拿大、歐洲(如英國、德國、法國、盧森堡、愛爾蘭等)",
+      "currency": "新台幣"
+    },
+    "0050": {
+      "fund_id": "98764389",
+      "name": "元大台灣卓越50基金",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "0051": {
+      "fund_id": "48772770",
+      "name": "元大台灣中型100基金",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "0052": {
+      "fund_id": "48790067",
+      "name": "富邦台灣科技指數基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "0053": {
+      "fund_id": "48903196",
+      "name": "元大台灣電子科技基金",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "0055": {
+      "fund_id": "48903175",
+      "name": "元大台灣金融基金",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "0056": {
+      "fund_id": "48966213",
+      "name": "元大台灣高股息基金 (本基金之配息來源可能為收益平準金且並無保證收益及配息)",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "0057": {
+      "fund_id": "48975156",
+      "name": "富邦台灣ETF傘型基金之富邦台灣摩根指數股票型基金",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "0061": {
+      "fund_id": "25610486",
+      "name": "元大標智滬深300基金",
+      "class_code": "AH21",
+      "investment_region": "香港",
+      "currency": "新台幣"
+    },
+    "006201": {
+      "fund_id": "26282102",
+      "name": "元大富櫃50基金",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "006203": {
+      "fund_id": "26306553",
+      "name": "元大摩臺基金",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "006204": {
+      "fund_id": "26332314",
+      "name": "永豐臺灣加權ETF基金",
+      "class_code": "AH11",
+      "investment_region": "國內",
+      "currency": "新台幣"
+    },
+    "006205": {
+      "fund_id": "26334740",
+      "name": "富邦上証180基金",
+      "class_code": "AH21",
+      "investment_region": "大陸",
+      "currency": "新台幣"
+    },
+    "006206": {
+      "fund_id": "31830488",
+      "name": "元大上證50基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國、香港、中國大陸、新加坡",
+      "currency": "新台幣"
+    },
+    "006207": {
+      "fund_id": "31835478",
+      "name": "復華滬深300 A股基金",
+      "class_code": "AH21",
+      "investment_region": "大陸",
+      "currency": "新台幣"
+    },
+    "006208": {
+      "fund_id": "31840182",
+      "name": "富邦台灣釆吉50基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "00631L": {
+      "fund_id": "38619904",
+      "name": "元大台灣50單日正向2倍基金 (本基金為策略交易型產品且投資具有槓桿操作風險，故本基金不適合長期持有，僅符合臺灣證券交易所訂適格條件之投資人始得交易)",
+      "class_code": "AH13",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00632R": {
+      "fund_id": "38619910",
+      "name": "元大台灣50單日反向1倍基金 (本基金為策略交易型產品且投資具有反向操作風險，故本基金不適合長期持有，僅符合臺灣證券交易所訂適格條件之投資人始得交易)",
+      "class_code": "AH13",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00633L": {
+      "fund_id": "38633011",
+      "name": "富邦中國ETF傘型基金之富邦上証180單日正向兩倍基金",
+      "class_code": "AH23",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00634R": {
+      "fund_id": "38633027",
+      "name": "富邦中國ETF傘型基金之富邦上証180單日反向一倍基金",
+      "class_code": "AH23",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00636": {
+      "fund_id": "42260528",
+      "name": "國泰富時中國A50基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00637L": {
+      "fund_id": "42300253",
+      "name": "元大滬深300單日正向2倍基金 (本基金為策略交易型產品且投資具有槓桿操作風險，故本基金不適合長期持有，僅符合臺灣證券交易所訂適格條件之投資人始得交易)",
+      "class_code": "AH23",
+      "investment_region": "中華民國境內、大陸地區、香港、新加坡、日本及韓國等國家",
+      "currency": "新台幣"
+    },
+    "00638R": {
+      "fund_id": "42300232",
+      "name": "元大滬深300單日反向1倍基金 (本基金為策略交易型產品且投資具有反向操作風險，故本基金不適合長期持有，僅符合臺灣證券交易所訂適格條件之投資人始得交易)",
+      "class_code": "AH23",
+      "investment_region": "中華民國境內、大陸地區、香港、新加坡、日本及韓國等國家",
+      "currency": "新台幣"
+    },
+    "00639": {
+      "fund_id": "42302273",
+      "name": "富邦深証100基金",
+      "class_code": "AH21",
+      "investment_region": "大陸",
+      "currency": "新台幣"
+    },
+    "00640L": {
+      "fund_id": "42319561",
+      "name": "富邦日本ETF傘型基金之富邦日本東証單日正向兩倍基金 (本基金採匯率避險)",
+      "class_code": "AH23",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00641R": {
+      "fund_id": "42319582",
+      "name": "富邦日本ETF傘型基金之富邦日本東証單日反向一倍基金 (本基金採匯率避險)",
+      "class_code": "AH23",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00643": {
+      "fund_id": "42323777",
+      "name": "群益深証中小100基金",
+      "class_code": "AH21",
+      "investment_region": "台灣、中國大陸、香港、新加坡等區域。",
+      "currency": "新台幣"
+    },
+    "00645": {
+      "fund_id": "42328908",
+      "name": "富邦日本東証基金 (本基金採匯率避險)",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00646": {
+      "fund_id": "42333613",
+      "name": "元大標普500基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國、美國、日本、新加坡",
+      "currency": "新台幣"
+    },
+    "00647L": {
+      "fund_id": "42333579",
+      "name": "元大標普500單日正向2倍基金 (本基金為策略交易型產品且投資具有槓桿操作風險，故本基金不適合長期持有，僅符合臺灣證券交易所訂適格條件之投資人始得交易)",
+      "class_code": "AH23",
+      "investment_region": "中華民國、美國、日本及新加坡",
+      "currency": "新台幣"
+    },
+    "00648R": {
+      "fund_id": "42333563",
+      "name": "元大標普500單日反向1倍基金 (本基金為策略交易型產品且投資具有反向操作風險，故本基金不適合長期持有，僅符合臺灣證券交易所訂適格條件之投資人始得交易)",
+      "class_code": "AH23",
+      "investment_region": "中華民國、美國、日本及新加坡",
+      "currency": "新台幣"
+    },
+    "00650L": {
+      "fund_id": "42329863",
+      "name": "復華恒生單日正向二倍基金",
+      "class_code": "AH23",
+      "investment_region": "香港",
+      "currency": "新台幣"
+    },
+    "00651R": {
+      "fund_id": "42329879",
+      "name": "復華恒生單日反向一倍基金",
+      "class_code": "AH23",
+      "investment_region": "香港",
+      "currency": "新台幣"
+    },
+    "00652": {
+      "fund_id": "42376963",
+      "name": "富邦印度ETF傘型基金之富邦印度NIFTY基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00653L": {
+      "fund_id": "42376990",
+      "name": "富邦印度ETF傘型基金之富邦印度NIFTY單日正向兩倍基金",
+      "class_code": "AH23",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00654R": {
+      "fund_id": "42376984",
+      "name": "富邦印度ETF傘型基金之富邦印度NIFTY單日反向一倍基金",
+      "class_code": "AH23",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00655L": {
+      "fund_id": "42385148",
+      "name": "國泰A50傘型基金之富時中國A50單日正向2倍基金",
+      "class_code": "AH23",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00656R": {
+      "fund_id": "42385127",
+      "name": "國泰A50傘型基金之富時中國A50單日反向1倍基金",
+      "class_code": "AH23",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00657": {
+      "fund_id": "42389475",
+      "name": "國泰日本ETF傘型基金之日經225基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00660": {
+      "fund_id": "42398684",
+      "name": "元大歐洲50基金",
+      "class_code": "AH21",
+      "investment_region": "奧地利、比利時、芬蘭、法國、 德國、希臘、愛爾蘭、義大利、盧森堡、荷蘭、葡萄牙、西班牙、中華民國及美國。",
+      "currency": "新台幣"
+    },
+    "00661": {
+      "fund_id": "42398663",
+      "name": "元大日經225基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國、日本與新加坡",
+      "currency": "新台幣"
+    },
+    "00662": {
+      "fund_id": "42399305",
+      "name": "富邦NASDAQ-100基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00663L": {
+      "fund_id": "42404264",
+      "name": "國泰臺指ETF傘型基金之臺灣加權指數單日正向2倍基金",
+      "class_code": "AH13",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00664R": {
+      "fund_id": "42404258",
+      "name": "國泰臺指ETF傘型基金之臺灣加權指數單日反向1倍基金",
+      "class_code": "AH13",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00665L": {
+      "fund_id": "42404573",
+      "name": "富邦恒生國企ETF傘型基金之富邦恒生國企單日正向兩倍基金",
+      "class_code": "AH23",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00666R": {
+      "fund_id": "42404567",
+      "name": "富邦恒生國企ETF傘型基金之富邦恒生國企單日反向一倍基金",
+      "class_code": "AH23",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00668": {
+      "fund_id": "42443225",
+      "name": "國泰美國ETF傘型基金之道瓊工業平均指數基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00669R": {
+      "fund_id": "42443203",
+      "name": "國泰美國ETF傘型基金之道瓊工業平均指數單日反向1倍基金",
+      "class_code": "AH23",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00670L": {
+      "fund_id": "42441710",
+      "name": "富邦NASDAQ-100 ETF傘型基金之富邦NASDAQ-100單日正向兩倍基金 (本基金採匯率避險)",
+      "class_code": "AH23",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00671R": {
+      "fund_id": "42441704",
+      "name": "富邦NASDAQ-100 ETF傘型基金之富邦NASDAQ-100單日反向一倍基金 (本基金採匯率避險)",
+      "class_code": "AH23",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00675L": {
+      "fund_id": "42450837",
+      "name": "富邦臺灣加權ETF傘型基金之富邦臺灣加權單日正向兩倍基金",
+      "class_code": "AH13",
+      "investment_region": "國內",
+      "currency": "新台幣"
+    },
+    "00676R": {
+      "fund_id": "42450843",
+      "name": "富邦臺灣加權ETF傘型基金之富邦臺灣加權單日反向一倍基金",
+      "class_code": "AH13",
+      "investment_region": "國內",
+      "currency": "新台幣"
+    },
+    "00678": {
+      "fund_id": "42465424",
+      "name": "群益那斯達克生技基金",
+      "class_code": "AH21",
+      "investment_region": "台灣、美國",
+      "currency": "新台幣"
+    },
+    "00679B": {
+      "fund_id": "42461573",
+      "name": "元大美國政府20年期(以上)債券基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "1. 中華民國及美國。 2. 標的指數成分債發行人之國家(截至2016年5月底止，國家為美國)。",
+      "currency": "新台幣"
+    },
+    "00680L": {
+      "fund_id": "42461567",
+      "name": "元大美國政府20年期(以上)債券單日正向2倍基金 (本基金為策略交易型產品且投資具有槓桿操作風險，故本基金不適合長期持有，僅符合臺灣證券交易所訂定之適格條件之投資人始得交易)",
+      "class_code": "AH24",
+      "investment_region": "1. 中華民國及美國。 2. 標的指數成分債發行人之國家(截至2016年5月底止，國家為美國)。",
+      "currency": "新台幣"
+    },
+    "00681R": {
+      "fund_id": "42461588",
+      "name": "元大美國政府20年期(以上)債券單日反向1倍基金 (本基金為策略交易型產品且投資具有反向操作風險，故本基金不適合長期持有，僅符合臺灣證券交易所訂定之適格條件之投資人始得交易)",
+      "class_code": "AH24",
+      "investment_region": "1. 中華民國及美國。 2. 標的指數成分債發行人之國家(截至2016年5月底止，國家為美國)。",
+      "currency": "新台幣"
+    },
+    "00685L": {
+      "fund_id": "42481276",
+      "name": "群益臺灣加權單日正向2倍基金",
+      "class_code": "AH13",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00686R": {
+      "fund_id": "42481260",
+      "name": "群益臺灣加權單日反向1倍基金",
+      "class_code": "AH13",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00687B": {
+      "fund_id": "42482726A",
+      "name": "國泰美國債券ETF傘型基金之20年期(以上)美國公債指數基金-新台幣(配息) (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00687C": {
+      "fund_id": "42482726B",
+      "name": "國泰美國債券ETF傘型基金之20年期(以上)美國公債指數基金-美元(不配息)",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內及境外",
+      "currency": "美元"
+    },
+    "00688L": {
+      "fund_id": "42482747",
+      "name": "國泰美國債券ETF傘型基金之20年期(以上)美國公債指數單日正向2倍基金",
+      "class_code": "AH24",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00689R": {
+      "fund_id": "42482731",
+      "name": "國泰美國債券ETF傘型基金之20年期(以上)美國公債指數單日反向1倍基金",
+      "class_code": "AH24",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00690": {
+      "fund_id": "42482107",
+      "name": "兆豐臺灣藍籌30ETF基金",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "00692": {
+      "fund_id": "42482423",
+      "name": "富邦臺灣公司治理100基金",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "00694B": {
+      "fund_id": "42519239",
+      "name": "富邦美國政府債券ETF傘型基金之富邦美國政府債券1-3年期基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00695B": {
+      "fund_id": "42519245",
+      "name": "富邦美國政府債券ETF傘型基金之富邦美國政府債券7-10年期基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00696B": {
+      "fund_id": "42519250",
+      "name": "富邦美國政府債券ETF傘型基金之富邦美國政府債券20年期以上基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00697B": {
+      "fund_id": "42469744",
+      "name": "元大美國政府7至10年期債券基金",
+      "class_code": "AH22",
+      "investment_region": "1. 中華民國及美國。 2. 標的指數成分債發行人之國家：美國(截至2016年10月底止)。",
+      "currency": "新台幣"
+    },
+    "00700": {
+      "fund_id": "42464918",
+      "name": "富邦恒生國企ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00701": {
+      "fund_id": "42530591",
+      "name": "國泰低波動ETF傘型基金之臺灣低波動股利精選30基金 (本基金並無保證收益及配息)",
+      "class_code": "AH11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00702": {
+      "fund_id": "42530608",
+      "name": "國泰低波動ETF傘型基金之美國標普500低波動高股息基金 (本基金並無保證收益及配息)",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00703": {
+      "fund_id": "42528997",
+      "name": "台新MSCI中國基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國、美國及香港",
+      "currency": "新台幣"
+    },
+    "00709": {
+      "fund_id": "42529243",
+      "name": "富邦富時歐洲ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00710B": {
+      "fund_id": "42529932",
+      "name": "復華1至5年期非投資等級債券基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "全球",
+      "currency": "新台幣"
+    },
+    "00711B": {
+      "fund_id": "42529953",
+      "name": "復華新興市場10年期以上債券基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "新興市場",
+      "currency": "新台幣"
+    },
+    "00712": {
+      "fund_id": "42529948",
+      "name": "復華富時不動產證券化基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH25",
+      "investment_region": "美國",
+      "currency": "新台幣"
+    },
+    "00713": {
+      "fund_id": "42540916",
+      "name": "元大台灣高股息低波動ETF基金 (本基金之配息來源可能為收益平準金且並無保證收益及配息)",
+      "class_code": "AH11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00714": {
+      "fund_id": "42543131",
+      "name": "群益道瓊美國地產ETF基金",
+      "class_code": "AH25",
+      "investment_region": "國內及外國之有價證券",
+      "currency": "新台幣"
+    },
+    "00717": {
+      "fund_id": "42546448",
+      "name": "富邦標普美國特別股ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00719B": {
+      "fund_id": "42552659",
+      "name": "元大美國政府1至3年期債券ETF基金",
+      "class_code": "AH22",
+      "investment_region": "中國民國及美國",
+      "currency": "新台幣"
+    },
+    "00720B": {
+      "fund_id": "42552623",
+      "name": "元大20年期以上BBB級美元公司債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "1.中華民國 2. 美國、英國、加拿大、澳洲、比利時、瑞士、法國、墨西哥、荷蘭、西班牙、義大利、以色列、巴西、盧森堡、德國、奧地利、瑞典、紐西蘭、南韓、日本、新加坡、芬蘭、挪威、愛爾蘭、馬來西亞、中國大陸、香港、澳門、印尼、泰國、菲律賓、捷克、智利、波蘭、印度、俄羅斯、丹麥及其他標的指數成分債發行人之國家。",
+      "currency": "新台幣"
+    },
+    "00722B": {
+      "fund_id": "42553637",
+      "name": "群益15年期以上電信業公司債ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內及外國之有價證券",
+      "currency": "新台幣"
+    },
+    "00723B": {
+      "fund_id": "42553643",
+      "name": "群益15年期以上科技業公司債ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內及外國之有價證券",
+      "currency": "新台幣"
+    },
+    "00724B": {
+      "fund_id": "42553664",
+      "name": "群益10年期以上金融債ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內及外國之有價證券",
+      "currency": "新台幣"
+    },
+    "00725B": {
+      "fund_id": "72939309",
+      "name": "國泰息收ETF傘型基金之10年期(以上)BBB美元息收公司債券基金 (基金之配息來源可能為收益平準金且本基金並無保證收益及配息)",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00726B": {
+      "fund_id": "72939321",
+      "name": "國泰息收ETF傘型基金之新興市場5年期(以上)美元息收投資等級債券基金 (基金之配息來源可能為收益平準金且本基金並無保證收益及配息)",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00727B": {
+      "fund_id": "72939315",
+      "name": "國泰息收ETF傘型基金之優選1-5年美元非投資等級債券基金 (本基金並無保證收益及配息)",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00728": {
+      "fund_id": "72949242",
+      "name": "第一金臺灣工業菁英30 ETF基金 (本基金配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "中華民國",
+      "currency": "新台幣"
+    },
+    "00730": {
+      "fund_id": "72949931",
+      "name": "富邦道瓊臺灣優質高息30ETF基金 (本基金之配息來源可能為收益平準金且基金並無保證收益及配息)",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "00731": {
+      "fund_id": "72957164",
+      "name": "復華富時台灣高股息低波動基金 (基金之配息來源可能為收益平準金且本基金並無保證收益及配息)",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "00733": {
+      "fund_id": "72960132",
+      "name": "富邦臺灣中小A級動能50ETF基金",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "00734B": {
+      "fund_id": "72959748",
+      "name": "台新摩根大通新興市場投資等級美元債券ETF基金",
+      "class_code": "AH22",
+      "investment_region": "新興市場",
+      "currency": "新台幣"
+    },
+    "00735": {
+      "fund_id": "72962758",
+      "name": "國泰趨勢ETF傘型基金之臺韓科技基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00736": {
+      "fund_id": "72962770",
+      "name": "國泰趨勢ETF傘型基金之富時新興市場基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00737": {
+      "fund_id": "72962743",
+      "name": "國泰趨勢ETF傘型基金之納斯達克全球人工智慧及機器人基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00739": {
+      "fund_id": "72963026",
+      "name": "元大MSCI中國A股國際通ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國、大陸地區、香港及新加坡",
+      "currency": "新台幣"
+    },
+    "00740B": {
+      "fund_id": "72963546",
+      "name": "富邦全方位入息ETF傘型基金之富邦彭博10年期(以上)BBB美元息收公司債券ETF基金 (本基金之配息來源可能為收益平準金且基金並無保證收益及配息)",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00741B": {
+      "fund_id": "72963525",
+      "name": "富邦全方位入息ETF傘型基金之富邦彭博優選1-5年非投資等級債券ETF基金 (本基金之配息來源可能為收益平準金且基金並無保證收益及配息)",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00746B": {
+      "fund_id": "73626500",
+      "name": "富邦多元收益ETF傘型基金之富邦彭博9-35年A級美元息收公司債券ETF基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00749B": {
+      "fund_id": "73658930",
+      "name": "凱基全球息收ETF傘型基金之凱基10年期以上新興市場BBB美元主權債及類主權債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00750B": {
+      "fund_id": "73658988",
+      "name": "凱基全球息收ETF傘型基金之凱基10年期以上科技業公司債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00751B": {
+      "fund_id": "73656187",
+      "name": "元大20年期以上AAA至A級美元公司債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "1. 中華民國 2. 美國、英國、加拿大、澳洲、比利時、瑞士、法國、墨西哥、荷蘭、西班牙、義大利、以色列、巴西、盧森堡、德國、奧地利、瑞典、紐西蘭、南韓、日本、新加坡、芬蘭、挪威、愛爾蘭、馬來西亞、中國大陸、香港、澳門、印尼、泰國、菲律賓、捷克、智利、波蘭、印度、俄羅斯、丹麥及其他標的指數成分債發行人之國家",
+      "currency": "新台幣"
+    },
+    "00752": {
+      "fund_id": "73680588",
+      "name": "中國信託MSCI中國外資自由投資50不含A及B股ETF基金",
+      "class_code": "AH21",
+      "investment_region": "投資區域範圍皆涵蓋全球、可投資地區包括：歐洲、美洲、亞洲、非洲、大洋洲、其他等地區",
+      "currency": "新台幣"
+    },
+    "00753L": {
+      "fund_id": "73680567",
+      "name": "中國信託MSCI中國外資自由投資50不含A及B股單日正向2倍ETF基金",
+      "class_code": "AH23",
+      "investment_region": "投資區域範圍皆涵蓋全球。可投資地區包括：歐洲、美洲、亞洲、非洲、大洋洲、其他等地區。",
+      "currency": "新台幣"
+    },
+    "00754B": {
+      "fund_id": "73682050",
+      "name": "群益15年期以上高評等公司債ETF 基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內及外國之有價證券",
+      "currency": "新台幣"
+    },
+    "00755B": {
+      "fund_id": "73682045",
+      "name": "群益15年期以上公用事業公司債ETF 基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內及外國之有價證券",
+      "currency": "新台幣"
+    },
+    "00756B": {
+      "fund_id": "73682158",
+      "name": "群益15年期以上新興市場主權債ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內及外國之有價證券",
+      "currency": "新台幣"
+    },
+    "00757": {
+      "fund_id": "73692389",
+      "name": "統一NYSE FANG+ ETF基金",
+      "class_code": "AH21",
+      "investment_region": "國內外上市櫃股票等",
+      "currency": "新台幣"
+    },
+    "00758B": {
+      "fund_id": "73688977",
+      "name": "復華15年期以上能源業債券ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "全球",
+      "currency": "新台幣"
+    },
+    "00759B": {
+      "fund_id": "73688934",
+      "name": "復華15年期以上製藥業債券ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "全球",
+      "currency": "新台幣"
+    },
+    "00760B": {
+      "fund_id": "73689048",
+      "name": "復華新興市場企業債券ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "新興市場",
+      "currency": "新台幣"
+    },
+    "00761B": {
+      "fund_id": "73701726",
+      "name": "國泰10年期以上A等級美元公司債券ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00762": {
+      "fund_id": "73694555",
+      "name": "元大全球人工智慧ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國、美國、韓國、澳洲、埃及、紐西蘭、日本、比利時、中國及其他標的指數成分股之國家。",
+      "currency": "新台幣"
+    },
+    "00764B": {
+      "fund_id": "73709430",
+      "name": "群益25年期以上美國政府債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內及國外之有價證券",
+      "currency": "新台幣"
+    },
+    "00768B": {
+      "fund_id": "74424708",
+      "name": "復華美國20年期以上公債ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "美國",
+      "currency": "新台幣"
+    },
+    "00770": {
+      "fund_id": "74702435",
+      "name": "國泰標普北美科技ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00771": {
+      "fund_id": "74705236",
+      "name": "元大標普美國高息特別股ETF基金 (本基金並無保證收益及配息)",
+      "class_code": "AH21",
+      "investment_region": "中華民國及美國",
+      "currency": "新台幣"
+    },
+    "00772B": {
+      "fund_id": "74707446",
+      "name": "中國信託10年期以上高評級美元公司債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "本子基金投資區域範圍涵蓋全球，可投資之國家或地區包括：中華民國、美國、英國、加拿大、澳洲、比利時、瑞士、法國、墨西哥、荷蘭、西班牙、義大利、以色列、巴西、盧森堡、德國、奧地利、瑞典、紐西蘭、南韓、日本、新加坡、芬蘭、挪威、愛爾蘭、馬來西亞、中國大陸、香港、澳門、印尼、泰國、菲律賓、捷克、智利、波蘭、印度、俄羅斯、丹麥及其他標的指數成分債發行人之國家。",
+      "currency": "新台幣"
+    },
+    "00773B": {
+      "fund_id": "74707494",
+      "name": "中國信託10年期以上優先順位金融債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "本子基金投資區域範圍涵蓋全球，可投資之國家或地區包括：中華民國、美國、英國、加拿大、澳洲、比利時、瑞士、法國、墨西哥、荷蘭、西班牙、義大利、以色列、巴西、盧森堡、德國、奧地利、瑞典、紐西蘭、南韓、日本、新加坡、芬蘭、挪威、愛爾蘭、馬來西亞、中國大陸、香港、澳門、印尼、泰國、菲律賓、捷克、智利、波蘭、印度、俄羅斯、丹麥及其他標的指數成分債發行人之國家",
+      "currency": "新台幣"
+    },
+    "00775B": {
+      "fund_id": "74708894",
+      "name": "台新全方位收益ETF傘型基金之台新富時15年以上特選產業美元投資等級債券ETF基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國及國外地區",
+      "currency": "新台幣"
+    },
+    "00777B": {
+      "fund_id": "74712291",
+      "name": "凱基多元收益ETF傘型基金之凱基15年期以上AAA至A級美元公司債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00778B": {
+      "fund_id": "74712308",
+      "name": "凱基多元收益ETF傘型基金之凱基20年期以上美元金融債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00779B": {
+      "fund_id": "74712314",
+      "name": "凱基多元收益ETF傘型基金之凱基25年期以上美國公債ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00780B": {
+      "fund_id": "74719647",
+      "name": "國泰旗艦產業ETF傘型基金之7-10年A等級金融產業債券基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00781B": {
+      "fund_id": "74719597",
+      "name": "國泰旗艦產業ETF傘型基金之15年期以上A等級科技產業債券基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00782B": {
+      "fund_id": "74719490",
+      "name": "國泰旗艦產業ETF傘型基金之15年期以上A等級公用事業產業債券基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00783": {
+      "fund_id": "74721518",
+      "name": "富邦多元收益ⅡETF傘型基金之富邦中國中証中小500ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00785B": {
+      "fund_id": "74721600",
+      "name": "富邦多元收益ⅡETF傘型基金之富邦全球金融業10年以上美元投等債券ETF基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00786B": {
+      "fund_id": "74722571",
+      "name": "元大10年期以上美元投資級銀行債券ETF基金",
+      "class_code": "AH22",
+      "investment_region": "1.中華民國 2.美國、英國、加拿大、澳洲、比利時、瑞士、法國、墨西哥、荷蘭、西班牙、義大利、以色列、巴西、盧森堡、德國、奧地利、瑞典、紐西蘭、南韓、日本、新加坡、芬蘭、挪威、愛爾蘭、馬來西亞、中國大陸、香港、澳門、印尼、泰國、菲律賓、捷克、智利、波蘭、印度、俄羅斯、丹麥及其他標的指數成分債發行人之國家。",
+      "currency": "新台幣"
+    },
+    "00787B": {
+      "fund_id": "74722592",
+      "name": "元大10年期以上美元投資級醫療保健債券ETF基金",
+      "class_code": "AH22",
+      "investment_region": "1、中華民國 2、 美國、英國、加拿大、澳洲、比利時、瑞士、法國、墨西哥、荷蘭、西班牙、義大利、以色列、巴西、盧森堡、德國、奧地利、瑞典、紐西蘭、南韓、日本、新加坡、芬蘭、挪威、愛爾蘭、馬來西亞、中國大陸、香港、澳門、印尼、泰國、菲律賓、捷克、智利、波蘭、印度、俄羅斯、丹麥及其他標的指數成分債發行人之國家",
+      "currency": "新台幣"
+    },
+    "00788B": {
+      "fund_id": "74722657",
+      "name": "元大10年期以上美元投資級公共事業電能債券ETF基金",
+      "class_code": "AH22",
+      "investment_region": "1.中華民國2.美國、英國、加拿大、澳洲、比利時、瑞士、法國、墨西哥、荷蘭、西班牙、義大利、以色列、巴西、盧森堡、德國、奧地利、瑞典、紐西蘭、南韓、日本、新加坡、芬蘭、挪威、愛爾蘭、馬來西亞、中國大陸、香港、澳門、印尼、泰國、菲律賓、捷克、智利、波蘭、印度、俄羅斯、丹麥及其他標的指數成分債發行人之國家。",
+      "currency": "新台幣"
+    },
+    "00789B": {
+      "fund_id": "74726062",
+      "name": "復華20年期以上A3級以上公司債券ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "全球",
+      "currency": "新台幣"
+    },
+    "00791B": {
+      "fund_id": "74726020",
+      "name": "復華1至5年期美元特選信用債券ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "全球",
+      "currency": "新台幣"
+    },
+    "00792B": {
+      "fund_id": "75955772",
+      "name": "群益15年期以上A級美元公司債ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內及外國之有價證券",
+      "currency": "新台幣"
+    },
+    "00795B": {
+      "fund_id": "75959067",
+      "name": "中國信託美國政府20年期以上債券ETF基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國、美國",
+      "currency": "新台幣"
+    },
+    "00799B": {
+      "fund_id": "75967947",
+      "name": "國泰大三元ETF傘型基金之15年期以上A等級醫療保健產業債券基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00830": {
+      "fund_id": "75968002",
+      "name": "國泰大三元ETF傘型基金之美國費城半導體基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00834B": {
+      "fund_id": "75970725",
+      "name": "第一金彭博美國10年期以上金融債券指數ETF基金",
+      "class_code": "AH22",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00836B": {
+      "fund_id": "75981027",
+      "name": "永豐10年期以上美元A級公司債券ETF基金",
+      "class_code": "AH22",
+      "investment_region": "國內／國外",
+      "currency": "新台幣"
+    },
+    "00840B": {
+      "fund_id": "75984663",
+      "name": "凱基精選美元債券ETF傘型基金之凱基15年期以上美元投資等級精選公司債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00841B": {
+      "fund_id": "75984798",
+      "name": "凱基精選美元債券ETF傘型基金之凱基20年期以上AAA至AA級大型美元公司債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00842B": {
+      "fund_id": "76301054",
+      "name": "台新息收傘型基金之台新美元銀行債券15年期以上ETF基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國及外國",
+      "currency": "新台幣"
+    },
+    "00844B": {
+      "fund_id": "76307395",
+      "name": "台新首選收益傘型基金之台新15年期(以上)美元金融債券ETF基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國及國外地區",
+      "currency": "新台幣"
+    },
+    "00845B": {
+      "fund_id": "76311692",
+      "name": "富邦多元收益ⅢETF傘型基金之富邦中國以外新興市場美元5年以上投資等級債券ETF基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00846B": {
+      "fund_id": "76311594",
+      "name": "富邦多元收益ⅢETF傘型基金之富邦彭博歐洲區美元7-15年期銀行債ETF基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "00848B": {
+      "fund_id": "76318219",
+      "name": "中國信託新興亞洲(不含中國)美元精選綜合債券ETF基金 (本子基金有一定比重投資於非投資等級之高風險債券且基金並無保證收益及配息)",
+      "class_code": "AH22",
+      "investment_region": "中華民國、印度、印尼、馬來西亞、南韓、泰國、菲律賓及其他標的指數成分債發行人之國家",
+      "currency": "新台幣"
+    },
+    "00849B": {
+      "fund_id": "76317990",
+      "name": "中國信託新興市場0-5年期美元政府債券ETF基金 (本子基金有 一定 比重投資於非投資等級之高風險債券 且基金並無保證收益及配息)",
+      "class_code": "AH22",
+      "investment_region": "中華民國、巴西、哥倫比亞、印尼、墨西哥、秘魯、菲律賓、卡達、俄羅斯、沙烏地阿拉伯、南非、土耳其、南韓、中國、阿拉伯聯合大公國、匈牙利、馬來西亞、哈薩克、羅馬尼亞、阿布達比、波蘭、以色列、阿曼、克羅埃西亞、印度、智利、新加坡及其他標的指數成分債發行人之國家",
+      "currency": "新台幣"
+    },
+    "00850": {
+      "fund_id": "76322163",
+      "name": "元大臺灣ESG永續ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "00851": {
+      "fund_id": "76321684",
+      "name": "台新SG全球AI機器人精選ETF基金",
+      "class_code": "AH21",
+      "investment_region": "全球",
+      "currency": "新台幣"
+    },
+    "00852L": {
+      "fund_id": "76325112",
+      "name": "國泰道瓊工業平均指數單日正向2倍基金",
+      "class_code": "AH23",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00853B": {
+      "fund_id": "76331254",
+      "name": "統一彭博10年期以上Aa至A級美元優質公司債券ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "主要投資於國內外債券等",
+      "currency": "新台幣"
+    },
+    "00856B": {
+      "fund_id": "76340768",
+      "name": "永豐1至3年期美國公債ETF基金",
+      "class_code": "AH22",
+      "investment_region": "國內／國外",
+      "currency": "新台幣"
+    },
+    "00857B": {
+      "fund_id": "76340774",
+      "name": "永豐20年期以上美國公債ETF基金",
+      "class_code": "AH22",
+      "investment_region": "國內／國外",
+      "currency": "新台幣"
+    },
+    "00858": {
+      "fund_id": "76340789",
+      "name": "永豐美國大型500股票ETF基金",
+      "class_code": "AH21",
+      "investment_region": "國內／國外",
+      "currency": "新台幣"
+    },
+    "00859B": {
+      "fund_id": "76344856",
+      "name": "群益0-1年期美國政府債券ETF基金",
+      "class_code": "AH22",
+      "investment_region": "國內及國外之有價證券",
+      "currency": "新台幣"
+    },
+    "00860B": {
+      "fund_id": "76344618",
+      "name": "群益1-5年期投資等級公司債ETF基金",
+      "class_code": "AH22",
+      "investment_region": "國內及國外之有價證券",
+      "currency": "新台幣"
+    },
+    "00861": {
+      "fund_id": "76347684",
+      "name": "元大全球未來通訊ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國、美國、南韓、香港、日本、芬蘭、瑞典、德國、英國、西班牙、法國、義大利、澳洲、新加坡、中國及其他標的指數成分證券之國家。",
+      "currency": "新台幣"
+    },
+    "00862B": {
+      "fund_id": "76348749",
+      "name": "中國信託20年期以上BBB級美元公司債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "中華民國、澳洲、巴西、加拿大、法國、墨西哥、西班牙、荷蘭、瑞士、英國、美國及其他標的指數成分債發行人之國家。",
+      "currency": "新台幣"
+    },
+    "00863B": {
+      "fund_id": "76348733",
+      "name": "中國信託10年期以上電信業美元公司債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "中華民國、美國、英國、加拿大、墨西哥、西班牙、瑞士、法國、德國、荷蘭及其他標的指數成分債發行人之國家。",
+      "currency": "新台幣"
+    },
+    "00864B": {
+      "fund_id": "76348728",
+      "name": "中國信託美國政府0至1年期債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "中華民國、美國",
+      "currency": "新台幣"
+    },
+    "00865B": {
+      "fund_id": "76355987",
+      "name": "國泰美國收益傘型基金之美國短期公債ETF基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00867B": {
+      "fund_id": "76492552",
+      "name": "台新優質收益ETF傘型基金之台新15年期(以上)A-BBB美元電信債券ETF基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國及國外地區",
+      "currency": "新台幣"
+    },
+    "00870B": {
+      "fund_id": "76737557",
+      "name": "元大15年期以上新興市場主權債ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "1中華民國 2墨西哥、印尼、沙烏地阿拉伯、卡達、俄國、哥倫比亞、菲律賓、土耳其、烏拉圭、巴西、巴拿馬、秘魯、阿拉伯聯合大公國、多明尼加、南非、哈克、以色列、阿曼、智利、羅馬尼亞、匈牙利、南韓、巴拉圭、馬來西亞、摩洛哥、瓜地馬拉及其他的指數成債發行之國家。",
+      "currency": "新台幣"
+    },
+    "00875": {
+      "fund_id": "77060531",
+      "name": "國泰網路資安ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00876": {
+      "fund_id": "77549343",
+      "name": "元大全球5G關鍵科技ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國、美國、南韓、香港、日本、荷蘭、德國、英國、法國、中國及其他標的指數成分證券之國家。",
+      "currency": "新台幣"
+    },
+    "00877": {
+      "fund_id": "78744463",
+      "name": "復華中國5G通信ETF基金",
+      "class_code": "AH21",
+      "investment_region": "大陸地區",
+      "currency": "新台幣"
+    },
+    "00878": {
+      "fund_id": "88090913",
+      "name": "國泰台灣高股息傘型基金之台灣ESG永續高股息ETF基金 (基金之配息來源可能為收益平準金且本基金並無保證收益及配息)",
+      "class_code": "AH11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00881": {
+      "fund_id": "88114133",
+      "name": "國泰台灣科技龍頭ETF基金",
+      "class_code": "AH11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00882": {
+      "fund_id": "88134187",
+      "name": "中國信託恒生中國高股息ETF基金 (本子基金之配息來源可能為收益平準金且基金並無保證收益及配息)",
+      "class_code": "AH21",
+      "investment_region": "中華民國、香港及其他標的指數成分股之國家。",
+      "currency": "新台幣"
+    },
+    "00884B": {
+      "fund_id": "88134166",
+      "name": "中國信託15年期以上新興市場美元主權低碳債券ETF基金 (本基金非屬環境、社會及治理相關主題基金)",
+      "class_code": "AH22",
+      "investment_region": "中國民國、墨西哥、印尼、沙烏地阿拉伯、卡達、俄羅斯、哥倫比亞、菲律賓、烏拉圭、巴拿馬、羅馬尼亞、以色列、阿拉伯聯合大公國及其他標的指數成分債發行人之國家。",
+      "currency": "新台幣"
+    },
+    "00885": {
+      "fund_id": "88173189",
+      "name": "富邦富時越南ETF基金",
+      "class_code": "AH21",
+      "investment_region": "投資國內、外",
+      "currency": "新台幣"
+    },
+    "00886": {
+      "fund_id": "88172098",
+      "name": "永豐美國科技ETF基金",
+      "class_code": "AH21",
+      "investment_region": "國內／國外",
+      "currency": "新台幣"
+    },
+    "00887": {
+      "fund_id": "88171696",
+      "name": "永豐中國科技50大ETF基金",
+      "class_code": "AH21",
+      "investment_region": "國內／國外",
+      "currency": "新台幣"
+    },
+    "00888": {
+      "fund_id": "88171719",
+      "name": "永豐台灣ESG永續優質ETF基金",
+      "class_code": "AH11",
+      "investment_region": "國內",
+      "currency": "新台幣"
+    },
+    "00890B": {
+      "fund_id": "88176480",
+      "name": "凱基環球傘型基金之凱基 15 年期以上美元 BBB 級 ESG 永續公司債券 ETF 基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00891": {
+      "fund_id": "88182265",
+      "name": "中國信託臺灣ESG永續關鍵半導體ETF基金",
+      "class_code": "AH11",
+      "investment_region": "中華民國之有價證券",
+      "currency": "新台幣"
+    },
+    "00892": {
+      "fund_id": "88183736",
+      "name": "富邦台灣核心半導體ETF基金",
+      "class_code": "AH11",
+      "investment_region": "投資國內",
+      "currency": "新台幣"
+    },
+    "00893": {
+      "fund_id": "88185256",
+      "name": "國泰全球智能電動車ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00894": {
+      "fund_id": "88195183",
+      "name": "中國信託特選小資高價30ETF基金",
+      "class_code": "AH11",
+      "investment_region": "中國民國之有價證券",
+      "currency": "新台幣"
+    },
+    "00895": {
+      "fund_id": "88194950",
+      "name": "富邦未來車ETF基金",
+      "class_code": "AH21",
+      "investment_region": "投資國內外",
+      "currency": "新台幣"
+    },
+    "00896": {
+      "fund_id": "88231049",
+      "name": "中國信託臺灣綠能及電動車ETF基金 (本基金非屬環境、社會及治理相關主題基金)",
+      "class_code": "AH11",
+      "investment_region": "中國民國之有價證券",
+      "currency": "新台幣"
+    },
+    "00897": {
+      "fund_id": "88234242",
+      "name": "富邦基因免疫生技ETF基金",
+      "class_code": "AH21",
+      "investment_region": "投資國內外",
+      "currency": "新台幣"
+    },
+    "00898": {
+      "fund_id": "88237803",
+      "name": "國泰全球基因免疫與醫療革命ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00899": {
+      "fund_id": "88251656",
+      "name": "富蘭克林華美全球潔淨能源ETF基金",
+      "class_code": "AH21",
+      "investment_region": "詳公開說明書",
+      "currency": "新台幣"
+    },
+    "00900": {
+      "fund_id": "88254540",
+      "name": "富邦特選台灣高股息30ETF基金 (本基金之配息來源可能為收益平準金且基金並無保證收益及配息)",
+      "class_code": "AH11",
+      "investment_region": "投資國內",
+      "currency": "新台幣"
+    },
+    "00901": {
+      "fund_id": "88255098",
+      "name": "永豐台灣智能車供應鏈ETF基金",
+      "class_code": "AH11",
+      "investment_region": "國內",
+      "currency": "新台幣"
+    },
+    "00902": {
+      "fund_id": "88261134",
+      "name": "中國信託電池及儲能科技ETF基金",
+      "class_code": "AH21",
+      "investment_region": "台灣、美國、中國、香港、韓國、日本",
+      "currency": "新台幣"
+    },
+    "00903": {
+      "fund_id": "88261140",
+      "name": "富邦元宇宙ETF基金",
+      "class_code": "AH21",
+      "investment_region": "投資國內外",
+      "currency": "新台幣"
+    },
+    "00904": {
+      "fund_id": "88265048",
+      "name": "台新臺灣全市場半導體精選30ETF基金",
+      "class_code": "AH11",
+      "investment_region": "中華民國",
+      "currency": "新台幣"
+    },
+    "00905": {
+      "fund_id": "88266320",
+      "name": "富蘭克林華美臺灣Smart ETF基金",
+      "class_code": "AH11",
+      "investment_region": "詳公開說明書",
+      "currency": "新台幣"
+    },
+    "00907": {
+      "fund_id": "88313702",
+      "name": "永豐台灣優選入息存股ETF基金",
+      "class_code": "AH11",
+      "investment_region": "國內",
+      "currency": "新台幣"
+    },
+    "00908": {
+      "fund_id": "88313560",
+      "name": "富邦全球入息不動產與基礎建設ETF基金",
+      "class_code": "AH21",
+      "investment_region": "投資國內外",
+      "currency": "新台幣"
+    },
+    "00909": {
+      "fund_id": "88317046",
+      "name": "國泰全球數位支付服務ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00910": {
+      "fund_id": "88316551",
+      "name": "第一金太空衛星ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00911": {
+      "fund_id": "88317812",
+      "name": "兆豐洲際半導體ETF基金",
+      "class_code": "AH21",
+      "investment_region": "全球，主要投資地區美國",
+      "currency": "新台幣"
+    },
+    "00912": {
+      "fund_id": "88319403",
+      "name": "中國信託臺灣智慧50ETF基金",
+      "class_code": "AH11",
+      "investment_region": "中國民國之有價證券",
+      "currency": "新台幣"
+    },
+    "00913": {
+      "fund_id": "88321560",
+      "name": "兆豐特選台灣晶圓製造ETF基金",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "00915": {
+      "fund_id": "88324665",
+      "name": "凱基台灣優選高股息30 ETF基金 (本基金之配息來源可能為收益平準金且基金並無保證收益及配息)",
+      "class_code": "AH11",
+      "investment_region": "國內",
+      "currency": "新台幣"
+    },
+    "00916": {
+      "fund_id": "88325405",
+      "name": "國泰全球品牌50ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00917": {
+      "fund_id": "88326299",
+      "name": "中國信託特選金融及數據ETF基金",
+      "class_code": "AH21",
+      "investment_region": "美國、英國、法國、德國、香港",
+      "currency": "新台幣"
+    },
+    "00918": {
+      "fund_id": "88329556",
+      "name": "大華銀台灣優選股利高填息30ETF基金 (本基金並無保證收益及配息且配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "中華民國",
+      "currency": "新台幣"
+    },
+    "00919": {
+      "fund_id": "88330879",
+      "name": "群益台灣精選高息ETF基金 (本基金之配息來源可能為收益平準金且基金並無保證收益及配息)",
+      "class_code": "AH11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00920": {
+      "fund_id": "88332996",
+      "name": "富邦全球ESG綠色電力ETF基金",
+      "class_code": "AH21",
+      "investment_region": "投資國內外",
+      "currency": "新台幣"
+    },
+    "00921": {
+      "fund_id": "88351249",
+      "name": "兆豐台灣產業龍頭存股等權重ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "00922": {
+      "fund_id": "88385923",
+      "name": "國泰台灣領袖 50 ETF 基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00923": {
+      "fund_id": "88385901",
+      "name": "群益台灣ESG低碳50ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00924": {
+      "fund_id": "88391777",
+      "name": "復華美國標普500成長ETF基金",
+      "class_code": "AH21",
+      "investment_region": "美國",
+      "currency": "新台幣"
+    },
+    "00926": {
+      "fund_id": "88396230",
+      "name": "凱基全球菁英55 ETF基金",
+      "class_code": "AH21",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00927": {
+      "fund_id": "88397435",
+      "name": "群益台灣半導體收益ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00928": {
+      "fund_id": "88398743",
+      "name": "中國信託上櫃ESG 30 ETF基金",
+      "class_code": "AH11",
+      "investment_region": "中華民國之有價證券",
+      "currency": "新台幣"
+    },
+    "00929": {
+      "fund_id": "88399314",
+      "name": "復華台灣科技優息ETF基金 (基金之配息來源可能為收益平準金且本基金並無保證收益及配息)",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "00930": {
+      "fund_id": "93104629",
+      "name": "永豐台灣ESG低碳高息40ETF基金",
+      "class_code": "AH11",
+      "investment_region": "國內",
+      "currency": "新台幣"
+    },
+    "00931B": {
+      "fund_id": "93106366",
+      "name": "統一彭博美國20年期以上公債ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "主要投資於國內外債券等",
+      "currency": "新台幣"
+    },
+    "00932": {
+      "fund_id": "93111473",
+      "name": "兆豐台灣ESG永續高股息等權重 ETF 基金 (基金之配息來源可能為收益平準金且本基金並無保證收益及配息)",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "00933B": {
+      "fund_id": "93149246",
+      "name": "國泰10年以上投資級金融債券ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00934": {
+      "fund_id": "93150242",
+      "name": "中國信託臺灣優選成長高股息ETF基金 (基金之配息來源可能為收益平準金 且 基金並無保證收益及配息)",
+      "class_code": "AH11",
+      "investment_region": "中國民國之有價證券",
+      "currency": "新台幣"
+    },
+    "00935": {
+      "fund_id": "93151376",
+      "name": "野村臺灣創新科技50ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00936": {
+      "fund_id": "93150593",
+      "name": "台新臺灣永續高息中小型ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "中華民國",
+      "currency": "新台幣"
+    },
+    "00937B": {
+      "fund_id": "93155485",
+      "name": "群益ESG 20年期以上BBB投資等級公司債ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內及外國之有價證券",
+      "currency": "新台幣"
+    },
+    "00938": {
+      "fund_id": "93159187",
+      "name": "凱基台灣優選30 ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "國內",
+      "currency": "新台幣"
+    },
+    "00939": {
+      "fund_id": "93168221",
+      "name": "統一台灣高息動能ETF基金 (本基金並無保證收益及配息，配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "00940": {
+      "fund_id": "93176257",
+      "name": "元大臺灣價值高息ETF基金 (本基金之配息來源可能為收益平準金且並無保證收益及配息)",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "00941": {
+      "fund_id": "93176279",
+      "name": "中國信託上游半導體ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內、日本、韓國、美國、法國、德國、荷蘭",
+      "currency": "新台幣"
+    },
+    "00942B": {
+      "fund_id": "93210760",
+      "name": "台新美國20年期以上A級公司債券ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "中華民國 境內及境外",
+      "currency": "新台幣"
+    },
+    "00943": {
+      "fund_id": "93211796",
+      "name": "兆豐台灣電子成長高息等權重ETF基金 (基金之配息來源可能為收益平準金且本基金並無保證收益及配息)",
+      "class_code": "AH11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "00944": {
+      "fund_id": "93212660",
+      "name": "野村臺灣趨勢動能高股息ETF基金 (本基金之配息來源可能為收益平準金且並無保證收益及配息)",
+      "class_code": "AH11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00945B": {
+      "fund_id": "93213801",
+      "name": "凱基美國優選收益非投資等級債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00946": {
+      "fund_id": "93215250",
+      "name": "群益台灣科技高息成長ETF基金 (本基金之配息來源可能為收益平準金且基金並無保證收益及配息)",
+      "class_code": "AH11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00947": {
+      "fund_id": "93216764",
+      "name": "台新臺灣IC設計動能ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "中華民國",
+      "currency": "新台幣"
+    },
+    "00948B": {
+      "fund_id": "93218545",
+      "name": "中國信託15年期以上已開發市場投資級優化收益ESG美元公司債券ETF基金 (本子基金之配息來源可能為收益平準金並無保證收益及配息)",
+      "class_code": "AH22",
+      "investment_region": "中華民國、歐盟成員國、美國、日本、英國、加拿大、澳洲、紐西蘭、瑞士、挪威、瑞典及其他標的指數成分債發行人之國家。",
+      "currency": "新台幣"
+    },
+    "00949": {
+      "fund_id": "93220253",
+      "name": "復華日本護城河優勢龍頭企業ETF基金",
+      "class_code": "AH21",
+      "investment_region": "日本",
+      "currency": "新台幣"
+    },
+    "00950B": {
+      "fund_id": "00505048",
+      "name": "凱基全球10年期以上美元A級公司債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00951": {
+      "fund_id": "00508426",
+      "name": "台新日本半導體ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內及外國",
+      "currency": "新台幣"
+    },
+    "00952": {
+      "fund_id": "00512110",
+      "name": "凱基優選台灣 AI 50 ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "國內",
+      "currency": "新台幣"
+    },
+    "00953B": {
+      "fund_id": "00512532",
+      "name": "群益優選收益非投資等級債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內及外國之有價證券",
+      "currency": "新台幣"
+    },
+    "00954": {
+      "fund_id": "00512651",
+      "name": "中國信託日本半導體ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國、日本、新加坡",
+      "currency": "新台幣"
+    },
+    "00955": {
+      "fund_id": "00512646",
+      "name": "中國信託日本商社及批發ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國、日本、新加坡",
+      "currency": "新台幣"
+    },
+    "00956": {
+      "fund_id": "00512630",
+      "name": "中國信託日經高股息50 ETF基金 (本子基金之配息來源可能為收益平準金且基金並無保證收益及配息)",
+      "class_code": "AH21",
+      "investment_region": "中華民國、日本、新加坡",
+      "currency": "新台幣"
+    },
+    "00957B": {
+      "fund_id": "00512527",
+      "name": "兆豐美國企業優選投資級公司債ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "美國及其他標的指數成分債之國家或地區",
+      "currency": "新台幣"
+    },
+    "00958B": {
+      "fund_id": "00513624",
+      "name": "永豐15年期以上ESG投資等級美元銀行債ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內／國外",
+      "currency": "新台幣"
+    },
+    "00959B": {
+      "fund_id": "00515073",
+      "name": "大華銀15年期以上BBB投資等級美國公司債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00960": {
+      "fund_id": "00516397",
+      "name": "野村全球航運龍頭息收ETF基金 (本基金之配息來源可能為收益平準金且並無保證收益及配息)",
+      "class_code": "AH21",
+      "investment_region": "全球市場",
+      "currency": "新台幣"
+    },
+    "00961": {
+      "fund_id": "00516729",
+      "name": "富蘭克林華美臺灣ESG永續高息ETF基金",
+      "class_code": "AH11",
+      "investment_region": "詳公開說明書",
+      "currency": "新台幣"
+    },
+    "00962": {
+      "fund_id": "00526070",
+      "name": "台新臺灣AI優息動能ETF基金",
+      "class_code": "AH11",
+      "investment_region": "中華民國",
+      "currency": "新台幣"
+    },
+    "00963": {
+      "fund_id": "00527303",
+      "name": "中國信託全球高股息ETF基金 (本子基金之配息來源可能為收益平準金且本子基金並無保證收益及配息)",
+      "class_code": "AH21",
+      "investment_region": "中華民國、日本、新加坡、美國、法國、德國、英國。",
+      "currency": "新台幣"
+    },
+    "00964": {
+      "fund_id": "00527296",
+      "name": "中國信託亞太高股息ETF基金 (本子基金之配息來源可能為收益平準金且基金並無保證收益及配息)",
+      "class_code": "AH21",
+      "investment_region": "中華民國、日本、新加坡、澳洲、香港、韓國",
+      "currency": "新台幣"
+    },
+    "00965": {
+      "fund_id": "00527578",
+      "name": "元大全球航太與防衛科技ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國、美國、日本、韓國、印度、澳洲、英國、法國、德國、義大利、以色列、瑞典及其他標的指數成分股之國家。",
+      "currency": "新台幣"
+    },
+    "00966B": {
+      "fund_id": "00531566",
+      "name": "統一全球15年以上BBB優選ESG公司債ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "主要投資於國內外債券等",
+      "currency": "新台幣"
+    },
+    "00967B": {
+      "fund_id": "00532452",
+      "name": "元大優息10年期以上美國政府債券ETF基金 (本基金之配息來源可能為收益平準金且並無保證收益及配息)",
+      "class_code": "AH22",
+      "investment_region": "1.中華民國及美國 2.標的指數成分債發行人之國家:美國",
+      "currency": "新台幣"
+    },
+    "00968B": {
+      "fund_id": "00532523",
+      "name": "元大優息10年期以上已開發市場投資級美元公司債券ETF基金 (本基金之配息來源可能為收益平準金且並無保證收益及配息)",
+      "class_code": "AH22",
+      "investment_region": "1.中華民國。2.歐盟成員國、美國、日本、英國、加拿大、澳洲、紐西蘭、瑞士、挪威、瑞典和西歐及其他標的指數成分債發行人之國家。",
+      "currency": "新台幣"
+    },
+    "00969B": {
+      "fund_id": "00532495",
+      "name": "元大零息超長期美國政府債券ETF基金",
+      "class_code": "AH22",
+      "investment_region": "本基金投資於中華民國之有價證券為中華民國境內由國家或機構所保證、發行、承銷或證冊掛牌之政府公債、普通公司債(含無擔保公司債)、金融債券。本基金投資於經金管會核准之國外有價證券為本基金公開說明書所列國家或地區之外國國家或機構所保證、發行、承銷或註冊掛牌，符合金管會所規定之信用評等等級以上之債券(含政府公債、普通公司債(含無擔保公司債)、金融債券)。前述之債券不含以國內有價證券、本國上市、上櫃公司於海外發行之有價證券、國內證券投資信託事業於海外發行之基金受益憑證、未經金管會核准或申報生效得募集及銷售之境外基金為東結標日之連動型或結構型債券。",
+      "currency": "新台幣"
+    },
+    "00970B": {
+      "fund_id": "00533678",
+      "name": "台新20年期以上BBB美元投資等級公司債ETF基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國及國外地區",
+      "currency": "新台幣"
+    },
+    "00971": {
+      "fund_id": "00534206",
+      "name": "野村美日ETF傘型基金之美國創新研發龍頭ETF基金",
+      "class_code": "AH21",
+      "investment_region": "美國市場",
+      "currency": "新台幣"
+    },
+    "00972": {
+      "fund_id": "00534233",
+      "name": "野村美日ETF傘型基金之日本價值動能高息ETF基金 (本基金之配息來源可能為收益平準金且並無保證收益及配息)",
+      "class_code": "AH21",
+      "investment_region": "日本市場",
+      "currency": "新台幣"
+    },
+    "009800": {
+      "fund_id": "00568922",
+      "name": "中國信託NASDAQ 100 ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國、美國",
+      "currency": "新台幣"
+    },
+    "009801": {
+      "fund_id": "00568937",
+      "name": "中國信託美國創新科技ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國、美國",
+      "currency": "新台幣"
+    },
+    "009802": {
+      "fund_id": "00572496",
+      "name": "富邦台灣旗艦動能50ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "投資國內",
+      "currency": "新台幣"
+    },
+    "009803": {
+      "fund_id": "00572524",
+      "name": "玉山臺灣市值動能50 ETF 基金 (本基金之配息可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "009804": {
+      "fund_id": "00572518",
+      "name": "聯邦台灣精彩50ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "中華民國",
+      "currency": "新台幣"
+    },
+    "009805": {
+      "fund_id": "00582311",
+      "name": "台新美國電力基建息收ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國境外",
+      "currency": "新台幣"
+    },
+    "009806": {
+      "fund_id": "00583509",
+      "name": "台新全球傘型基金之台新標普500 ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH21",
+      "investment_region": "投資於國內及國外",
+      "currency": "新台幣"
+    },
+    "009807": {
+      "fund_id": "00583515",
+      "name": "台新全球傘型基金之標普科技精選 ETF 基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH21",
+      "investment_region": "投資於國內及國外",
+      "currency": "新台幣"
+    },
+    "009808": {
+      "fund_id": "00583873",
+      "name": "華南永昌台灣優選50ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "本基金投資於中華民國境內之有價證券",
+      "currency": "新台幣"
+    },
+    "009809": {
+      "fund_id": "00579505",
+      "name": "富邦台灣淨零轉型ESG50 ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH11",
+      "investment_region": "投資國內",
+      "currency": "新台幣"
+    },
+    "00980A": {
+      "fund_id": "00579499",
+      "name": "野村臺灣智慧優選主動式ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AL11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00980B": {
+      "fund_id": "00569302",
+      "name": "台新10年期以上特選全球BBB美元投資等級公司債券ETF基金",
+      "class_code": "AH22",
+      "investment_region": "中華民國 境內及境外",
+      "currency": "新台幣"
+    },
+    "00980D": {
+      "fund_id": "00600606",
+      "name": "聯博投資等級債入息主動式ETF基金 (本基金有一定比重得投資於非投資等級之高風險債券，配息來源可能為收益平準金且並無保證收益及配息)",
+      "class_code": "AL22",
+      "investment_region": "中華民國、外國",
+      "currency": "新台幣"
+    },
+    "00980T": {
+      "fund_id": "00584649",
+      "name": "凱基美國Top股債平衡ETF基金",
+      "class_code": "AH26",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "009810": {
+      "fund_id": "00597996",
+      "name": "玉山全球跨國藍籌100ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH21",
+      "investment_region": "投資國內外",
+      "currency": "新台幣"
+    },
+    "009811": {
+      "fund_id": "00599299",
+      "name": "統一美國50ETF 基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH21",
+      "investment_region": "主要投資於國內外股票等",
+      "currency": "新台幣"
+    },
+    "009812": {
+      "fund_id": "00608902",
+      "name": "野村日本東證ETF基金",
+      "class_code": "AH21",
+      "investment_region": "日本市場",
+      "currency": "新台幣"
+    },
+    "009813": {
+      "fund_id": "00608950",
+      "name": "貝萊德iShares安碩標普500卓越50 ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH21",
+      "investment_region": "中華民國及外國地區",
+      "currency": "新台幣"
+    },
+    "009814": {
+      "fund_id": "00647813",
+      "name": "富邦美國傘型基金之富邦標普500 ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH21",
+      "investment_region": "中華民國境內境外",
+      "currency": "新台幣"
+    },
+    "009815": {
+      "fund_id": "00648622",
+      "name": "大華銀Magnificent 7 Plus美國大型科技ETF基金",
+      "class_code": "AH21",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "009816": {
+      "fund_id": "00655756",
+      "name": "凱基台灣TOP 50 ETF基金",
+      "class_code": "AH11",
+      "investment_region": "國內",
+      "currency": "新台幣"
+    },
+    "009817": {
+      "fund_id": "00663088",
+      "name": "國泰大和日本不動產收息ETF基金 (本基金並無保證收益及配息)",
+      "class_code": "AH25",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "009818": {
+      "fund_id": "00655101",
+      "name": "華南永昌NASDAQ 100科技ETF基金",
+      "class_code": "AH21",
+      "investment_region": "本基金投資於中華民國及外國有價證券",
+      "currency": "新台幣"
+    },
+    "009819": {
+      "fund_id": "00669317",
+      "name": "中國信託美國數據中心及電力ETF 基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國、美國",
+      "currency": "新台幣"
+    },
+    "00981A": {
+      "fund_id": "00583395",
+      "name": "統一台股增長主動式ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AL11",
+      "investment_region": "中華民國",
+      "currency": "新台幣"
+    },
+    "00981B": {
+      "fund_id": "00568520",
+      "name": "第一金美元優選收益非投資等級債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "中華民國及國外",
+      "currency": "新台幣"
+    },
+    "00981D": {
+      "fund_id": "00606159",
+      "name": "中國信託價值策略非投資等級債券主動式ETF基金 (本子基金之配息來源可能為收益平準金並無保證收益及配息)",
+      "class_code": "AL22",
+      "investment_region": "中華民國、歐盟成員國、美國、日本、英國、加拿大、澳洲、紐西蘭、瑞士、挪威、瑞典及其他本基金公開說明書所列國家。",
+      "currency": "新台幣"
+    },
+    "00981T": {
+      "fund_id": "00609521",
+      "name": "凱基雙核收息債股平衡ETF基金 (本基金之配息來源可能為收益平準金且基金並無保證收益及配息)",
+      "class_code": "AH26",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "009820": {
+      "fund_id": "00671974",
+      "name": "元大納斯達克100增強成長精選ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國及美國。",
+      "currency": "新台幣"
+    },
+    "009821": {
+      "fund_id": "00672713",
+      "name": "野村全球稀土與關鍵資源ETF基金",
+      "class_code": "AH21",
+      "investment_region": "全球市場",
+      "currency": "新台幣"
+    },
+    "009822": {
+      "fund_id": "00675275",
+      "name": "華南永昌全球未來金融優選30 ETF基金",
+      "class_code": "AH21",
+      "investment_region": "中華民國、美國、加拿大、英國、德國、法國、瑞士、 義大利、奧地利、比利時、荷蘭、愛爾蘭、丹麥、芬蘭、瑞典、挪威、西班牙、葡 萄牙、以色列、新加坡、香港、日本、澳大利亞、紐西蘭及韓國。",
+      "currency": "新台幣"
+    },
+    "009823": {
+      "fund_id": "00641986",
+      "name": "群益標普500ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH21",
+      "investment_region": "國內及外國之有價證券",
+      "currency": "新台幣"
+    },
+    "009824": {
+      "fund_id": "00682986",
+      "name": "群益美國科技巨頭ETF基金",
+      "class_code": "AH21",
+      "investment_region": "國內及外國之有價證券",
+      "currency": "新台幣"
+    },
+    "009825": {
+      "fund_id": "00684464",
+      "name": "聯邦美國金融創新ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH21",
+      "investment_region": "中華民國及美國",
+      "currency": "新台幣"
+    },
+    "009826": {
+      "fund_id": "00718470",
+      "name": "貝萊德iShares安碩世界股票ETF基金",
+      "class_code": "AH21",
+      "investment_region": "全球區域",
+      "currency": "新台幣"
+    },
+    "009827": {
+      "fund_id": "00719668",
+      "name": "玉山未來全球算力ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH21",
+      "investment_region": "中華民國、美國、日本、英國、法國、瑞士、德國、荷蘭、南韓、西班牙、義大利及其他標的指數成分證券之國家。",
+      "currency": "新台幣"
+    },
+    "009828": {
+      "fund_id": "00719359",
+      "name": "中國信託台日韓PCB ETF基金",
+      "class_code": "AH21",
+      "investment_region": "台灣、日本、韓國",
+      "currency": "新台幣"
+    },
+    "009829": {
+      "fund_id": "00719554",
+      "name": "大華銀韓國KOSPI 50 ETF基金",
+      "class_code": "AH21",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00982A": {
+      "fund_id": "00584520",
+      "name": "群益台灣精選強棒主動式ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AL11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00982B": {
+      "fund_id": "00579456",
+      "name": "富蘭克林華美20年期以上BBB投資級美元公司債ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "詳公開說明書",
+      "currency": "新台幣"
+    },
+    "00982D": {
+      "fund_id": "00609114",
+      "name": "富邦優選收益傘型基金之富邦環球動態入息投資級債主動式ETF基金 (本基金之配息來源可能為收益平準金且基金並無保證收益及配息)",
+      "class_code": "AL22",
+      "investment_region": "投資國內外",
+      "currency": "新台幣"
+    },
+    "00982T": {
+      "fund_id": "00608234",
+      "name": "兆豐台美動能股債平衡ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH26",
+      "investment_region": "中華民國、美國",
+      "currency": "新台幣"
+    },
+    "00983A": {
+      "fund_id": "00586267",
+      "name": "中國信託ARK創新主動式ETF基金",
+      "class_code": "AL21",
+      "investment_region": "中華民國、美國",
+      "currency": "新台幣"
+    },
+    "00983B": {
+      "fund_id": "00580860",
+      "name": "大華銀優化票息20年期以上美國政府債券ETF基金 (本基金並無保證收益及配息且配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00983D": {
+      "fund_id": "00609120",
+      "name": "富邦優選收益傘型基金之富邦環球複合優選收益債主動式ETF基金 (本基金有一定比重得投資於非投資等級之高風險債券且基金之配息來源可能為收益平準金且基金並無保證收益及配息)",
+      "class_code": "AL22",
+      "investment_region": "投資國內外",
+      "currency": "新台幣"
+    },
+    "00984A": {
+      "fund_id": "00599087",
+      "name": "安聯台灣高息成長主動式ETF基金 (本基金之配息來源可能為收益平準金且基金並無保證收益及配息)",
+      "class_code": "AL11",
+      "investment_region": "中華民國",
+      "currency": "新台幣"
+    },
+    "00984B": {
+      "fund_id": "00580854",
+      "name": "大華銀優化收益15年期以上A級美國公司債券ETF基金 (本基金並無保證收益及配息且配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內外",
+      "currency": "新台幣"
+    },
+    "00984D": {
+      "fund_id": "00649782",
+      "name": "聯博優選全球非投資等級債券主動式ETF基金 (本基金主要投資於非投資等級之高風險債券，配息來源可能為收益平準金且並無保證收益及配息)",
+      "class_code": "AL22",
+      "investment_region": "中華民國、外國",
+      "currency": "新台幣"
+    },
+    "00985A": {
+      "fund_id": "00586576",
+      "name": "野村臺灣增強50主動式ETF基金",
+      "class_code": "AL11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00985B": {
+      "fund_id": "00584541",
+      "name": "群益0-5年期ESG投資等級公司債ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "國內及外國之有價證券",
+      "currency": "新台幣"
+    },
+    "00985D": {
+      "fund_id": "00665558",
+      "name": "貝萊德iShares安碩收益優化投資等級債主動式ETF基金 (基金有一定比重投資於非投資等級之高風險債券，配息來源可能為收益平準金且並無保證收益及配息)",
+      "class_code": "AL22",
+      "investment_region": "中華民國與國外有價證券",
+      "currency": "新台幣"
+    },
+    "00986A": {
+      "fund_id": "00602169",
+      "name": "台新全球龍頭成長主動式ETF基金",
+      "class_code": "AL21",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00986B": {
+      "fund_id": "00600887",
+      "name": "富蘭克林華美10年期以上投資級美元金融債ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "詳公開說明書",
+      "currency": "新台幣"
+    },
+    "00986D": {
+      "fund_id": "00664988",
+      "name": "復華全球金融債券入息主動式ETF基金 (本基金有一定比重得投資於非投資等級之高風險債券且本基金並無保證收益及配息)",
+      "class_code": "AL22",
+      "investment_region": "全球",
+      "currency": "新台幣"
+    },
+    "00987A": {
+      "fund_id": "00607592",
+      "name": "台新臺灣優勢成長主動式ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AL11",
+      "investment_region": "中華民國",
+      "currency": "新台幣"
+    },
+    "00987B": {
+      "fund_id": "00643289",
+      "name": "野村澳洲10年期以上主權及類主權債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "本基金可投資之國家包括中華民國、澳洲及其他已納入與即將納入標的指數成分債券之國家或地區。",
+      "currency": "新台幣"
+    },
+    "00987D": {
+      "fund_id": "00721290",
+      "name": "統一股債傘型基金之統一美國公債量化增益主動式ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AL22",
+      "investment_region": "主要投資於國內外債券等",
+      "currency": "新台幣"
+    },
+    "00988A": {
+      "fund_id": "00608038",
+      "name": "統一全球創新主動式ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AL21",
+      "investment_region": "主要投資於國內外股票等",
+      "currency": "新台幣"
+    },
+    "00988B": {
+      "fund_id": "00664002",
+      "name": "玉山美元嚴選非投資等級債券ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "美國、英國、加拿大、日本、澳洲、挪威、愛爾蘭、馬爾他、法國、塞浦路斯、奧地利及其他已納入與即將納入標的指數成分債發行人之國家或地區。可能有機會納入的國家或地區為母體指數H0A0 Index 涵蓋之涉險國：G10 成員國、美國、西歐地區國家。",
+      "currency": "新台幣"
+    },
+    "00989A": {
+      "fund_id": "00610034",
+      "name": "摩根大美國領先科技主動式ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AL21",
+      "investment_region": "美國、中華民國、加拿大、盧森堡、愛爾蘭、中國及香港",
+      "currency": "新台幣"
+    },
+    "00989B": {
+      "fund_id": "00654953",
+      "name": "台新美國聚焦傘型基金之台新美國優選收益非投資等級債券ETF基金 (本基金之配息來源可能為收益平準金且無保證收益及配息)",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00990A": {
+      "fund_id": "00643865",
+      "name": "元大全球AI新經濟主動式ETF基金",
+      "class_code": "AL21",
+      "investment_region": "中華民國、 美國、英國、日本、加拿大、法國、瑞士、德國、澳洲、中國、南韓、台灣、西班牙、香港、瑞典、巴西、荷蘭、南非、義大利、印度、墨西哥、丹麥、新加坡、比利時、馬來西亞、越南、芬蘭、印尼、泰國、挪威、土耳其、以色列、波蘭、智利、菲律賓、愛爾蘭、卡達、哥倫比亞、阿拉伯聯合大公國、奧地利、希臘、葡萄牙、紐西蘭、祕魯、埃及、匈牙利、捷克、沙烏地阿拉伯及科威特等。",
+      "currency": "新台幣"
+    },
+    "00990B": {
+      "fund_id": "00681240",
+      "name": "國泰全球多元收益傘型基金之全球收益非投資等級債券ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "中華民國境內及境外",
+      "currency": "新台幣"
+    },
+    "00991A": {
+      "fund_id": "00649777",
+      "name": "復華台灣未來50主動式ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AL11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "00991B": {
+      "fund_id": "00718485",
+      "name": "貝萊德iShares安碩10年期以上A級美元公司債ETF基金 (基金之配息來源 可能為收益平準金)",
+      "class_code": "AH22",
+      "investment_region": "全球區域",
+      "currency": "新台幣"
+    },
+    "00992A": {
+      "fund_id": "00650252",
+      "name": "群益台灣科技創新主動式ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AL11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    },
+    "00992B": {
+      "fund_id": "00725726",
+      "name": "街口特選優息非投資等級債券ETF基金 (基金之配息來源可能為收益平準金且並無保證收益及配息)",
+      "class_code": "AH22",
+      "investment_region": "以美國、英國、加拿大、愛爾蘭、日本、澳洲、法國、荷蘭、奧地利、瑞士及其他已納入與即將納入標的指數成分債之國家或地區，並排除中國(不含港澳)。",
+      "currency": "新台幣"
+    },
+    "00993A": {
+      "fund_id": "00650730",
+      "name": "安聯台灣主動式ETF基金 (本基金之配息來源可能為收益平準金且基金並無保證收益及配息)",
+      "class_code": "AL11",
+      "investment_region": "中華民國",
+      "currency": "新台幣"
+    },
+    "00994A": {
+      "fund_id": "00650540",
+      "name": "第一金台股趨勢優選主動式ETF基金 (本基金配息來源可能為收益平準金)",
+      "class_code": "AL11",
+      "investment_region": "中華民國",
+      "currency": "新台幣"
+    },
+    "00995A": {
+      "fund_id": "00653201",
+      "name": "中國信託台灣卓越成長主動式ETF基金",
+      "class_code": "AL11",
+      "investment_region": "中華民國之有價證券",
+      "currency": "新台幣"
+    },
+    "00996A": {
+      "fund_id": "00661960",
+      "name": "兆豐台灣豐收主動式 ETF基金 (基金之配息來源可能為收益平準金)",
+      "class_code": "AL11",
+      "investment_region": "台灣",
+      "currency": "新台幣"
+    },
+    "00997A": {
+      "fund_id": "00667893",
+      "name": "群益美國增長主動式ETF基金 (本基金之配息來源可能為收益平準金)",
+      "class_code": "AL21",
+      "investment_region": "國內及外國之有價證券",
+      "currency": "新台幣"
+    },
+    "00998A": {
+      "fund_id": "00664973",
+      "name": "復華全球金融股票入息主動式ETF基金 (基金之配息來源可能為收益平準金且該基金並無保證收益及配息)",
+      "class_code": "AL21",
+      "investment_region": "全球",
+      "currency": "新台幣"
+    },
+    "00999A": {
+      "fund_id": "00666156",
+      "name": "野村臺灣策略高息主動式ETF基金 (本基金之配息來源可能為收益平準金且並無保證收益及配息)",
+      "class_code": "AL11",
+      "investment_region": "中華民國境內",
+      "currency": "新台幣"
+    }
+  }
+}

@@ -404,7 +404,7 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
         <label class="toggle"><input type="checkbox" id="only-alert">只看折溢價超過 ±1%</label>
         <button class="reset" id="reset-filters" type="button">清除篩選</button>
       </div>
-      <p class="filter-hint">地域與策略僅列逐檔核實的商品，其餘保留「待確認」；選定某地域不代表涵蓋該地域的全部 ETF。</p>
+      <p class="filter-hint">地域依官方商品資料與公會申報整理；「跨國（公告範圍）」表示可投資範圍，詳細國別請見商品資料。策略為本站依官方定位整理，非買賣建議。</p>
     </div>
     <p class="filter-active" id="filter-active" hidden></p>
     <details class="quality-panel" id="data-quality"><summary>本檢視資料狀態<span id="quality-summary">載入中…</span></summary><div id="quality-content"></div></details>
@@ -470,7 +470,7 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
 </dialog>
 <script>
 (function(){
-  const ORDER=["全部","股票","債券","多重資產","期貨","待確認"];
+  const ORDER=["全部","股票","債券","多重資產","不動產","期貨","待確認"];
   const $=id=>document.getElementById(id);
   const fmt=(v,d)=>typeof v!=="number"||!Number.isFinite(v)?"—":v.toLocaleString("zh-TW",{minimumFractionDigits:d,maximumFractionDigits:d});
   const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -499,12 +499,12 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
   const hasNumber=v=>typeof v==="number"&&Number.isFinite(v);
   const detailText=v=>v==null||String(v).trim()===""?"—":esc(v);
   const detailNumber=(v,unit="")=>hasNumber(v)?esc(v.toLocaleString("zh-TW",{maximumFractionDigits:20}))+unit:"—";
-  const detailSource=v=>`<small class="detail-source">出處：${detailText(v)}</small>`;
+  const detailSource=(v,url)=>`<small class="detail-source">出處：${url?sourceLink(v,url):detailText(v)}</small>`;
   const detailField=(label,value,{note="",wide=false}={})=>`<div class="detail-field${wide?" wide":""}"><dt>${label}</dt><dd>${value}${note}</dd></div>`;
   const detailMetric=(v,unit="")=>`<span class="detail-value">${detailNumber(v,unit)}</span>`;
   const detailSection=(title,body)=>`<section class="detail-section"><h3>${title}</h3>${body}</section>`;
   const signed=(v,unit="",digits=2)=>hasNumber(v)?`${v>0?"+":""}${fmt(v,digits)}${unit}`:"—";
-  const trustedHosts=["yuantaetfs.com","yuantaetf.com","fsit.com.tw","capitalfund.com.tw","ezmoney.com.tw","fhtrust.com.tw","kgifund.com.tw","cathaysite.com.tw","sitca.org.tw","ctbcinvestments.com.tw","ctbcinvestments.com","nomurafunds.com.tw","am.jpmorgan.com","blackrock.com","allianzgi.com.tw","twse.com.tw","tpex.org.tw","data.gov.tw","abfunds.com.tw"];
+  const trustedHosts=["yuantaetfs.com","yuantaetf.com","fsit.com.tw","capitalfund.com.tw","ezmoney.com.tw","fhtrust.com.tw","kgifund.com.tw","cathaysite.com.tw","sitca.org.tw","ctbcinvestments.com.tw","ctbcinvestments.com","nomurafunds.com.tw","am.jpmorgan.com","blackrock.com","allianzgi.com.tw","twse.com.tw","tpex.org.tw","data.gov.tw","abfunds.com.tw","ftft.com.tw","jkoam.com"];
   function sourceLink(label,url){
     try{const u=new URL(url);if(u.protocol==="https:"&&trustedHosts.some(h=>u.hostname===h||u.hostname.endsWith("."+h)))return `<a href="${esc(u.href)}" target="_blank" rel="noopener noreferrer">${detailText(label||"查看原公告")}</a>`;}catch{}
     return detailText(label);
@@ -535,7 +535,7 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
     });
   }
   // 日期與完整度結束。
-  const provenance=(label,url,day)=>{const status=dateState(day,detailDate,label);return `<small class="detail-source">資料日：${detailText(day)} <span class="date-note ${["future","missing","invalid"].includes(status.kind)?"review":""}">（${status.label}）</span><br>出處：${sourceLink(label,url)}</small>`;};
+  const provenance=(label,url,day,value)=>{if(value===null)return `<small class="detail-source">尚未取得官方數值與對應日期。</small>`;const status=dateState(day,detailDate,label);return `<small class="detail-source">資料日：${detailText(day)} <span class="date-note ${["future","missing","invalid"].includes(status.kind)?"review":""}">（${status.label}）</span><br>出處：${sourceLink(label,url)}</small>`;};
 
   // 商品與口徑核心：未知狀態不補成一致，費率文字不猜成分段。
   function profileOf(d){return d.product||{};}
@@ -562,10 +562,25 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
     const p=profileOf(d);
     return typeof d.premium==="number"&&Number.isFinite(d.premium)&&String(d.nav_source||"").includes("正式淨值")&&d.nav_date===day&&!!p.trading_currency&&p.trading_currency===p.nav_currency;
   }
+  function fieldStamp(d,key){
+    if(typeof d[key]!=="number"||!Number.isFinite(d[key]))return key==="aum"&&d.product?.main_code?"同基金交易線，未另列規模":"尚未取得官方數值";
+    return `${d[key+"_date"]||"日期待確認"}${/月統計|月資料/.test(d[key+"_source"]||"")?" · 月資料":""}`;
+  }
+  function fieldCurrency(d,key){
+    return typeof d[key]==="number"&&Number.isFinite(d[key])?(profileOf(d)[key+"_currency"]||"幣別待確認"):"";
+  }
+  function premiumNote(d,day){
+    if(d.premium_reason)return d.premium_reason;
+    if(typeof d.nav!=="number"||!Number.isFinite(d.nav))return "尚未取得淨值";
+    if(!d.nav_date)return "淨值日期待確認";
+    if(formalComparable(d,day))return "同日正式淨值";
+    if(String(d.nav_source||"").includes("預估淨值"))return d.nav_date===day?"同日預估淨值":"跨日預估淨值";
+    return d.nav_date!==day?"跨日淨值":"淨值口徑需核對";
+  }
   // 商品與口徑核心結束。
   const currencyLabel=c=>({TWD:"新臺幣 TWD",USD:"美元 USD",CNY:"人民幣 CNY"}[c]||"幣別待確認");
   const cellNote=text=>`<small class="cell-note">${esc(text)}</small>`;
-  const aumStamp=d=>`${d.aum_date||"日期待確認"}${/月統計|月資料/.test(d.aum_source||"")?" · 月資料":""}`;
+  const aumStamp=d=>fieldStamp(d,"aum");
   function productLabel(d){const p=profileOf(d);return [p.asset_class||"資產待確認",p.management||"管理方式待確認",p.structure!=="一般"?p.structure:null].filter(Boolean).join(" · ");}
   function tableLayout(){
     const table=document.querySelector("table"),flow=state.view==="flows";
@@ -591,7 +606,7 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
   function syncStickyColumns(){const table=document.querySelector("table"),head=[...table.querySelectorAll("thead th")].find(el=>el.getBoundingClientRect().width>0);if(head)table.style.setProperty("--code-width",head.getBoundingClientRect().width+"px");}
   new ResizeObserver(syncStickyColumns).observe(document.querySelector("table"));
   function renderCards(rows){
-    $("etf-cards").innerHTML=rows.length?rows.map(d=>`<article class="etf-card"><button type="button" class="card-open" data-card-code="${esc(d.code)}" aria-haspopup="dialog" aria-controls="etf-detail"><span class="card-code">${esc(d.code)}</span>${detailText(d.name)} <span class="muted">›</span></button><p class="card-meta">${esc(productLabel(d))} · ${esc(currencyLabel(profileOf(d).trading_currency))}</p><dl class="card-values"><div><dt>收盤價 · ${esc(detailDate)}</dt><dd>${fmt(d.price,2)} ${cellNote(priceStatus(d))}</dd></div><div><dt>市價漲跌幅</dt><dd class="${d.change_pct>0?"up":d.change_pct<0?"down":""}">${signed(d.change_pct,"%")}</dd></div><div><dt>${String(d.nav_source||"").includes("正式淨值")?"正式":"預估"}淨值 · ${esc(profileOf(d).nav_currency||"幣別待確認")}</dt><dd>${fmt(d.nav,2)}${cellNote(d.nav_date||"日期待確認")}</dd></div><div><dt>規模 · ${esc(profileOf(d).aum_currency||"幣別待確認")} 億</dt><dd>${fmt(d.aum,2)}${cellNote(aumStamp(d))}</dd></div></dl></article>`).join(""):'<p class="empty">沒有符合條件的 ETF，請調整篩選。</p>';
+    $("etf-cards").innerHTML=rows.length?rows.map(d=>`<article class="etf-card"><button type="button" class="card-open" data-card-code="${esc(d.code)}" aria-haspopup="dialog" aria-controls="etf-detail"><span class="card-code">${esc(d.code)}</span>${detailText(d.name)} <span class="muted">›</span></button><p class="card-meta">${esc(productLabel(d))} · ${esc(currencyLabel(profileOf(d).trading_currency))}</p><dl class="card-values"><div><dt>收盤價 · ${esc(detailDate)}</dt><dd>${fmt(d.price,2)} ${cellNote(priceStatus(d))}</dd></div><div><dt>市價漲跌幅</dt><dd class="${d.change_pct>0?"up":d.change_pct<0?"down":""}">${signed(d.change_pct,"%")}</dd></div><div><dt>${String(d.nav_source||"").includes("正式淨值")?"正式":"預估"}淨值 · ${esc(fieldCurrency(d,"nav"))}</dt><dd>${fmt(d.nav,2)}${cellNote(fieldStamp(d,"nav"))}</dd></div><div><dt>規模 · ${esc(fieldCurrency(d,"aum"))} 億</dt><dd>${fmt(d.aum,2)}${cellNote(aumStamp(d))}</dd></div></dl></article>`).join(""):'<p class="empty">沒有符合條件的 ETF，請調整篩選。</p>';
   }
 
   function renderQuality(items){
@@ -627,7 +642,7 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
       `<td class="l"><div class="name">${detailText(d.name)}</div><div class="issuer">${detailText(d.issuer)}</div></td><td class="l"><span class="tag">${esc(profileOf(d).asset_class||"待確認")}</span>${cellNote(profileOf(d).management||"待確認")}</td>`+
       `<td class="num" title="${esc(f.reason||'官方日資料不足')}">${signed(f.net_amount)}<small class="flow-status">${hasNumber(f.net_amount)?"本站估算":"待確認"}</small></td>`+
       `<td class="num">${signed(f.net_rate,"%")}</td><td class="num">${signed(f.four_week_amount)}</td><td class="num">${hasNumber(f.positive_weeks)?f.positive_weeks+" / 4":"—"}</td><td class="num">${signed(f.units_rate,"%")}</td>`+
-      `<td class="num">${fmt(d.aum,2)}<small class="flow-status">${esc(profileOf(d).aum_currency||"幣別待確認")} · ${esc(aumStamp(d))}</small></td><td class="num">${signed(f.aum_change)}</td><td class="num">${detailText(f.as_of||detailDate)}</td>`+
+      `<td class="num">${fmt(d.aum,2)}<small class="flow-status">${esc(fieldCurrency(d,"aum"))} · ${esc(aumStamp(d))}</small></td><td class="num">${signed(f.aum_change)}</td><td class="num">${detailText(f.as_of||detailDate)}</td>`+
       `<td class="l"><span class="flow-status">${hasNumber(f.net_amount)?"投信正式日資料 → 本站估算":esc(f.reason||"官方日資料不足")}<br>${f.events?.length?"有特殊事件，請開啟詳情":"特殊事件待核對"}</span></td></tr>`;
   }
 
@@ -660,20 +675,20 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
     const navLabel=hasNumber(d.nav)?`<span class="detail-badge">${String(d.nav_source??"").includes("正式淨值")?"正式淨值":"預估淨值"}</span>`:"";
     const premium=hasNumber(d.premium)?`<span class="detail-value ${d.premium>0?"premium":d.premium<0?"discount":""}" title="${esc(d.premium)}%">${d.premium>0?"+":""}${fmt(d.premium,2)}%</span>`:"—";
     const price=detailField(`收盤價（${currencyLabel(profileOf(d).trading_currency)}／單位）`,`<span class="detail-value quote-value">${fmt(d.price,2)}</span>`+change,{note:'<small class="detail-source">下方百分比＝收盤價相較前一交易日的漲跌幅。</small>'})+
-      detailField(`每單位基金淨值（${currencyLabel(profileOf(d).nav_currency)}）`,detailMetric(d.nav)+navLabel,{note:provenance(d.nav_source,d.nav_source_url,d.nav_date)})+
-      detailField(`前一營業日淨值（${currencyLabel(profileOf(d).nav_currency)}）`,detailMetric(d.nav_prev))+detailField("市價相對淨值折溢價（%）",premium,{note:`<small class="detail-source">行情 ${detailText(detailDate)} ／ 淨值 ${detailText(d.nav_date)}<br>${detailText(d.premium_reason||(formalComparable(d,detailDate)?"同日正式淨值；海外市場仍須注意時差。":"預估值或日期待確認，不納入同日正式淨值平均。"))}</small>`})+
+      detailField(`每單位基金淨值${hasNumber(d.nav)?`（${currencyLabel(profileOf(d).nav_currency)}）`:""}`,detailMetric(d.nav)+navLabel,{note:provenance(d.nav_source,d.nav_source_url,d.nav_date,d.nav??null)})+
+      detailField(`前一營業日淨值${hasNumber(d.nav_prev)?`（${currencyLabel(profileOf(d).nav_currency)}）`:""}`,detailMetric(d.nav_prev))+detailField("市價相對淨值折溢價（%）",premium,{note:`<small class="detail-source">行情 ${detailText(detailDate)} ／ 淨值 ${detailText(d.nav_date)}<br>${detailText(premiumNote(d,detailDate)+(formalComparable(d,detailDate)?"；海外市場仍須注意時差。":"；不納入同日正式淨值平均。"))}</small>`})+
       detailField("成交量（約千單位）",detailMetric(d.volume_lots))+
       detailField("市價查核",detailText(priceStatus(d)),{note:d.price_check==="已修正"?'<small class="detail-source">Yahoo 股市與交易所數字不一致，已採用交易所資料。</small>':d.price_check==="交易所"?'<small class="detail-source">Yahoo 缺資料，直接採用交易所資料。</small>':""});
-    const values=detailField(`基金規模（${currencyLabel(profileOf(d).aum_currency)} 億）`,`<span class="detail-value" title="${detailText(d.aum)}">${fmt(d.aum,2)}</span>`,{note:provenance(d.aum_source,d.aum_source_url,d.aum_date)})+
-      detailField("流通受益權單位數（單位）",detailMetric(d.units),{note:provenance(d.units_source,d.units_source_url,d.units_date)})+
+    const values=detailField(`基金規模${hasNumber(d.aum)?`（${currencyLabel(profileOf(d).aum_currency)} 億）`:""}`,`<span class="detail-value" title="${detailText(d.aum)}">${fmt(d.aum,2)}</span>`,{note:provenance(d.aum_source,d.aum_source_url,d.aum_date,d.aum??null)})+
+      detailField("流通受益權單位數（單位）",detailMetric(d.units),{note:provenance(d.units_source,d.units_source_url,d.units_date,d.units??null)})+
       detailField("基金規模本週增減（億元）",`<span class="detail-value flow-number">${signed(d.flows?.aum_change)}</span>`,{note:`<small class="detail-source">增減率 ${signed(d.flows?.aum_rate,"%")}；規模變化不等於資金流入。</small>`})+
       detailField("規模週比較基準日",detailText(d.flows?.baseline))+
-      detailField("追蹤指數",detailText(d.index_name))+detailField("上市日",detailText(d.listed_date));
+      detailField("追蹤指數",detailText(d.index_name||(profileOf(d).management==="主動式"?"不適用（主動式管理）":"未取得官方指數名稱")))+detailField("上市／上櫃日",detailText(d.listed_date),{note:d.listed_date&&d.listed_date===profileOf(d).listed_date?detailSource(profileOf(d).listing_source,profileOf(d).listing_source_url):""});
     const basic=detailField("當日單位增減",hasNumber(d.units_change)?`<span class="detail-value">${d.units_change>0?"+":""}${detailNumber(d.units_change)}</span>`:"—",{note:hasNumber(d.units_change)?`<small class="detail-source">${d.units_change>0?"淨申購":d.units_change<0?"淨買回":"無單位增減"}</small>`:""})+
-      detailField("受益人數",detailMetric(d.beneficiaries),{note:provenance(d.beneficiaries_source,d.beneficiaries_source_url,d.beneficiaries_month)})+
+      detailField("受益人數",detailMetric(d.beneficiaries),{note:provenance(d.beneficiaries_source,d.beneficiaries_source_url,d.beneficiaries_month,d.beneficiaries??null)})+
       detailField("經理人",detailText(d.manager))+detailField("風險等級",detailText(d.risk_class));
     const fees=detailField("契約經理費／公告費率",esc(feeDisplay(d).label),{wide:true,note:d.mgmt_fee_text?`<small class="detail-source">原文：${detailText(d.mgmt_fee_text)}</small>`:""})+
-      detailField(d.expense?.year?`${d.expense.year} 年實際總費用率`:"總費用率（年度待確認）",detailMetric(d.fee,"%"),{wide:true,note:d.expense?detailSource(d.expense.source):""})+
+      detailField(d.expense?.year?`${d.expense.year} 年實際總費用率`:hasNumber(d.fee)?"總費用率（年度待確認）":"年度實際總費用率",detailMetric(d.fee,"%"),{wide:true,note:d.expense?detailSource(d.expense.source):""})+
       detailField("保管費",detailText(d.custodian_fee_text),{wide:true,note:detailSource(d.fee_source)});
     const metrics=[["div_yield","現金殖利率","%"],["pe","本益比"," 倍"],["pb","股價淨值比"," 倍"],
       ["roe","ROE","%"],["beta","Beta",""],["volatility","年化波動度","%"]];
@@ -682,12 +697,15 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
         `</dl><p class="detail-footnote">資料日期：${detailText(d.stats.date)}</p>`):"";
     $("detail-content").innerHTML=detailSection("行情與淨值",`<details class="metric-help"><summary>這些數字代表什麼？</summary><p>收盤價是每單位 ETF 的市場成交價格；淨值是基金扣除負債後，每單位代表的淨資產。兩者差距稱為折溢價：正數為溢價，負數為折價。</p><p>成交量統一以「約千單位」呈現，為原始受益權單位數除以 1,000 後取整數，不等於每檔商品的交易張數。每張單位依商品交易規格。漲跌幅是價格變動，並非基金淨申購或資金流入。</p></details><dl class="detail-grid">${price}</dl>`)+
       detailSection("規模與基本資料",`<p class="metric-help">基金規模＝整檔基金的淨資產，1 億元＝100,000,000 元。流通單位數是已發行的受益權份數，並不是金額。規模亦受資產漲跌、配息及匯率影響。</p><dl class="detail-grid">${values}</dl>`)+
-      detailSection("前十大持股／成分",`<p class="holdings-meta">${provenance(d.holdings_source,d.holdings_source_url,d.holdings_date)}依公告權重排序；債券、期貨與基金部位會標示種類。</p>`+holdingsDetail(d.holdings_top))+
+      detailSection("前十大持股／成分",`<p class="holdings-meta">${provenance(d.holdings_source,d.holdings_source_url,d.holdings_date,d.holdings_top?.length?undefined:null)}依公告權重排序；債券、期貨與基金部位會標示種類。</p>`+holdingsDetail(d.holdings_top))+
       detailSection("配息資訊",dividendDetail("下一次除息",d.next_ex)+dividendDetail("最近一次除息",d.last_ex))+
       detailSection("費用",`<dl class="detail-grid">${fees}</dl>`)+
       detailSection("基金資料",`<dl class="detail-grid">${basic}</dl>`)+
       stats+flowDetail(d)+activeETFDetail(d);
-    const product=profileOf(d),intro=`<div class="product-labels">${[product.asset_class,product.management,product.region,product.strategy,product.structure].filter(Boolean).map(v=>`<span class="tag">${esc(v)}</span>`).join("")}</div><p class="metric-help">地域：${detailText(product.region||"待確認")} · 策略：${detailText(product.strategy||"待確認")}<br>交易幣別：${esc(currencyLabel(product.trading_currency))} · 每交易單位：${product.trading_unit?detailNumber(product.trading_unit)+" 受益權單位":"待核對商品規格"}${product.main_code?`<br>同基金主要交易代號：${esc(product.main_code)}；不同交易線不重複加總基金規模。`:""}</p><p class="detail-source">分類出處：${sourceLink(product.source,product.source_url)} · 查閱 ${detailText(product.checked_at)}<br>管理方式、資產與結構採 ${sourceLink("交易所編碼規則",product.rules_url)}；地域、策略未逐檔核實者留空，不以名稱猜測。${product.currency_basis?`<br>交易規格：${sourceLink(product.currency_basis,product.currency_source_url)}`:""}</p>`;
+    const product=profileOf(d),intro=`<div class="product-labels">${[product.asset_class,product.management,product.region,product.strategy,product.structure].filter(Boolean).map(v=>`<span class="tag">${esc(v)}</span>`).join("")}</div>
+      <p class="metric-help">地域：${detailText(product.region||"待確認")} · 策略：${detailText(product.strategy||"待確認")}<br>交易幣別：${esc(currencyLabel(product.trading_currency))} · 每交易單位：${product.trading_unit?detailNumber(product.trading_unit)+" 受益權單位":"待核對商品規格"}${product.main_code?`<br>同基金主要交易代號：${esc(product.main_code)}；不同交易線不重複加總基金規模。`:""}</p>
+      <p class="detail-source">分類出處：${sourceLink(product.source,product.source_url)}${product.data_month?` · 公告月份 ${detailText(product.data_month)}`:""} · 查閱 ${detailText(product.checked_at)}</p>
+      <details class="metric-help"><summary>分類依據與公告投資範圍</summary><p>地域依據：${detailText(product.region_basis||"官方商品資料")}<br>策略依據：${detailText(product.strategy_basis||"官方商品資料")}</p>${product.official_name?`<p>官方基金全名：${detailText(product.official_name)}</p>`:""}${product.region_scope?`<p>公會申報可投資範圍：${detailText(product.region_scope)}<br>${sourceLink("公會原表",product.classification_source_url)} · ${detailText(product.classification_month)}</p>`:""}<p>資產分類採公會類型代號、官方商品資料及${sourceLink("交易所編碼規則",product.rules_url)}；槓桿／反向與主動／被動分開呈現。公告範圍不等於目前持倉國別或權重。</p>${product.currency_basis?`<p>交易規格：${sourceLink(product.currency_basis,product.currency_source_url)}</p>`:""}${product.value_currency_url?`<p>規模／淨值幣別：${sourceLink("投信原始數值標示",product.value_currency_url)}</p>`:""}</details>`;
     $("detail-content").insertAdjacentHTML("afterbegin",detailSection("商品定位與交易規格",intro));
     const sections=Array.from($("detail-content").querySelectorAll(".detail-section"));
     $("detail-nav").innerHTML=sections.map((section,i)=>{section.id="detail-section-"+i;const label=section.querySelector("h3").textContent;return `<button type="button" data-section="${section.id}">${esc(label.split("｜")[0])}</button>`;}).join("");
@@ -842,10 +860,10 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
       <td class="l"><span class="tag">${esc(profileOf(d).asset_class||"待確認")}</span>${cellNote(profileOf(d).management||"待確認")}</td>
       <td class="num">${d.price_check==="已修正"?`<span class="fixed" title="Yahoo 股市與交易所數字不一致，已採用交易所資料">${fmt(d.price,2)}<span class="ex-note">已修正</span></span>`:fmt(d.price,2)}${cellNote((profileOf(d).trading_currency||"幣別待確認")+" · "+priceStatus(d))}</td>
       <td class="num ${d.change_pct>0?"up":d.change_pct<0?"down":""}">${d.change_pct==null?"—":(d.change_pct>0?"+":"")+fmt(d.change_pct,2)+"%"}</td>
-      <td class="num" title="${esc(d.nav_source||"")}">${fmt(d.nav,2)} <span class="unit-label">${esc(profileOf(d).nav_currency||"幣別待確認")}</span>${navSource(d)}${cellNote(d.nav_date||"日期待確認")}</td>
-      <td class="num">${pdCell(d.premium)}${cellNote(d.premium_reason||(formalComparable(d,detailDate)?"同日正式淨值":"預估／日期需核對"))}</td>
+      <td class="num" title="${esc(d.nav_source||"")}">${fmt(d.nav,2)} <span class="unit-label">${esc(fieldCurrency(d,"nav"))}</span>${navSource(d)}${cellNote(fieldStamp(d,"nav"))}</td>
+      <td class="num">${pdCell(d.premium)}${cellNote(premiumNote(d,detailDate))}</td>
       <td class="num">${fmt(d.volume_lots,0)}</td>
-      <td class="num" title="${esc(d.aum_source?"出處："+d.aum_source:"")}">${fmt(d.aum,2)}${cellNote((profileOf(d).aum_currency||"幣別待確認")+" · "+aumStamp(d))}</td>
+      <td class="num" title="${esc(d.aum_source?"出處："+d.aum_source:"")}">${fmt(d.aum,2)}${cellNote([fieldCurrency(d,"aum"),aumStamp(d)].filter(Boolean).join(" · "))}</td>
       <td class="num" title="${esc([d.mgmt_fee_text&&"經理費："+d.mgmt_fee_text,d.custodian_fee_text&&"保管費："+d.custodian_fee_text].filter(Boolean).join("\n"))}">${esc(feeDisplay(d).label)}${hasNumber(d.expense?.total)?cellNote(`${d.expense.year} 實際總費用率 ${d.expense.total}%`):""}</td>
       <td class="num ${d.ex_date?(d.ex_upcoming?"ex-next":"ex-past"):""}">${md(d.ex_date)}${d.ex_date?`<span class="ex-note">${d.ex_upcoming?"即將除息":"最近一次"}</span>`:""}</td>
       <td class="num">${fmt(d.ex_cash,3)}${hasNumber(d.ex_cash)?cellNote(profileOf(d).trading_currency==="TWD"?"TWD":"配息幣別請核對原文"):""}</td>

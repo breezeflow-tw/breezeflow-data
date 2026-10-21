@@ -19,6 +19,7 @@
 | `tests/` | 離線測試；`tests/fixtures/` 是測試用假資料 |
 | `data/etf_meta.csv` | 人工補充資料（類型修正、費用率、規模） |
 | `data/product_overrides.json` | 有官方來源與查閱日的商品地域、策略及交易線補充；未知值不得補猜 |
+| `data/product_reference.json` | 已核對的公會基本資料備援快照（僅名稱、類型、投資範圍、幣別）；較新公會申報優先，不含行情數值 |
 | `.github/workflows/daily.yml` | 週一到週五台灣時間 08:50、18:00 自動更新並部署 |
 
 ## 資料來源規則（最重要）
@@ -59,7 +60,7 @@
 | `product` | 商品維度與欄位幣別：`asset_class`、`management`、`structure`、`region`、`strategy`、`trading_currency`、`trading_unit`、`main_code`、`nav_currency`、`aum_currency`、`fund_currency`，以及 `source`、`source_url`、`checked_at`、`rules_url`、`currency_basis`、`currency_source_url`。未知留 `null`；交易、淨值、規模幣別各自依採用來源判別，不能互相代換。保存為 `product_profile` 表／CSV 的 `profile_json`。新表由 `ensure_schema` 建立；舊日行情不回溯改寫。 |
 | `premium_reason` | 市價與淨值幣別不明或不同時，`premium` 留空並說明原因；同日正式淨值平均另要求日期與幣別一致。 |
 | `nav`、`nav_source` | 淨值與出處；出處含「正式淨值」代表投信公告的正式淨值（投信官網，或投信投顧公會的每日基金淨值），其餘為預估淨值（投信官網公布或證交所轉載）。優先順序：投信官網正式淨值 → 投信投顧公會正式淨值 → 投信官網預估淨值 → 證交所轉載的預估淨值 |
-| `nav_date`、`nav_source_url` | 淨值的資料日期與原文連結（正式淨值才有連結） |
+| `nav_date`、`nav_source_url` | 淨值的資料日期與原文連結；正式與預估皆可有。與淨值數字及來源一起保存，重跑不可沿用另一份數值的日期。舊資料只可從同一筆 MIS 時間戳或同日且數值相符的公會正式快照恢復日期，不能直接套網站交易日。 |
 | `source_time` | 證交所轉載的預估淨值資料時間（YYYYMMDD HH:MM:SS），沒有用到時為空字串 |
 | `nav_prev`、`premium` | 前一營業日淨值、折溢價 %（正數為溢價） |
 | `aum`、`aum_source`、`aum_date`、`aum_source_url` | 規模（億元）、出處、資料日期與原文連結。只放官方數字：投信官網公告或投信投顧公會 ETF 月統計（月底），取資料日期較新的；都沒有時為 `null` |
@@ -78,6 +79,10 @@
 | `flows` | 週申贖**估算**（擁有者要求的推算值，見資料來源規則的例外）：本週 `{start, end, baseline, net_amount, net_rate, units_rate, aum_change, aum_rate, status, reason, method, sources}`，加上 `as_of`、`latest_official_date`、近 4 週合計 `four_week_amount`、淨申購週數 `positive_weeks`、可計算週數 `available_weeks`、各週明細 `weeks[]`、已取得的特殊事件 `events[]` 與 `events_status`。`net_amount` 單位億元，為逐日「流通單位數增減 × 同日投信正式淨值」加總；期初到本週任一個交易日缺官方資料、幣別未確認或遇分割合併等事件時為 `null`，`reason` 說明原因。各週另有選用欄位（舊資料可能沒有）：`calendar`（`官方開休市日期`／`未涵蓋`／`未使用`）、`trading_days`（本週交易日）、`closed_days`（本週休市的平日）與機器可讀的原因 `reason_code`（`calendar_unknown` 日曆未涵蓋、`market_closed` 整週休市、`missing_official` 缺官方日資料、`currency_unconfirmed`、`special_event`、`incomplete`、`units_mismatch`、`split_suspected`、`source_changed`；可估算時為 `null`）。有官方開休市日期時，`baseline` 是本週第一天之前最近的交易日（例如前週五休市就是前週四），只比較交易日；官方表沒涵蓋的年度不判定休市，該週為 `null`。整週休市時 `status` 為「休市」、`net_amount` 為 `null`。各週 `sources[]` 是逐日官方快照 `{date, source, url}`，另有選用的 `announced`（投信標示的公告日期，即申購買回清單的清單日期；沒有標示時為 `null`）、`first_observed_at`、`observed_at`（本站第一次與最近一次取得的時間） |
 | `expense` | 投信投顧公會公布的年度實際費用比率 `{year, mgmt, custodian, other, total, source}`，單位 %：經理費、保管費、其他費用與合計（含交易成本）。年中才成立的 ETF 沒有整年資料，為 `null` |
 | `returns` | 區間報酬 `{price: {...}, total: {...}}`，單位 %。`price` 是市價報酬，`total` 是含息報酬（配息再投入）。區間代號：`1w` 近一週、`1m` 近一月、`3m` 近三月、`6m` 近六月、`ytd` 今年以來、`1y` 近一年、`3y` 近三年、`5y` 近五年。期初是 `returns_info.starts` 那天或之前最近的交易日，期末是 `trade_date`。上市不到該區間、或配息紀錄核對不符時為 `null`；整檔沒有資料時 `returns` 為 `null` |
+
+`product` 的分類補充欄位：`official_name`、`classification_code`、`region_scope`、`region_basis`、`strategy_basis`、`data_month`、`reference_code`、`classification_source_url`、`classification_month`。地域「跨國（公告範圍）」是申報允許範圍，不是即時持倉地域；策略是本站按官方名稱整理，未明示者只寫指數追蹤／主動選股等概括定位，不推成市值型。公會 `fund_info` 保留 `class_code`、`investment_region`；原始來源月份不可被投信人工查核頁面沿用。外幣交易線可共用基金定位，但不能繼承主交易線的規模與淨值幣別。
+
+靜態補充另可有 `listed_date`、`listing_source`、`listing_source_url`、`listing_checked_at`（只補缺漏上市／上櫃日，不代換基金成立日），以及 `official_value_currency`、`official_value_source`、`value_currency_url`（數值來源相符時才可補幣別）。
 
 本機產生測試資料（假資料，用完請還原）：
 

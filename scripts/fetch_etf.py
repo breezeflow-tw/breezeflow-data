@@ -31,6 +31,7 @@ import fund_flows
 import market_calendar
 import official_quotes
 import product_profile
+import nav_provenance
 import sitca_etf
 from issuers import allianz, blackrock, capital, cathay, ctbc, fubon, fuhhwa, jpmorgan, kgi, nomura, uni, yuanta
 from issuers.common import flat_fee
@@ -409,6 +410,8 @@ def apply_issuer(items: list[dict], issuer: dict[str, dict], date: str) -> None:
     """投信官網的資料優先；沒有接入的投信維持交易所資料，並標示每個欄位的出處。"""
     for it in items:
         it["nav_source"] = "證交所（投信預估淨值）" if it["nav"] is not None else None
+        it["nav_date"] = nav_provenance.timestamp_day(it.get("source_time")) if it["nav"] is not None else None
+        it["nav_source_url"] = SOURCES["nav"] if it["nav_date"] else None
         it["aum_source"] = "交易所資料推算（發行單位數×淨值）" if it["aum"] is not None else None
         for f in ISSUER_FIELDS:
             it.setdefault(f, None)
@@ -596,12 +599,14 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
         # 同一天重跑會更新當天資料；這次沒抓到的欄位（例如 MIS 暫時連不上時的淨值）保留原值
         con.executemany(
             """INSERT INTO daily(date, code, price, change_pct, nav, nav_prev, premium, volume_lots, source_time, aum,
-                                 price_check, nav_source, aum_source, beneficiaries, units_change)
+                                 price_check, nav_source, aum_source, beneficiaries, units_change, nav_date, nav_source_url)
                VALUES(:date, :code, :price, :change_pct, :nav, :nav_prev, :premium, :volume_lots, :source_time, :aum,
-                      :price_check, :nav_source, :aum_source, :beneficiaries, :units_change)
+                      :price_check, :nav_source, :aum_source, :beneficiaries, :units_change, :nav_date, :nav_source_url)
                ON CONFLICT(date, code) DO UPDATE SET
                  units_change=COALESCE(excluded.units_change, daily.units_change),
-                 nav_source=COALESCE(excluded.nav_source, daily.nav_source),
+                 nav_source=CASE WHEN excluded.nav IS NOT NULL THEN excluded.nav_source ELSE daily.nav_source END,
+                 nav_date=CASE WHEN excluded.nav IS NOT NULL THEN excluded.nav_date ELSE daily.nav_date END,
+                 nav_source_url=CASE WHEN excluded.nav IS NOT NULL THEN excluded.nav_source_url ELSE daily.nav_source_url END,
                  aum_source=COALESCE(excluded.aum_source, daily.aum_source),
                  beneficiaries=COALESCE(excluded.beneficiaries, daily.beneficiaries),
                  price_check=COALESCE(excluded.price_check, daily.price_check),
@@ -612,8 +617,8 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
                  nav_prev=COALESCE(excluded.nav_prev, daily.nav_prev),
                  premium=COALESCE(excluded.premium, daily.premium),
                  volume_lots=COALESCE(excluded.volume_lots, daily.volume_lots),
-                 source_time=COALESCE(NULLIF(excluded.source_time, ''), daily.source_time)""",
-            [{**it, "date": date} for it in items],
+                 source_time=CASE WHEN excluded.nav IS NOT NULL THEN excluded.source_time ELSE daily.source_time END""",
+            [{"nav_date":None, "nav_source_url":None, **it, "date": date} for it in items],
         )
         save_official_nav(con, nav or {})
         save_issuer_detail(con, issuer or {})
@@ -664,11 +669,13 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
         attach_dividends(con, items, date)
         # 讓輸出的 JSON 與資料庫一致
         cols = ["price", "change_pct", "nav", "nav_prev", "premium", "volume_lots", "source_time", "nav_source", "aum_source",
-                "units_change"]
+                "units_change", "nav_date", "nav_source_url"]
         stored = {r[0]: r[1:] for r in con.execute(f"SELECT code, {', '.join(cols)} FROM daily WHERE date=?", (date,))}
         for it in items:
             if it["code"] in stored:
                 it.update(zip(cols, stored[it["code"]]))
+        nav_provenance.restore(con, items, date)
+        con.commit()
     finally:
         con.close()
 
@@ -738,7 +745,7 @@ def save_official_nav(con: sqlite3.Connection, nav: dict) -> None:
 
 FUND_INFO_COLS = ("code", "fund_id", "name", "data_month", "inception", "currency", "manager", "risk_class",
                   "mgmt_fee_text", "custodian_fee_text", "expense_year", "exp_mgmt", "exp_custodian", "exp_other",
-                  "exp_total", "fetched")
+                  "exp_total", "fetched", "class_code", "investment_region")
 
 
 def load_fund_info(db_path: Path) -> tuple[dict, str | None]:
@@ -759,7 +766,7 @@ def load_fund_info(db_path: Path) -> tuple[dict, str | None]:
         expense = ({"year": r["expense_year"], "mgmt": r["exp_mgmt"], "custodian": r["exp_custodian"],
                     "other": r["exp_other"], "total": r["exp_total"]} if r["exp_total"] is not None else None)
         funds[r["code"]] = {k: r[k] for k in ("fund_id", "name", "inception", "currency", "manager", "risk_class",
-                                               "mgmt_fee_text", "custodian_fee_text")} | {"expense": expense}
+                                               "mgmt_fee_text", "custodian_fee_text", "class_code", "investment_region", "data_month", "fetched")} | {"expense": expense}
     if not funds:
         return {}, None
     months = [r[3] for r in rows if r[3]]
@@ -774,7 +781,8 @@ def save_fund_info(con: sqlite3.Connection, info: dict, fetched: str) -> None:
         f"INSERT INTO fund_info({', '.join(FUND_INFO_COLS)}) VALUES({', '.join('?' * len(FUND_INFO_COLS))})",
         [(code, f["fund_id"], f["name"], info.get("month"), f["inception"], f["currency"], f["manager"], f["risk_class"],
           f["mgmt_fee_text"], f["custodian_fee_text"], (f["expense"] or {}).get("year"), (f["expense"] or {}).get("mgmt"),
-          (f["expense"] or {}).get("custodian"), (f["expense"] or {}).get("other"), (f["expense"] or {}).get("total"), fetched)
+          (f["expense"] or {}).get("custodian"), (f["expense"] or {}).get("other"), (f["expense"] or {}).get("total"), fetched,
+          f.get("class_code"), f.get("investment_region"))
          for code, f in sorted(info["funds"].items())],
     )
 
@@ -1063,6 +1071,8 @@ def main(argv=None) -> int:
         old = old_info.result() if old_info else {}
     if fresh:
         fund_info = fresh
+        for f in fund_info.get("funds", {}).values():
+            f.update(data_month=fund_info.get("month"), fetched=today.isoformat())
     if old.get("done"):
         print(f"{sitca.SOURCE}歷史資料回補：" + "、".join(f"{'彙總表' if r == 'summary' else '配息'} {m}" for r, m in old["done"]))
     summary = fresh.get("summary") or {}
