@@ -1,4 +1,13 @@
 code,date,nav,aum,units,units_change,currency,source,source_url,observed_at,announced,first_observed_at
 00402A,2026-09-15,9.42,65.78,698627000.0,-1000000.0,TWD,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0003,2026-10-20T16:05:20+00:00,2026-09-17,2026-10-20T16:05:20+00:00
+00960,2026-09-15,22.37,12.97,57995000.0,-500000.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00960&tab=basic,2026-10-21T10:32:24+00:00,2026-09-17,2026-10-21T10:32:24+00:00
+00971,2026-09-15,17.23,9.51,55177000.0,0.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00971&tab=basic,2026-10-21T10:32:24+00:00,2026-09-17,2026-10-21T10:32:24+00:00
+00972,2026-09-15,22.26,3.38,15172000.0,0.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00972&tab=basic,2026-10-21T10:32:24+00:00,2026-09-16,2026-10-21T10:32:24+00:00
+00980A,2026-09-15,23.68,186.79,788730000.0,0.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic,2026-10-21T10:32:24+00:00,2026-09-16,2026-10-21T10:32:24+00:00
+009812,2026-09-15,13.04,11.91,91382000.0,-1000000.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009812&tab=basic,2026-10-21T10:32:24+00:00,2026-09-16,2026-10-21T10:32:24+00:00
+009821,2026-09-15,13.93,71.98,516840000.0,0.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009821&tab=basic,2026-10-21T10:32:24+00:00,2026-09-17,2026-10-21T10:32:24+00:00
 00984A,2026-09-15,15.05,94.91,630458000.0,0.0,TWD,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0001,2026-10-20T16:05:20+00:00,2026-09-16,2026-10-20T16:05:20+00:00
+00985A,2026-09-15,22.38,101.68,454289000.0,0.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic,2026-10-21T10:32:24+00:00,2026-09-16,2026-10-21T10:32:24+00:00
+00987B,2026-09-15,15.5058,11.37,73327000.0,500000.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00987B&tab=basic,2026-10-21T10:32:24+00:00,2026-09-17,2026-10-21T10:32:24+00:00
 00993A,2026-09-15,12.8,95.92,749591000.0,0.0,TWD,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0002,2026-10-20T16:05:20+00:00,2026-09-16,2026-10-20T16:05:20+00:00
+00999A,2026-09-15,11.13,113.78,1022517000.0,6500000.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic,2026-10-21T10:32:24+00:00,2026-09-16,2026-10-21T10:32:24+00:00

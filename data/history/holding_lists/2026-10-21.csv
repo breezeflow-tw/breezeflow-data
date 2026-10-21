@@ -1,0 +1,100 @@
+code,date,source,source_url,rows,stock_rows,missing_qty,weight_sum,complete,date_basis,first_observed_at,observed_at
+00400A,2026-10-21,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=EA,52,52,0,93.99,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00401A,2026-10-21,摩根投信官網,https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false,57,56,0,92.2824,1,持股列 navDate／effectiveDate,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00403A,2026-10-21,統一投信官網,https://www.ezmoney.com.tw/ETF/Fund/Info?fundCode=63YTW,50,50,0,89.96,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00405A,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00405A,47,47,0,95.4673,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00406A,2026-10-21,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,63,62,0,106.39,1,申購買回清單明示「淨值日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00407A,2026-10-21,凱基投信官網,https://www.kgifund.com.tw/Fund/RedemptionList?fundNo=J024,50,50,0,94.89,1,淨值欄名明示資料日期,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00415A,2026-10-21,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/504/buyback,50,50,0,96.4157,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+0050,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/0050,52,50,0,99.97,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+0051,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/0051,102,100,0,100.24,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+0052,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=0052,74,72,0,100.0079,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+0053,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/0053,369,366,0,99.74,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+0055,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/0055,16,15,0,100.19,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+0056,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/0056,50,50,0,97.03,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+0057,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=0057,75,74,0,99.9615,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+0061,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/0061,2,0,0,99.63,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+006201,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/006201,53,50,0,100.05,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+006203,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/006203,75,74,0,100.33,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+006205,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=006205,166,0,0,99.9854,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+006206,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/006206,44,0,0,99.74,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+006207,2026-10-21,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF01&qDate=2026%2F10%2F21,251,0,0,99.6,1,資產明細回傳日期與查詢的正式淨值日期一致,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+006208,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=006208,51,50,0,99.9974,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00631L,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00631L,3,1,0,199.7,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00632R,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00632R,1,0,0,100.05,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00633L,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00633L,4,0,0,200.4297,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00634R,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00634R,2,0,0,99.4847,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00636,2026-10-21,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=66,49,0,0,99.95,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00637L,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00637L,3,0,0,201.38,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00638R,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00638R,2,0,0,99.09,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00639,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00639,95,0,0,100.0574,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00640L,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00640L,2,0,0,199.8655,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00641R,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00641R,2,0,0,99.5237,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00643,2026-10-21,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/069/buyback,98,0,0,99.9469,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00645,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00645,1039,0,0,99.2376,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00650L,2026-10-21,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF03&qDate=2026%2F10%2F21,1,0,0,199.89,1,資產明細回傳日期與查詢的正式淨值日期一致,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00651R,2026-10-21,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF04&qDate=2026%2F10%2F21,1,0,0,-100.82,1,資產明細回傳日期與查詢的正式淨值日期一致,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00655L,2026-10-21,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=82,2,0,0,195.71,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00656R,2026-10-21,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=83,1,0,0,100.86,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00657,2026-10-21,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=84,226,0,0,100.69,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00661,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00661,226,0,0,99.78,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00663L,2026-10-21,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=87,1,0,0,199.62,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00664R,2026-10-21,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=88,1,0,0,99.9,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00665L,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00665L,1,0,0,200.0352,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00666R,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00666R,1,0,0,99.5753,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00675L,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00675L,2,0,0,203.3799,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00676R,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00676R,1,0,0,100.085,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00685L,2026-10-21,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/094/buyback,1,0,0,199.8923,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00686R,2026-10-21,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/095/buyback,1,0,0,100.0855,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00692,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00692,101,100,0,99.9974,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00700,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00700,47,0,0,99.9541,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00701,2026-10-21,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=AD,31,30,0,100.0,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00713,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00713,51,50,0,99.37,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00730,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00730,31,30,0,100.0061,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00731,2026-10-21,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF08&qDate=2026%2F10%2F21,36,35,0,98.953,1,資產明細回傳日期與查詢的正式淨值日期一致,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00733,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00733,93,92,0,100.0238,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00735,2026-10-21,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=AW,79,58,0,99.97,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00783,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00783,477,0,0,99.9698,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00850,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00850,111,110,0,99.96,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00877,2026-10-21,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF19&qDate=2026%2F10%2F21,48,0,0,99.996,1,資產明細回傳日期與查詢的正式淨值日期一致,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00878,2026-10-21,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=CN,30,29,0,100.02,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00881,2026-10-21,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=CR,31,30,0,100.03,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00885,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00885,29,0,0,99.0926,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00891,2026-10-21,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,32,30,0,99.49,1,申購買回清單明示「淨值日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00892,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00892,31,30,0,100.0067,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00894,2026-10-21,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,31,30,0,99.45,1,申購買回清單明示「淨值日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00896,2026-10-21,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,51,50,0,99.45,1,申購買回清單明示「淨值日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00900,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00900,31,30,0,99.9978,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00912,2026-10-21,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,51,50,0,99.41,1,申購買回清單明示「淨值日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00915,2026-10-21,凱基投信官網,https://www.kgifund.com.tw/Fund/RedemptionList?fundNo=J015,31,30,0,100.0,1,淨值欄名明示資料日期,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00919,2026-10-21,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/195/buyback,41,40,0,100.0018,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00922,2026-10-21,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=DO,50,49,0,100.01,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00923,2026-10-21,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/365/buyback,51,50,0,100.0786,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00927,2026-10-21,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/366/buyback,30,30,0,99.9905,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00928,2026-10-21,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,31,30,0,99.33,1,申購買回清單明示「淨值日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00929,2026-10-21,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF21&qDate=2026%2F10%2F21,51,50,0,99.876,1,資產明細回傳日期與查詢的正式淨值日期一致,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00934,2026-10-21,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,51,50,0,99.41,1,申購買回清單明示「淨值日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00935,2026-10-21,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00935&tab=basic,51,50,0,99.98,1,清單另列 CPcfdate；持股依淨值日期 CNavDt 保存,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00938,2026-10-21,凱基投信官網,https://www.kgifund.com.tw/Fund/RedemptionList?fundNo=J017,31,30,0,99.89,1,淨值欄名明示資料日期,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00939,2026-10-21,統一投信官網,https://www.ezmoney.com.tw/ETF/Fund/Info?fundCode=46YTW,41,40,0,99.96,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00940,2026-10-21,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00940,51,50,0,99.09,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00944,2026-10-21,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic,51,50,0,100.03,1,清單另列 CPcfdate；持股依淨值日期 CNavDt 保存,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00946,2026-10-21,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/388/buyback,51,50,0,100.1434,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00949,2026-10-21,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF22&qDate=2026%2F10%2F21,31,0,0,99.919,1,資產明細回傳日期與查詢的正式淨值日期一致,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00952,2026-10-21,凱基投信官網,https://www.kgifund.com.tw/Fund/RedemptionList?fundNo=J020,51,50,0,99.92,1,淨值欄名明示資料日期,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00972,2026-10-21,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00972&tab=basic,51,0,0,99.7,1,清單另列 CPcfdate；持股依淨值日期 CNavDt 保存,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+009802,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=009802,51,50,0,100.0076,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+009809,2026-10-21,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=009809,35,34,0,100.0384,1,基金資產頁明示「資料日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00980A,2026-10-21,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic,51,50,0,95.61,1,清單另列 CPcfdate；持股依淨值日期 CNavDt 保存,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+009812,2026-10-21,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009812&tab=basic,2,0,0,99.7,1,清單另列 CPcfdate；持股依淨值日期 CNavDt 保存,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+009816,2026-10-21,凱基投信官網,https://www.kgifund.com.tw/Fund/RedemptionList?fundNo=J023,51,50,0,99.96,1,淨值欄名明示資料日期,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+009817,2026-10-21,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=E9,1,0,0,1.85,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00981A,2026-10-21,統一投信官網,https://www.ezmoney.com.tw/ETF/Fund/Info?fundCode=49YTW,52,51,0,98.18,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00982A,2026-10-21,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/399/buyback,57,57,0,97.4982,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00984A,2026-10-21,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0001,80,80,0,98.55,1,清單另列 CPcfdate；持股依淨值日期 CNavDt 保存,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00985A,2026-10-21,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic,51,50,0,91.57,1,清單另列 CPcfdate；持股依淨值日期 CNavDt 保存,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00991A,2026-10-21,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF23&qDate=2026%2F10%2F21,50,50,0,98.829,1,資產明細回傳日期與查詢的正式淨值日期一致,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00992A,2026-10-21,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/500/buyback,43,43,0,96.552,1,,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00993A,2026-10-21,安聯投信官網,https://etf.allianzgi.com.tw/etf-info/E0002,50,49,0,93.31,1,清單另列 CPcfdate；持股依淨值日期 CNavDt 保存,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00995A,2026-10-21,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,56,56,0,97.25,1,申購買回清單明示「淨值日期」,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
+00999A,2026-10-21,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic,55,54,0,97.41,1,清單另列 CPcfdate；持股依淨值日期 CNavDt 保存,2026-10-21T18:32:23+08:00,2026-10-21T18:32:23+08:00
