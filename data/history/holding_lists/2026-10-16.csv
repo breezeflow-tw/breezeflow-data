@@ -1,7 +1,7 @@
 code,date,source,source_url,rows,stock_rows,missing_qty,weight_sum,complete,date_basis,first_observed_at,observed_at
-00739,2026-10-16,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00739,386,0,0,99.98,1,,2026-10-21T00:05:20+08:00,2026-10-21T00:05:20+08:00
-00752,2026-10-16,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,50,0,0,99.05,1,申購買回清單明示「淨值日期」,2026-10-21T00:05:20+08:00,2026-10-21T00:05:20+08:00
-00753L,2026-10-16,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,2,0,0,200.53,1,申購買回清單明示「淨值日期」,2026-10-21T00:05:20+08:00,2026-10-21T00:05:20+08:00
-00882,2026-10-16,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,49,0,0,96.42,1,申購買回清單明示「淨值日期」,2026-10-21T00:05:20+08:00,2026-10-21T00:05:20+08:00
-00902,2026-10-16,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,30,0,0,98.91,1,申購買回清單明示「淨值日期」,2026-10-21T00:05:20+08:00,2026-10-21T00:05:20+08:00
-00964,2026-10-16,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,50,16,0,97.06,1,申購買回清單明示「淨值日期」,2026-10-21T00:05:20+08:00,2026-10-21T00:05:20+08:00
+00739,2026-10-16,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00739,386,0,0,99.98,1,,2026-10-21T00:05:20+08:00,2026-10-21T09:27:26+08:00
+00752,2026-10-16,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,50,0,0,99.05,1,申購買回清單明示「淨值日期」,2026-10-21T00:05:20+08:00,2026-10-21T09:27:26+08:00
+00753L,2026-10-16,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,2,0,0,200.53,1,申購買回清單明示「淨值日期」,2026-10-21T00:05:20+08:00,2026-10-21T09:27:26+08:00
+00882,2026-10-16,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,49,0,0,96.42,1,申購買回清單明示「淨值日期」,2026-10-21T00:05:20+08:00,2026-10-21T09:27:26+08:00
+00902,2026-10-16,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,30,0,0,98.91,1,申購買回清單明示「淨值日期」,2026-10-21T00:05:20+08:00,2026-10-21T09:27:26+08:00
+00964,2026-10-16,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,50,16,0,97.06,1,申購買回清單明示「淨值日期」,2026-10-21T00:05:20+08:00,2026-10-21T09:27:26+08:00
