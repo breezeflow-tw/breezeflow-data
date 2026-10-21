@@ -76,7 +76,7 @@ def publish_data(root, *, verify_fn=verify, refresh_fn=refresh, attempts=3):
                 git(root, "rebase", "--abort", check=False)
                 raise RuntimeError("資料與遠端有實際衝突，已停止；不選擇覆蓋任一版本。")
             verify_fn(root)
-            if any(path.startswith("scripts/") or path == "data/etf_meta.csv" for path in changed):
+            if any(path.startswith("scripts/") or path in ("data/etf_meta.csv", "data/product_overrides.json") for path in changed):
                 refresh_fn(root)
                 commit_data(root)
             baseline = remote

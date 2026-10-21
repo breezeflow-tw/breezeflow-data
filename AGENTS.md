@@ -18,6 +18,7 @@
 | `web/index.html` | 網站（單一檔案，讀 `web/data/latest.json`） |
 | `tests/` | 離線測試；`tests/fixtures/` 是測試用假資料 |
 | `data/etf_meta.csv` | 人工補充資料（類型修正、費用率、規模） |
+| `data/product_overrides.json` | 有官方來源與查閱日的商品地域、策略及交易線補充；未知值不得補猜 |
 | `.github/workflows/daily.yml` | 週一到週五台灣時間 08:50、18:00 自動更新並部署 |
 
 ## 資料來源規則（最重要）
@@ -54,7 +55,9 @@
 | 欄位 | 說明 |
 |---|---|
 | `code`、`name`、`issuer`、`category`、`market` | 代號、名稱、發行投信、類型、上市／上櫃 |
-| `price`、`change_pct`、`volume_lots`、`price_check` | 收盤價、漲跌幅 %、成交量（張）、市價查核結果 |
+| `price`、`change_pct`、`volume_lots`、`price_check` | 收盤價、漲跌幅 %、成交量（受益權單位數除以 1000 後取整數，介面稱「約千單位」，外幣線不一定等於張數）、市價查核結果；未提供狀態亦計入統計 |
+| `product` | 商品維度與欄位幣別：`asset_class`、`management`、`structure`、`region`、`strategy`、`trading_currency`、`trading_unit`、`main_code`、`nav_currency`、`aum_currency`、`fund_currency`，以及 `source`、`source_url`、`checked_at`、`rules_url`、`currency_basis`、`currency_source_url`。未知留 `null`；交易、淨值、規模幣別各自依採用來源判別，不能互相代換。保存為 `product_profile` 表／CSV 的 `profile_json`。新表由 `ensure_schema` 建立；舊日行情不回溯改寫。 |
+| `premium_reason` | 市價與淨值幣別不明或不同時，`premium` 留空並說明原因；同日正式淨值平均另要求日期與幣別一致。 |
 | `nav`、`nav_source` | 淨值與出處；出處含「正式淨值」代表投信公告的正式淨值（投信官網，或投信投顧公會的每日基金淨值），其餘為預估淨值（投信官網公布或證交所轉載）。優先順序：投信官網正式淨值 → 投信投顧公會正式淨值 → 投信官網預估淨值 → 證交所轉載的預估淨值 |
 | `nav_date`、`nav_source_url` | 淨值的資料日期與原文連結（正式淨值才有連結） |
 | `source_time` | 證交所轉載的預估淨值資料時間（YYYYMMDD HH:MM:SS），沒有用到時為空字串 |

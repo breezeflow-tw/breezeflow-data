@@ -30,6 +30,7 @@ import store
 import fund_flows
 import market_calendar
 import official_quotes
+import product_profile
 import sitca_etf
 from issuers import allianz, blackrock, capital, cathay, ctbc, fubon, fuhhwa, jpmorgan, kgi, nomura, uni, yuanta
 from issuers.common import flat_fee
@@ -352,8 +353,15 @@ THEME = re.compile(r"半導體|科技|5G|電動車|AI|智慧|網通|生技|醫�
 
 
 def classify(code: str, name: str) -> str:
-    if code.endswith("B"):
+    verified = product_profile.overrides().get(code, {}).get("category")
+    if verified:
+        return verified
+    if code.endswith(("A", "D")):
+        return "主動式"
+    if code.endswith(("B", "C")):
         return "債券"
+    if code.endswith("T"):
+        return "多重資產"
     if code.endswith(("L", "R")) or re.search(r"正2|反1|反向|槓桿", name):
         return "槓桿反向"
     if code.endswith("U") or re.search(r"黃金|石油|原油|白銀|期貨|商品", name):
@@ -366,7 +374,7 @@ def classify(code: str, name: str) -> str:
         return "高股息"
     if THEME.search(name):
         return "主題型"
-    return "市值型"
+    return "待分類"
 
 
 ISSUERS = ["富蘭克林華美", "華南永昌", "第一金", "大華銀", "中國信託", "元大", "富邦", "國泰", "群益", "中信", "復華",
@@ -772,7 +780,7 @@ def save_fund_info(con: sqlite3.Connection, info: dict, fetched: str) -> None:
 
 
 # 外幣交易線（代號結尾 K）和主要交易線是同一檔基金；多半是去掉 K 的代號，例外列在這裡
-MAIN_LINES = {"00625K": "006205"}  # 富邦上証+R 是富邦上証 180（006205）的人民幣交易線
+MAIN_LINES = {"00625K": "006205", "00687C": "00687B"}  # 已核對的同基金交易線
 
 
 def main_line(code: str) -> str | None:
@@ -951,8 +959,8 @@ def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, h
     """網站讀的唯一檔案。區間報酬的起始日與出處放在最上層 returns_info，各檔數字在 items[].returns。"""
     checks: dict[str, int] = {}
     for it in items:
-        if it.get("price_check"):
-            checks[it["price_check"]] = checks.get(it["price_check"], 0) + 1
+        check = it.get("price_check") or ("狀態未提供" if it.get("price") is not None else "無市價")
+        checks[check] = checks.get(check, 0) + 1
     out.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "generated_at": datetime.now(TW).isoformat(timespec="seconds"),
@@ -1068,6 +1076,7 @@ def main(argv=None) -> int:
     apply_fund_nav(items, navs, date)
     print(f"{sitca.SOURCE}基金淨值：{date} 共 {len(navs)} 檔" if navs else f"{sitca.SOURCE}基金淨值：{date} 尚未公布")
 
+    product_profile.attach(items, issuer, fund_info.get("funds"))
     save_db(items, date, args.db, nav, dividends, diffs, issuer, (fresh.get("dividends") or []) + (old.get("dividends") or []), navs)
     con = sqlite3.connect(args.db)
     try:
@@ -1105,6 +1114,11 @@ def main(argv=None) -> int:
         official_quotes.save_stocks(con, stocks, now)
         active_holdings.save_events(con, active_holdings.parse_events(raw["div_twse"], raw["div_tpex"]), now)
         holdings_flow = active_holdings.build(con, items, date, market_calendar.load(con))
+        product_profile.attach(items, issuer, fund_info.get("funds"))
+        product_profile.save(con, items)
+        for it in items:
+            if it.get("premium_reason"):
+                con.execute("UPDATE daily SET premium=NULL, premium_official=NULL WHERE code=? AND date=?", (it["code"], date))
         official += stocks
         con.commit()
         purge_excluded(con)
