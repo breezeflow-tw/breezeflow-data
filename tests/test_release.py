@@ -163,6 +163,32 @@ class ReleaseTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 release.validate_data(self.a)
 
+    def test_older_market_date_cannot_be_committed_or_published(self):
+        before = self.run_git(self.remote, "rev-parse", "main")
+        self.write(self.a, "data/history/daily/2026-10-19.csv", "code,date,price\n0050,2026-10-19,21\n")
+        self.data(self.a, 21)  # 網站仍是 10/16，歷史已有 10/19
+        with self.assertRaisesRegex(ValueError, "早於已保存行情 2026-10-19"):
+            self.publish()
+        self.assertEqual(self.run_git(self.remote, "rev-parse", "main"), before)
+        self.assertEqual(self.run_git(self.a, "rev-parse", "HEAD"), before)
+        with self.assertRaisesRegex(ValueError, "停止發布"):
+            release.write_manifest(self.a)
+
+    def test_same_or_newer_market_date_is_valid(self):
+        self.write(self.a, "data/history/daily/2026-10-16.csv", "code,date,price\n0050,2026-10-16,20\n")
+        for day in ("2026-10-16", "2026-10-19"):
+            with self.subTest(day=day):
+                self.write(self.a, "web/data/latest.json", json.dumps(dict(self.payload, trade_date=day)))
+                self.assertEqual(release.validate_data(self.a)["trade_date"], day)
+
+    def test_newer_history_from_remote_blocks_stale_publish(self):
+        self.data(self.a, 21)
+        self.remote_change("data/history/daily/2026-10-19.csv", "code,date,price\n0050,2026-10-19,22\n")
+        before = self.run_git(self.remote, "rev-parse", "main")
+        with self.assertRaisesRegex(ValueError, "早於已保存行情"):
+            self.publish()
+        self.assertEqual(self.run_git(self.remote, "rev-parse", "main"), before)
+
 
 if __name__ == "__main__":
     unittest.main()
