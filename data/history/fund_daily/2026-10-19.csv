@@ -39,9 +39,9 @@ code,date,nav,aum,units,units_change,currency,source,source_url,observed_at,anno
 00646,2026-10-19,78.61,505.05,642485000.0,1000000.0,TWD,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00646,2026-10-21T01:27:26+00:00,,2026-10-20T14:48:45+00:00
 00647L,2026-10-19,140.19,6.89,4916000.0,0.0,TWD,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00647L,2026-10-21T01:27:26+00:00,,2026-10-20T14:48:45+00:00
 00648R,2026-10-19,3.94,5.53,140188000.0,0.0,TWD,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00648R,2026-10-21T01:27:26+00:00,,2026-10-20T14:48:45+00:00
-00652,2026-10-19,32.44,19.8,61035000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00652,2026-10-21T14:33:47+00:00,,2026-10-20T14:48:45+00:00
-00653L,2026-10-19,41.65,5.17,12403000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00653L,2026-10-21T14:33:47+00:00,,2026-10-20T14:48:45+00:00
-00654R,2026-10-19,7.19,1.4,19466000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00654R,2026-10-21T14:33:47+00:00,,2026-10-20T14:48:45+00:00
+00652,2026-10-19,32.44,19.8,61035000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00652,2026-10-21T16:28:31+00:00,,2026-10-20T14:48:45+00:00
+00653L,2026-10-19,41.65,5.17,12403000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00653L,2026-10-21T16:28:31+00:00,,2026-10-20T14:48:45+00:00
+00654R,2026-10-19,7.19,1.4,19466000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00654R,2026-10-21T16:28:31+00:00,,2026-10-20T14:48:45+00:00
 00655L,2026-10-19,28.48,17.64,61958000.0,0.0,TWD,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=82,2026-10-20T01:28:57+00:00,,
 00656R,2026-10-19,6.47,1.32,20357000.0,0.0,TWD,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=83,2026-10-20T01:28:57+00:00,,
 00657,2026-10-19,77.38,5.12,6559000.0,0.0,TWD,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=84,2026-10-20T01:28:57+00:00,,
