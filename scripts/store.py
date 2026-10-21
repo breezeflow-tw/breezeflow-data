@@ -53,7 +53,8 @@ SPLIT_DIRS = {"daily": "daily", "holding": "holdings", "fund_daily": "fund_daily
 MIGRATIONS = {
     "product_profile": {},  # 新表由 schema.sql 的 CREATE IF NOT EXISTS 建立，不改寫舊日行情。
     "daily": {"nav_official": "REAL", "premium_official": "REAL", "aum": "REAL", "price_check": "TEXT",
-              "nav_source": "TEXT", "aum_source": "TEXT", "beneficiaries": "INTEGER", "units_change": "REAL"},
+              "nav_source": "TEXT", "nav_date": "TEXT", "nav_source_url": "TEXT", "aum_source": "TEXT", "beneficiaries": "INTEGER", "units_change": "REAL"},
+    "fund_info": {"class_code": "TEXT", "investment_region": "TEXT"},
     "etf": {"units": "REAL", "index_name": "TEXT", "listed_date": "TEXT", "mgmt_fee": "REAL",
             "mgmt_fee_text": "TEXT", "custodian_fee_text": "TEXT", "manager": "TEXT", "risk_class": "TEXT",
             "beneficiaries": "INTEGER", "beneficiaries_month": "TEXT", "stats_json": "TEXT",

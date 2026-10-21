@@ -44,7 +44,8 @@ class ProductProfileTest(unittest.TestCase):
         self.assertEqual(p.describe("00625K", "測試+R")["trading_currency"], "CNY")
         self.assertEqual(p.describe("00636K", "測試+U")["trading_currency"], "USD")
         self.assertIsNone(p.describe("00999K", "未確認名稱")["trading_currency"])
-        self.assertIsNone(p.describe("00636K", "測試+U")["trading_unit"])
+        self.assertEqual(p.describe("00636K", "測試+U")["trading_unit"], 100)
+        self.assertIsNone(p.describe("00999K", "未確認名稱")["trading_unit"])
 
     def test_currency_mismatch_cannot_create_a_premium(self):
         item = {"code":"00687C", "name":"測試", "price":10, "nav":300, "premium":-96.67, "nav_source":"測試投信官網（正式淨值）"}

@@ -117,6 +117,13 @@ class ReleaseTest(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "流程本身已更新"):
             self.publish()
 
+    def test_product_reference_change_refreshes_data(self):
+        self.data(self.a, 21)
+        self.remote_change("data/product_reference.json", '{"funds": {}}')
+        self.publish()
+        self.assertEqual(len(self.verified), 1)
+        self.assertEqual(len(self.refreshed), 1)
+
     def test_unrelated_local_change_is_not_committed(self):
         self.data(self.a, 21)
         self.write(self.a, "web/index.html", "未提交程式")

@@ -1,7 +1,504 @@
 {
-  "0050": {"region":"臺灣","strategy":"市值型","category":"市值型","source":"元大投信商品資訊","source_url":"https://www.yuantaetfs.com/product/detail/0050/Basic_information","checked_at":"2026-10-21"},
-  "00875": {"region":"全球","strategy":"科技主題","category":"主題型","source":"證交所 ETF e添富商品資訊","source_url":"https://www.twse.com.tw/zh/ETFortune/etfInfo/00875","checked_at":"2026-10-21"},
-  "009828": {"region":"臺灣、日本、韓國","strategy":"科技主題","category":"主題型","source":"證交所 ETF e添富商品資訊","source_url":"https://wwwc.twse.com.tw/zh/ETFortune/etfInfo/009828","checked_at":"2026-10-21"},
-  "00984D": {"region":"全球","strategy":"非投資等級債","category":"主動式","source":"聯博投信商品資訊","source_url":"https://www.abfunds.com.tw/campaign/apac/tw/product/etf/active-etf-00984d/active-etf-00984d.html","checked_at":"2026-10-21"},
-  "00687C": {"region":"美國","strategy":"長天期公債","category":"債券","main_code":"00687B","trading_currency":"USD","trading_unit":100,"source":"櫃買中心國泰20年美債美元加掛公告","source_url":"https://www.tpex.org.tw/storage/about_otc_news/2025/01/1736401405_3084_news.pdf","checked_at":"2026-10-21"}
+  "00415A": {
+    "region": "臺灣",
+    "strategy": "主動選股",
+    "source": "群益投信商品資料",
+    "source_url": "https://www.capitalfund.com.tw/etf/product/detail/504/basic",
+    "checked_at": "2026-10-21",
+    "region_basis": "官方商品資料人工核對",
+    "strategy_basis": "官方商品資料人工核對"
+  },
+  "0050": {
+    "region": "臺灣",
+    "strategy": "市值型",
+    "category": "市值型",
+    "source": "元大投信商品資訊",
+    "source_url": "https://www.yuantaetfs.com/product/detail/0050/Basic_information",
+    "checked_at": "2026-10-21",
+    "region_basis": "官方商品資料人工核對",
+    "strategy_basis": "官方商品資料人工核對"
+  },
+  "00625K": {
+    "trading_unit": 1000,
+    "currency_basis": "證交所逐檔交易單位公告（人民幣線1,000；本表美元線100）",
+    "currency_source_url": "https://www.twse.com.tw/rwd/staticFiles/product/publication/0005000014.pdf",
+    "unit_checked_at": "2026-10-21"
+  },
+  "00635U": {
+    "asset_class": "期貨",
+    "region": "商品（不適用國別）",
+    "strategy": "黃金期貨",
+    "official_name": "元大標普高盛黃金ER指數股票型期貨信託基金",
+    "region_basis": "追蹤商品／匯率期貨；不以交易所所在地當成股票投資地域",
+    "strategy_basis": "官方基金全名及追蹤指數",
+    "source": "元大投信申購買回清單",
+    "source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00635U",
+    "checked_at": "2026-10-21",
+    "fund_currency": "TWD",
+    "official_value_currency": "TWD",
+    "official_value_source": "元大投信官網",
+    "value_currency_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00635U"
+  },
+  "00636K": {
+    "trading_unit": 100,
+    "currency_basis": "證交所逐檔交易單位公告（人民幣線1,000；本表美元線100）",
+    "currency_source_url": "https://www.twse.com.tw/rwd/staticFiles/product/publication/0005000014.pdf",
+    "unit_checked_at": "2026-10-21"
+  },
+  "00642U": {
+    "asset_class": "期貨",
+    "region": "商品（不適用國別）",
+    "strategy": "原油期貨",
+    "official_name": "元大標普高盛原油ER指數股票型期貨信託基金",
+    "region_basis": "追蹤商品／匯率期貨；不以交易所所在地當成股票投資地域",
+    "strategy_basis": "官方基金全名及追蹤指數",
+    "source": "元大投信申購買回清單",
+    "source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00642U",
+    "checked_at": "2026-10-21",
+    "fund_currency": "TWD",
+    "official_value_currency": "TWD",
+    "official_value_source": "元大投信官網",
+    "value_currency_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00642U"
+  },
+  "00643K": {
+    "trading_unit": 1000,
+    "currency_basis": "證交所逐檔交易單位公告（人民幣線1,000；本表美元線100）",
+    "currency_source_url": "https://www.twse.com.tw/rwd/staticFiles/product/publication/0005000014.pdf",
+    "unit_checked_at": "2026-10-21"
+  },
+  "00657K": {
+    "trading_unit": 100,
+    "currency_basis": "證交所逐檔交易單位公告（人民幣線1,000；本表美元線100）",
+    "currency_source_url": "https://www.twse.com.tw/rwd/staticFiles/product/publication/0005000014.pdf",
+    "unit_checked_at": "2026-10-21"
+  },
+  "00668K": {
+    "trading_unit": 100,
+    "currency_basis": "證交所逐檔交易單位公告（人民幣線1,000；本表美元線100）",
+    "currency_source_url": "https://www.twse.com.tw/rwd/staticFiles/product/publication/0005000014.pdf",
+    "unit_checked_at": "2026-10-21"
+  },
+  "00673R": {
+    "asset_class": "期貨",
+    "region": "商品（不適用國別）",
+    "strategy": "原油期貨",
+    "official_name": "元大標普高盛原油ER單日反向1倍指數股票型期貨信託基金",
+    "region_basis": "追蹤商品／匯率期貨；不以交易所所在地當成股票投資地域",
+    "strategy_basis": "官方基金全名及追蹤指數",
+    "source": "元大投信申購買回清單",
+    "source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00673R",
+    "checked_at": "2026-10-21",
+    "fund_currency": "TWD",
+    "official_value_currency": "TWD",
+    "official_value_source": "元大投信官網",
+    "value_currency_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00673R"
+  },
+  "00674R": {
+    "asset_class": "期貨",
+    "region": "商品（不適用國別）",
+    "strategy": "黃金期貨",
+    "official_name": "元大標普高盛黃金ER單日反向1倍指數股票型期貨信託基金",
+    "region_basis": "追蹤商品／匯率期貨；不以交易所所在地當成股票投資地域",
+    "strategy_basis": "官方基金全名及追蹤指數",
+    "source": "元大投信申購買回清單",
+    "source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00674R",
+    "checked_at": "2026-10-21",
+    "fund_currency": "TWD",
+    "official_value_currency": "TWD",
+    "official_value_source": "元大投信官網",
+    "value_currency_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00674R"
+  },
+  "00682U": {
+    "asset_class": "期貨",
+    "region": "匯率（不適用國別）",
+    "strategy": "美元指數期貨",
+    "official_name": "元大標普美元ER指數股票型期貨信託基金",
+    "region_basis": "追蹤商品／匯率期貨；不以交易所所在地當成股票投資地域",
+    "strategy_basis": "官方基金全名及追蹤指數",
+    "source": "元大投信申購買回清單",
+    "source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00682U",
+    "checked_at": "2026-10-21",
+    "fund_currency": "TWD",
+    "official_value_currency": "TWD",
+    "official_value_source": "元大投信官網",
+    "value_currency_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00682U"
+  },
+  "00683L": {
+    "asset_class": "期貨",
+    "region": "匯率（不適用國別）",
+    "strategy": "美元指數期貨",
+    "official_name": "元大標普美元ER單日正向2倍指數股票型期貨信託基金",
+    "region_basis": "追蹤商品／匯率期貨；不以交易所所在地當成股票投資地域",
+    "strategy_basis": "官方基金全名及追蹤指數",
+    "source": "元大投信申購買回清單",
+    "source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00683L",
+    "checked_at": "2026-10-21",
+    "fund_currency": "TWD",
+    "official_value_currency": "TWD",
+    "official_value_source": "元大投信官網",
+    "value_currency_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00683L"
+  },
+  "00684R": {
+    "asset_class": "期貨",
+    "region": "匯率（不適用國別）",
+    "strategy": "美元指數期貨",
+    "official_name": "元大標普美元ER單日反向1倍指數股票型期貨信託基金",
+    "region_basis": "追蹤商品／匯率期貨；不以交易所所在地當成股票投資地域",
+    "strategy_basis": "官方基金全名及追蹤指數",
+    "source": "元大投信申購買回清單",
+    "source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00684R",
+    "checked_at": "2026-10-21",
+    "fund_currency": "TWD",
+    "official_value_currency": "TWD",
+    "official_value_source": "元大投信官網",
+    "value_currency_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00684R"
+  },
+  "00687C": {
+    "region": "美國",
+    "strategy": "長天期公債",
+    "category": "債券",
+    "main_code": "00687B",
+    "trading_currency": "USD",
+    "trading_unit": 100,
+    "source": "櫃買中心國泰20年美債美元加掛公告",
+    "source_url": "https://www.tpex.org.tw/storage/about_otc_news/2025/01/1736401405_3084_news.pdf",
+    "checked_at": "2026-10-21",
+    "region_basis": "官方商品資料人工核對",
+    "strategy_basis": "官方商品資料人工核對"
+  },
+  "00693U": {
+    "asset_class": "期貨",
+    "region": "商品（不適用國別）",
+    "strategy": "黃豆期貨",
+    "official_name": "街口標普高盛黃豆ER指數股票型期貨信託基金",
+    "region_basis": "追蹤商品／匯率期貨；不以交易所所在地當成股票投資地域",
+    "strategy_basis": "官方基金全名及追蹤指數",
+    "source": "街口投信基金月報",
+    "source_url": "https://www.jkoam.com/webapi/File/345676ee-865d-4254-a721-486178d94346/34_%E6%9C%88%E5%A0%B1.pdf",
+    "checked_at": "2026-10-21",
+    "fund_currency": "TWD",
+    "data_month": "2025-09"
+  },
+  "00706L": {
+    "asset_class": "期貨",
+    "region": "匯率（不適用國別）",
+    "strategy": "日圓期貨",
+    "official_name": "元大標普日圓ER單日正向2倍指數股票型期貨信託基金",
+    "region_basis": "追蹤商品／匯率期貨；不以交易所所在地當成股票投資地域",
+    "strategy_basis": "官方基金全名及追蹤指數",
+    "source": "元大投信申購買回清單",
+    "source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00706L",
+    "checked_at": "2026-10-21",
+    "fund_currency": "TWD",
+    "official_value_currency": "TWD",
+    "official_value_source": "元大投信官網",
+    "value_currency_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00706L"
+  },
+  "00707R": {
+    "asset_class": "期貨",
+    "region": "匯率（不適用國別）",
+    "strategy": "日圓期貨",
+    "official_name": "元大標普日圓ER單日反向1倍指數股票型期貨信託基金",
+    "region_basis": "追蹤商品／匯率期貨；不以交易所所在地當成股票投資地域",
+    "strategy_basis": "官方基金全名及追蹤指數",
+    "source": "元大投信申購買回清單",
+    "source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00707R",
+    "checked_at": "2026-10-21",
+    "fund_currency": "TWD",
+    "official_value_currency": "TWD",
+    "official_value_source": "元大投信官網",
+    "value_currency_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00707R"
+  },
+  "00708L": {
+    "asset_class": "期貨",
+    "region": "商品（不適用國別）",
+    "strategy": "黃金期貨",
+    "official_name": "元大標普高盛黃金ER單日正向2倍指數股票型期貨信託基金",
+    "region_basis": "追蹤商品／匯率期貨；不以交易所所在地當成股票投資地域",
+    "strategy_basis": "官方基金全名及追蹤指數",
+    "source": "元大投信申購買回清單",
+    "source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00708L",
+    "checked_at": "2026-10-21",
+    "fund_currency": "TWD",
+    "official_value_currency": "TWD",
+    "official_value_source": "元大投信官網",
+    "value_currency_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00708L"
+  },
+  "00715L": {
+    "asset_class": "期貨",
+    "region": "商品（不適用國別）",
+    "strategy": "原油期貨",
+    "official_name": "街口標普高盛布蘭特原油ER單日正向2倍指數股票型期貨信託基金",
+    "region_basis": "追蹤商品／匯率期貨；不以交易所所在地當成股票投資地域",
+    "strategy_basis": "官方基金全名及追蹤指數",
+    "source": "街口投信基金月報",
+    "source_url": "https://www.jkoam.com/webapi/File/e7477c60-e68f-4e7e-aec5-63c7e363fdb0/39_%E6%9C%88%E5%A0%B1.pdf",
+    "checked_at": "2026-10-21",
+    "fund_currency": "TWD",
+    "data_month": "2025-08"
+  },
+  "00734B": {
+    "listed_date": "2018-05-24",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00738U": {
+    "asset_class": "期貨",
+    "region": "商品（不適用國別）",
+    "strategy": "白銀期貨",
+    "official_name": "元大道瓊白銀ER指數股票型期貨信託基金",
+    "region_basis": "追蹤商品／匯率期貨；不以交易所所在地當成股票投資地域",
+    "strategy_basis": "官方基金全名及追蹤指數",
+    "source": "元大投信申購買回清單",
+    "source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00738U",
+    "checked_at": "2026-10-21",
+    "fund_currency": "TWD",
+    "official_value_currency": "TWD",
+    "official_value_source": "元大投信官網",
+    "value_currency_url": "https://www.yuantaetfs.com/tradeInfo/pcf/00738U"
+  },
+  "00763U": {
+    "asset_class": "期貨",
+    "region": "商品（不適用國別）",
+    "strategy": "銅期貨",
+    "official_name": "街口道瓊銅ER指數股票型期貨信託基金",
+    "region_basis": "追蹤商品／匯率期貨；不以交易所所在地當成股票投資地域",
+    "strategy_basis": "官方基金全名及追蹤指數",
+    "source": "街口投信基金月報",
+    "source_url": "https://www.jkoam.com/webapi/File/5e4ae474-36b2-47e4-995f-915d51d2e124/51_%E6%9C%88%E5%A0%B1.pdf",
+    "checked_at": "2026-10-21",
+    "fund_currency": "TWD",
+    "data_month": "2025-09"
+  },
+  "00834B": {
+    "listed_date": "2019-05-09",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00836B": {
+    "listed_date": "2019-05-22",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00842B": {
+    "listed_date": "2019-06-14",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00844B": {
+    "listed_date": "2019-07-18",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00856B": {
+    "listed_date": "2019-09-30",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00857B": {
+    "listed_date": "2019-09-30",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00858": {
+    "listed_date": "2019-09-30",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00867B": {
+    "listed_date": "2019-11-15",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00875": {
+    "region": "全球",
+    "strategy": "科技主題",
+    "category": "主題型",
+    "source": "證交所 ETF e添富商品資訊",
+    "source_url": "https://www.twse.com.tw/zh/ETFortune/etfInfo/00875",
+    "checked_at": "2026-10-21",
+    "region_basis": "官方商品資料人工核對",
+    "strategy_basis": "官方商品資料人工核對"
+  },
+  "00886": {
+    "listed_date": "2021-03-31",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00887": {
+    "listed_date": "2021-03-31",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00888": {
+    "listed_date": "2021-03-31",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00942B": {
+    "listed_date": "2024-04-18",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00957B": {
+    "listed_date": "2024-09-10",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00958B": {
+    "listed_date": "2024-09-18",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00959B": {
+    "listed_date": "2024-08-28",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00970B": {
+    "listed_date": "2024-12-17",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "009806": {
+    "listed_date": "2025-05-28",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "009807": {
+    "listed_date": "2025-05-28",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00980B": {
+    "listed_date": "2025-01-22",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00980D": {
+    "listed_date": "2025-08-04",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "009815": {
+    "listed_date": "2026-01-26",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00981B": {
+    "listed_date": "2025-03-10",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "009822": {
+    "listed_date": "2026-06-03",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "009825": {
+    "listed_date": "2026-07-17",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "009828": {
+    "region": "臺灣、日本、韓國",
+    "strategy": "科技主題",
+    "category": "主題型",
+    "source": "證交所 ETF e添富商品資訊",
+    "source_url": "https://wwwc.twse.com.tw/zh/ETFortune/etfInfo/009828",
+    "checked_at": "2026-10-21",
+    "region_basis": "官方商品資料人工核對",
+    "strategy_basis": "官方商品資料人工核對"
+  },
+  "00982B": {
+    "region": "已開發市場",
+    "strategy": "投資等級債",
+    "source": "富蘭克林華美投信商品資料",
+    "source_url": "https://www.ftft.com.tw/etf/product/details/?id=173",
+    "checked_at": "2026-10-21",
+    "region_basis": "追蹤指數的成熟市場範圍；不將美元當成美國",
+    "strategy_basis": "官方追蹤指數",
+    "listed_date": "2025-04-28",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00983B": {
+    "listed_date": "2025-05-13",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00984B": {
+    "listed_date": "2025-05-13",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00984D": {
+    "region": "全球",
+    "strategy": "非投資等級債",
+    "category": "主動式",
+    "source": "聯博投信商品資訊",
+    "source_url": "https://www.abfunds.com.tw/campaign/apac/tw/product/etf/active-etf-00984d/active-etf-00984d.html",
+    "checked_at": "2026-10-21",
+    "region_basis": "官方商品資料人工核對",
+    "strategy_basis": "官方商品資料人工核對"
+  },
+  "00986B": {
+    "region": "已開發市場",
+    "strategy": "金融債",
+    "source": "富蘭克林華美投信商品資料",
+    "source_url": "https://www.ftft.com.tw/etf/product/details/?id=176",
+    "checked_at": "2026-10-21",
+    "region_basis": "追蹤指數的成熟市場範圍；不將美元當成美國",
+    "strategy_basis": "官方追蹤指數",
+    "listed_date": "2025-11-12",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00988B": {
+    "listed_date": "2026-03-25",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00989B": {
+    "listed_date": "2026-03-31",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  },
+  "00992B": {
+    "listed_date": "2026-10-08",
+    "listing_source": "證交所 ISIN 上櫃 ETF 清單",
+    "listing_source_url": "https://isin.twse.com.tw/isin/class_main.jsp?Page=1&chklike=Y&issuetype=3&market=2",
+    "listing_checked_at": "2026-10-21"
+  }
 }
