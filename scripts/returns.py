@@ -1,24 +1,26 @@
-"""區間報酬率：用 Yahoo 股市日線（收盤價已做分割還原）計算各檔 ETF 的市價報酬與含息報酬。
+"""區間報酬率：只用交易所開放資料逐日保存的官方收盤行情（exchange_daily）與資料庫的配息紀錄計算。
 
 - 市價報酬＝期末收盤價 ÷ 期初收盤價 − 1
-- 含息報酬＝期末收盤價 ÷ 期初還原收盤價 − 1（Yahoo 的還原收盤價已把期間的配息再投入）
-- 期初是起始日當天或之前最近的交易日；ETF 上市還不到該區間就不算，留空
-- 期末收盤價用查核後的數字（Yahoo 與交易所不一致時已改用交易所）
-- 含息報酬會和資料庫的配息紀錄（投信官網、交易所）核對：區間內有 Yahoo 沒列到或金額不符的配息，
-  該區間的含息報酬留空，不用可能漏算配息的數字
+- 含息報酬：配息在除息日以當天收盤價再投入，＝期末收盤價 ÷ 期初收盤價 × Π（1＋每單位配息 ÷ 除息日收盤價）− 1
+- 期初是起始日當天或之前最近的交易日（依證交所開休市日期），期末是網站的交易日
+- 官方收盤行情從開始保存那天起累積、不回補。期初早於保存起點、期初或期末沒有官方收盤價、
+  期間內有交易日沒有保存到這檔的收盤行情，或開休市日期沒有涵蓋時，該區間為 null
+- 交易所的漲跌價差是相對於當天參考價的差。參考價（收盤價 − 漲跌價差）比前一個收盤價低的部分要能用當天的配息解釋：
+  解釋不了的小幅調整（疑似漏列配息）只讓含息報酬為 null；大幅調整（疑似分割、合併）或無法核對時，市價與含息報酬都為 null
 """
 from __future__ import annotations
 
 import calendar
-import json
-from datetime import date, datetime, timedelta, timezone
-from pathlib import Path
+import sqlite3
+from collections import defaultdict
+from datetime import date, timedelta
 
-TW = timezone(timedelta(hours=8))
 PERIODS = ("1w", "1m", "3m", "6m", "ytd", "1y", "3y", "5y")
 MONTHS = {"1m": 1, "3m": 3, "6m": 6, "1y": 12, "3y": 36, "5y": 60}
-HISTORY_DAYS = 5 * 366 + 30  # 五年再多抓一個月，確保五年前那天之前有交易日
-SOURCE = "Yahoo 股市日線（含息報酬以還原收盤價計算，配息與投信官網、交易所紀錄核對）"
+SOURCE = ("證交所、櫃買中心開放資料逐日保存的官方收盤價（政府資料開放平臺資料集 11549、11370）；"
+          "含息報酬依資料庫的配息紀錄，在除息日以當天收盤價再投入")
+TICK = 0.05  # 參考價的容許誤差（元）：ETF 的升降單位最大 0.05 元
+DIVIDEND_MAX = 0.25  # 參考價比前一個收盤價低 25% 以內才可能是配息；更多、或參考價反而較高時疑似分割、合併
 
 
 def add_months(d: date, n: int) -> date:
@@ -36,66 +38,99 @@ def start_dates(end: str) -> dict[str, str]:
     return {p: starts[p].isoformat() for p in PERIODS}
 
 
-def parse_history(payloads: dict) -> dict[str, dict]:
-    """Yahoo 日線 → {代號: {"days": [(日期, 收盤價, 還原收盤價)], "dividends": [(除息日, 每單位金額)]}}。"""
-    def day(ts):
-        return datetime.fromtimestamp(int(ts), TW).strftime("%Y-%m-%d")
-
-    result = {}
-    for symbol, payload in (payloads or {}).items():
-        try:
-            chart = payload["chart"]["result"][0]
-            stamps = chart.get("timestamp") or []
-            close = chart["indicators"]["quote"][0].get("close") or []
-        except (KeyError, IndexError, TypeError):
-            continue
-        adj = ((chart["indicators"].get("adjclose") or [{}])[0].get("adjclose") or [None] * len(close))
-        events = (chart.get("events") or {}).get("dividends") or {}
-        result[symbol.split(".")[0]] = {
-            "days": [(day(t), c, a) for t, c, a in zip(stamps, close, adj) if c],
-            "dividends": sorted((day(v.get("date") or t), v.get("amount")) for t, v in events.items()),
-        }
-    return result
+def load(con: sqlite3.Connection) -> tuple[dict, dict, dict]:
+    """官方收盤行情 {代號: {日期: (收盤價, 漲跌價差)}}（收盤價不是正數時為 None）、{代號: 市場}，
+    以及各市場保存到收盤行情的日期 {市場: {日期}}。"""
+    series, markets, captured = defaultdict(dict), {}, defaultdict(set)
+    try:
+        rows = con.execute("SELECT code, date, market, close, change FROM exchange_daily ORDER BY date").fetchall()
+    except sqlite3.OperationalError:
+        rows = []
+    for code, day, market, close, change in rows:
+        series[code][day] = (close if close is not None and close > 0 else None, change)
+        markets[code] = market
+        captured[market].add(day)
+    return series, markets, captured
 
 
-def listed_in_yahoo(yahoo_divs: list, ex_date: str, cash: float | None) -> bool:
-    """資料庫的一筆配息在 Yahoo 找得到：除息日相差 3 天內，金額相差 1% 或 0.002 元以內。
-    ETF 分割後，Yahoo 會把分割前的配息除以分割比例（例如 1 拆 7 時 10.19 元變 1.4557 元），
-    所以金額剛好是整數倍（誤差 1% 內）也算同一筆。"""
-    d0 = date.fromisoformat(ex_date)
-    for d, amount in yahoo_divs:
-        if abs((date.fromisoformat(d) - d0).days) <= 3:
-            if cash is None or amount is None or abs(amount - cash) <= max(0.002, abs(cash) * 0.01):
-                return True
-            ratio = cash / amount if amount > 0 else 0
-            return round(ratio) >= 2 and abs(ratio - round(ratio)) <= round(ratio) * 0.01
-    return False
+def load_dividends(con: sqlite3.Connection) -> dict[str, dict[str, float | None]]:
+    """資料庫的配息紀錄 {代號: {除息日: 每單位配息}}；金額尚未公告時為 None。"""
+    out = defaultdict(dict)
+    for code, ex_date, cash in con.execute("SELECT code, ex_date, cash FROM dividend"):
+        out[code][ex_date] = cash
+    return out
 
 
-def compute(series: dict | None, end: str, end_price: float | None = None,
-            known_dividends: list[tuple[str, float | None]] = ()) -> dict | None:
-    """單檔的各區間報酬（%，四捨五入到小數兩位）。Yahoo 沒有期末那天的資料就整檔不算。"""
-    days = (series or {}).get("days") or []
-    idx = next((i for i in range(len(days) - 1, -1, -1) if days[i][0] == end), None)
-    if idx is None:
+def history_from(captured: dict) -> dict[str, str]:
+    """各市場官方收盤行情的保存起點。"""
+    return {market: min(days) for market, days in sorted(captured.items()) if days}
+
+
+def window(cal, start: str, end: str) -> tuple[str, list[str]] | None:
+    """期初（起始日當天或之前最近的交易日）與期初之後到期末的交易日；開休市日期沒涵蓋時回傳 None。"""
+    is_open = cal.is_open(start) if cal else None
+    if is_open is None:
         return None
-    last = end_price if end_price else days[idx][1]
+    base = start if is_open else cal.previous_trading_day(start)
+    if not base or base >= end:
+        return None
+    days = cal.trading_days((date.fromisoformat(base) + timedelta(days=1)).isoformat(), end)
+    return (base, days) if days else None
+
+
+def compute(series: dict, captured: set, end: str, cal, dividends: dict | None = None) -> dict | None:
+    """單檔的各區間報酬（%，四捨五入到小數兩位）。series 是 {日期: (收盤價, 漲跌價差)}，captured 是這檔所屬市場
+    保存到收盤行情的日期，dividends 是 {除息日: 每單位配息}。期末沒有官方收盤價時回傳 None。"""
+    last = (series.get(end) or (None, None))[0]
+    if last is None:
+        return None
+    dividends = dividends or {}
     price, total = {}, {}
     for period, start in start_dates(end).items():
-        base = next((days[i] for i in range(idx, -1, -1) if days[i][0] <= start), None)
-        price[period] = round((last / base[1] - 1) * 100, 2) if base else None
-        complete = base and base[2] and all(listed_in_yahoo(series.get("dividends") or [], d, cash)
-                                            for d, cash in known_dividends if base[0] < d <= end)
-        total[period] = round((last / base[2] - 1) * 100, 2) if complete else None
+        price[period] = total[period] = None
+        span = window(cal, start, end)
+        if span is None:
+            continue
+        base_day, days = span
+        base = (series.get(base_day) or (None, None))[0]
+        if base is None or any(d not in captured or d not in series for d in days):
+            continue
+        price_ok = total_ok = True
+        factor, prev = 1.0, base
+        for d in days:
+            close, change = series[d]
+            paid = d in dividends
+            cash = dividends.get(d)
+            if paid and cash is None:
+                total_ok = False  # 配息金額還沒公告
+            if close is None:
+                total_ok = total_ok and not paid  # 除息日沒有成交，沒有再投入的價格
+                continue  # 沒有成交：下一個有成交的日子再核對參考價
+            if change is None:
+                if not paid:
+                    price_ok = total_ok = False  # 無法核對參考價，可能漏掉分割、合併
+            else:
+                gap = prev - (close - change)  # 前一個收盤價比參考價高的部分，應該等於當天配息
+                if abs(gap - (cash or 0)) > TICK:
+                    if abs(gap) <= TICK or 0 < gap <= prev * DIVIDEND_MAX:
+                        total_ok = False  # 配息紀錄和參考價對不上（漏列、金額或日期不符）：市價報酬照算
+                    else:
+                        price_ok = total_ok = False  # 疑似分割、合併
+            if paid and cash:
+                factor *= 1 + cash / close
+            prev = close
+        if price_ok:
+            price[period] = round((last / base - 1) * 100, 2)
+            if total_ok:
+                total[period] = round((last / base * factor - 1) * 100, 2)
     return {"price": price, "total": total}
 
 
-def previous(out: Path, trade_date: str, source: str) -> dict[str, dict]:
-    """同一個交易日再跑（例如早上 08:50）時，沿用上一次輸出的報酬率，不必重抓五年日線。"""
-    try:
-        payload = json.loads(Path(out).read_text("utf-8"))
-    except (OSError, ValueError):
-        return {}
-    if payload.get("trade_date") != trade_date or payload.get("source") != source:
-        return {}
-    return {it["code"]: it["returns"] for it in payload.get("items") or [] if it.get("code") and it.get("returns")}
+def attach(con: sqlite3.Connection, items: list[dict], end: str, cal) -> dict:
+    """每檔附上區間報酬（items[].returns），回傳 latest.json 的 returns_info。"""
+    series, markets, captured = load(con)
+    dividends = load_dividends(con)
+    for it in items:
+        code = it["code"]
+        it["returns"] = compute(series.get(code) or {}, captured.get(markets.get(code), set()), end, cal, dividends.get(code))
+    return {"source": SOURCE, "starts": start_dates(end), "history_from": history_from(captured)}

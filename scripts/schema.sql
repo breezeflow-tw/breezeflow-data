@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS dividend (
   PRIMARY KEY (code, ex_date)
 );
 
--- 市價查核紀錄：Yahoo 股市與交易所數字不一致的明細
+-- 市價查核紀錄：Yahoo 股市與交易所數字不一致的明細。2026-10-21 起停用 Yahoo，不再寫入；既有紀錄保留
 CREATE TABLE IF NOT EXISTS price_check (
   date        TEXT NOT NULL,
   code        TEXT NOT NULL,

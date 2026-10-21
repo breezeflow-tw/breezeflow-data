@@ -75,41 +75,48 @@ class ParseTest(unittest.TestCase):
     def test_trade_date(self):
         TW = timezone(timedelta(hours=8))
         evening, morning = datetime(2026, 10, 19, 18, 23, tzinfo=TW), datetime(2026, 10, 20, 9, 20, tzinfo=TW)
-        stale = {"0050": {"date": "2026-10-16"}, "0056": {"date": "2026-10-16"}, "00679B": {"date": "2026-10-19"}}
-        probe = {"2026-10-16": {}, "2026-10-19": {}}
-        # 傍晚：證交所開放資料還停在上週五，Yahoo 已有當天收盤
-        self.assertEqual(f.trade_date({}, stale, evening, probe), "2026-10-19")
-        # 隔天開盤後才跑：Yahoo 當天的盤中日線不算，用前一個交易日
-        self.assertEqual(f.trade_date({}, {"0050": {"date": "2026-10-19"}}, morning, {**probe, "2026-10-20": {}}), "2026-10-19")
-        # Yahoo 抓不到時沿用交易所最多檔的日期；MIS 日期另需官方日曆與市價
-        self.assertEqual(f.trade_date({}, stale, evening, None), "2026-10-16")
         calendar = f.market_calendar.Calendar({}, {2026})
-        self.assertEqual(f.trade_date({"0050": {"date": "2026-10-16", "price": 20}}, {}, evening, {}, calendar), "2026-10-16")
+        stale = {"0050": {"date": "2026-10-16"}, "0056": {"date": "2026-10-16"}, "00679B": {"date": "2026-10-19"}}
+        # 傍晚：證交所開放資料還停在上週五（櫃買已是當天），MIS 已有當天市價：交易日換到當天
+        self.assertEqual(f.trade_date({"0050": {"date": "2026-10-19", "price": 20}}, stale, evening, calendar), "2026-10-19")
+        # MIS 抓不到時用交易所最多檔的日期，不因一檔較新的資料推進
+        self.assertEqual(f.trade_date({}, stale, evening, calendar), "2026-10-16")
+        # 隔天開盤後才跑：當天 MIS 的盤中資料不算，用前一個交易日
+        self.assertEqual(f.trade_date({"0050": {"date": "2026-10-20", "price": 20}}, {"0050": {"date": "2026-10-19"}}, morning,
+                                      calendar), "2026-10-19")
+        # MIS 日期另需官方日曆與市價
+        self.assertEqual(f.trade_date({"0050": {"date": "2026-10-16", "price": 20}}, {}, evening, calendar), "2026-10-16")
 
     def test_midnight_uses_newer_mis_and_same_day_issuer_nav(self):
         now = datetime(2026, 10, 22, 0, 30, tzinfo=f.TW)
         calendar = f.market_calendar.Calendar({}, {2026})
         nav = f.parse_nav({"a1": [{"msgArray": [{"a": "0050", "b": "測試基金", "e": "22", "f": "21.9",
                                                 "h": "21.2", "i": "20261021", "j": "17:00:00"}]}]})
-        exchange = {"0050": {"date": "2026-10-20", "close": 20, "name": "測試基金"}}
-        yahoo = {"0050": {"2026-10-20": {"close": 20}}}
-        day = f.trade_date(nav, exchange, now, yahoo["0050"], calendar)
+        exchange = {"0050": {"date": "2026-10-20", "close": 20, "name": "測試基金", "market": "上市"}}
+        day = f.trade_date(nav, exchange, now, calendar)
         self.assertEqual(day, "2026-10-21")
-        quotes, _ = f.reconcile(yahoo, exchange, day)
+        con = sqlite3.connect(":memory:")
+        store.ensure_schema(con)
+        con.execute("INSERT INTO exchange_daily(code, date, market, name, close, change, dataset, source_url) "
+                    "VALUES('0050', '2026-10-20', '上市', '測試基金', 20, 0.1, 'd', 'u')")
+        quotes = f.official_prices(con, exchange, day)
+        con.close()
         items = f.merge(nav, quotes, {}, day)
         f.apply_issuer(items, {"0050": {"source": "測試投信官網", "nav_estimate": 21.8,
                                        "nav_estimate_date": "2026-10-21"}}, day)
-        self.assertEqual(items[0]["price"], 22)  # 不把前天收盤價貼上昨天日期
+        # 證交所當天的官方收盤行情還沒公布：不用 MIS 市價補，也不把前天收盤價貼上昨天日期，折溢價一併留空
+        self.assertEqual((items[0]["price"], items[0]["premium"], items[0]["price_date"]), (None, None, None))
+        self.assertEqual(items[0]["price_note"], "證交所的官方收盤行情還沒公布（通常隔天清晨更新）")
         self.assertEqual((items[0]["nav"], items[0]["nav_date"]), (21.8, "2026-10-21"))
 
     def test_mis_intraday_future_and_invalid_dates_are_not_candidates(self):
         now = datetime(2026, 10, 22, 13, 0, tzinfo=f.TW)
         calendar = f.market_calendar.Calendar({}, {2026})
-        probe = {"2026-10-21": {}, "2026-10-22": {}, "2026-10-23": {}, "invalid": {}}
+        exchange = {"0050": {"date": "2026-10-21"}, "0056": {"date": "2026-10-22"}, "00679B": {"date": "invalid"}}
         for day in ("2026-10-22", "2026-10-23", "2026-02-30", "20261021", None):
             with self.subTest(day=day):
                 nav = {"0050": {"date": day, "price": 20}}
-                self.assertEqual(f.trade_date(nav, {}, now, probe, calendar), "2026-10-21")
+                self.assertEqual(f.trade_date(nav, exchange, now, calendar), "2026-10-21")
 
     def test_mis_needs_open_calendar_day_and_price(self):
         now = datetime(2026, 10, 27, 0, 30, tzinfo=f.TW)
@@ -119,18 +126,18 @@ class ParseTest(unittest.TestCase):
                                 ("2026-10-23", None, 20), ("2026-10-23", calendar, None)):
             with self.subTest(day=day, calendar=cal, price=price):
                 nav = {"0050": {"date": day, "price": price}}
-                self.assertEqual(f.trade_date(nav, {}, now, {"2026-10-22": {}}, cal), "2026-10-22")
+                self.assertEqual(f.trade_date(nav, {"0050": {"date": "2026-10-22"}}, now, cal), "2026-10-22")
 
     def test_mis_uses_majority_date(self):
         now = datetime(2026, 10, 22, 18, 0, tzinfo=f.TW)
         nav = {"0050": {"date": "2026-10-21", "price": 20}, "0056": {"date": "2026-10-21", "price": 30},
                "00999": {"date": "2026-10-22", "price": 40}}
-        self.assertEqual(f.trade_date(nav, {}, now, {"2026-10-20": {}}, f.market_calendar.Calendar({}, {2026})),
+        self.assertEqual(f.trade_date(nav, {"0050": {"date": "2026-10-20"}}, now, f.market_calendar.Calendar({}, {2026})),
                          "2026-10-21")
 
     def test_missing_dates_do_not_become_today(self):
         with self.assertRaisesRegex(ValueError, "無法確認已收盤"):
-            f.trade_date({}, {}, datetime(2026, 10, 22, 0, 30, tzinfo=f.TW), {})
+            f.trade_date({}, {}, datetime(2026, 10, 22, 0, 30, tzinfo=f.TW))
 
     def test_zero_price_is_missing(self):
         # 沒有成交的 ETF，證交所即時資料的市價是 0；淨值尚未計算時也是 0
@@ -160,14 +167,41 @@ class ParseTest(unittest.TestCase):
                 self.assertEqual(con.execute(f"SELECT COUNT(*) FROM {table} WHERE code = ?", (code,)).fetchone()[0], 0, table)
             con.close()
 
-    def test_reconcile_stale_exchange(self):
-        yahoo = {"0050": {"2026-10-19": {"close": 108.15, "change_pct": -0.78, "volume_lots": 50000}}}
-        exchange = {"0050": {"close": 109.0, "change_pct": 0.1, "volume_lots": 60000, "date": "2026-10-16"},
-                    "0056": {"close": 36.1, "change_pct": -0.3, "volume_lots": 18000, "date": "2026-10-16"}}
-        quotes, diffs = f.reconcile(yahoo, exchange, "2026-10-19")
-        # 交易所資料是別天的：價格不拿來查核，成交量也不能混用
-        self.assertEqual((quotes["0050"]["close"], quotes["0050"]["volume_lots"], quotes["0050"]["check"], diffs), (108.15, 50000, "未查核", []))
-        self.assertEqual((quotes["0056"]["close"], quotes["0056"]["volume_lots"]), (None, None))
+    def test_official_prices(self):
+        con = sqlite3.connect(":memory:")
+        store.ensure_schema(con)
+        con.executemany("INSERT INTO exchange_daily(code, date, market, name, close, change, volume_shares, dataset, source_url) "
+                        "VALUES(?, ?, ?, ?, ?, ?, ?, 'd', 'u')",
+                        [("0050", "2026-10-16", "上市", "元大台灣50", 52.35, 0.45, 25300000),
+                         ("00631L", "2026-10-16", "上市", "元大台灣50正2", None, None, 0),
+                         ("00679B", "2026-10-19", "上櫃", "元大美債20年", 28.0, -0.2, 1000000)])
+        exchange = {"0050": {"market": "上市", "name": "元大台灣50", "date": "2026-10-16"},
+                    "0056": {"market": "上市", "name": "元大高股息", "date": "2026-10-16"},
+                    "00679B": {"market": "上櫃", "name": "元大美債20年", "date": "2026-10-19", "units": 5e8}}
+        # 傍晚：櫃買已有 10/19 的官方收盤行情，證交所還停在 10/16：上市的留空並寫明原因，不混用別天的成交量
+        q = f.official_prices(con, exchange, "2026-10-19")
+        b = q["00679B"]
+        self.assertEqual((b["close"], b["volume_lots"], b["check"], b["source"], b["units"]), (28.0, 1000, "交易所", "櫃買中心收盤行情", 5e8))
+        self.assertAlmostEqual(b["change_pct"], -0.2 / 28.2 * 100)
+        self.assertEqual((q["0050"]["close"], q["0050"]["volume_lots"], q["0050"]["note"]),
+                         (None, None, "證交所的官方收盤行情還沒公布（通常隔天清晨更新）"))
+        # 證交所公布那天：有成交的照用；沒有成交、交易所沒列出的都寫明原因
+        q = f.official_prices(con, exchange, "2026-10-16")
+        self.assertEqual((q["0050"]["close"], q["0050"]["volume_lots"], q["0050"]["check"]), (52.35, 25300, "交易所"))
+        self.assertAlmostEqual(q["0050"]["change_pct"], 0.45 / 51.9 * 100)
+        self.assertEqual((q["00631L"]["close"], q["00631L"]["volume_lots"], q["00631L"]["note"]), (None, 0, "當天沒有成交"))
+        self.assertEqual((q["0056"]["close"], q["0056"]["note"]), (None, "交易所收盤行情沒有列出這檔"))
+        # MIS 的市價不補收盤價，也不用來算折溢價
+        mis = {"0056": {"name": "元大高股息", "price": 36.1, "nav": 36.0, "premium": 0.28, "nav_prev": 35.9, "date": "2026-10-16",
+                        "source_date": "20261016", "source_time": "13:30:00"}}
+        items = {it["code"]: it for it in f.merge(mis, q, {}, "2026-10-16")}
+        self.assertEqual((items["0050"]["price"], items["0050"]["price_source"], items["0050"]["price_date"], items["0050"]["price_note"]),
+                         (52.35, "證交所收盤行情", "2026-10-16", None))
+        self.assertEqual((items["0056"]["price"], items["0056"]["premium"], items["0056"]["price_note"]),
+                         (None, None, "交易所收盤行情沒有列出這檔"))
+        self.assertEqual((items["00631L"]["price"], items["00631L"]["price_date"], items["00631L"]["price_note"]),
+                         (None, None, "當天沒有成交"))
+        con.close()
 
     def test_clean_name(self):
         self.assertEqual(f.clean_name("國泰標普低波高息(本基金並無保證收益及配息)"), "國泰標普低波高息")
@@ -185,23 +219,6 @@ class ParseTest(unittest.TestCase):
         self.assertNotIn("2330", codes)  # 個股不收
         self.assertEqual(codes["00679B"], {"code": "00679B", "ex_date": "2026-10-16", "cash": 0.34})
         self.assertIsNone(codes["00757"]["cash"])  # 尚未公告金額
-
-    def test_yahoo_reconcile(self):
-        yahoo = f.parse_yahoo(json.loads((FIX / "yahoo.json").read_text("utf-8")))
-        self.assertEqual(yahoo["0050"]["2026-10-16"]["volume_lots"], 23500)
-        self.assertAlmostEqual(yahoo["0050"]["2026-10-16"]["change_pct"], 0.45 / 51.9 * 100)
-        exchange = {**f.parse_quotes(json.loads((FIX / "tpex.json").read_text("utf-8")), "上櫃"),
-                    **f.parse_quotes(json.loads((FIX / "twse.json").read_text("utf-8")), "上市")}
-        quotes, diffs = f.reconcile(yahoo, exchange, "2026-10-16")
-        self.assertEqual(quotes["0050"]["check"], "一致")  # 成交量不同不算不一致
-        self.assertEqual(quotes["0050"]["volume_lots"], 25300)  # 成交量採用交易所官方總量
-        self.assertEqual(quotes["00679B"]["check"], "一致")
-        self.assertEqual(quotes["00757"]["check"], "已修正")
-        self.assertEqual(quotes["00757"]["close"], 112.50)  # 不一致時採用交易所
-        self.assertEqual(diffs, [{"code": "00757", "field": "close", "yahoo": 112.8, "exchange": 112.5}])
-        self.assertEqual(quotes["00631L"]["check"], "未查核")
-        self.assertEqual(quotes["00631L"]["close"], 24.05)
-        self.assertEqual(quotes["0056"]["check"], "交易所")  # Yahoo 沒有這檔
 
     def test_issuer(self):
         self.assertEqual(f.issuer_from_name("元大台灣50"), "元大")
@@ -325,8 +342,8 @@ class CapitalTest(unittest.TestCase):
             {"a": "00927", "b": "群益半導體收益", "e": "38.22", "f": "37.95", "g": "", "h": "37.72", "i": "20261016", "j": "13:30:00"}]})
         (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
         twse = json.loads((fix / "twse.json").read_text("utf-8"))
-        twse += [{"Code": "00919", "Name": "群益台灣精選高息", "TradeVolume": "50,000,000", "ClosingPrice": "32.74", "Change": "-0.1000"},
-                 {"Code": "00927", "Name": "群益半導體收益", "TradeVolume": "9,000,000", "ClosingPrice": "38.22", "Change": "0.3000"}]
+        twse += [{"Date": "1151016", "Code": "00919", "Name": "群益台灣精選高息", "TradeVolume": "50,000,000", "ClosingPrice": "32.74", "Change": "-0.1000"},
+                 {"Date": "1151016", "Code": "00927", "Name": "群益半導體收益", "TradeVolume": "9,000,000", "ClosingPrice": "38.22", "Change": "0.3000"}]
         (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
         return fix
 
@@ -406,8 +423,8 @@ class FuhHwaTest(unittest.TestCase):
             {"a": "00768B", "b": "復華20年美債", "e": "47.95", "f": "47.87", "g": "", "h": "47.80", "i": "20261016", "j": "13:30:00"}]})
         (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
         twse = json.loads((fix / "twse.json").read_text("utf-8"))
-        twse += [{"Code": "00929", "Name": "復華台灣科技優息", "TradeVolume": "80,000,000", "ClosingPrice": "29.90", "Change": "0.1500"},
-                 {"Code": "00768B", "Name": "復華20年美債", "TradeVolume": "3,000,000", "ClosingPrice": "47.95", "Change": "0.0500"}]
+        twse += [{"Date": "1151016", "Code": "00929", "Name": "復華台灣科技優息", "TradeVolume": "80,000,000", "ClosingPrice": "29.90", "Change": "0.1500"},
+                 {"Date": "1151016", "Code": "00768B", "Name": "復華20年美債", "TradeVolume": "3,000,000", "ClosingPrice": "47.95", "Change": "0.0500"}]
         (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
         return fix
 
@@ -464,8 +481,8 @@ class KgiTest(unittest.TestCase):
             {"a": "00945B", "b": "凱基美國非投等債", "e": "14.50", "f": "14.46", "g": "", "h": "14.32", "i": "20261016", "j": "13:30:00"}]})
         (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
         twse = json.loads((fix / "twse.json").read_text("utf-8"))
-        twse += [{"Code": "009816", "Name": "凱基台灣TOP50", "TradeVolume": "60,000,000", "ClosingPrice": "16.20", "Change": "0.0500"},
-                 {"Code": "00945B", "Name": "凱基美國非投等債", "TradeVolume": "4,000,000", "ClosingPrice": "14.50", "Change": "0.0800"}]
+        twse += [{"Date": "1151016", "Code": "009816", "Name": "凱基台灣TOP50", "TradeVolume": "60,000,000", "ClosingPrice": "16.20", "Change": "0.0500"},
+                 {"Date": "1151016", "Code": "00945B", "Name": "凱基美國非投等債", "TradeVolume": "4,000,000", "ClosingPrice": "14.50", "Change": "0.0800"}]
         (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
         return fix
 
@@ -555,8 +572,8 @@ class FubonTest(unittest.TestCase):
             {"a": "00696B", "b": "富邦美債20年", "e": "30.70", "f": "30.58", "g": "", "h": "30.50", "i": "20261016", "j": "13:30:00"}]})
         (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
         twse = json.loads((fix / "twse.json").read_text("utf-8"))
-        twse += [{"Code": "006208", "Name": "富邦台50", "TradeVolume": "5,000,000", "ClosingPrice": "150.60", "Change": "0.6000"},
-                 {"Code": "00696B", "Name": "富邦美債20年", "TradeVolume": "3,000,000", "ClosingPrice": "30.70", "Change": "0.1500"}]
+        twse += [{"Date": "1151016", "Code": "006208", "Name": "富邦台50", "TradeVolume": "5,000,000", "ClosingPrice": "150.60", "Change": "0.6000"},
+                 {"Date": "1151016", "Code": "00696B", "Name": "富邦美債20年", "TradeVolume": "3,000,000", "ClosingPrice": "30.70", "Change": "0.1500"}]
         (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
         return fix
 
@@ -632,8 +649,8 @@ class CathayTest(unittest.TestCase):
             {"a": "00687B", "b": "國泰20年美債", "e": "30.30", "f": "30.21", "g": "", "h": "30.00", "i": "20261016", "j": "13:30:00"}]})
         (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
         twse = json.loads((fix / "twse.json").read_text("utf-8"))
-        twse += [{"Code": "00878", "Name": "國泰永續高股息", "TradeVolume": "50,000,000", "ClosingPrice": "25.10", "Change": "0.2000"},
-                 {"Code": "00687B", "Name": "國泰20年美債", "TradeVolume": "8,000,000", "ClosingPrice": "30.30", "Change": "0.1000"}]
+        twse += [{"Date": "1151016", "Code": "00878", "Name": "國泰永續高股息", "TradeVolume": "50,000,000", "ClosingPrice": "25.10", "Change": "0.2000"},
+                 {"Date": "1151016", "Code": "00687B", "Name": "國泰20年美債", "TradeVolume": "8,000,000", "ClosingPrice": "30.30", "Change": "0.1000"}]
         (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
         return fix
 
@@ -684,8 +701,8 @@ class CtbcTest(unittest.TestCase):
             {"a": "00772B", "b": "中信高評級公司債", "e": "32.70", "f": "32.60", "g": "", "h": "32.50", "i": "20261016", "j": "13:30:00"}]})
         (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
         twse = json.loads((fix / "twse.json").read_text("utf-8"))
-        twse += [{"Code": "00891", "Name": "中信關鍵半導體", "TradeVolume": "30,000,000", "ClosingPrice": "20.20", "Change": "0.1000"},
-                 {"Code": "00772B", "Name": "中信高評級公司債", "TradeVolume": "2,000,000", "ClosingPrice": "32.70", "Change": "0.1000"}]
+        twse += [{"Date": "1151016", "Code": "00891", "Name": "中信關鍵半導體", "TradeVolume": "30,000,000", "ClosingPrice": "20.20", "Change": "0.1000"},
+                 {"Date": "1151016", "Code": "00772B", "Name": "中信高評級公司債", "TradeVolume": "2,000,000", "ClosingPrice": "32.70", "Change": "0.1000"}]
         (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
         return fix
 
@@ -783,8 +800,8 @@ class NomuraTest(unittest.TestCase):
             {"a": "00987B", "b": "野村10+澳洲公債", "e": "15.70", "f": "15.60", "g": "", "h": "15.55", "i": "20261016", "j": "13:30:00"}]})
         (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
         twse = json.loads((fix / "twse.json").read_text("utf-8"))
-        twse += [{"Code": "00935", "Name": "野村臺灣新科技50", "TradeVolume": "20,000,000", "ClosingPrice": "57.00", "Change": "0.1500"},
-                 {"Code": "00987B", "Name": "野村10+澳洲公債", "TradeVolume": "1,000,000", "ClosingPrice": "15.70", "Change": "0.0500"}]
+        twse += [{"Date": "1151016", "Code": "00935", "Name": "野村臺灣新科技50", "TradeVolume": "20,000,000", "ClosingPrice": "57.00", "Change": "0.1500"},
+                 {"Date": "1151016", "Code": "00987B", "Name": "野村10+澳洲公債", "TradeVolume": "1,000,000", "ClosingPrice": "15.70", "Change": "0.0500"}]
         (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
         return fix
 
@@ -842,8 +859,8 @@ class JpmorganTest(unittest.TestCase):
             {"a": "00989A", "b": "主動摩根美國科技", "e": "17.60", "f": "17.50", "g": "", "h": "17.45", "i": "20261016", "j": "13:30:00"}]})
         (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
         twse = json.loads((fix / "twse.json").read_text("utf-8"))
-        twse += [{"Code": "00401A", "Name": "主動摩根台灣鑫收", "TradeVolume": "5,000,000", "ClosingPrice": "13.80", "Change": "0.1000"},
-                 {"Code": "00989A", "Name": "主動摩根美國科技", "TradeVolume": "1,000,000", "ClosingPrice": "17.60", "Change": "0.1500"}]
+        twse += [{"Date": "1151016", "Code": "00401A", "Name": "主動摩根台灣鑫收", "TradeVolume": "5,000,000", "ClosingPrice": "13.80", "Change": "0.1000"},
+                 {"Date": "1151016", "Code": "00989A", "Name": "主動摩根美國科技", "TradeVolume": "1,000,000", "ClosingPrice": "17.60", "Change": "0.1500"}]
         (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
         return fix
 
@@ -1017,8 +1034,8 @@ class AllianzTest(unittest.TestCase):
             {"a": "00412A", "b": "主動安聯亞半導體", "e": "9.10", "f": "9.02", "g": "", "h": "9.05", "i": "20261016", "j": "13:30:00"}]})
         (fix / "nav.json").write_text(json.dumps(nav, ensure_ascii=False), "utf-8")
         twse = json.loads((fix / "twse.json").read_text("utf-8"))
-        twse += [{"Code": "00984A", "Name": "主動安聯台灣高息", "TradeVolume": "20,000,000", "ClosingPrice": "15.30", "Change": "-0.6200"},
-                 {"Code": "00412A", "Name": "主動安聯亞半導體", "TradeVolume": "5,000,000", "ClosingPrice": "9.10", "Change": "0.0500"}]
+        twse += [{"Date": "1151016", "Code": "00984A", "Name": "主動安聯台灣高息", "TradeVolume": "20,000,000", "ClosingPrice": "15.30", "Change": "-0.6200"},
+                 {"Date": "1151016", "Code": "00412A", "Name": "主動安聯亞半導體", "TradeVolume": "5,000,000", "ClosingPrice": "9.10", "Change": "0.0500"}]
         (fix / "twse.json").write_text(json.dumps(twse, ensure_ascii=False), "utf-8")
         return fix
 
@@ -1047,9 +1064,17 @@ class AllianzTest(unittest.TestCase):
 
 
 class ReturnsTest(unittest.TestCase):
-    def history(self):
+    """區間報酬只用交易所開放資料逐日保存的官方收盤行情（合成數值，開休市日期用證交所 2026 年官方表）。"""
+    CAL = f.market_calendar.Calendar(f.market_calendar.parse(json.loads((FIX / "calendar.json").read_text("utf-8"))), {2026})
+    # 10/09 休市；10/13 除息 1 元：參考價 49.5 ＝ 前一個收盤價 50.5 − 1
+    SERIES = {"2026-10-08": (50.0, 0.5), "2026-10-12": (50.5, 0.5), "2026-10-13": (49.0, -0.5), "2026-10-14": (49.5, 0.5),
+              "2026-10-15": (50.0, 0.5), "2026-10-16": (51.0, 1.0)}
+
+    def compute(self, series=None, captured=None, dividends=None, end="2026-10-16", cal=None):
         import returns
-        return returns.parse_history(json.loads((FIX / "yahoo_history.json").read_text("utf-8")))
+        series = dict(self.SERIES if series is None else series)
+        return returns.compute(series, set(self.SERIES) if captured is None else captured, end, cal or self.CAL,
+                               {"2026-10-13": 1.0} if dividends is None else dividends)
 
     def test_start_dates(self):
         import returns
@@ -1060,55 +1085,67 @@ class ReturnsTest(unittest.TestCase):
                           "ytd": "2025-12-31", "1y": "2025-10-16", "3y": "2023-10-16", "5y": "2021-10-16"})
 
     def test_compute(self):
-        import returns
-        h = self.history()
-        r = returns.compute(h["0050"], "2026-10-16", 52.35, [("2026-07-21", 1.0)])
-        # 期初取起始日當天或之前最近的交易日：近一週的起始日 10/09 沒有資料，用 10/08
-        self.assertEqual(r["price"]["1w"], round((52.35 / 51.5 - 1) * 100, 2))
-        self.assertEqual((r["price"]["1y"], r["total"]["1y"]), (round((52.35 / 45 - 1) * 100, 2), round((52.35 / 42 - 1) * 100, 2)))
-        self.assertEqual(r["total"]["5y"], round((52.35 / 25 - 1) * 100, 2))
-        # 期末用查核後的收盤價
-        self.assertEqual(returns.compute(h["0050"], "2026-10-16", 52.0)["price"]["1m"], round((52.0 / 50.5 - 1) * 100, 2))
-        # 資料庫有、Yahoo 沒列到的配息：涵蓋那天的區間不算含息報酬，市價報酬照算
-        miss = returns.compute(h["0050"], "2026-10-16", 52.35, [("2026-08-20", 0.5)])
-        self.assertEqual((miss["total"]["1m"] is None, miss["total"]["3m"], miss["price"]["3m"] is None), (False, None, False))
-        # 配息金額不符也一樣
-        self.assertIsNone(returns.compute(h["0050"], "2026-10-16", 52.35, [("2026-07-21", 1.2)])["total"]["6m"])
-        # 分割前的配息：Yahoo 依分割比例調整過金額（1 拆 7），整數倍視為同一筆
-        self.assertTrue(returns.listed_in_yahoo([("2022-04-20", 1.455714)], "2022-04-20", 10.19))
-        self.assertFalse(returns.listed_in_yahoo([("2022-07-18", 0.22)], "2022-07-18", 0.3))
-        # 上市不到 3 年就不算 3 年、5 年報酬
-        b = returns.compute(h["00679B"], "2026-10-16", 28.0)
-        self.assertEqual((b["price"]["3y"], b["total"]["5y"]), (None, None))
-        self.assertIsNone(returns.compute(h["00679B"], "2026-10-19", 28.0))  # Yahoo 沒有期末那天
+        r = self.compute()
+        # 近一週的起始日 10/09 休市，期初用之前最近的交易日 10/08；配息在除息日以收盤價再投入
+        self.assertEqual(r["price"]["1w"], round((51 / 50 - 1) * 100, 2))
+        self.assertEqual(r["total"]["1w"], round((51 / 50 * (1 + 1 / 49) - 1) * 100, 2))
+        # 期初早於官方收盤行情的保存起點：留空，不回補
+        self.assertEqual((r["price"]["1m"], r["total"]["1y"], r["price"]["5y"]), (None, None, None))
+        # 期末沒有官方收盤價：整檔不算
+        self.assertIsNone(self.compute({**self.SERIES, "2026-10-16": (None, None)}))
 
-    def test_previous(self):
-        import returns
-        with tempfile.TemporaryDirectory() as tmp:
-            out = Path(tmp) / "latest.json"
-            out.write_text(json.dumps({"trade_date": "2026-10-16", "source": "live",
-                                       "items": [{"code": "0050", "returns": {"price": {"1m": 1.0}}}, {"code": "0056", "returns": None}]}), "utf-8")
-            self.assertEqual(returns.previous(out, "2026-10-16", "live"), {"0050": {"price": {"1m": 1.0}}})
-            self.assertEqual(returns.previous(out, "2026-10-19", "live"), {})  # 換了交易日要重算
-            self.assertEqual(returns.previous(out, "2026-10-16", "fixture"), {})
-            self.assertEqual(returns.previous(Path(tmp) / "none.json", "2026-10-16", "live"), {})
+    def test_dividend_checks(self):
+        # 資料庫漏列配息：參考價對不上前一個收盤價，含息報酬留空，市價報酬照算
+        r = self.compute(dividends={})
+        self.assertEqual((r["price"]["1w"], r["total"]["1w"]), (2.0, None))
+        # 配息金額還沒公告也一樣
+        r = self.compute(dividends={"2026-10-13": None})
+        self.assertEqual((r["price"]["1w"], r["total"]["1w"]), (2.0, None))
+        # 資料庫的配息日期不符（參考價那天沒有調整）：含息報酬留空，不當成分割
+        r = self.compute(dividends={"2026-10-13": 1.0, "2026-10-15": 0.5})
+        self.assertEqual((r["price"]["1w"], r["total"]["1w"]), (2.0, None))
+        # 除息日沒有成交：沒有再投入的價格，含息報酬留空；之後的參考價從最後一個收盤價核對
+        no_trade = {**self.SERIES, "2026-10-13": (None, None), "2026-10-14": (49.5, -0.0)}
+        r = self.compute(no_trade)
+        self.assertEqual((r["price"]["1w"], r["total"]["1w"]), (2.0, None))
 
-    def test_pipeline_and_reuse(self):
+    def test_split_and_gaps(self):
+        # 疑似分割（參考價比前一個收盤價低超過 25%）：市價、含息報酬都留空
+        split = {**self.SERIES, "2026-10-14": (12.4, 0.15), "2026-10-15": (12.5, 0.1), "2026-10-16": (12.75, 0.25)}
+        r = self.compute(split)
+        self.assertEqual((r["price"]["1w"], r["total"]["1w"]), (None, None))
+        # 期間內有交易日沒有保存到這個市場的收盤行情，或交易所沒有列出這檔
+        self.assertIsNone(self.compute(captured=set(self.SERIES) - {"2026-10-14"})["price"]["1w"])
+        self.assertIsNone(self.compute({d: v for d, v in self.SERIES.items() if d != "2026-10-14"})["price"]["1w"])
+        # 沒有漲跌價差、當天也沒有配息：無法核對參考價
+        self.assertIsNone(self.compute({**self.SERIES, "2026-10-15": (50.0, None)})["price"]["1w"])
+        # 開休市日期沒涵蓋：不判定期初
+        self.assertIsNone(self.compute(cal=f.market_calendar.Calendar({}, set()))["price"]["1w"])
+
+    def test_pipeline(self):
         with tempfile.TemporaryDirectory() as tmp:
-            fix = fixtures_without(tmp)
             db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
-            args = ["--fixtures", str(fix), "--db", str(db), "--out", str(out)]
-            self.assertEqual(f.main(args), 0)
+            # 先前已保存 10/08～10/15 的官方收盤行情（10/15 除息 1 元，參考價 50.4）；這次的測試資料補上 10/16（收盤 52.35、漲 0.45）
+            con = store.open_db(db, Path(tmp) / "history")
+            con.executemany("INSERT INTO exchange_daily(code, date, market, name, close, change, dataset, source_url) "
+                            "VALUES('0050', ?, '上市', '元大台灣50', ?, ?, 'd', 'u')",
+                            [("2026-10-08", 50.0, 0.1), ("2026-10-12", 50.5, 0.5), ("2026-10-13", 51.0, 0.5),
+                             ("2026-10-14", 51.4, 0.4), ("2026-10-15", 51.9, 1.5)])
+            con.commit()
+            con.close()
+            self.assertEqual(f.main(["--fixtures", str(FIX), "--db", str(db), "--out", str(out)]), 0)
             payload = json.loads(out.read_text("utf-8"))
-            self.assertEqual(payload["returns_info"]["starts"]["1y"], "2025-10-16")
+            info = payload["returns_info"]
+            self.assertEqual((info["starts"]["1y"], info["history_from"]), ("2025-10-16", {"上市": "2026-10-08", "上櫃": "2026-10-16"}))
+            self.assertIn("11549", info["source"])
             items = {i["code"]: i for i in payload["items"]}
-            self.assertEqual(items["0050"]["returns"]["price"]["1y"], round((52.35 / 45 - 1) * 100, 2))
-            self.assertIsNone(items["0056"]["returns"])  # Yahoo 沒有這檔的日線
-            # 同一交易日再跑：不再需要五年日線，沿用上次的報酬
-            (fix / "yahoo_history.json").unlink()
-            self.assertEqual(f.main(args), 0)
-            again = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
-            self.assertEqual(again["0050"]["returns"], items["0050"]["returns"])
+            # 交易所除權息預告的 0050 配息（10/15，1 元）在除息日以收盤價再投入
+            self.assertEqual((items["0050"]["returns"]["price"]["1w"], items["0050"]["returns"]["total"]["1w"]),
+                             (round((52.35 / 50 - 1) * 100, 2), round((52.35 / 50 * (1 + 1 / 51.9) - 1) * 100, 2)))
+            self.assertIsNone(items["0050"]["returns"]["price"]["1m"])  # 官方歷史還不到一個月
+            # 有官方收盤價、但還沒有歷史：各區間留空；沒有成交（沒有期末收盤價）：整檔不算
+            self.assertEqual(set(items["0056"]["returns"]["price"].values()), {None})
+            self.assertIsNone(items["00631L"]["returns"])
 
 
 class SitcaTest(unittest.TestCase):
@@ -1351,15 +1388,20 @@ class PipelineTest(unittest.TestCase):
             self.assertEqual(con.execute("SELECT COUNT(*) FROM etf").fetchone()[0], 5)
             con.close()
 
-    def test_price_check_saved(self):
+    def test_official_price_saved(self):
         with tempfile.TemporaryDirectory() as tmp:
             db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
             self.assertEqual(f.main(["--fixtures", str(FIX), "--db", str(db), "--out", str(out)]), 0)
             payload = json.loads(out.read_text("utf-8"))
-            self.assertEqual(payload["price_check"], {"一致": 2, "已修正": 1, "未查核": 1, "交易所": 1})
+            # 收盤價只用交易所的官方收盤行情；沒有成交的寫明原因，不再寫入 Yahoo 查核紀錄
+            self.assertEqual(payload["price_check"], {"交易所": 4, "無市價": 1})
+            items = {i["code"]: i for i in payload["items"]}
+            self.assertEqual((items["00757"]["price"], items["00757"]["price_check"]), (112.5, "交易所"))
+            self.assertEqual((items["00679B"]["price_source"], items["00679B"]["price_date"]), ("櫃買中心收盤行情", "2026-10-16"))
+            self.assertEqual((items["00631L"]["price"], items["00631L"]["price_note"]), (None, "當天沒有成交"))
             con = sqlite3.connect(db)
-            self.assertEqual(con.execute("SELECT code, field, yahoo, exchange FROM price_check").fetchall(),
-                             [("00757", "close", 112.8, 112.5)])
+            self.assertEqual(con.execute("SELECT COUNT(*) FROM price_check").fetchone()[0], 0)
+            self.assertEqual(con.execute("SELECT price, price_check FROM daily WHERE code = '0050'").fetchone(), (52.35, "交易所"))
             con.close()
 
     def test_size_and_dividends_in_output(self):

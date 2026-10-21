@@ -27,8 +27,8 @@
 | 資料 | 主要來源 | 查核／備援 |
 |---|---|---|
 | 淨值、規模、費用率、除息日、發放日、配息金額、成分股 | **各投信官網公告**（逐家接入中） | 證交所、櫃買中心開放資料 |
-| 收盤價 | **Yahoo 股市** | 證交所、櫃買中心逐檔查核；不一致時採用交易所並記錄在 `price_check` |
-| 成交量 | 證交所、櫃買中心官方總量 | Yahoo（實測系統性偏低 1～8%，只作備援） |
+| 收盤價、漲跌幅 | **證交所、櫃買中心 OpenAPI 收盤行情**（資料集 11549、11370，逐筆存在 `exchange_daily`） | 不用其他來源補值：當天還沒公布或沒有成交就留空並寫明原因。2026-10-21 起停用 Yahoo（擁有者核准 `docs/data-licensing.md` 第六節） |
+| 成交量 | 證交所、櫃買中心官方總量 | 無 |
 
 - **絕對不可編造或估計數字。** 抓不到就留空（`None` / `—`），並在輸出中說明。
   - 例外之一是擁有者要求的週申贖 `flows`：用官方的單位數增減 × 同日正式淨值推算，一律標示「估算」並附公式，資料不齊就留空，不補零。
@@ -43,7 +43,7 @@
 
 網站只讀這一個檔案。欄位沒有資料時一律是 `null`，畫面請顯示「—」，**不可自行估算或補值**。
 
-最上層：`generated_at`（產生時間）、`trade_date`（交易日）、`source`（`live` 或 `fixture`）、`has_nav`、`price_check`（市價查核統計）、`returns_info`（區間報酬的出處 `source` 與各區間起始日 `starts`）、`active_changes`（主動式 ETF 持股異動的台股彙總，見下）、`active_holdings`（主動式 ETF 持股資金動向，見下）、`attributions`（顯名資訊，見下）、`count`、`items`（每檔 ETF 一筆）。
+最上層：`generated_at`（產生時間）、`trade_date`（交易日）、`source`（`live` 或 `fixture`）、`has_nav`、`price_check`（收盤價狀態統計：`交易所` 是有官方收盤價，`無市價` 是沒有）、`returns_info`（區間報酬的出處 `source`、各區間起始日 `starts`，以及各市場官方收盤行情的保存起點 `history_from` `{上市, 上櫃}`）、`active_changes`（主動式 ETF 持股異動的台股彙總，見下）、`active_holdings`（主動式 ETF 持股資金動向，見下）、`attributions`（顯名資訊，見下）、`count`、`items`（每檔 ETF 一筆）。
 
 `attributions`：這次用到、已在政府資料開放平臺列為政府資料開放授權條款第 1 版的資料集，依條款顯名用 `[{provider, dataset, dataset_url, source_url, data_date, license, license_url}]`：提供機關、資料名稱、資料集頁、取得的端點、資料日期（年份取這個日期）、授權條款名稱與連結。目前只有交易所的收盤行情（上市資料集 11549、上櫃資料集 11370）；沒有用到時為空陣列。其他來源的授權狀態見 `docs/data-licensing.md`，不在此列不代表已取得授權。
 
@@ -56,7 +56,8 @@
 | 欄位 | 說明 |
 |---|---|
 | `code`、`name`、`issuer`、`category`、`market` | 代號、名稱、發行投信、類型、上市／上櫃 |
-| `price`、`change_pct`、`volume_lots`、`price_check` | 收盤價、漲跌幅 %、成交量（受益權單位數除以 1000 後取整數，介面稱「約千單位」，外幣線不一定等於張數）、市價查核結果；未提供狀態亦計入統計 |
+| `price`、`change_pct`、`volume_lots`、`price_check` | 收盤價、漲跌幅 %、成交量（受益權單位數除以 1000 後取整數，介面稱「約千單位」，外幣線不一定等於張數）、收盤價狀態（`交易所` 或 `null`）。三個數字都只用 `trade_date` 那天交易所的官方收盤行情，不用 MIS 市價或其他來源補；漲跌幅以交易所的漲跌價差 ÷ 參考價計算（除息日已扣除配息） |
+| `price_source`、`price_date`、`price_note` | 收盤價的出處（`證交所收盤行情`／`櫃買中心收盤行情`）與資料日期；沒有收盤價時兩者為 `null`，`price_note` 寫明原因：證交所的官方收盤行情還沒公布（隔天清晨才更新，傍晚與午夜的更新常見）、櫃買中心的還沒公布、當天沒有成交，或交易所收盤行情沒有列出這檔。折溢價只用官方收盤價計算，收盤價留空時折溢價也是 `null` |
 | `product` | 商品維度與欄位幣別：`asset_class`、`management`、`structure`、`region`、`strategy`、`trading_currency`、`trading_unit`、`main_code`、`nav_currency`、`aum_currency`、`fund_currency`，以及 `source`、`source_url`、`checked_at`、`rules_url`、`currency_basis`、`currency_source_url`。未知留 `null`；交易、淨值、規模幣別各自依採用來源判別，不能互相代換。保存為 `product_profile` 表／CSV 的 `profile_json`。新表由 `ensure_schema` 建立；舊日行情不回溯改寫。 |
 | `premium_reason` | 市價與淨值幣別不明或不同時，`premium` 留空並說明原因；同日正式淨值平均另要求日期與幣別一致。 |
 | `nav`、`nav_source` | 淨值與出處；出處含「正式淨值」代表投信公告的正式淨值（投信官網，或投信投顧公會的每日基金淨值），其餘為預估淨值（投信官網公布或證交所轉載）。優先順序：投信官網正式淨值 → 投信投顧公會正式淨值 → 投信官網預估淨值 → 證交所轉載的預估淨值 |
@@ -78,7 +79,7 @@
 | `sitca_monthly` | 投信投顧公會 ETF 月統計（`SITCA_ETF/etf_statement2.aspx`，以證券代號對應）`{code, month, currency, aum, nav, units, subscriptions, redemptions, beneficiaries, net_amount, source, source_url, published_at}`：金額為億元，`net_amount` 為申購減買回，`published_at` 為公會公布日；非新台幣級別的 `nav` 為 `null`。只用截至交易日已經公布的月份 |
 | `flows` | 週申贖**估算**（擁有者要求的推算值，見資料來源規則的例外）：本週 `{start, end, baseline, net_amount, net_rate, units_rate, aum_change, aum_rate, status, reason, method, sources}`，加上 `as_of`、`latest_official_date`、近 4 週合計 `four_week_amount`、淨申購週數 `positive_weeks`、可計算週數 `available_weeks`、各週明細 `weeks[]`、已取得的特殊事件 `events[]` 與 `events_status`。`net_amount` 單位億元，為逐日「流通單位數增減 × 同日投信正式淨值」加總；期初到本週任一個交易日缺官方資料、幣別未確認或遇分割合併等事件時為 `null`，`reason` 說明原因。各週另有選用欄位（舊資料可能沒有）：`calendar`（`官方開休市日期`／`未涵蓋`／`未使用`）、`trading_days`（本週交易日）、`closed_days`（本週休市的平日）與機器可讀的原因 `reason_code`（`calendar_unknown` 日曆未涵蓋、`market_closed` 整週休市、`missing_official` 缺官方日資料、`currency_unconfirmed`、`special_event`、`incomplete`、`units_mismatch`、`split_suspected`、`source_changed`；可估算時為 `null`）。有官方開休市日期時，`baseline` 是本週第一天之前最近的交易日（例如前週五休市就是前週四），只比較交易日；官方表沒涵蓋的年度不判定休市，該週為 `null`。整週休市時 `status` 為「休市」、`net_amount` 為 `null`。各週 `sources[]` 是逐日官方快照 `{date, source, url}`，另有選用的 `announced`（投信標示的公告日期，即申購買回清單的清單日期；沒有標示時為 `null`）、`first_observed_at`、`observed_at`（本站第一次與最近一次取得的時間） |
 | `expense` | 投信投顧公會公布的年度實際費用比率 `{year, mgmt, custodian, other, total, source}`，單位 %：經理費、保管費、其他費用與合計（含交易成本）。年中才成立的 ETF 沒有整年資料，為 `null` |
-| `returns` | 區間報酬 `{price: {...}, total: {...}}`，單位 %。`price` 是市價報酬，`total` 是含息報酬（配息再投入）。區間代號：`1w` 近一週、`1m` 近一月、`3m` 近三月、`6m` 近六月、`ytd` 今年以來、`1y` 近一年、`3y` 近三年、`5y` 近五年。期初是 `returns_info.starts` 那天或之前最近的交易日，期末是 `trade_date`。上市不到該區間、或配息紀錄核對不符時為 `null`；整檔沒有資料時 `returns` 為 `null` |
+| `returns` | 區間報酬 `{price: {...}, total: {...}}`，單位 %。`price` 是市價報酬，`total` 是含息報酬（配息再投入）。區間代號：`1w` 近一週、`1m` 近一月、`3m` 近三月、`6m` 近六月、`ytd` 今年以來、`1y` 近一年、`3y` 近三年、`5y` 近五年。期初是 `returns_info.starts` 那天或之前最近的交易日（依證交所開休市日期），期末是 `trade_date`。只用 `exchange_daily` 逐筆保存的官方收盤價（2026-10-19 起累積，不回補），含息報酬把資料庫的配息在除息日以收盤價再投入。期初早於官方歷史起點、期間內有交易日沒有保存到行情、參考價顯示疑似分割合併時為 `null`；配息紀錄和交易所參考價對不上時只有 `total` 為 `null`；期末沒有官方收盤價時 `returns` 為 `null` |
 
 `product` 的分類補充欄位：`official_name`、`classification_code`、`region_scope`、`region_basis`、`strategy_basis`、`data_month`、`reference_code`、`classification_source_url`、`classification_month`。地域「跨國（公告範圍）」是申報允許範圍，不是即時持倉地域；策略是本站按官方名稱整理，未明示者只寫指數追蹤／主動選股等概括定位，不推成市值型。公會 `fund_info` 保留 `class_code`、`investment_region`；原始來源月份不可被投信人工查核頁面沿用。外幣交易線可共用基金定位，但不能繼承主交易線的規模與淨值幣別。
 

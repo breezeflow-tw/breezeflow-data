@@ -36,6 +36,9 @@ class OfficialQuotesTest(unittest.TestCase):
         # 價格 0、空白是沒有成交，存成空值；成交股數 0 照存
         z = rows["00999X"]
         self.assertEqual((z["close"], z["open"], z["volume_shares"]), (None, None, 0.0))
+        # 負數、NaN、Infinity 不是有效價格
+        bad = [{**TWSE[0], "Code": c, "ClosingPrice": v} for c, v in (("00991X", "-1.00"), ("00992X", "NaN"), ("00993X", "Infinity"))]
+        self.assertEqual([r["close"] for r in oq.parse(bad, [])], [None, None, None])
         b = rows["00679B"]
         self.assertEqual((b["date"], b["market"], b["close"], b["change"], b["transactions"], b["dataset"]),
                          ("2026-10-20", "上櫃", 28.0, -0.03, 1200.0, "上櫃股票行情"))
@@ -63,11 +66,15 @@ class OfficialQuotesTest(unittest.TestCase):
             db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
             self.assertEqual(f.main(["--fixtures", str(ROOT / "tests" / "fixtures"), "--db", str(db), "--out", str(out)]), 0)
             payload = json.loads(out.read_text("utf-8"))
-            # 測試資料的上市行情沒有資料日期，只有上櫃那一筆寫入
-            self.assertEqual([x["dataset"] for x in payload["attributions"]], ["上櫃股票行情"])
+            self.assertEqual([x["dataset"] for x in payload["attributions"]], ["盤後資訊 > 個股日成交資訊", "上櫃股票行情"])
             con = sqlite3.connect(db)
-            self.assertEqual(con.execute("SELECT code, date, close FROM exchange_daily").fetchall(), [("00679B", "2026-10-16", 28.0)])
+            # 沒有成交的 00631L 也保存（收盤價空值）；網站的收盤價就是這張表的原值
+            self.assertEqual(con.execute("SELECT code, date, close FROM exchange_daily ORDER BY code").fetchall(),
+                             [("0050", "2026-10-16", 52.35), ("0056", "2026-10-16", 36.1), ("00631L", "2026-10-16", None),
+                              ("00679B", "2026-10-16", 28.0), ("00757", "2026-10-16", 112.5)])
             con.close()
+            items = {i["code"]: i for i in payload["items"]}
+            self.assertEqual((items["0050"]["price"], items["0050"]["price_source"]), (52.35, "證交所收盤行情"))
             # 依日期分檔保存
             self.assertTrue((Path(tmp) / "history" / "exchange_daily" / "2026-10-16.csv").exists())
 

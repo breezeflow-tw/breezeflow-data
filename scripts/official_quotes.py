@@ -4,7 +4,8 @@
 - 上櫃：櫃買中心 OpenAPI tpex_mainboard_daily_close_quotes，資料集 11370「上櫃股票行情」（含 ETF）
 - 兩個端點都只有最新一天，沒有可依日期查的歷史：每次執行保存當下的原值，日期用交易所標示的資料日期
 - 價格是 0、空白或「--」代表沒有成交或沒有資料，存成空值；成交股數 0 照存
-- 這張表只放交易所原值，不改變網站目前採用的收盤價（daily 表）
+- 網站的收盤價、漲跌幅、成交量都從這張表取網站交易日那天的原值（fetch_etf.official_prices），區間報酬也只用這張表；
+  2026-10-19 起逐日累積，之前以 Yahoo 為主來源的 daily 歷史不改標籤、不算官方歷史
 - 主動式 ETF 持有的台股股票另存 stock_close（只有收盤價），供持股資金動向估值；同樣從開始保存那天起逐日累積，不回補
 - 兩個資料集在政府資料開放平臺列為政府資料開放授權條款第 1 版（docs/data-licensing.md 證據 10、11），
   利用時須標示提供機關、年份、資料名稱與版本、授權聲明連結：latest.json 的 attributions 列出這些資訊
@@ -67,7 +68,7 @@ def parse(twse_rows, tpex_rows) -> list[dict]:
             for k in ("open", "high", "low", "close", "change", "volume_shares", "trade_value", "transactions"):
                 rec[k] = num(f.get(k))
             for k in PRICES:
-                rec[k] = rec[k] or None  # 價格 0 是沒有成交
+                rec[k] = rec[k] if rec[k] is not None and rec[k] > 0 else None  # 價格 0 是沒有成交；負數不是有效價格
             out.append(rec)
     return out
 
