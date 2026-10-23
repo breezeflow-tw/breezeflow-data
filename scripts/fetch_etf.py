@@ -690,20 +690,44 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
         con.close()
 
 
+def mis_evening(clock: datetime, day: str) -> bool:
+    """MIS「前一營業日淨值」可以直接採用的時段：MIS 日期當天收盤後到晚間（台灣時間 13:30～21:00）。
+    隔天早上 MIS 日期還沒換時，部分 ETF 已換成當天的淨值（2026-10-23 早上實測），不能採用。"""
+    local = clock.astimezone(TW)
+    return local.date().isoformat() == day and "13:30" <= local.strftime("%H:%M") < "21:00"
+
+
+def previous_business_day(con: sqlite3.Connection, day: str, cal: market_calendar.Calendar | None) -> str | None:
+    """day 之前最近一個真的有交易的日子。依官方開休市日期往前找；日曆上開市、本站卻沒有那天的行情，
+    而且那天 18:00 以後取得的櫃買中心收盤行情還是更早的日期（櫃買中心收盤當天就會更新），就是臨時休市
+    （例如颱風；2026-10-23 晚上 21:20 櫃買中心仍是 10/22 的行情），再往前找。
+    官方表沒涵蓋時用本站最近的交易日；無法確定時回傳 None。"""
+    for _ in range(10):
+        prev = cal.previous_trading_day(day) if cal else None
+        if prev is None:
+            return con.execute("SELECT MAX(date) FROM daily WHERE date < ?", (day,)).fetchone()[0]
+        if con.execute("SELECT 1 FROM daily WHERE date = ? LIMIT 1", (prev,)).fetchone():
+            return prev
+        if not con.execute("SELECT 1 FROM exchange_daily WHERE market = '上櫃' AND date < ? AND observed_at >= ? LIMIT 1",
+                           (prev, f"{prev}T18:00:00+08:00")).fetchone():
+            return None
+        day = prev
+    return None
+
+
 def align_daily(con: sqlite3.Connection, items: list[dict], date: str, cal: market_calendar.Calendar | None) -> None:
     """每日行情表那一天的列只放那一天的數字（在週申贖附上官方規模與日期之後執行）：
     - 規模：只放資料日期就是這一天的官方規模，沒有就留空，不把別天或推算的規模寫進來；
       之後才公告的同一天官方規模（投信官網逐日資料）補進還空著的列
-    - 前一營業日淨值：用本站保存的前一個交易日正式淨值；MIS 的同名欄位隔天早上會先換成當天的淨值、日期欄卻沒變，不直接採用
+    - 前一營業日淨值：交易日當天晚間取得的 MIS 數字已在存檔時寫入；還空著時，用本站保存的前一營業日正式淨值補上
     只改寫網站交易日這一列與空白欄，不改既有歷史的數字。"""
-    prev = cal.previous_trading_day(date) if cal else None
-    if prev is None:
-        prev = con.execute("SELECT MAX(date) FROM daily WHERE date < ?", (date,)).fetchone()[0]
+    prev = previous_business_day(con, date, cal)
     official = dict(con.execute("SELECT code, nav_official FROM daily WHERE date = ? AND nav_official IS NOT NULL", (prev,))) if prev else {}
+    stored = dict(con.execute("SELECT code, nav_prev FROM daily WHERE date = ? AND nav_prev IS NOT NULL", (date,)))
     rows = []
     for it in items:
         aum = it.get("aum") if it.get("aum_date") == date else None
-        it["nav_prev"] = official.get(it["code"])
+        it["nav_prev"] = stored.get(it["code"], official.get(it["code"]))
         rows.append({"code": it["code"], "date": date, "aum": aum, "aum_source": it.get("aum_source") if aum is not None else None,
                      "nav_prev": it["nav_prev"]})
     con.executemany("UPDATE daily SET aum = :aum, aum_source = :aum_source, nav_prev = :nav_prev WHERE date = :date AND code = :code",
@@ -759,7 +783,7 @@ MIS_TICK = 0.01  # MIS 的淨值多半只到小數兩位、四位小數的淨值
 
 
 def save_official_nav(con: sqlite3.Connection, nav: dict, clock: datetime | None = None) -> None:
-    """MIS 的「前一營業日淨值」是投信公告的正式淨值，補進前一個交易日那一列的空白，並算出正式折溢價。
+    """MIS 的「前一營業日淨值」是投信公告的正式淨值，補進前一營業日（臨時休市往前找）那一列的空白，並算出正式折溢價。
     這個欄位沒有標示淨值日期，要看取得的時間（clock，台灣時間）判斷；2026-10-19～23 共 23 次排程輸出實測：
     - MIS 日期當天收盤後到晚間（13:30～21:00）：都是前一個交易日的淨值，照常補
     - 隔天早上、MIS 日期還沒換：部分 ETF 已換成 MIS 日期當天的淨值，日期欄卻沒變
@@ -772,7 +796,7 @@ def save_official_nav(con: sqlite3.Connection, nav: dict, clock: datetime | None
     cal = market_calendar.load(con)
 
     def before(day):
-        return cal.previous_trading_day(day) or con.execute("SELECT MAX(date) FROM daily WHERE date < ?", (day,)).fetchone()[0]
+        return previous_business_day(con, day, cal) if day else None
 
     def official(day):
         return dict(con.execute("SELECT code, nav_official FROM daily WHERE date = ? AND nav_official IS NOT NULL", (day,))) if day else {}
@@ -787,7 +811,7 @@ def save_official_nav(con: sqlite3.Connection, nav: dict, clock: datetime | None
             continue
         today = clock.date().isoformat() == mis_date
         if con.execute("SELECT 1 FROM daily WHERE date = ? LIMIT 1", (mis_date,)).fetchone():
-            evening = today and "13:30" <= clock.strftime("%H:%M") < "21:00"
+            evening = mis_evening(clock, mis_date)
             other = official(mis_date)  # 可能已換成 MIS 日期當天的淨值
         else:
             evening = False
@@ -1111,6 +1135,9 @@ def main(argv=None) -> int:
         print("警告：沒有淨值資料，本次只更新價格與成交量。", file=sys.stderr)
     quotes, diffs = reconcile(yahoo, exchange, date)
     items = merge(nav, quotes, load_meta(), date, parse_fund(raw["fund"]))
+    if not mis_evening(clock, date):
+        for it in items:
+            it["nav_prev"] = None  # MIS 的前一營業日淨值只在交易日當天晚間採用，其他時間不覆蓋已保存的數字
     dividends = [d for d in parse_dividends(raw["div_twse"], raw["div_tpex"]) if d["code"] not in EXCLUDED]
 
     # 各投信是不同網站，同時抓；同一個網站內仍逐筆、放慢速度

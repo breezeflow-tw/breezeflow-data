@@ -1428,18 +1428,33 @@ class DailyDateTest(unittest.TestCase):
         self.assertEqual(self.official(con, "2026-10-22")[0], 51.9)
 
     def test_align_daily_uses_same_day_values(self):
-        rows = [("2026-10-19", "0050", 49.0, 49.8, None, None, None), ("2026-10-21", "0050", 51.0, None, 999.0, "舊值", 51.2),
-                ("2026-10-21", "0056", 41.0, None, 88.0, "舊值", 41.3)]
+        rows = [("2026-10-19", c, 49.0, n, None, None, None) for c, n in (("0050", 49.8), ("0056", 40.9), ("00757", 108.0))]
+        rows += [("2026-10-21", "0050", 51.0, None, 999.0, "舊值", None), ("2026-10-21", "0056", 41.0, None, 88.0, "舊值", 41.3),
+                 ("2026-10-21", "00757", 110.0, None, None, None, None)]
         con = self.db(rows)
         items = [{"code": "0050", "aum": 123.4, "aum_date": "2026-10-21", "aum_source": "元大投信官網"},
-                 {"code": "0056", "aum": 88.0, "aum_date": "2026-10-20", "aum_source": "元大投信官網"}]
+                 {"code": "0056", "aum": 88.0, "aum_date": "2026-10-20", "aum_source": "元大投信官網"},
+                 {"code": "00757", "aum": None}]
         cal = f.market_calendar.Calendar({"2026-10-20": {"is_open": False}}, {2026})  # 10/20 休市：前一個交易日是 10/19
         f.align_daily(con, items, "2026-10-21", cal)
         got = {c: r for c, *r in con.execute("SELECT code, aum, aum_source, nav_prev FROM daily WHERE date='2026-10-21'")}
-        self.assertEqual(got["0050"], [123.4, "元大投信官網", 49.8])
-        self.assertEqual(got["0056"], [None, None, None])  # 規模是別天的、前一個交易日沒有正式淨值：都留空
-        self.assertEqual([it["nav_prev"] for it in items], [49.8, None])
+        self.assertEqual(got["0050"], [123.4, "元大投信官網", 49.8])  # 空白：用前一營業日保存的正式淨值
+        self.assertEqual(got["0056"], [None, None, 41.3])  # 規模是別天的：留空；晚間取得的前一營業日淨值不覆蓋
+        self.assertEqual([it["nav_prev"] for it in items], [49.8, 41.3, 108.0])
         self.assertEqual(items[1]["aum"], 88.0)  # 網站沿用附日期的最新官方規模，只有每日行情表對齊日期
+
+    def test_previous_business_day_skips_unscheduled_closure(self):
+        """日曆上開市、本站沒有行情，而且當晚確認過櫃買中心還是更早的行情：臨時休市（2026-10-23 實例）。"""
+        con = self.db([("2026-10-22", "0050", 56.3, 56.16, None, None, None), ("2026-10-27", "0050", 56.5, None, None, None, None)])
+        cal = f.market_calendar.Calendar({"2026-10-26": {"is_open": False}}, {2026})
+        self.assertIsNone(f.previous_business_day(con, "2026-10-27", cal))  # 沒有 10/23 當晚的證據：無法確定
+        con.execute("""INSERT INTO exchange_daily(code, date, market, dataset, source_url, first_observed_at, observed_at)
+                       VALUES('00679B', '2026-10-22', '上櫃', '上櫃股票行情', 'https://example.com', ?, ?)""",
+                    ("2026-10-22T18:29:59+08:00", "2026-10-23T09:29:36+08:00"))
+        self.assertIsNone(f.previous_business_day(con, "2026-10-27", cal))  # 10/23 早上的觀察不算
+        con.execute("UPDATE exchange_daily SET observed_at = '2026-10-23T21:20:09+08:00'")
+        self.assertEqual(f.previous_business_day(con, "2026-10-27", cal), "2026-10-22")
+        self.assertEqual(f.previous_business_day(con, "2026-10-22", f.market_calendar.Calendar({}, set())), None)  # 官方表沒涵蓋：本站之前沒有交易日
 
     def test_align_daily_fills_later_official_aum(self):
         con = self.db([("2026-10-20", "0050", 50.0, None, None, None, None), ("2026-10-20", "0056", 40.0, None, 77.0, "交易所資料推算", None),
@@ -1517,6 +1532,28 @@ class PipelineTest(unittest.TestCase):
             con.close()
             items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
             self.assertEqual(items["0050"]["nav"], 52.25)
+
+    def test_mis_prev_nav_only_from_evening_snapshot(self):
+        """MIS 的前一營業日淨值只在交易日當天晚間採用：隔天早上 MIS 日期沒換、數字卻已換成當天的淨值，不能覆蓋。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            fix = fixtures_without(tmp, "yuanta")
+            run = ["--db", str(db), "--out", str(out)]
+            self.assertEqual(f.main(["--fixtures", str(fix), *run, "--clock", "2026-10-16T18:20:00"]), 0)
+            self.assertEqual({i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}["0050"]["nav_prev"], 51.90)
+
+            rolled = Path(tmp) / "rolled"
+            shutil.copytree(fix, rolled)
+            nav = json.loads((rolled / "nav.json").read_text("utf-8"))
+            for block in nav["a1"]:
+                for row in block["msgArray"]:
+                    row["h"] = row["f"]  # 已換成 10/16 當天的淨值，日期欄還是 10/16
+            (rolled / "nav.json").write_text(json.dumps(nav), "utf-8")
+            self.assertEqual(f.main(["--fixtures", str(rolled), *run, "--clock", "2026-10-19T09:25:00"]), 0)
+            self.assertEqual({i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}["0050"]["nav_prev"], 51.90)
+            con = sqlite3.connect(db)
+            self.assertEqual(con.execute("SELECT nav_prev FROM daily WHERE code='0050' AND date='2026-10-16'").fetchone()[0], 51.90)
+            con.close()
 
     def test_morning_run_records_official_nav(self):
         """早上開盤前：淨值資料已換成下個交易日，收盤行情還是前一天。"""

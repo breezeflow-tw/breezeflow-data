@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS daily (
   price        REAL,              -- 收盤價（無收盤價時用即時成交價）
   change_pct   REAL,              -- 漲跌幅（%）
   nav          REAL,              -- 投信預估淨值
-  nav_prev     REAL,              -- 前一個交易日的正式淨值（本站保存的，不直接用 MIS 的同名欄位）
+  nav_prev     REAL,              -- 前一營業日的正式淨值：當天晚間取得的 MIS 數字，或本站保存的前一營業日正式淨值
   premium      REAL,              -- 折溢價（%），正數為溢價
   volume_lots  INTEGER,           -- 成交受益權單位數除以 1000 後取整數；外幣交易線不等於張數
   source_time  TEXT,              -- 淨值資料時間
