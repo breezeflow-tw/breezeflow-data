@@ -203,6 +203,20 @@ class ParseTest(unittest.TestCase):
         self.assertAlmostEqual(q["0050"]["change_pct"], 0.45 / 51.9 * 100)
         self.assertEqual((q["00631L"]["close"], q["00631L"]["volume_lots"], q["00631L"]["note"]), (None, 0, "當天沒有成交"))
         self.assertEqual((q["0056"]["close"], q["0056"]["note"]), (None, "交易所收盤行情沒有列出這檔"))
+        # 除息日：證交所的漲跌價差記 0，不是相對除息參考價的漲跌，漲跌幅留空並寫明原因；平常日子持平照算 0
+        con.executemany("INSERT INTO exchange_daily(code, date, market, name, close, change, volume_shares, dataset, source_url) "
+                        "VALUES(?, ?, '上市', ?, ?, ?, 1000, 'd', 'u')",
+                        [("0056", "2026-10-15", "元大高股息", 36.5, 0.1), ("0056", "2026-10-16", "元大高股息", 35.1, 0.0),
+                         ("006208", "2026-10-15", "富邦台50", 150.0, 1.0), ("006208", "2026-10-16", "富邦台50", 150.0, 0.0)])
+        con.execute("INSERT INTO dividend(code, ex_date, cash) VALUES('0056', '2026-10-16', 1.2)")
+        ex = f.official_prices(con, exchange, "2026-10-16")
+        self.assertEqual((ex["0056"]["close"], ex["0056"]["change_pct"]), (35.1, None))
+        self.assertIn("除息、除權日", ex["0056"]["change_note"])
+        self.assertEqual((ex["006208"]["change_pct"], ex["006208"]["change_note"]), (0.0, None))
+        merged = {it["code"]: it for it in f.merge({}, ex, {}, "2026-10-16")}
+        self.assertEqual((merged["0056"]["change_pct"], merged["0056"]["change_note"] is not None), (None, True))
+        con.execute("DELETE FROM exchange_daily WHERE code IN ('0056', '006208')")
+        con.execute("DELETE FROM dividend")
         # MIS 的市價不補收盤價，也不用來算折溢價
         mis = {"0056": {"name": "元大高股息", "price": 36.1, "nav": 36.0, "premium": 0.28, "nav_prev": 35.9, "date": "2026-10-16",
                         "source_date": "20261016", "source_time": "13:30:00"}}
@@ -1142,6 +1156,18 @@ class ReturnsTest(unittest.TestCase):
         r = self.compute(no_trade)
         self.assertEqual((r["price"]["1w"], r["total"]["1w"]), (2.0, None))
 
+    def test_exchange_ex_dividend_change(self):
+        # 實測：除息日證交所的漲跌價差記 0、櫃買中心空白，不是相對參考價的漲跌；有配息紀錄就以配息解釋
+        for change in (0.0, None):
+            r = self.compute({**self.SERIES, "2026-10-13": (49.0, change)})
+            self.assertEqual((r["price"]["1w"], r["total"]["1w"]), (2.0, round((51 / 50 * (1 + 1 / 49) - 1) * 100, 2)), change)
+        # 除息當天收盤價剛好等於前一天收盤價（漲跌記 0）也一樣
+        r = self.compute({**self.SERIES, "2026-10-13": (50.5, 0.0), "2026-10-14": (51.0, 0.5), "2026-10-15": (50.0, -1.0)})
+        self.assertEqual(r["total"]["1w"], round((51 / 50 * (1 + 1 / 50.5) - 1) * 100, 2))
+        # 平常日子收盤價沒變，漲跌記 0 是真的持平
+        r = self.compute({**self.SERIES, "2026-10-14": (49.0, 0.0), "2026-10-15": (50.0, 1.0)})
+        self.assertEqual(r["total"]["1w"], round((51 / 50 * (1 + 1 / 49) - 1) * 100, 2))
+
     def test_split_and_gaps(self):
         # 疑似分割（參考價比前一個收盤價低超過 25%）：市價、含息報酬都留空
         split = {**self.SERIES, "2026-10-14": (12.4, 0.15), "2026-10-15": (12.5, 0.1), "2026-10-16": (12.75, 0.25)}
@@ -1150,8 +1176,11 @@ class ReturnsTest(unittest.TestCase):
         # 期間內有交易日沒有保存到這個市場的收盤行情，或交易所沒有列出這檔
         self.assertIsNone(self.compute(captured=set(self.SERIES) - {"2026-10-14"})["price"]["1w"])
         self.assertIsNone(self.compute({d: v for d, v in self.SERIES.items() if d != "2026-10-14"})["price"]["1w"])
-        # 沒有漲跌價差、當天也沒有配息：無法核對參考價
-        self.assertIsNone(self.compute({**self.SERIES, "2026-10-15": (50.0, None)})["price"]["1w"])
+        # 沒有漲跌價差、資料庫也沒有配息紀錄：小幅變動當成疑似漏列配息，只有含息報酬留空；超過 25% 疑似分割
+        r = self.compute({**self.SERIES, "2026-10-15": (50.0, None)})
+        self.assertEqual((r["price"]["1w"], r["total"]["1w"]), (2.0, None))
+        r = self.compute({**self.SERIES, "2026-10-15": (12.5, None), "2026-10-16": (12.75, 0.25)})
+        self.assertEqual((r["price"]["1w"], r["total"]["1w"]), (None, None))
         # 開休市日期沒涵蓋：不判定期初
         self.assertIsNone(self.compute(cal=f.market_calendar.Calendar({}, set()))["price"]["1w"])
 

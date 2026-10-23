@@ -66,8 +66,8 @@
 | 欄位 | 說明 |
 |---|---|
 | `code`、`name`、`issuer`、`category`、`market` | 代號、名稱、發行投信、類型、上市／上櫃 |
-| `price`、`change_pct`、`volume_lots`、`price_check` | 收盤價、漲跌幅 %、成交量（受益權單位數除以 1000 後取整數，介面稱「約千單位」，外幣線不一定等於張數）、收盤價狀態（`交易所` 或 `null`）。三個數字都只用 `trade_date` 那天交易所的官方收盤行情，不用 MIS 市價或其他來源補；漲跌幅以交易所的漲跌價差 ÷ 參考價計算（除息日已扣除配息） |
-| `price_source`、`price_date`、`price_note` | 收盤價的出處（`證交所收盤行情`／`櫃買中心收盤行情`）與資料日期；沒有收盤價時兩者為 `null`，`price_note` 寫明原因：證交所的官方收盤行情還沒公布（隔天清晨才更新，傍晚與午夜的更新常見）、櫃買中心的還沒公布、當天沒有成交，或交易所收盤行情沒有列出這檔。折溢價只用官方收盤價計算，收盤價留空時折溢價也是 `null` |
+| `price`、`change_pct`、`volume_lots`、`price_check` | 收盤價、漲跌幅 %、成交量（受益權單位數除以 1000 後取整數，介面稱「約千單位」，外幣線不一定等於張數）、收盤價狀態（`交易所` 或 `null`）。三個數字都只用 `trade_date` 那天交易所的官方收盤行情，不用 MIS 市價或其他來源補；漲跌幅以交易所的漲跌價差 ÷ 參考價計算。除息、除權日交易所沒有提供相對參考價的漲跌（證交所記 0、櫃買中心空白），漲跌幅為 `null`，`change_note` 寫明原因，不用前一天收盤價自行推算 |
+| `price_source`、`price_date`、`price_note`、`change_note` | 收盤價的出處（`證交所收盤行情`／`櫃買中心收盤行情`）與資料日期；沒有收盤價時兩者為 `null`，`price_note` 寫明原因：證交所的官方收盤行情還沒公布（隔天清晨才更新，傍晚與午夜的更新常見）、櫃買中心的還沒公布、當天沒有成交，或交易所收盤行情沒有列出這檔。折溢價只用官方收盤價計算，收盤價留空時折溢價也是 `null` |
 | `product` | 商品維度與欄位幣別：`asset_class`、`management`、`structure`、`region`、`strategy`、`trading_currency`、`trading_unit`、`main_code`、`nav_currency`、`aum_currency`、`fund_currency`，以及 `source`、`source_url`、`checked_at`、`rules_url`、`currency_basis`、`currency_source_url`。未知留 `null`；交易、淨值、規模幣別各自依採用來源判別，不能互相代換。保存為 `product_profile` 表／CSV 的 `profile_json`。新表由 `ensure_schema` 建立；舊日行情不回溯改寫。 |
 | `premium_reason` | 市價與淨值幣別不明或不同時，`premium` 留空並說明原因；同日正式淨值平均另要求日期與幣別一致。 |
 | `nav`、`nav_source` | 淨值與出處；出處含「正式淨值」代表投信公告的正式淨值（投信官網，或投信投顧公會的每日基金淨值），其餘為預估淨值（投信官網公布或證交所轉載）。優先順序：投信官網正式淨值 → 投信投顧公會正式淨值 → 投信官網預估淨值 → 證交所轉載的預估淨值 |
