@@ -53,6 +53,7 @@
 ```bash
 python -m unittest discover -s tests -v   # 離線測試
 python scripts/fetch_etf.py               # 抓真實資料（需要能連到上面三個網站）
+python scripts/audit.py --all            # 資料查核：交叉核對網站數字與原始來源（唯讀）
 python -m http.server -d web 8000         # 開 http://localhost:8000 看網頁
 ```
 
