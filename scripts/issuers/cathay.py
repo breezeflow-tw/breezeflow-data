@@ -36,6 +36,8 @@ TWD = ("新台幣", "新臺幣")
 DETAIL_LISTS = {"股票": ("GetETFDetailStockList", "股票"), "債券": ("GetETFDetailBondList", "債券"),
                 "期貨": ("GetETFDetailFutureList", "期貨"), "ETF": ("GetETFDetailETFList", "基金"),
                 "基金": ("GetETFDetailFundList", "基金")}
+CASH_LIKE = ("現金", "附買回", "存款", "保證金", "應收", "應付")  # 資產配置裡不會出現在成分明細的現金類項目
+UNLISTED_LIMIT = 5.0  # 沒有成分明細介面的項目合計超過淨資產的 5%，這份成分明細就不完整
 
 
 class Api:
@@ -136,6 +138,18 @@ def detail_kinds(rows) -> list[str]:
     """資產配置 → 要查的成分類型（依 DETAIL_LISTS 的順序）。「期貨（名目本金）」視為期貨，「附買回債券」不是債券成分。"""
     items = {re.sub(r"[（(].*", "", str(r.get("item") or "")).strip() for r in rows or []}
     return [k for k in DETAIL_LISTS if k in items]
+
+
+def unlisted(rows) -> list[tuple[str, float]]:
+    """資產配置裡沒有成分明細介面的項目與占淨資產比例（%），現金類除外。
+    例如國泰日本不動產（009817）的不動產投資信託：只查得到期貨明細（約 2%），不能當成完整清單。"""
+    out = []
+    for r in rows or []:
+        name = str(r.get("item") or "").strip()
+        share = num(str(r.get("ntMkval") or "").replace("%", ""))
+        if name and share and re.sub(r"[（(].*", "", name).strip() not in DETAIL_LISTS and not any(w in name for w in CASH_LIKE):
+            out.append((name, share))
+    return out
 
 
 def parse_holdings(item: str, rows) -> list[dict]:
@@ -241,7 +255,13 @@ def fetch(get_json=None, fixtures: Path | None = None, context: ssl.SSLContext |
         if rec["nav_date"]:
             day = rec["nav_date"]
             try:
-                for item in detail_kinds(call(f"bal_{fid}", "api/ETF/GetETFDetailBalList", FundCode=fid, SearchDate=day)):
+                bal = call(f"bal_{fid}", "api/ETF/GetETFDetailBalList", FundCode=fid, SearchDate=day)
+                missing = unlisted(bal)
+                if sum(share for _, share in missing) > UNLISTED_LIMIT:
+                    print(f"警告：{SOURCE} {code} 資產配置有還沒接入成分明細的項目（{'、'.join(f'{n} {v}%' for n, v in missing)}），"
+                          "成分明細不完整，本次不存", file=sys.stderr)
+                    bal = []
+                for item in detail_kinds(bal):
                     rows = call(f"{DETAIL_LISTS[item][0]}_{fid}", f"api/ETF/{DETAIL_LISTS[item][0]}", FundCode=fid, SearchDate=day)
                     rec["holdings"] += parse_holdings(item, rows)
             except RuntimeError as exc:
