@@ -13,6 +13,7 @@
 | `scripts/fetch_etf.py` | 抓資料、查核、合併、寫入資料庫與 JSON |
 | `scripts/schema.sql` | 資料庫結構（`etf`、`daily`、`dividend`、`price_check`、`holding`） |
 | `scripts/store.py` | 資料保存：歷史資料存成 `data/history/` 的 CSV，執行時重建 SQLite |
+| `scripts/audit.py` | 資料查核（唯讀、不連網路）：交叉核對網站數字與原始來源；「阻擋」項目不符時結束代碼為 1，「提醒」項目列出例子交給人工確認 |
 | `scripts/issuers/` | 各投信官網的抓取模組（一家一個檔案） |
 | `data/history/` | **資料庫本體**（CSV，依日期分檔）。`data/etf.db` 是執行時產生的，不提交 |
 | `web/index.html` | 網站（單一檔案，讀 `web/data/latest.json`） |
