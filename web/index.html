@@ -495,6 +495,8 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
 <script>
 (function(){
   const ORDER=["全部","股票","債券","多重資產","不動產","期貨","待確認"];
+  // 歷史資料完整性與使用條件確認前，暫停公開 K 線及共用此資料的投入模擬入口。
+  const HISTORY_RESEARCH_ENABLED=false;
   const $=id=>document.getElementById(id);
   const fmt=(v,d)=>typeof v!=="number"||!Number.isFinite(v)?"—":v.toLocaleString("zh-TW",{minimumFractionDigits:d,maximumFractionDigits:d});
   const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -735,20 +737,22 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
       detailSection("配息資訊",dividendDetail("下一次除息",d.next_ex)+dividendDetail("最近一次除息",d.last_ex))+
       detailSection("費用",`<dl class="detail-grid">${fees}</dl>`)+
       detailSection("基金資料",`<dl class="detail-grid">${basic}</dl>`)+
-      stats+flowDetail(d)+activeETFDetail(d)+detailSection("K 線與歷史行情",'<div id="research-content"></div>');
+      stats+flowDetail(d)+activeETFDetail(d)+(HISTORY_RESEARCH_ENABLED?detailSection("K 線與歷史行情",'<div id="research-content"></div>'):"");
     const product=profileOf(d),intro=`<div class="product-labels">${[product.asset_class,product.management,product.region,product.strategy,product.structure].filter(Boolean).map(v=>`<span class="tag">${esc(v)}</span>`).join("")}</div>
       <p class="metric-help">地域：${detailText(product.region||"待確認")} · 策略：${detailText(product.strategy||"待確認")}<br>交易幣別：${esc(currencyLabel(product.trading_currency))} · 每交易單位：${product.trading_unit?detailNumber(product.trading_unit)+" 受益權單位":"待核對商品規格"}${product.main_code?`<br>同基金主要交易代號：${esc(product.main_code)}；不同交易線不重複加總基金規模。`:""}</p>
       <p class="detail-source">分類出處：${sourceLink(product.source,product.source_url)}${product.data_month?` · 公告月份 ${detailText(product.data_month)}`:""} · 查閱 ${detailText(product.checked_at)}</p>
       <details class="metric-help"><summary>分類依據與公告投資範圍</summary><p>地域依據：${detailText(product.region_basis||"官方商品資料")}<br>策略依據：${detailText(product.strategy_basis||"官方商品資料")}</p>${product.official_name?`<p>官方基金全名：${detailText(product.official_name)}</p>`:""}${product.region_scope?`<p>公會申報可投資範圍：${detailText(product.region_scope)}<br>${sourceLink("公會原表",product.classification_source_url)} · ${detailText(product.classification_month)}</p>`:""}<p>資產分類採公會類型代號、官方商品資料及${sourceLink("交易所編碼規則",product.rules_url)}；槓桿／反向與主動／被動分開呈現。公告範圍不等於目前持倉國別或權重。</p>${product.currency_basis?`<p>交易規格：${sourceLink(product.currency_basis,product.currency_source_url)}</p>`:""}${product.value_currency_url?`<p>規模／淨值幣別：${sourceLink("投信原始數值標示",product.value_currency_url)}</p>`:""}</details>`;
     $("detail-content").insertAdjacentHTML("afterbegin",detailSection("商品定位與交易規格",intro));
-    // 先顯示這檔 ETF 的 K 線，免去捲到頁尾再按載入的隱藏入口。
-    const research=$("research-content"),researchSection=research.closest(".detail-section");
-    research.innerHTML='<p class="metric-help" role="status">正在載入這檔 ETF 的 K 線…</p>';
-    $("detail-content").prepend(researchSection);
+    // 恢復歷史研究時才建立與載入此區；暫停期間不請求歷史行情檔案。
+    const research=$("research-content"),researchSection=research?.closest(".detail-section");
+    if(research){
+      research.innerHTML='<p class="metric-help" role="status">正在載入這檔 ETF 的 K 線…</p>';
+      $("detail-content").prepend(researchSection);
+    }
     const sections=Array.from($("detail-content").querySelectorAll(".detail-section"));
     $("detail-nav").innerHTML=sections.map((section,i)=>{section.id="detail-section-"+i;const label=section.querySelector("h3").textContent;return `<button type="button" data-section="${section.id}">${esc(section===researchSection?"K 線圖":label.split("｜")[0])}</button>`;}).join("");
     $("detail-content").scrollTop=0;
-    loadResearch(d);
+    if(research)loadResearch(d);
   }
 
   // 十年研究計算核心：不依賴 DOM，不呼叫 AI 或第三方報價。
@@ -856,6 +860,7 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
   const researchCache=new Map();
   async function loadResearch(item){
     const holder=$("research-content");
+    if(!holder)return;
     holder.setAttribute("aria-live","polite");
     try{
       let data=researchCache.get(item.code);
