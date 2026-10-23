@@ -150,6 +150,8 @@ tbody tr.is-selected td.code{box-shadow:inset 4px 0 var(--accent)}
 .contact-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:1px solid var(--accent);border-radius:4px;color:var(--accent);text-decoration:none;font-weight:600}
 .contact-link:hover{background:var(--accent-soft)}.contact-action small{font-size:calc(11px * var(--text-scale));color:var(--muted);text-align:center}
 .forum{padding:36px 24px;border-top:1px solid var(--line);scroll-margin-top:80px}
+.discussion-entry{display:none}
+@media(max-width:767px){.discussion-entry{display:flex;gap:24px;padding:8px 16px;border-bottom:1px solid var(--line)}.discussion-entry a{display:inline-flex;align-items:center;min-height:44px;font-size:calc(13px * var(--text-scale))}}
 .forum-heading,.forum-actions,.forum-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .forum-heading h2{font-size:calc(24px * var(--text-scale));margin:4px 0 10px}.forum-kicker{color:var(--accent);font-size:calc(12px * var(--text-scale));letter-spacing:.12em}
 .forum p,.forum summary,.forum label{font-size:calc(13px * var(--text-scale));line-height:1.8}.forum p{color:var(--muted)}
@@ -420,6 +422,7 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
 <main class="wrap">
   <h1 class="sr-only" id="page-title">微風流動 · 台股 ETF 資料庫</h1>
   <p class="banner" id="banner" role="status" hidden></p>
+  <nav class="discussion-entry" aria-label="交流入口"><a href="#discussion">公開討論板</a><a href="#contact">私人留言給站長</a></nav>
   <section class="summary" aria-label="全市場摘要">
     <div class="stat"><span class="stat-title">交易代號</span><span class="v"><span id="s-count">—</span><small>個</small></span></div>
     <button type="button" class="stat stat-action" data-quick="premium"><span class="stat-title">溢價 &gt; 1%</span><span class="v premium"><span id="s-prem">—</span><small>檔</small></span></button>
