@@ -12306,7 +12306,7 @@ code,date,asset_code,asset_name,kind,weight,qty,source,source_url
 00770,2026-10-21,ZETA.US,Zeta Global Holdings Corp,股票,0.04,1982.0,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=BH
 00770,2026-10-21,ZM.US,ZOOM VIDEO COMMUNICATIONS-A,股票,0.12,2320.0,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=BH
 00770,2026-10-21,ZS.US,"ZSCALER, INC. CMN",股票,0.11,921.0,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=BH
-00771,2026-10-21,ALL B,ALL 7.49253,股票,1.34,3478.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
+00771,2026-10-21,ALL B,ALL 7.49464,股票,1.34,3478.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
 00771,2026-10-21,ALL H,ALL 5.1 PERP,股票,2.19,8000.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
 00771,2026-10-21,ALL I,ALL 4 3/4 PERP,股票,0.53,2087.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
 00771,2026-10-21,ALL J,ALL 7 3/8 PERP,股票,1.61,4174.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
@@ -22229,6 +22229,34 @@ code,date,asset_code,asset_name,kind,weight,qty,source,source_url
 00968B,2026-10-21,ZN2252684,QUALCOMM INC 6% 05/20/2053,債券,0.3,688989.93,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00968B
 00968B,2026-10-21,ZQ2569890,WALT DISNEY COMPANY/THE 6.65% 11/15/2037,債券,0.4,928804.68,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00968B
 00968B,2026-10-21,ZR6325859,OCCIDENTAL PETROLEUM COR 6.6% 03/15/2046,債券,1.37,3198076.35,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00968B
+00969B,2026-10-21,912803GC1,STRIP PRINC 0% 11/15/2051,債券,6.46,2262285.95,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803GE7,STRIP PRINC 0% 02/15/2052,債券,7.65,2678611.18,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803GH0,STRIP PRINC 0% 05/15/2052,債券,5.53,1936983.3,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803GK3,STRIP PRINC 0% 08/15/2052,債券,5.83,2042158.6,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803GM9,STRIP PRINC 0% 11/15/2052,債券,4.31,1507828.29,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803GP2,STRIP PRINC 0% 02/15/2053,債券,7.96,2788788.24,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803GS6,STRIP PRINC 0% 05/15/2053,債券,7.75,2714921.4,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803GU1,STRIP PRINC 0% 08/15/2053,債券,4.93,1726033.7,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803GW7,STRIP PRINC 0% 11/15/2053,債券,4.0,1401922.07,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803GY3,STRIP PRINC 0% 02/15/2054,債券,7.53,2635801.45,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803HB2,STRIP PRINC 0% 05/15/2054,債券,5.67,1983895.8,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803HD8,STRIP PRINC 0% 08/15/2054,債券,5.48,1918448.4,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803HF3,STRIP PRINC 0% 11/15/2054,債券,5.34,1871486.4,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803HH9,STRIP PRINC 0% 02/15/2055,債券,5.17,1811011.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803HL0,STRIP PRINC 0% 05/15/2055,債券,5.05,1768149.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803HN6,STRIP PRINC 0% 08/15/2055,債券,3.7,1296690.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803HQ9,STRIP PRINC 0% 11/15/2055,債券,2.81,982564.6,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803HS5,STRIP PRINC 0% 02/15/2056,債券,2.12,741058.5,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912803HV8,STRIP PRINC 0% 05/15/2056,債券,1.62,565598.7,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912834A65,STRIPS 0% 11/15/2051,債券,0.14,49962.8,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912834B56,STRIPS 0% 02/15/2052,債券,0.14,49333.6,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912834C55,STRIPS 0% 05/15/2052,債券,0.07,24409.3,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912834D47,STRIPS 0% 08/15/2052,債券,0.14,48173.2,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912834F29,STRIPS 0% 11/15/2052,債券,0.07,23794.9,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912834F94,STRIPS 0% 02/15/2053,債券,0.07,23503.3,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912834G93,STRIPS 0% 05/15/2053,債券,0.07,23296.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912834H84,STRIPS 0% 08/15/2053,債券,0.07,22957.1,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
+00969B,2026-10-21,912834K56,STRIPS 0% 02/15/2054,債券,0.06,22456.3,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B
 00971,2026-10-21,NQ-202612,電子小型那斯達克100指數,期貨,4.14,2.0,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00971&tab=basic
 00971,2026-10-21,AAPL US,蘋果公司,股票,7.94,6683.0,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00971&tab=basic
 00971,2026-10-21,ADBE US,奧多比系統公司,股票,0.09,97.0,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00971&tab=basic
