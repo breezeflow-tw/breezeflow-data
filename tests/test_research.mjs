@@ -106,6 +106,13 @@ test('配息與分割尚未補齊仍可看原始日 K，空白日 K 不引導切
   assert.doesNotMatch(empty,/切回日 K/);
 });
 
+test('歷史研究入口不存在時不讀取資料，也不存取已移除的容器',async()=>{
+  let requests=0;
+  const c=vm.createContext({Map,$:()=>null,fetch:async()=>{requests++;throw Error('不應請求歷史資料');}});
+  vm.runInContext(html.slice(html.indexOf('  const researchCache='),html.indexOf('  function researchChart(')),c);
+  await c.loadResearch({code:'0050'});
+  assert.equal(requests,0);
+});
 test('自動載入歷史僅更新目前 ETF，切換時過期回應不覆寫新頁',async()=>{
   const loaded=[],holder={isConnected:true,setAttribute(){}};
   let release;
