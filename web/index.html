@@ -381,6 +381,8 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
 @media(max-width:767px){.research-quote{padding:16px}.research-toolbar{padding:0 16px 12px}.research-readout{padding:12px 16px}.research-ohlc{grid-template-columns:repeat(2,minmax(0,1fr))}.research-chart-footer{padding:12px 16px;flex-wrap:wrap}.research-fields{grid-template-columns:1fr}.research-periods button{min-height:42px;padding-inline:20px}.research-form-group{padding:14px}.research-result-summary{grid-template-columns:1fr}.research-result-summary>div{display:flex;justify-content:space-between;align-items:baseline}.research-result-summary dt{margin:0}.site-nav{gap:6px}.theme-control select{padding:6px;max-width:110px}.brand-name{font-size:calc(20px * var(--text-scale))}.masthead{gap:10px 6px}.research-quote strong{font-size:calc(30px * var(--text-scale))}}
 @media(max-width:360px){.masthead{grid-template-columns:1fr}.site-nav{margin-left:0}.dateline{font-size:calc(11px * var(--text-scale))}:root{--header-height:148px}}
 .research-chart:not(.research-price-chart) text{font-size:calc(13px * var(--text-scale))}
+.research-backtest{border:1px solid var(--line);border-radius:8px;margin-top:20px;padding:16px}.research-backtest>summary{cursor:pointer;font-weight:600;line-height:1.8;min-height:32px}.research-backtest>summary span{display:block;color:var(--muted);font-size:calc(12px * var(--text-scale));font-weight:400;margin-left:18px}.research-backtest[open]>summary{margin-bottom:14px}
+@media(max-width:767px){.research-chart-card{display:flex;flex-direction:column}.research-quote{order:0;padding:14px 16px 8px}.research-toolbar{order:1}#research-chart{order:2}.research-readout{order:3}.research-chart-footer{order:4}}
 @media(max-width:1399px){.brand-en{display:none}}
 @media(min-width:768px) and (max-width:1199px){:root{--header-height:108px}.masthead{height:auto;min-height:108px;padding-block:12px;display:grid;grid-template-columns:auto 1fr;gap:8px 18px}.theme-control>span{display:none}.dateline{grid-column:1/-1;display:flex;justify-content:flex-end;gap:8px;border:0;padding:0}}
 </style>
@@ -733,16 +735,20 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
       detailSection("配息資訊",dividendDetail("下一次除息",d.next_ex)+dividendDetail("最近一次除息",d.last_ex))+
       detailSection("費用",`<dl class="detail-grid">${fees}</dl>`)+
       detailSection("基金資料",`<dl class="detail-grid">${basic}</dl>`)+
-      stats+flowDetail(d)+activeETFDetail(d)+detailSection("歷史行情與投資模擬",`<div id="research-content"><p class="metric-help">歷史資料目標：近 10 年。上市未滿 10 年者從上市日起算；實際可用期間依資料完整度顯示。</p><div class="research-tools"><button id="research-load" type="button">載入歷史行情與回測條件</button></div></div>`);
-    $("research-load").addEventListener("click",()=>loadResearch(d));
+      stats+flowDetail(d)+activeETFDetail(d)+detailSection("K 線與歷史行情",'<div id="research-content"></div>');
     const product=profileOf(d),intro=`<div class="product-labels">${[product.asset_class,product.management,product.region,product.strategy,product.structure].filter(Boolean).map(v=>`<span class="tag">${esc(v)}</span>`).join("")}</div>
       <p class="metric-help">地域：${detailText(product.region||"待確認")} · 策略：${detailText(product.strategy||"待確認")}<br>交易幣別：${esc(currencyLabel(product.trading_currency))} · 每交易單位：${product.trading_unit?detailNumber(product.trading_unit)+" 受益權單位":"待核對商品規格"}${product.main_code?`<br>同基金主要交易代號：${esc(product.main_code)}；不同交易線不重複加總基金規模。`:""}</p>
       <p class="detail-source">分類出處：${sourceLink(product.source,product.source_url)}${product.data_month?` · 公告月份 ${detailText(product.data_month)}`:""} · 查閱 ${detailText(product.checked_at)}</p>
       <details class="metric-help"><summary>分類依據與公告投資範圍</summary><p>地域依據：${detailText(product.region_basis||"官方商品資料")}<br>策略依據：${detailText(product.strategy_basis||"官方商品資料")}</p>${product.official_name?`<p>官方基金全名：${detailText(product.official_name)}</p>`:""}${product.region_scope?`<p>公會申報可投資範圍：${detailText(product.region_scope)}<br>${sourceLink("公會原表",product.classification_source_url)} · ${detailText(product.classification_month)}</p>`:""}<p>資產分類採公會類型代號、官方商品資料及${sourceLink("交易所編碼規則",product.rules_url)}；槓桿／反向與主動／被動分開呈現。公告範圍不等於目前持倉國別或權重。</p>${product.currency_basis?`<p>交易規格：${sourceLink(product.currency_basis,product.currency_source_url)}</p>`:""}${product.value_currency_url?`<p>規模／淨值幣別：${sourceLink("投信原始數值標示",product.value_currency_url)}</p>`:""}</details>`;
     $("detail-content").insertAdjacentHTML("afterbegin",detailSection("商品定位與交易規格",intro));
+    // 先顯示這檔 ETF 的 K 線，免去捲到頁尾再按載入的隱藏入口。
+    const research=$("research-content"),researchSection=research.closest(".detail-section");
+    research.innerHTML='<p class="metric-help" role="status">正在載入這檔 ETF 的 K 線…</p>';
+    $("detail-content").prepend(researchSection);
     const sections=Array.from($("detail-content").querySelectorAll(".detail-section"));
-    $("detail-nav").innerHTML=sections.map((section,i)=>{section.id="detail-section-"+i;const label=section.querySelector("h3").textContent;return `<button type="button" data-section="${section.id}">${esc(label.split("｜")[0])}</button>`;}).join("");
+    $("detail-nav").innerHTML=sections.map((section,i)=>{section.id="detail-section-"+i;const label=section.querySelector("h3").textContent;return `<button type="button" data-section="${section.id}">${esc(section===researchSection?"K 線圖":label.split("｜")[0])}</button>`;}).join("");
     $("detail-content").scrollTop=0;
+    loadResearch(d);
   }
 
   // 十年研究計算核心：不依賴 DOM，不呼叫 AI 或第三方報價。
@@ -849,7 +855,7 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
 
   const researchCache=new Map();
   async function loadResearch(item){
-    const holder=$("research-content"),button=$("research-load");if(button)button.disabled=true;
+    const holder=$("research-content");
     holder.setAttribute("aria-live","polite");
     try{
       let data=researchCache.get(item.code);
@@ -867,7 +873,7 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
   }
   function researchChart(data,period,width=640,scale=1){
     const bars=aggregateResearch(data,period).slice(-120);
-    if(!bars.length)return '<div class="research-empty"><strong>這個週期的資料還不完整</strong><p>請切回日 K 查看已取得行情；缺漏資料不會拼成完整週線或月線。</p></div>';
+    if(!bars.length)return period==="day"?'<div class="research-empty"><strong>尚未取得完整日 K 資料</strong><p>K 線需要同一天的開盤、最高、最低、收盤價及成交量；只有收盤價時不會補畫 K 棒。</p></div>':'<div class="research-empty"><strong>這個週期的資料還不完整</strong><p>請切回日 K 查看已取得行情；缺漏資料不會拼成完整週線或月線。</p></div>';
     width=Math.max(280,Math.min(1200,width));scale=Math.max(1,Math.min(1.25,scale));
     const height=350,left=16,right=68*scale,top=28,bottom=232,span=width-left-right,step=span/bars.length;
     const low=Math.min(...bars.map(b=>b.low)),high=Math.max(...bars.map(b=>b.high)),pad=Math.max((high-low)*.14,high*.004),min=low-pad,max=high+pad;
@@ -894,18 +900,18 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
     return `<div class="research-readout-date">${esc(date)}${bar.partial?' <span>本期未結束</span>':''}</div><dl class="research-ohlc">${[["開",bar.open],["高",bar.high],["低",bar.low],["收",bar.close]].map(([label,value])=>`<div><dt>${label}</dt><dd>${fmt(value,2)}</dd></div>`).join("")}<div class="research-ohlc-volume"><dt>成交單位數</dt><dd>${fmt(bar.volume,0)}</dd></div></dl>`;
   }
   function renderResearch(holder,data){
-    const latest=data.ready_ranges.at(-1),end=latest?.end||data.as_of,start=latest?.start||data.required_start;
+    const latest=data.ready_ranges.at(-1),end=latest?.end||data.as_of,start=latest?.start||data.available_start||data.required_start;
     const last=data.bars.at(-1);
-    holder.innerHTML=`<div class="research-status"><div><span class="research-status-label ${data.ten_year_complete?"is-ready":""}">${data.ten_year_complete?"十年資料已核實":"歷史資料建置中"}</span><span>已取得 ${fmt(data.bars.length,0)} 筆日行情</span></div><p>實際 ${esc(data.available_start||"尚未取得")} ～ ${esc(data.available_end||"尚未取得")}<br><small>目標近 ${data.target_years} 年：${esc(data.required_start)} ～ ${esc(data.as_of)}。${data.ten_year_complete?"":"完整證據到齊的期間才開放回測。"}</small></p></div>
+    holder.innerHTML=`<div class="research-status"><div><span class="research-status-label ${data.bars.length?"is-ready":""}">${data.bars.length?"可查看日 K":"行情累積中"}</span><span>已保存 ${fmt(data.bars.length,0)} 個交易日</span></div><p>${data.bars.length?esc(data.available_start)+" ～ "+esc(data.available_end):"尚無完整開高低收資料"}<br><small>這是目前實際保存的行情；${data.ten_year_complete?"已涵蓋近十年。":"較早歷史仍在補齊，並非完整十年。"}</small></p></div>
       <div class="research-chart-card"><div class="research-quote"><div><span>最近收盤 <small>${esc(data.currency||"幣別待確認")}</small></span><strong>${fmt(last?.close,2)}</strong></div><div class="research-quote-date">${esc(last?.date||"尚無行情")}<span>原始市價 · 未還原</span></div></div>
       <div class="research-toolbar"><div class="research-periods" role="group" aria-label="K 線週期"><button type="button" data-period="day" aria-pressed="true">日 K</button><button type="button" data-period="week" aria-pressed="false">週 K</button><button type="button" data-period="month" aria-pressed="false">月 K</button></div><button class="research-expand" type="button" aria-pressed="false">展開檢視 ↗</button></div>
       <div id="research-readout" class="research-readout">${researchReadout(last)}</div><div id="research-chart"></div>
       <div class="research-chart-footer"><div class="research-legend"><span class="research-key ma20">MA20</span><span class="research-key ma60">MA60</span><span>紅漲／綠跌</span></div><span id="research-count"></span></div></div>
       <p class="detail-footnote research-chart-hint">點選 K 棒查看開高低收；鍵盤左右鍵切換。最多顯示 120 根，資料不足或跨分割時不繪製均線。週月僅彙整可核對期間。</p>
-      <details class="metric-help"><summary>資料完整度與出處</summary><p>缺行情：${data.missing_price_dates.length} 個交易日 · 日曆待核實：${data.unknown_calendar_dates.length} 日 · 公司行動完整度待核實：${data.missing_action_dates.length} 日 · 其他異常：${data.issues.length} 筆。<br>空白配息清單不代表沒有配息。</p><p>${data.sources.map(s=>`${detailText(s.provider)}${s.data_start?"（"+esc(s.data_start)+"～"+esc(s.data_end)+"）":""} · ${sourceLink(s.dataset,s.dataset_url||s.url)} · ${sourceLink(s.license,s.license_url||s.redistribution_evidence)}`).join("<br>")||"尚無可核對的歷史來源"}</p>${data.actions.length?`<p>${data.actions.map(a=>`${esc(a.date)} ${a.kind==="split"?"分割比例 "+a.ratio:"每單位配息 "+a.cash+"，發放日 "+a.pay_date}`).join("<br>")}</p>`:""}</details>
-      <div class="research-simulation-title"><span>歷史情境試算</span><h4>單筆／定時定額模擬</h4></div><p class="detail-footnote">金額以 ${esc(data.currency||"該 ETF 交易幣別")} 計價；每次採收盤價、整數單位模擬，未成交零頭留存現金。休市順延，月底不足扣款日則取月底再順延。同日投入合併買入。配息在發放後才能再投入。</p>
+      <details class="metric-help"><summary>K 線出處與歷史資料進度</summary><p>補齊目標：${esc(data.required_start)} ～ ${esc(data.as_of)}（近 ${data.target_years} 年；上市未滿十年者從上市日起算）。下列缺口是這段目標期間的統計，不代表上方已顯示的日 K 無效。</p><p>缺行情：${data.missing_price_dates.length} 個交易日 · 開休市日期待補：${data.unknown_calendar_dates.length} 日 · 配息／分割紀錄完整度待補：${data.missing_action_dates.length} 日 · 其他異常：${data.issues.length} 筆。<br>空白配息清單不代表沒有配息；回測需另外確認完整事件紀錄。</p><p>${data.sources.map(s=>`${detailText(s.provider)}${s.data_start?"（"+esc(s.data_start)+"～"+esc(s.data_end)+"）":""} · ${sourceLink(s.dataset,s.dataset_url||s.url)} · ${sourceLink(s.license,s.license_url||s.redistribution_evidence)}`).join("<br>")||"尚無可核對的歷史來源"}</p>${data.actions.length?`<p>${data.actions.map(a=>`${esc(a.date)} ${a.kind==="split"?"分割比例 "+a.ratio:"每單位配息 "+a.cash+"，發放日 "+a.pay_date}`).join("<br>")}</p>`:""}</details>
+      <details class="research-backtest"><summary>單筆／定時定額模擬 <span>${latest?"查看可用期間與設定":"回測資料尚未齊備"}</span></summary><p class="detail-footnote">${latest?"僅資料完整的期間可進行模擬。":"原始 K 線可先閱讀；回測還需要完整行情、開休市日期及配息／分割紀錄，未齊備前不產生結果。"}</p><p class="detail-footnote">金額以 ${esc(data.currency||"該 ETF 交易幣別")} 計價；每次採收盤價、整數單位模擬，未成交零頭留存現金。休市順延，月底不足扣款日則取月底再順延。同日投入合併買入。配息在發放後才能再投入。</p>
       <form class="research-form" id="research-form"><label>投入方式<select name="mode"><option value="monthly">每月定時定額</option><option value="single">單筆投入</option><option value="combined">單筆＋每月追加</option></select></label><label>配息處理<select name="dividends"><option value="cash">保留現金</option><option value="reinvest">配息再投入</option></select></label><label>開始日期<input name="start" type="date" value="${esc(start)}" min="${esc(data.required_start)}" max="${esc(data.as_of)}" required></label><label>結束日期<input name="end" type="date" value="${esc(end)}" min="${esc(data.required_start)}" max="${esc(data.as_of)}" required></label><label>單筆投入金額<input name="initial" type="number" min="0" max="10000000000" value="0" required></label><label>每月投入金額<input name="monthly" type="number" min="0" max="1000000000" value="5000" required></label><label>每月扣款日<input name="payday" type="number" min="1" max="31" step="1" value="6" required></label><label>買入手續費率（%，自行設定）<input name="feeRate" type="number" min="0" max="10" step="0.0001" value="0" required></label><label>每次最低手續費<input name="minimum" type="number" min="0" max="1000000" step="0.01" value="0" required></label><button type="submit">檢查資料並開始模擬</button></form>
-      <div id="research-result" aria-live="polite"><p class="research-message">${esc(researchRange(data,start,end)||"所選期間資料已可核對，可設定條件開始模擬。")}</p></div><p class="detail-footnote">歷史模擬不代表未來報酬，不構成買賣建議。手續費為輸入條件下的估算，預設 0 表示未計。結果以期末持有資產估值，未扣賣出費稅與個人所得稅，未模擬滑價，不保證能以收盤價成交。上市前資料不替補。</p>`;
+      <div id="research-result" aria-live="polite"><p class="research-message">${esc(researchRange(data,start,end)||"所選期間資料已可核對，可設定條件開始模擬。")}</p></div><p class="detail-footnote">歷史模擬不代表未來報酬，不構成買賣建議。手續費為輸入條件下的估算，預設 0 表示未計。結果以期末持有資產估值，未扣賣出費稅與個人所得稅，未模擬滑價，不保證能以收盤價成交。上市前資料不替補。</p></details>`;
     const chart=holder.querySelector("#research-chart"),readout=holder.querySelector("#research-readout");
     let period="day",selected=null,chartWidth=0;
     const selectBar=(index,focus=false)=>{

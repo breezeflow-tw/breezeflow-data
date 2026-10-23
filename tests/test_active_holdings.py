@@ -95,7 +95,8 @@ class ActiveHoldingsTest(unittest.TestCase):
     def test_contract_and_day_period(self):
         f = self.flow
         self.assertEqual((f["version"], f["as_of"], f["price_history_from"], sorted(f["periods"])), (1, "2026-10-20", "2026-10-13", ["1d", "1m", "1w"]))
-        self.assertEqual([a["dataset_url"] for a in f["attributions"]], ["https://data.gov.tw/dataset/11549"])
+        self.assertEqual([a["dataset_url"] for a in f["attributions"]],
+                         ["https://data.gov.tw/dataset/11549", "https://data.gov.tw/dataset/18419", "https://data.gov.tw/dataset/25036"])
         d = f["periods"]["1d"]
         self.assertEqual((d["status"], d["baseline"], d["start"], d["end"], d["days"]), ("可計算", "2026-10-19", "2026-10-20", "2026-10-20", ["2026-10-20"]))
         # 00991A 也有 10/19、10/20 的清單，列入單日；公會前十大不是完整清單；0050 不是主動式
@@ -226,6 +227,28 @@ class ActiveHoldingsTest(unittest.TestCase):
         self.assertNotIn("00981A", p["included_etfs"])
         self.assertTrue(any(e["code"] == "00981A" and "持股基準日" in e["reason"] for e in p["excluded_etfs"]))
         self.assertTrue(all(e["date_basis"] for e in p["lists"]))
+
+    def test_official_full_names_match_only_the_verified_security(self):
+        for code, full, short in [("1303", "南亞塑膠工業", "南亞"), ("2368", "金像電子（股）公司", "金像電"),
+                                   ("3665", "貿聯控股（BizLink Holding In", "貿聯-KY"), ("6147", "頎邦科技", "頎邦")]:
+            with self.subTest(code=code):
+                self.assertTrue(ah.stock_identity(code, full, {code: {short}}))
+                self.assertFalse(ah.stock_identity(code, full, {code: {"海外同碼公司"}}))
+                self.assertFalse(ah.stock_identity(code, full + "日本子公司", {code: {short}}))
+                self.assertFalse(ah.stock_identity("9999", full, {"9999": {short}}))
+        self.assertFalse(ah.stock_identity("1303", "南亞科技", {"1303": {"南亞"}}))
+        self.assertFalse(ah.stock_identity("1303", "南亞塑膠工業", {}))
+
+    def test_verified_full_name_restores_holdings_without_filling_missing_quantities(self):
+        self.con.execute("UPDATE stock_close SET name='聯發科' WHERE code='2454'")
+        self.con.execute("UPDATE holding SET asset_name='聯發科技' WHERE asset_code='2454'")
+        self.flow = ah.build(self.con, self.items, "2026-10-20", CAL)
+        self.assertTrue(self.stock("1d", "2454")["complete"])
+        self.assertEqual(self.stock("1d", "2454")["net_shares"], -500)
+        self.con.execute("UPDATE holding SET qty=NULL WHERE asset_code='2454' AND date='2026-10-20'")
+        lists = ah.load_lists(self.con, "2026-10-19", "2026-10-20")
+        self.assertIn("2454", lists["00981A"]["2026-10-20"]["missing"])
+        self.assertNotIn("2454", lists["00981A"]["2026-10-20"]["stocks"])
 
     def test_single_holder_large_jump_and_price_adjustment(self):
         self.con.execute("UPDATE holding SET qty=60000 WHERE code='00981A' AND asset_code='2882' AND date='2026-10-20'")

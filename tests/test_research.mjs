@@ -95,3 +95,31 @@ test('字型偏好僅接受有效選項，儲存不可用時不阻擋頁面',()=
   }
   assert.doesNotThrow(()=>vm.runInNewContext(boot,{document:{documentElement:{dataset:{}}},localStorage:{getItem(){throw Error('禁止儲存');}}}));
 });
+
+test('配息與分割尚未補齊仍可看原始日 K，空白日 K 不引導切回自己',()=>{
+  const d=data();d.missing_action_dates=['2026-10-19'];d.ready_ranges=[];
+  assert.match(context.researchChart(d,'day'),/<svg/);
+  assert.throws(()=>context.simulateResearch(d,opts));
+  d.bars=[];
+  const empty=context.researchChart(d,'day');
+  assert.match(empty,/尚未取得完整日 K 資料/);
+  assert.doesNotMatch(empty,/切回日 K/);
+});
+
+test('自動載入歷史僅更新目前 ETF，切換時過期回應不覆寫新頁',async()=>{
+  const loaded=[],holder={isConnected:true,setAttribute(){}};
+  let release;
+  const pending=new Promise(resolve=>release=resolve);
+  const c=vm.createContext({Map,RegExp,$:()=>holder,detailDate:'2026-10-22',detailCode:'0050',
+    fetch:async url=>url.endsWith('index.json')?{ok:true,json:async()=>({as_of:'2026-10-22',items:{'0050':{file:'0050-0123456789abcdef.json'}}})}:pending,
+    renderResearch:(_holder,d)=>loaded.push(d.code)});
+  vm.runInContext(html.slice(html.indexOf('  const researchCache='),html.indexOf('  function researchChart(')),c);
+  const loading=c.loadResearch({code:'0050'});
+  c.detailCode='00984A';
+  release({ok:true,json:async()=>({version:1,as_of:'2026-10-22',code:'0050'})});
+  await loading;
+  assert.deepEqual(loaded,[]);
+  c.detailCode='0050';
+  await c.loadResearch({code:'0050'});
+  assert.deepEqual(loaded,['0050']);
+});

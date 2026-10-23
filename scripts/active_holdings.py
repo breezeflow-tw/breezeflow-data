@@ -25,11 +25,13 @@
 from __future__ import annotations
 
 import math
+import json
 import re
 import sqlite3
 import unicodedata
 from collections import defaultdict
 from datetime import date, timedelta
+from pathlib import Path
 
 import official_quotes
 import returns
@@ -65,6 +67,7 @@ NAME_ALIASES = {
     "3533": {"嘉澤", "lotescoltd"}, "6442": {"光聖", "光紅建聖"},
     "6510": {"精測", "中華精測科技"}, "8046": {"南電", "南亞電路", "南亞電路板"},
 }
+NAME_REFERENCE = json.loads((Path(__file__).resolve().parents[1] / "data/stock_name_reference.json").read_text("utf-8"))
 EVENT_SOURCES = {"上市": ("證交所除權除息預告", "https://openapi.twse.com.tw/v1/exchangeReport/TWT48U_ALL",
                           {"code": "Code", "date": "Date", "kind": "Exdividend", "stock": "StockDividendRatio",
                            "sub": "SubscriptionRatio"}),
@@ -107,8 +110,14 @@ def stock_identity(asset, name, official_names):
     known = {normalized_name(v) for v in official_names.get(asset, ()) if v}
     if not n or not known:
         return False
-    aliases = NAME_ALIASES.get(asset, set())
-    return n in known or (n in aliases and bool(known & aliases))
+    aliases = {normalized_name(v) for v in NAME_ALIASES.get(asset, ())}
+    if n in known or (n in aliases and bool(known & aliases)):
+        return True
+    # 逐代號核對的全名／簡稱對照，仍要求交易所行情名稱作為錨點。
+    # 不做前綴、包含或相似度比對，以免海外同碼、子公司及名稱相近股票混入。
+    reference = NAME_REFERENCE["items"].get(asset)
+    return bool(reference and normalized_name(reference["short_name"]) in known and
+                n in {normalized_name(v) for v in [reference["official_name"], *reference["aliases"]]})
 
 
 # ---------- 保存 ----------
@@ -500,5 +509,6 @@ def build(con: sqlite3.Connection, items: list[dict], trade_date: str, cal) -> d
     periods = {p: build_period(p, cal, as_of, lists, names, prices, price_days, first_price, units, events) for p in PERIODS}
     markets = sorted({market for (_c, d), (_close, market, _ds) in prices.items() if market and d == as_of})
     return {"version": VERSION, "as_of": as_of, "source": SOURCE, "method": METHOD, "price_history_from": first_price,
-            "attributions": official_quotes.attributions([{"market": m, "date": as_of} for m in markets]),
+            "attributions": official_quotes.attributions([{"market": m, "date": as_of} for m in markets])
+                            + NAME_REFERENCE["attributions"],
             "periods": periods}
