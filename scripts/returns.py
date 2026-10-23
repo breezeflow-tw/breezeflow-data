@@ -6,7 +6,9 @@
 - 官方收盤行情從開始保存那天起累積、不回補。期初早於保存起點、期初或期末沒有官方收盤價、
   期間內有交易日沒有保存到這檔的收盤行情，或開休市日期沒有涵蓋時，該區間為 null
 - 交易所的漲跌價差是相對於當天參考價的差。參考價（收盤價 − 漲跌價差）比前一個收盤價低的部分要能用當天的配息解釋：
-  解釋不了的小幅調整（疑似漏列配息）只讓含息報酬為 null；大幅調整（疑似分割、合併）或無法核對時，市價與含息報酬都為 null
+  解釋不了的小幅調整（疑似漏列配息）只讓含息報酬為 null；大幅調整（疑似分割、合併）時，市價與含息報酬都為 null
+- 除息、除權日交易所不提供相對參考價的漲跌（證交所記 0、櫃買中心空白，2026-10 實測）：有配息紀錄就以配息解釋；
+  沒有紀錄時，單日變動超過 25% 疑似分割、合併，兩種報酬都為 null，否則只讓含息報酬為 null
 """
 from __future__ import annotations
 
@@ -106,9 +108,13 @@ def compute(series: dict, captured: set, end: str, cal, dividends: dict | None =
             if close is None:
                 total_ok = total_ok and not paid  # 除息日沒有成交，沒有再投入的價格
                 continue  # 沒有成交：下一個有成交的日子再核對參考價
-            if change is None:
+            if change is None or (change == 0 and (paid or abs(close - prev) > 1e-9)):
+                # 交易所沒有提供相對參考價的漲跌（除息、除權日）：有配息紀錄就由配息解釋
                 if not paid:
-                    price_ok = total_ok = False  # 無法核對參考價，可能漏掉分割、合併
+                    if abs(close / prev - 1) > DIVIDEND_MAX:
+                        price_ok = total_ok = False  # 疑似分割、合併
+                    else:
+                        total_ok = False  # 疑似漏列配息：市價報酬照算
             else:
                 gap = prev - (close - change)  # 前一個收盤價比參考價高的部分，應該等於當天配息
                 if abs(gap - (cash or 0)) > TICK:

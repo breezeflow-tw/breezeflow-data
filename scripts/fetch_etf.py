@@ -220,6 +220,11 @@ def official_prices(con: sqlite3.Connection, exchange: dict, date: str) -> dict[
     名稱、市場、發行單位數沿用這次抓到的交易所資料（日期不同也可以用）。沒有官方收盤價時 close 為 None，note 寫明原因：
     交易所還沒公布那天的資料（證交所隔天清晨才更新）、當天沒有成交，或交易所資料沒有列出這檔。"""
     rows, captured = {}, set()
+    # 除息、除權日交易所的漲跌價差不是相對參考價的漲跌（證交所記 0、櫃買中心空白）：用前一個官方收盤價與配息紀錄辨認
+    prev_close = dict(con.execute(
+        "SELECT e.code, e.close FROM exchange_daily e WHERE e.close > 0 AND e.date = "
+        "(SELECT MAX(x.date) FROM exchange_daily x WHERE x.code = e.code AND x.date < ? AND x.close > 0)", (date,)))
+    paid = {c for (c,) in con.execute("SELECT code FROM dividend WHERE ex_date = ?", (date,))}
     for code, market, name, close, change, volume in con.execute(
             "SELECT code, market, name, close, change, volume_shares FROM exchange_daily WHERE date = ?", (date,)):
         rows[code] = {"market": market, "name": name, "close": close if close is not None and close > 0 else None,
@@ -230,12 +235,17 @@ def official_prices(con: sqlite3.Connection, exchange: dict, date: str) -> dict[
         e, o = exchange.get(code, {}), rows.get(code)
         market = (o or {}).get("market") or e.get("market")
         q = {"name": e.get("name") or (o or {}).get("name"), "market": market, "units": e.get("units"), "date": date,
-             "close": None, "change_pct": None, "volume_lots": None, "check": None, "source": None, "note": None}
+             "close": None, "change_pct": None, "volume_lots": None, "check": None, "source": None, "note": None,
+             "change_note": None}
         if o:
             q["volume_lots"] = round(o["volume"] / 1000) if o["volume"] is not None else None
         if o and o["close"] is not None:
-            base = o["close"] - o["change"] if o["change"] is not None else None
-            q.update(close=o["close"], change_pct=o["change"] / base * 100 if base else None, check="交易所",
+            change, before = o["change"], prev_close.get(code)
+            if change is None or (change == 0 and (code in paid or (before and abs(o["close"] - before) > 1e-9))):
+                change = None
+                q["change_note"] = "除息、除權日交易所沒有提供相對參考價的漲跌，不用前一天收盤價自行推算"
+            base = o["close"] - change if change is not None else None
+            q.update(close=o["close"], change_pct=change / base * 100 if base else None, check="交易所",
                      source=PRICE_SOURCES.get(market))
         elif o:
             q["note"] = "當天沒有成交"
@@ -479,6 +489,7 @@ def merge(nav: dict, quotes: dict, meta: dict, date: str, fund: dict | None = No
             "price_source": q.get("source"),
             "price_date": date if price is not None else None,
             "price_note": None if price is not None else q.get("note") or "交易所收盤行情沒有列出這檔",
+            "change_note": q.get("change_note") if price is not None else None,
             "fee": num(m.get("fee")),
             "aum": aum,
             "units": units,
