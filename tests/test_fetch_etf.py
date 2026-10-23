@@ -1,4 +1,6 @@
 """離線測試：用 tests/fixtures 的假資料驗證解析、分類、合併與寫入。執行：python -m unittest -v"""
+import contextlib
+import io
 import json
 import shutil
 import sqlite3
@@ -602,6 +604,11 @@ class CathayTest(unittest.TestCase):
         # 「期貨（名目本金）」查期貨明細，「附買回債券」不是債券成分
         self.assertEqual(c.detail_kinds(load("bal_CN")), ["股票", "期貨"])
         self.assertEqual(c.detail_kinds([{"item": "附買回債券"}, {"item": "現金"}]), [])
+        # 沒有成分明細介面的項目（現金類除外）：國泰日本不動產（009817）只查得到約 2% 的期貨明細
+        self.assertEqual(c.unlisted(load("bal_CN")), [])
+        self.assertEqual(c.unlisted([{"item": "現金", "ntMkval": "1.2%"}, {"item": "附買回債券", "ntMkval": "0.5%"},
+                                     {"item": "不動產投資信託證券", "ntMkval": "96.9%"}, {"item": "期貨（名目本金）", "ntMkval": "1.84%"}]),
+                         [("不動產投資信託證券", 96.9)])
         self.assertEqual(c.parse_holdings("期貨", load("GetETFDetailFutureList_CN")),
                          [{"asset_code": "TX-202610", "asset_name": "台股期貨", "kind": "期貨", "weight": 3.0, "qty": 1000.0}])
         fund = c.parse_holdings("基金", [{"fnNo": "80907786", "fnName": "貨幣市場基金", "ntMkval": "9,031,629"}])
@@ -622,6 +629,22 @@ class CathayTest(unittest.TestCase):
         self.assertEqual(recs["00687B"]["mgmt_fee"], 0.15)
         usd = recs["00687C"]
         self.assertEqual((usd["nav_official"], usd["nav_estimate"], usd["aum"], usd["dividends"]), (None, None, None, []))
+
+    def test_fetch_skips_partial_holdings(self):
+        """資產配置有超過 5% 的項目查不到成分明細時，這份成分明細不完整，不存。"""
+        from issuers import cathay as c
+        with tempfile.TemporaryDirectory() as tmp:
+            fix = Path(tmp) / "cathay"
+            shutil.copytree(FIX / "cathay", fix)
+            bal = json.loads((fix / "bal_CN.json").read_text("utf-8"))
+            bal["result"].append({"item": "不動產投資信託證券", "amount": "NT$30,000,000,000", "ntMkval": "6.0%"})
+            (fix / "bal_CN.json").write_text(json.dumps(bal, ensure_ascii=False), "utf-8")
+            err = io.StringIO()
+            with contextlib.redirect_stderr(err):
+                recs = c.fetch(fixtures=fix, dividend_codes=set())
+        self.assertEqual(recs["00878"]["holdings"], [])
+        self.assertEqual(recs["00878"]["nav_official"], 25.0)  # 淨值、規模等其他資料照常
+        self.assertIn("不動產投資信託證券 6.0%", err.getvalue())
 
     def fixtures(self, tmp: str) -> Path:
         """在共用測試資料加上兩檔國泰 ETF 的交易所資料。"""
