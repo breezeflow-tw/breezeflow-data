@@ -144,6 +144,17 @@ Codex 於 2026-10-20 讀取，Claude 的執行環境無法連線：
 
 ## 六、官方收盤價與歷史資料替代方案（提案，實施前先回報影響）
 
+### 2026-10-23 十年研究資料功能補充
+
+擁有者已要求以近十年建置研究資料庫、K 線及投入模擬，二十年按需要擴充。此授權是開發功能，不代表取得來源機構的資料權利；亦不擴大成第六節全面移除 Yahoo 來源的提案。
+
+- 已重查 [上市日成交資料 11549](https://data.gov.tw/dataset/11549)、[上櫃行情 11370](https://data.gov.tw/dataset/11370)及[政府資料開放授權條款](https://data.gov.tw/license)：每日行情及顯名方式沿用證據 10、11。
+- [個股日成交查詢](https://www.twse.com.tw/zh/trading/historical/stock-day.html)標示 2010-01-04 起；[ETF 日成交查詢](https://www.twse.com.tw/zh/products/securities/etf/trading/statistics/day.html)標示 2017-01-01 起。這只確認網站有歷史查詢，不證明十年批次取得及公開利用範圍。
+- [證交所使用條款](https://www.twse.com.tw/zh/terms/use.html)第 6 點限制未同意方式的自動下載，第 8 點對政府資料開放平臺已授權資料有例外。未取得核對證據前，不建立歷史查詢頁爬蟲。
+- [ETF 收益分配頁](https://www.twse.com.tw/zh/products/securities/etf/products/div.html)含除息、發放日與每單位配息；完整十年再利用及缺漏核對尚待確認。
+- 新功能只使用既有有來源的官方日資料，以及明確審查來源／取得／公開利用證據的離線資料包。沒有隱含授權、沒有 Yahoo 歷史混入新研究資料，亦沒有把測試資料寫入正式資料。
+- 查閱日期：2026-10-23（Asia/Taipei）。十年資料包尚未取得。匯入流程與條件見 `docs/tasks/ten-year-research.md`。
+
 ### 證據
 
 - **證交所 OpenAPI：** `STOCK_DAY_ALL` 是全部上市證券（含 ETF）最新一天的收盤行情，欄位含日期、收盤價、漲跌價差、成交股數。

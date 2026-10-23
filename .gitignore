@@ -5,3 +5,5 @@ data/etf.db
 web/data/etf.db
 # 發布時產生，與實際部署內容一起保存，不回寫資料庫分支
 web/release.json
+# 十年研究資料在發布時由已提交的歷史重建。
+web/data/research/

@@ -1142,6 +1142,10 @@ def main(argv=None) -> int:
         official += stocks
         con.commit()
         purge_excluded(con)
+        # 已由 PR 核實取得與公開使用範圍的離線資料包；匯入以內容雜湊去重。
+        import research_history
+        if not args.fixtures:
+            research_history.import_pending(con, ROOT / "data/research-imports", date)
         store.dump(con, history)
     finally:
         con.close()

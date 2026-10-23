@@ -13,6 +13,7 @@ from pathlib import Path
 from contextlib import closing
 
 import store
+import research_history
 
 
 def git(root, *args, check=True):
@@ -79,7 +80,7 @@ def publish_data(root, *, verify_fn=verify, refresh_fn=refresh, attempts=3):
                 git(root, "rebase", "--abort", check=False)
                 raise RuntimeError("資料與遠端有實際衝突，已停止；不選擇覆蓋任一版本。")
             verify_fn(root)
-            if any(path.startswith("scripts/") or path in ("data/etf_meta.csv", "data/product_overrides.json", "data/product_reference.json") for path in changed):
+            if any(path.startswith(("scripts/", "data/research-imports/")) or path in ("data/etf_meta.csv", "data/product_overrides.json", "data/product_reference.json") for path in changed):
                 refresh_fn(root)
                 commit_data(root)
             baseline = remote
@@ -99,9 +100,10 @@ def write_manifest(root):
     with closing(sqlite3.connect(":memory:")) as source:
         store.ensure_schema(source)
         store.load(source, root / "data/history")
+        research_history.export(source, payload["items"], payload["trade_date"], root / "web/data/research")
         with closing(sqlite3.connect(root / "web/data/etf.db")) as target:
             source.backup(target)
-    paths = ("web/index.html", "web/data/latest.json", "web/data/etf.db")
+    paths = ("web/index.html", "web/data/latest.json", "web/data/etf.db", "web/data/research/index.json")
     result = {
         "commit": git(root, "rev-parse", "HEAD").stdout.strip(),
         "built_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),

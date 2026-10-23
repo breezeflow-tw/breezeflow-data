@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "source": {
+    "id": "fixture-only", "test_only": true, "provider": "測試資料，禁止正式發布", "dataset": "離線測試價量與事件",
+    "url": "https://example.test/fixture", "license": "僅測試",
+    "acquisition_evidence": "https://example.test/fixture-terms", "redistribution_evidence": "https://example.test/fixture-terms",
+    "checked_at": "2026-10-22", "reviewed_by": "離線測試", "status": "verified", "currency": "TWD"
+  },
+  "prices": [
+    {"code":"0050","date":"2026-10-19","market":"上市","open":10,"high":11,"low":9,"close":10,"volume":1000},
+    {"code":"0050","date":"2026-10-20","market":"上市","open":8,"high":9,"low":7,"close":8,"volume":1000},
+    {"code":"0050","date":"2026-10-21","market":"上市","open":8,"high":9,"low":7,"close":8,"volume":1000},
+    {"code":"0050","date":"2026-10-22","market":"上市","open":8,"high":9,"low":7,"close":8,"volume":1000}
+  ],
+  "actions": [{"code":"0050","date":"2026-10-20","kind":"dividend","cash":2,"pay_date":"2026-10-21"}],
+  "coverage": [
+    {"code":"0050","kind":"calendar","start":"2026-10-19","end":"2026-10-22","complete":true,"trading_days":["2026-10-19","2026-10-20","2026-10-21","2026-10-22"]},
+    {"code":"0050","kind":"actions","start":"2026-10-19","end":"2026-10-22","complete":true}
+  ]
+}
