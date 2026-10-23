@@ -4,6 +4,7 @@ import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 const html=readFileSync(new URL('../web/index.html',import.meta.url),'utf8'),context=vm.createContext({});
 vm.runInContext(html.match(/  function researchDate\([\s\S]*?  \/\/ 十年研究計算核心結束。/)[0],context);
+vm.runInContext(html.match(/  const fmt=[^\n]+/)[0]+'\n'+html.match(/  const esc=[^\n]+/)[0]+'\n'+html.slice(html.indexOf('  function researchChart('),html.indexOf('  function renderResearch(')),context);
 const fixture=JSON.parse(readFileSync(new URL('./fixtures/research_package.json',import.meta.url),'utf8'));
 function data(){return {required_start:'2026-10-19',as_of:'2026-10-22',listed_date:'2003-06-30',currency:'TWD',bars:structuredClone(fixture.prices),actions:structuredClone(fixture.actions),issues:[],unknown_calendar_dates:[],missing_price_dates:[],missing_action_dates:[],ready_ranges:[{start:'2026-10-19',end:'2026-10-22'}]};}
 const opts={start:'2026-10-19',end:'2026-10-22',mode:'single',dividends:'cash',initial:100,monthly:0,payday:6,feeRate:0,minimum:0};
@@ -61,4 +62,36 @@ test('十年定期投入的現金與資產核算守恆',()=>{
   d.bars=context.researchDays(d.required_start,d.as_of).filter(day=>![0,6].includes(new Date(day).getUTCDay())).map(date=>({date,close:10,open:10,high:10,low:10,volume:1000}));
   const r=context.simulateResearch(d,{...opts,start:d.required_start,end:d.as_of,mode:'combined',monthly:1000});
   assert.equal(r.assets,r.contributed);assert.equal(r.assets,r.marketValue+r.cash+r.receivable);assert.ok(Math.abs(r.xirr)<1e-10);assert.equal(r.contributed,120100);
+});
+
+test('小螢幕與特大字的 K 線保留有限座標，只有一根 K 棒進入 Tab 順序',()=>{
+  const chart=context.researchChart(data(),'day',320,1.25);
+  assert.match(chart,/viewBox="0 0 320 350"/);
+  assert.doesNotMatch(chart,/NaN|Infinity/);
+  assert.equal((chart.match(/tabindex="0"/g)||[]).length,1);
+  assert.equal((chart.match(/role="button"/g)||[]).length,4);
+  assert.match(chart,/開 8，高 9，低 7，收 8，成交量 1000 單位/);
+  const flat=data();flat.bars.forEach(b=>Object.assign(b,{open:8,high:8,low:8,close:8,volume:0}));
+  assert.doesNotMatch(context.researchChart(flat,'day',320,1.25),/NaN|Infinity/);
+});
+
+test('週線讀值包含真正末日與未結束標示；缺漏期間顯示空狀態',()=>{
+  const d=data(),bar=context.aggregateResearch(d,'week')[0];
+  assert.match(context.researchChart(d,'week'),/2026-10-19 至 2026-10-22/);
+  assert.match(context.researchReadout(bar),/2026-10-19 ～ 2026-10-22/);
+  assert.match(context.researchReadout(bar),/本期未結束/);
+  assert.match(context.researchReadout(bar),/4,000/);
+  d.missing_price_dates=['2026-10-20'];
+  assert.doesNotMatch(context.researchChart(d,'week'),/<svg/);
+  assert.match(context.researchChart(d,'week'),/資料還不完整/);
+});
+
+test('字型偏好僅接受有效選項，儲存不可用時不阻擋頁面',()=>{
+  const boot=[...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(x=>x[1]).find(s=>s.includes('breezeflow-text-size'));
+  for(const stored of ['large','extra','unexpected',null]){
+    const document={documentElement:{dataset:{}}};
+    vm.runInNewContext(boot,{document,localStorage:{getItem:()=>stored}});
+    assert.equal(document.documentElement.dataset.textSize,['large','extra'].includes(stored)?stored:undefined);
+  }
+  assert.doesNotThrow(()=>vm.runInNewContext(boot,{document:{documentElement:{dataset:{}}},localStorage:{getItem(){throw Error('禁止儲存');}}}));
 });
