@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-23T20:47:53+08:00",
+ "generated_at": "2026-10-23T21:20:10+08:00",
  "trade_date": "2026-10-22",
  "source": "live",
  "has_nav": true,
@@ -907,6 +907,24 @@
     "data_date": "2026-10-22",
     "license": "政府資料開放授權條款－第1版",
     "license_url": "https://data.gov.tw/license"
+   },
+   {
+    "provider": "金融監督管理委員會證券期貨局／臺灣證券交易所",
+    "dataset": "上市公司基本資料（名稱核對）",
+    "dataset_url": "https://data.gov.tw/dataset/18419",
+    "source_url": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "data_date": "2026-10-22",
+    "license": "政府資料開放授權條款－第1版",
+    "license_url": "https://data.gov.tw/license"
+   },
+   {
+    "provider": "金融監督管理委員會證券期貨局／證券櫃檯買賣中心",
+    "dataset": "上櫃公司基本資料（名稱核對）",
+    "dataset_url": "https://data.gov.tw/dataset/25036",
+    "source_url": "https://mopsfin.twse.com.tw/opendata/t187ap03_O.csv",
+    "data_date": "2026-10-23",
+    "license": "政府資料開放授權條款－第1版",
+    "license_url": "https://data.gov.tw/license"
    }
   ],
   "periods": {
@@ -915,7 +933,7 @@
     "end": "2026-10-22",
     "baseline": "2026-10-21",
     "status": "可計算",
-    "reason": "股數增減 × 當日官方收盤價的估算，不是實際成交金額，也未扣除申購買回影響。其中 14 檔股票因缺股價或部分 ETF 被排除，金額為空值。",
+    "reason": "股數增減 × 當日官方收盤價的估算，不是實際成交金額，也未扣除申購買回影響。其中 4 檔股票因缺股價或部分 ETF 被排除，金額為空值。",
     "reason_code": null,
     "days": [
      "2026-10-22"
@@ -1061,1307 +1079,36 @@
     ],
     "excluded_stocks": [
      {
-      "asset_code": "1216",
-      "asset_name": "統一",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00985A"
-      ]
-     },
-     {
       "asset_code": "1303",
-      "asset_name": "南亞",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "asset_name": "南亞塑膠",
+      "date": "2026-10-22",
+      "reason": "持股股數重大跳變，無法排除分割、減資或資料異常，暫不排名",
       "etfs": [
-       "00401A",
-       "00406A",
-       "00980A",
-       "00991A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "1402",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00985A"
-      ]
-     },
-     {
-      "asset_code": "1477",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A"
-      ]
-     },
-     {
-      "asset_code": "1504",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00985A"
-      ]
-     },
-     {
-      "asset_code": "1605",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00985A"
-      ]
-     },
-     {
-      "asset_code": "2027",
-      "asset_name": "大成鋼",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00985A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2059",
-      "asset_name": "川湖",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00980A",
-       "00985A",
-       "00991A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2301",
-      "asset_name": "光寶科",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00984A"
-      ]
-     },
-     {
-      "asset_code": "2308",
-      "asset_name": "台達電",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00980A",
-       "00985A",
-       "00991A",
-       "00993A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2313",
-      "asset_name": "華通",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00991A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "2317",
-      "asset_name": "鴻海",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00980A",
-       "00985A",
-       "00991A"
-      ]
-     },
-     {
-      "asset_code": "2327",
-      "asset_name": "國巨",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00991A"
-      ]
-     },
-     {
-      "asset_code": "2344",
-      "asset_name": "華邦電",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00980A",
-       "00984A",
-       "00985A",
-       "00993A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "2345",
-      "asset_name": "智邦",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00980A",
-       "00985A",
-       "00991A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2357",
-      "asset_name": "華碩",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00991A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2360",
-      "asset_name": "致茂",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00980A",
-       "00991A",
        "00995A"
       ]
      },
      {
       "asset_code": "2368",
       "asset_name": "金像電",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "date": "2026-10-22",
+      "reason": "疑似分割、減資或配股：股數與股價反向調整，待核對",
       "etfs": [
        "00406A",
-       "00980A",
-       "00985A",
-       "00993A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2376",
-      "asset_name": "技嘉",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00980A",
-       "00985A"
-      ]
-     },
-     {
-      "asset_code": "2377",
-      "asset_name": "微星",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00985A"
-      ]
-     },
-     {
-      "asset_code": "2379",
-      "asset_name": "瑞昱",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00991A"
-      ]
-     },
-     {
-      "asset_code": "2382",
-      "asset_name": "廣達",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00980A",
-       "00991A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2383",
-      "asset_name": "台光電",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00980A",
-       "00984A",
-       "00985A",
-       "00991A",
-       "00993A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2408",
-      "asset_name": "南亞科",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00980A",
-       "00985A",
-       "00991A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2412",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00985A",
-       "00991A"
-      ]
-     },
-     {
-      "asset_code": "2441",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2451",
-      "asset_name": "創見",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2454",
-      "asset_name": "聯發科",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00980A",
-       "00985A",
-       "00991A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2455",
-      "asset_name": "全新",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "2467",
-      "asset_name": "志聖",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "2472",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "2486",
-      "asset_name": "一詮",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "2603",
-      "asset_name": "長榮",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00984A",
-       "00985A",
-       "00991A",
-       "00993A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2609",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00985A"
-      ]
-     },
-     {
-      "asset_code": "2618",
-      "asset_name": "長榮航",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2634",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00984A"
-      ]
-     },
-     {
-      "asset_code": "2855",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00984A"
-      ]
-     },
-     {
-      "asset_code": "2880",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00984A",
-       "00991A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2881",
-      "asset_name": "富邦金",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00984A",
-       "00991A"
-      ]
-     },
-     {
-      "asset_code": "2882",
-      "asset_name": "國泰金",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00991A"
-      ]
-     },
-     {
-      "asset_code": "2883",
-      "asset_name": "凱基金",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00984A",
-       "00991A"
-      ]
-     },
-     {
-      "asset_code": "2884",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00980A",
-       "00984A",
-       "00991A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2885",
-      "asset_name": "元大金",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00991A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2886",
-      "asset_name": "兆豐金",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00984A",
-       "00991A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2887",
-      "asset_name": "台新新光金",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00991A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2890",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00984A",
-       "00991A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2892",
-      "asset_name": "第一金",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "2912",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A"
-      ]
-     },
-     {
-      "asset_code": "3006",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00984A"
-      ]
-     },
-     {
-      "asset_code": "3008",
-      "asset_name": "大立光",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00980A",
-       "00984A",
-       "00985A",
-       "00991A",
-       "00993A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "3017",
-      "asset_name": "奇鋐",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00980A",
-       "00985A",
-       "00991A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "3023",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "3026",
-      "asset_name": "禾伸堂",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00980A",
-       "00991A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "3034",
-      "asset_name": "聯詠",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A"
-      ]
-     },
-     {
-      "asset_code": "3036",
-      "asset_name": "文曄",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00980A",
-       "00985A",
-       "00991A"
-      ]
-     },
-     {
-      "asset_code": "3037",
-      "asset_name": "欣興",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00980A",
-       "00985A",
-       "00991A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "3044",
-      "asset_name": "健鼎",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00980A",
-       "00991A",
-       "00993A",
-       "00995A",
-       "00999A"
+       "00993A"
       ]
      },
      {
       "asset_code": "3081",
       "asset_name": "聯 亞",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "date": "2026-10-22",
+      "reason": "疑似分割、減資或配股：股數與股價反向調整，待核對",
       "etfs": [
-       "00406A",
-       "00980A",
-       "00985A",
-       "00991A",
-       "00993A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "3131",
-      "asset_name": "弘塑",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A"
-      ]
-     },
-     {
-      "asset_code": "3167",
-      "asset_name": "大 量",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A"
-      ]
-     },
-     {
-      "asset_code": "3189",
-      "asset_name": "景碩",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00980A",
-       "00984A",
-       "00985A",
-       "00991A",
-       "00993A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "3231",
-      "asset_name": "緯創",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00980A",
-       "00985A",
-       "00991A"
-      ]
-     },
-     {
-      "asset_code": "3260",
-      "asset_name": "威剛",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A"
-      ]
-     },
-     {
-      "asset_code": "3264",
-      "asset_name": "欣銓",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00980A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "3293",
-      "asset_name": "鈊 象",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00980A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "3363",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A"
-      ]
-     },
-     {
-      "asset_code": "3443",
-      "asset_name": "創意",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00407A",
-       "00980A",
-       "00984A",
-       "00993A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "3450",
-      "asset_name": "聯鈞",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "3491",
-      "asset_name": "昇達科",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00985A",
        "00993A"
-      ]
-     },
-     {
-      "asset_code": "3529",
-      "asset_name": "力旺",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00980A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "3661",
-      "asset_name": "世芯-KY",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00985A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "3665",
-      "asset_name": "貿聯-KY",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00980A",
-       "00985A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "3702",
-      "asset_name": "大聯大",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "3706",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "3711",
-      "asset_name": "日月光投控",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00980A",
-       "00985A",
-       "00991A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "4551",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "4746",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "4904",
-      "asset_name": "遠傳",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00985A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "4938",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A"
-      ]
-     },
-     {
-      "asset_code": "4958",
-      "asset_name": "臻鼎-KY",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "4991",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A"
-      ]
-     },
-     {
-      "asset_code": "5274",
-      "asset_name": "信 驊",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00980A",
-       "00984A",
-       "00991A",
-       "00993A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "5289",
-      "asset_name": "宜鼎",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "5347",
-      "asset_name": "世界",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00991A"
-      ]
-     },
-     {
-      "asset_code": "5434",
-      "asset_name": "崇越",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "5439",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "5904",
-      "asset_name": "寶雅*",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00980A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "6121",
-      "asset_name": "新 普",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "6138",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "6147",
-      "asset_name": "頎邦",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "6187",
-      "asset_name": "萬 潤",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00984A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "6213",
-      "asset_name": "聯茂",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00980A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "6214",
-      "asset_name": "精誠",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00984A"
-      ]
-     },
-     {
-      "asset_code": "6223",
-      "asset_name": "旺矽",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00980A",
-       "00991A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "6274",
-      "asset_name": "台 燿",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00980A",
-       "00991A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "6285",
-      "asset_name": "啟碁",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A",
-       "00406A",
-       "00985A"
-      ]
-     },
-     {
-      "asset_code": "6415",
-      "asset_name": "矽力*-KY",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "6446",
-      "asset_name": "藥華藥",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00984A",
-       "00985A"
-      ]
-     },
-     {
-      "asset_code": "6488",
-      "asset_name": "環球晶",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00985A"
-      ]
-     },
-     {
-      "asset_code": "6505",
-      "asset_name": "台塑化",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00984A",
-       "00991A",
-       "00993A"
-      ]
-     },
-     {
-      "asset_code": "6515",
-      "asset_name": "穎崴",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00980A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "6526",
-      "asset_name": "達發",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00985A"
-      ]
-     },
-     {
-      "asset_code": "6531",
-      "asset_name": "愛普",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00984A",
-       "00985A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "6669",
-      "asset_name": "緯穎",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00980A",
-       "00985A",
-       "00991A",
-       "00995A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "6715",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "6805",
-      "asset_name": "富世達",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "6831",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00980A"
-      ]
-     },
-     {
-      "asset_code": "7750",
-      "asset_name": "新 代",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00985A"
-      ]
-     },
-     {
-      "asset_code": "7751",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00980A"
-      ]
-     },
-     {
-      "asset_code": "7769",
-      "asset_name": "鴻 勁",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00980A",
-       "00985A",
-       "00991A",
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "8039",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00984A"
-      ]
-     },
-     {
-      "asset_code": "8150",
-      "asset_name": "南茂",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "8210",
-      "asset_name": "勤誠",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00980A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "8299",
-      "asset_name": "群聯",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00980A",
-       "00991A"
-      ]
-     },
-     {
-      "asset_code": "8358",
-      "asset_name": "金居",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "8464",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00401A"
-      ]
-     },
-     {
-      "asset_code": "8996",
-      "asset_name": "高力",
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00406A",
-       "00980A",
-       "00985A",
-       "00995A"
-      ]
-     },
-     {
-      "asset_code": "9941",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00999A"
-      ]
-     },
-     {
-      "asset_code": "9958",
-      "asset_name": null,
-      "date": "2026-10-21",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
-      "etfs": [
-       "00999A"
       ]
      },
      {
       "asset_code": "3105",
-      "asset_name": "穩懋",
+      "asset_name": "穩懋半導體",
       "date": "2026-10-22",
       "reason": "疑似分割、減資或配股：股數與股價反向調整，待核對",
       "etfs": [
@@ -2379,20 +1126,75 @@
      },
      {
       "asset_code": "3653",
-      "asset_name": "健策",
+      "asset_name": "健策精密",
       "date": "2026-10-22",
       "reason": "疑似分割、減資或配股：股數與股價反向調整，待核對",
       "etfs": [
+       "00406A",
        "00993A"
       ]
      },
      {
-      "asset_code": "4770",
-      "asset_name": null,
+      "asset_code": "3711",
+      "asset_name": "日月光投控",
       "date": "2026-10-22",
-      "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值",
+      "reason": "疑似分割、減資或配股：股數與股價反向調整，待核對",
+      "etfs": [
+       "00406A"
+      ]
+     },
+     {
+      "asset_code": "6187",
+      "asset_name": "萬 潤",
+      "date": "2026-10-22",
+      "reason": "持股股數重大跳變，無法排除分割、減資或資料異常，暫不排名",
       "etfs": [
        "00995A"
+      ]
+     },
+     {
+      "asset_code": "6213",
+      "asset_name": "聯茂電子",
+      "date": "2026-10-22",
+      "reason": "持股股數重大跳變，無法排除分割、減資或資料異常，暫不排名",
+      "etfs": [
+       "00406A"
+      ]
+     },
+     {
+      "asset_code": "6223",
+      "asset_name": "旺矽",
+      "date": "2026-10-22",
+      "reason": "持股股數重大跳變，無法排除分割、減資或資料異常，暫不排名",
+      "etfs": [
+       "00980A"
+      ]
+     },
+     {
+      "asset_code": "6274",
+      "asset_name": "台 燿",
+      "date": "2026-10-22",
+      "reason": "持股股數重大跳變，無法排除分割、減資或資料異常，暫不排名",
+      "etfs": [
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "6515",
+      "asset_name": "穎崴",
+      "date": "2026-10-22",
+      "reason": "持股股數重大跳變，無法排除分割、減資或資料異常，暫不排名",
+      "etfs": [
+       "00995A"
+      ]
+     },
+     {
+      "asset_code": "6805",
+      "asset_name": "富世達",
+      "date": "2026-10-22",
+      "reason": "持股股數重大跳變，無法排除分割、減資或資料異常，暫不排名",
+      "etfs": [
+       "00406A"
       ]
      }
     ],
@@ -2404,10 +1206,10 @@
       "source_url": "https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false",
       "rows": 57,
       "stock_rows": 56,
-      "missing_qty": 41,
+      "missing_qty": 0,
       "weight_sum": 92.2824,
       "date_basis": "持股列 navDate／effectiveDate",
-      "unverified_rows": 41,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-21T18:32:23+08:00",
       "observed_at": "2026-10-22T09:26:13+08:00"
      },
@@ -2418,12 +1220,12 @@
       "source_url": "https://am.jpmorgan.com/FundsMarketingHandler/product-data?cusip=TW00000401A1&country=tw&role=twetf&language=zh&userLoggedIn=false",
       "rows": 57,
       "stock_rows": 56,
-      "missing_qty": 41,
+      "missing_qty": 0,
       "weight_sum": 91.9247,
       "date_basis": "持股列 navDate／effectiveDate",
-      "unverified_rows": 41,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-23T20:47:51+08:00"
+      "observed_at": "2026-10-23T21:20:08+08:00"
      },
      {
       "code": "00405A",
@@ -2451,7 +1253,7 @@
       "date_basis": "基金資產頁明示「資料日期」",
       "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-23T20:47:51+08:00"
+      "observed_at": "2026-10-23T21:20:08+08:00"
      },
      {
       "code": "00406A",
@@ -2460,12 +1262,12 @@
       "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
       "rows": 63,
       "stock_rows": 62,
-      "missing_qty": 51,
+      "missing_qty": 0,
       "weight_sum": 106.39,
       "date_basis": "申購買回清單明示「淨值日期」",
-      "unverified_rows": 51,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-21T18:32:23+08:00",
-      "observed_at": "2026-10-23T20:47:51+08:00"
+      "observed_at": "2026-10-23T21:20:08+08:00"
      },
      {
       "code": "00406A",
@@ -2474,10 +1276,10 @@
       "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
       "rows": 63,
       "stock_rows": 62,
-      "missing_qty": 51,
+      "missing_qty": 0,
       "weight_sum": 108.62,
       "date_basis": "申購買回清單明示「淨值日期」",
-      "unverified_rows": 51,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
       "observed_at": "2026-10-22T18:29:58+08:00"
      },
@@ -2488,12 +1290,12 @@
       "source_url": "https://www.kgifund.com.tw/Fund/RedemptionList?fundNo=J024",
       "rows": 50,
       "stock_rows": 50,
-      "missing_qty": 1,
+      "missing_qty": 0,
       "weight_sum": 94.89,
       "date_basis": "淨值欄名明示資料日期",
-      "unverified_rows": 1,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-21T18:32:23+08:00",
-      "observed_at": "2026-10-23T20:47:51+08:00"
+      "observed_at": "2026-10-23T21:20:08+08:00"
      },
      {
       "code": "00407A",
@@ -2502,10 +1304,10 @@
       "source_url": "https://www.kgifund.com.tw/Fund/RedemptionList?fundNo=J024",
       "rows": 50,
       "stock_rows": 50,
-      "missing_qty": 1,
+      "missing_qty": 0,
       "weight_sum": 94.48,
       "date_basis": "淨值欄名明示資料日期",
-      "unverified_rows": 1,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
       "observed_at": "2026-10-22T18:29:58+08:00"
      },
@@ -2516,10 +1318,10 @@
       "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
       "rows": 51,
       "stock_rows": 50,
-      "missing_qty": 43,
+      "missing_qty": 0,
       "weight_sum": 95.61,
       "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
-      "unverified_rows": 43,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-21T18:32:23+08:00",
       "observed_at": "2026-10-22T09:26:13+08:00"
      },
@@ -2530,12 +1332,12 @@
       "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
       "rows": 51,
       "stock_rows": 50,
-      "missing_qty": 43,
+      "missing_qty": 0,
       "weight_sum": 96.53,
       "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
-      "unverified_rows": 43,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-23T20:47:51+08:00"
+      "observed_at": "2026-10-23T21:20:08+08:00"
      },
      {
       "code": "00984A",
@@ -2544,10 +1346,10 @@
       "source_url": "https://etf.allianzgi.com.tw/etf-info/E0001",
       "rows": 80,
       "stock_rows": 80,
-      "missing_qty": 23,
+      "missing_qty": 0,
       "weight_sum": 98.55,
       "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
-      "unverified_rows": 23,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-21T18:32:23+08:00",
       "observed_at": "2026-10-22T09:26:13+08:00"
      },
@@ -2558,12 +1360,12 @@
       "source_url": "https://etf.allianzgi.com.tw/etf-info/E0001",
       "rows": 80,
       "stock_rows": 80,
-      "missing_qty": 23,
+      "missing_qty": 0,
       "weight_sum": 98.45,
       "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
-      "unverified_rows": 23,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-23T20:47:51+08:00"
+      "observed_at": "2026-10-23T21:20:08+08:00"
      },
      {
       "code": "00985A",
@@ -2572,10 +1374,10 @@
       "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
       "rows": 51,
       "stock_rows": 50,
-      "missing_qty": 42,
+      "missing_qty": 0,
       "weight_sum": 91.57,
       "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
-      "unverified_rows": 42,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-21T18:32:23+08:00",
       "observed_at": "2026-10-22T09:26:13+08:00"
      },
@@ -2586,12 +1388,12 @@
       "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
       "rows": 51,
       "stock_rows": 50,
-      "missing_qty": 42,
+      "missing_qty": 0,
       "weight_sum": 92.64,
       "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
-      "unverified_rows": 42,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-23T20:47:51+08:00"
+      "observed_at": "2026-10-23T21:20:08+08:00"
      },
      {
       "code": "00991A",
@@ -2600,10 +1402,10 @@
       "source_url": "https://www.fhtrust.com.tw/api/assets?fundID=ETF23&qDate=2026%2F10%2F21",
       "rows": 50,
       "stock_rows": 50,
-      "missing_qty": 44,
+      "missing_qty": 0,
       "weight_sum": 98.829,
       "date_basis": "資產明細回傳日期與查詢的正式淨值日期一致",
-      "unverified_rows": 44,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-21T18:32:23+08:00",
       "observed_at": "2026-10-22T09:26:13+08:00"
      },
@@ -2614,12 +1416,12 @@
       "source_url": "https://www.fhtrust.com.tw/api/assets?fundID=ETF23&qDate=2026%2F10%2F22",
       "rows": 50,
       "stock_rows": 50,
-      "missing_qty": 44,
+      "missing_qty": 0,
       "weight_sum": 98.767,
       "date_basis": "資產明細回傳日期與查詢的正式淨值日期一致",
-      "unverified_rows": 44,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-23T20:47:51+08:00"
+      "observed_at": "2026-10-23T21:20:08+08:00"
      },
      {
       "code": "00993A",
@@ -2628,10 +1430,10 @@
       "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
       "rows": 50,
       "stock_rows": 49,
-      "missing_qty": 13,
+      "missing_qty": 0,
       "weight_sum": 93.31,
       "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
-      "unverified_rows": 13,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-21T18:32:23+08:00",
       "observed_at": "2026-10-22T09:26:13+08:00"
      },
@@ -2642,12 +1444,12 @@
       "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
       "rows": 51,
       "stock_rows": 50,
-      "missing_qty": 13,
+      "missing_qty": 0,
       "weight_sum": 98.69,
       "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
-      "unverified_rows": 13,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-23T20:47:51+08:00"
+      "observed_at": "2026-10-23T21:20:08+08:00"
      },
      {
       "code": "00995A",
@@ -2656,12 +1458,12 @@
       "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
       "rows": 56,
       "stock_rows": 56,
-      "missing_qty": 47,
+      "missing_qty": 0,
       "weight_sum": 97.25,
       "date_basis": "申購買回清單明示「淨值日期」",
-      "unverified_rows": 47,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-21T18:32:23+08:00",
-      "observed_at": "2026-10-23T20:47:51+08:00"
+      "observed_at": "2026-10-23T21:20:08+08:00"
      },
      {
       "code": "00995A",
@@ -2670,10 +1472,10 @@
       "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
       "rows": 55,
       "stock_rows": 55,
-      "missing_qty": 46,
+      "missing_qty": 0,
       "weight_sum": 97.22,
       "date_basis": "申購買回清單明示「淨值日期」",
-      "unverified_rows": 46,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
       "observed_at": "2026-10-22T18:29:58+08:00"
      },
@@ -2684,10 +1486,10 @@
       "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
       "rows": 55,
       "stock_rows": 54,
-      "missing_qty": 50,
+      "missing_qty": 0,
       "weight_sum": 97.41,
       "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
-      "unverified_rows": 50,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-21T18:32:23+08:00",
       "observed_at": "2026-10-22T09:26:13+08:00"
      },
@@ -2698,12 +1500,12 @@
       "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
       "rows": 55,
       "stock_rows": 54,
-      "missing_qty": 50,
+      "missing_qty": 0,
       "weight_sum": 97.33,
       "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
-      "unverified_rows": 50,
+      "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-23T20:47:51+08:00"
+      "observed_at": "2026-10-23T21:20:08+08:00"
      }
     ],
     "stocks": [
@@ -2742,6 +1544,49 @@
         "unit_qty_prev": 3.4734,
         "unit_qty": 3.5544,
         "unit_qty_change": 0.081,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2454",
+      "asset_name": "聯發科技",
+      "net_amount": 3.208,
+      "buy_amount": 3.208,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 80000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 4010.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 1393000,
+        "qty": 1473000,
+        "qty_change": 80000,
+        "amount": 3.208,
+        "action": "加碼",
+        "weight_prev": 5.41,
+        "weight": 5.48,
+        "unit_qty_prev": 1.1994,
+        "unit_qty": 1.2221,
+        "unit_qty_change": 0.0227,
         "source": "中信投信官網",
         "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
         "prev_date": "2026-10-21",
@@ -2794,6 +1639,464 @@
       ]
      },
      {
+      "asset_code": "2059",
+      "asset_name": "川湖科技",
+      "net_amount": 2.24365,
+      "buy_amount": 2.24365,
+      "sell_amount": 0.0,
+      "buy_etfs": 2,
+      "sell_etfs": 0,
+      "net_shares": 23000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 9755.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 113000,
+        "qty": 135000,
+        "qty_change": 22000,
+        "amount": 2.1461,
+        "action": "加碼",
+        "weight_prev": 1.07,
+        "weight": 1.22,
+        "unit_qty_prev": 0.0973,
+        "unit_qty": 0.112,
+        "unit_qty_change": 0.0147,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       },
+       {
+        "code": "00993A",
+        "name": "主動安聯台灣",
+        "qty_prev": 23000,
+        "qty": 24000,
+        "qty_change": 1000,
+        "amount": 0.09755,
+        "action": "加碼",
+        "weight_prev": 2.41,
+        "weight": 2.51,
+        "unit_qty_prev": 0.3159,
+        "unit_qty": 0.3296,
+        "unit_qty_change": 0.0137,
+        "source": "安聯投信官網",
+        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "3189",
+      "asset_name": "景碩科技",
+      "net_amount": 2.22836,
+      "buy_amount": 2.22836,
+      "sell_amount": 0.0,
+      "buy_etfs": 2,
+      "sell_etfs": 0,
+      "net_shares": 226000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 986.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 2146000,
+        "qty": 2346000,
+        "qty_change": 200000,
+        "amount": 1.972,
+        "action": "加碼",
+        "weight_prev": 2.03,
+        "weight": 2.15,
+        "unit_qty_prev": 1.8478,
+        "unit_qty": 1.9465,
+        "unit_qty_change": 0.0987,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       },
+       {
+        "code": "00993A",
+        "name": "主動安聯台灣",
+        "qty_prev": 538000,
+        "qty": 564000,
+        "qty_change": 26000,
+        "amount": 0.25636,
+        "action": "加碼",
+        "weight_prev": 5.64,
+        "weight": 5.95,
+        "unit_qty_prev": 7.3892,
+        "unit_qty": 7.7463,
+        "unit_qty_change": 0.3571,
+        "source": "安聯投信官網",
+        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "3017",
+      "asset_name": "奇鋐科技",
+      "net_amount": 2.17005,
+      "buy_amount": 3.4595,
+      "sell_amount": 1.28945,
+      "buy_etfs": 1,
+      "sell_etfs": 2,
+      "net_shares": 69000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 3145.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 1699000,
+        "qty": 1809000,
+        "qty_change": 110000,
+        "amount": 3.4595,
+        "action": "加碼",
+        "weight_prev": 5.15,
+        "weight": 5.28,
+        "unit_qty_prev": 1.4629,
+        "unit_qty": 1.5009,
+        "unit_qty_change": 0.038,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       },
+       {
+        "code": "00985A",
+        "name": "主動野村台灣50",
+        "qty_prev": 145000,
+        "qty": 109000,
+        "qty_change": -36000,
+        "amount": -1.1322,
+        "action": "減碼",
+        "weight_prev": 1.59,
+        "weight": 1.18,
+        "unit_qty_prev": 1.0117,
+        "unit_qty": 0.7594,
+        "unit_qty_change": -0.2523,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       },
+       {
+        "code": "00993A",
+        "name": "主動安聯台灣",
+        "qty_prev": 120000,
+        "qty": 115000,
+        "qty_change": -5000,
+        "amount": -0.15725,
+        "action": "減碼",
+        "weight_prev": 4.03,
+        "weight": 3.87,
+        "unit_qty_prev": 1.6481,
+        "unit_qty": 1.5795,
+        "unit_qty_change": -0.0686,
+        "source": "安聯投信官網",
+        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "3037",
+      "asset_name": "欣興電子",
+      "net_amount": 2.1266,
+      "buy_amount": 2.17,
+      "sell_amount": 0.0434,
+      "buy_etfs": 1,
+      "sell_etfs": 1,
+      "net_shares": 196000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 1085.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 5645000,
+        "qty": 5845000,
+        "qty_change": 200000,
+        "amount": 2.17,
+        "action": "加碼",
+        "weight_prev": 5.82,
+        "weight": 5.88,
+        "unit_qty_prev": 4.8605,
+        "unit_qty": 4.8496,
+        "unit_qty_change": -0.0109,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       },
+       {
+        "code": "00993A",
+        "name": "主動安聯台灣",
+        "qty_prev": 433000,
+        "qty": 429000,
+        "qty_change": -4000,
+        "amount": -0.0434,
+        "action": "減碼",
+        "weight_prev": 4.95,
+        "weight": 4.98,
+        "unit_qty_prev": 5.9471,
+        "unit_qty": 5.8921,
+        "unit_qty_change": -0.055,
+        "source": "安聯投信官網",
+        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2412",
+      "asset_name": "中華電信",
+      "net_amount": 2.03662,
+      "buy_amount": 2.03662,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 1289000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 158.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00985A",
+        "name": "主動野村台灣50",
+        "qty_prev": 2818000,
+        "qty": 4107000,
+        "qty_change": 1289000,
+        "amount": 2.03662,
+        "action": "加碼",
+        "weight_prev": 1.47,
+        "weight": 2.24,
+        "unit_qty_prev": 19.6611,
+        "unit_qty": 28.6144,
+        "unit_qty_change": 8.9533,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "6715",
+      "asset_name": "嘉基科技",
+      "net_amount": 1.55682,
+      "buy_amount": 1.55682,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 324000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 480.5,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 1671000,
+        "qty": 1995000,
+        "qty_change": 324000,
+        "amount": 1.55682,
+        "action": "加碼",
+        "weight_prev": 0.75,
+        "weight": 0.89,
+        "unit_qty_prev": 1.4388,
+        "unit_qty": 1.6552,
+        "unit_qty_change": 0.2164,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "3264",
+      "asset_name": "欣銓科技",
+      "net_amount": 1.479,
+      "buy_amount": 1.479,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 600000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 246.5,
+        "market": "上櫃",
+        "dataset": "11370"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 1600000,
+        "qty": 2200000,
+        "qty_change": 600000,
+        "amount": 1.479,
+        "action": "加碼",
+        "weight_prev": 0.4,
+        "weight": 0.5,
+        "unit_qty_prev": 1.3776,
+        "unit_qty": 1.8253,
+        "unit_qty_change": 0.4477,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2308",
+      "asset_name": "台達電子工業",
+      "net_amount": 1.3104,
+      "buy_amount": 1.3104,
+      "sell_amount": 0.0,
+      "buy_etfs": 2,
+      "sell_etfs": 0,
+      "net_shares": 84000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 1560.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 1693000,
+        "qty": 1773000,
+        "qty_change": 80000,
+        "amount": 1.248,
+        "action": "加碼",
+        "weight_prev": 2.58,
+        "weight": 2.57,
+        "unit_qty_prev": 1.4577,
+        "unit_qty": 1.4711,
+        "unit_qty_change": 0.0134,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       },
+       {
+        "code": "00993A",
+        "name": "主動安聯台灣",
+        "qty_prev": 52000,
+        "qty": 56000,
+        "qty_change": 4000,
+        "amount": 0.0624,
+        "action": "加碼",
+        "weight_prev": 0.88,
+        "weight": 0.94,
+        "unit_qty_prev": 0.7142,
+        "unit_qty": 0.7691,
+        "unit_qty_change": 0.0549,
+        "source": "安聯投信官網",
+        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
       "asset_code": "1101",
       "asset_name": "臺灣水泥",
       "net_amount": 1.217502,
@@ -2830,6 +2133,407 @@
         "unit_qty_change": 30.2085,
         "source": "野村投信官網",
         "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2383",
+      "asset_name": "台光電子材料",
+      "net_amount": 1.1661,
+      "buy_amount": 1.521,
+      "sell_amount": 0.3549,
+      "buy_etfs": 1,
+      "sell_etfs": 1,
+      "net_shares": 23000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 5070.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 1400000,
+        "qty": 1430000,
+        "qty_change": 30000,
+        "amount": 1.521,
+        "action": "加碼",
+        "weight_prev": 6.55,
+        "weight": 6.73,
+        "unit_qty_prev": 1.2054,
+        "unit_qty": 1.1865,
+        "unit_qty_change": -0.0189,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       },
+       {
+        "code": "00993A",
+        "name": "主動安聯台灣",
+        "qty_prev": 93000,
+        "qty": 86000,
+        "qty_change": -7000,
+        "amount": -0.3549,
+        "action": "減碼",
+        "weight_prev": 4.82,
+        "weight": 4.67,
+        "unit_qty_prev": 1.2773,
+        "unit_qty": 1.1812,
+        "unit_qty_change": -0.0961,
+        "source": "安聯投信官網",
+        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "3443",
+      "asset_name": "創意電子",
+      "net_amount": 1.13775,
+      "buy_amount": 1.13775,
+      "sell_amount": 0.0,
+      "buy_etfs": 2,
+      "sell_etfs": 0,
+      "net_shares": 15000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 7585.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 307000,
+        "qty": 319000,
+        "qty_change": 12000,
+        "amount": 0.9102,
+        "action": "加碼",
+        "weight_prev": 2.3,
+        "weight": 2.25,
+        "unit_qty_prev": 0.2643,
+        "unit_qty": 0.2647,
+        "unit_qty_change": 0.0004,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       },
+       {
+        "code": "00993A",
+        "name": "主動安聯台灣",
+        "qty_prev": 71000,
+        "qty": 74000,
+        "qty_change": 3000,
+        "amount": 0.22755,
+        "action": "加碼",
+        "weight_prev": 5.9,
+        "weight": 6.01,
+        "unit_qty_prev": 0.9752,
+        "unit_qty": 1.0164,
+        "unit_qty_change": 0.0412,
+        "source": "安聯投信官網",
+        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "5274",
+      "asset_name": "信驊科技",
+      "net_amount": 1.1207,
+      "buy_amount": 1.1207,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 7000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 16010.0,
+        "market": "上櫃",
+        "dataset": "11370"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 131000,
+        "qty": 138000,
+        "qty_change": 7000,
+        "amount": 1.1207,
+        "action": "加碼",
+        "weight_prev": 2.03,
+        "weight": 2.05,
+        "unit_qty_prev": 0.1128,
+        "unit_qty": 0.1145,
+        "unit_qty_change": 0.0017,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "3036",
+      "asset_name": "文曄科技",
+      "net_amount": 1.03731,
+      "buy_amount": 1.03731,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 487000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 213.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00985A",
+        "name": "主動野村台灣50",
+        "qty_prev": 3650000,
+        "qty": 4137000,
+        "qty_change": 487000,
+        "amount": 1.03731,
+        "action": "加碼",
+        "weight_prev": 2.63,
+        "weight": 3.04,
+        "unit_qty_prev": 25.4659,
+        "unit_qty": 28.8235,
+        "unit_qty_change": 3.3576,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2317",
+      "asset_name": "鴻海精密工業",
+      "net_amount": 0.69335,
+      "buy_amount": 0.69335,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 283000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 245.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00980A",
+        "name": "主動野村臺灣優選",
+        "qty_prev": 2170000,
+        "qty": 2453000,
+        "qty_change": 283000,
+        "amount": 0.69335,
+        "action": "加碼",
+        "weight_prev": 2.88,
+        "weight": 3.28,
+        "unit_qty_prev": 28.0641,
+        "unit_qty": 31.7036,
+        "unit_qty_change": 3.6395,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "3665",
+      "asset_name": "貿聯控股（BizLink Holding In",
+      "net_amount": 0.6375,
+      "buy_amount": 0.6375,
+      "sell_amount": 0.0,
+      "buy_etfs": 2,
+      "sell_etfs": 0,
+      "net_shares": 34000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 1875.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00980A",
+        "name": "主動野村臺灣優選",
+        "qty_prev": 110336,
+        "qty": 143336,
+        "qty_change": 33000,
+        "amount": 0.61875,
+        "action": "加碼",
+        "weight_prev": 1.14,
+        "weight": 1.47,
+        "unit_qty_prev": 1.4269,
+        "unit_qty": 1.8525,
+        "unit_qty_change": 0.4256,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       },
+       {
+        "code": "00993A",
+        "name": "主動安聯台灣",
+        "qty_prev": 30000,
+        "qty": 31000,
+        "qty_change": 1000,
+        "amount": 0.01875,
+        "action": "加碼",
+        "weight_prev": 0.61,
+        "weight": 0.62,
+        "unit_qty_prev": 0.412,
+        "unit_qty": 0.4258,
+        "unit_qty_change": 0.0138,
+        "source": "安聯投信官網",
+        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "1402",
+      "asset_name": "遠東新世紀",
+      "net_amount": 0.56355,
+      "buy_amount": 0.56355,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 1950000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 28.9,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00985A",
+        "name": "主動野村台灣50",
+        "qty_prev": 15953000,
+        "qty": 17903000,
+        "qty_change": 1950000,
+        "amount": 0.56355,
+        "action": "加碼",
+        "weight_prev": 1.55,
+        "weight": 1.79,
+        "unit_qty_prev": 111.3034,
+        "unit_qty": 124.7345,
+        "unit_qty_change": 13.4311,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "3008",
+      "asset_name": "大立光電",
+      "net_amount": 0.55575,
+      "buy_amount": 0.55575,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 9000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 6175.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00980A",
+        "name": "主動野村臺灣優選",
+        "qty_prev": 56000,
+        "qty": 65000,
+        "qty_change": 9000,
+        "amount": 0.55575,
+        "action": "加碼",
+        "weight_prev": 1.83,
+        "weight": 2.19,
+        "unit_qty_prev": 0.7242,
+        "unit_qty": 0.8401,
+        "unit_qty_change": 0.1159,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
         "prev_date": "2026-10-21",
         "date": "2026-10-22",
         "reason": null
@@ -2880,6 +2584,154 @@
       ]
      },
      {
+      "asset_code": "3044",
+      "asset_name": "健鼎科技",
+      "net_amount": 0.4726,
+      "buy_amount": 0.47816,
+      "sell_amount": 0.00556,
+      "buy_etfs": 1,
+      "sell_etfs": 1,
+      "net_shares": 85000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 556.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00980A",
+        "name": "主動野村臺灣優選",
+        "qty_prev": 364000,
+        "qty": 450000,
+        "qty_change": 86000,
+        "amount": 0.47816,
+        "action": "加碼",
+        "weight_prev": 1.13,
+        "weight": 1.37,
+        "unit_qty_prev": 4.7075,
+        "unit_qty": 5.816,
+        "unit_qty_change": 1.1085,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       },
+       {
+        "code": "00993A",
+        "name": "主動安聯台灣",
+        "qty_prev": 62000,
+        "qty": 61000,
+        "qty_change": -1000,
+        "amount": -0.00556,
+        "action": "減碼",
+        "weight_prev": 0.38,
+        "weight": 0.36,
+        "unit_qty_prev": 0.8515,
+        "unit_qty": 0.8378,
+        "unit_qty_change": -0.0137,
+        "source": "安聯投信官網",
+        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "3231",
+      "asset_name": "緯創資通",
+      "net_amount": 0.4693,
+      "buy_amount": 0.4693,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 247000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 190.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00980A",
+        "name": "主動野村臺灣優選",
+        "qty_prev": 1411000,
+        "qty": 1658000,
+        "qty_change": 247000,
+        "amount": 0.4693,
+        "action": "加碼",
+        "weight_prev": 1.46,
+        "weight": 1.72,
+        "unit_qty_prev": 18.2481,
+        "unit_qty": 21.4287,
+        "unit_qty_change": 3.1806,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2376",
+      "asset_name": "技嘉科技",
+      "net_amount": 0.4537,
+      "buy_amount": 0.4537,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 130000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 349.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00980A",
+        "name": "主動野村臺灣優選",
+        "qty_prev": 747000,
+        "qty": 877000,
+        "qty_change": 130000,
+        "amount": 0.4537,
+        "action": "加碼",
+        "weight_prev": 1.42,
+        "weight": 1.67,
+        "unit_qty_prev": 9.6608,
+        "unit_qty": 11.3347,
+        "unit_qty_change": 1.6739,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
       "asset_code": "1326",
       "asset_name": "台灣化學纖維",
       "net_amount": 0.438,
@@ -2923,6 +2775,92 @@
       ]
      },
      {
+      "asset_code": "2382",
+      "asset_name": "廣達電腦",
+      "net_amount": 0.42826,
+      "buy_amount": 0.42826,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 133000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 322.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00980A",
+        "name": "主動野村臺灣優選",
+        "qty_prev": 966000,
+        "qty": 1099000,
+        "qty_change": 133000,
+        "amount": 0.42826,
+        "action": "加碼",
+        "weight_prev": 1.68,
+        "weight": 1.93,
+        "unit_qty_prev": 12.493,
+        "unit_qty": 14.2039,
+        "unit_qty_change": 1.7109,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2027",
+      "asset_name": "大成不銹鋼工業",
+      "net_amount": 0.348128,
+      "buy_amount": 0.348128,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 688000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 50.6,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00985A",
+        "name": "主動野村台灣50",
+        "qty_prev": 10874000,
+        "qty": 11562000,
+        "qty_change": 688000,
+        "amount": 0.348128,
+        "action": "加碼",
+        "weight_prev": 1.84,
+        "weight": 2.02,
+        "unit_qty_prev": 75.8675,
+        "unit_qty": 80.5552,
+        "unit_qty_change": 4.6877,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
       "asset_code": "2303",
       "asset_name": "聯華電子",
       "net_amount": 0.34387,
@@ -2959,6 +2897,154 @@
         "unit_qty_change": 3.5245,
         "source": "野村投信官網",
         "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "4904",
+      "asset_name": "遠傳電信",
+      "net_amount": 0.2852,
+      "buy_amount": 0.2852,
+      "sell_amount": 0.0,
+      "buy_etfs": 2,
+      "sell_etfs": 0,
+      "net_shares": 248000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 115.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00985A",
+        "name": "主動野村台灣50",
+        "qty_prev": 7183000,
+        "qty": 7423000,
+        "qty_change": 240000,
+        "amount": 0.276,
+        "action": "加碼",
+        "weight_prev": 2.73,
+        "weight": 2.95,
+        "unit_qty_prev": 50.1155,
+        "unit_qty": 51.7178,
+        "unit_qty_change": 1.6023,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       },
+       {
+        "code": "00993A",
+        "name": "主動安聯台灣",
+        "qty_prev": 229000,
+        "qty": 237000,
+        "qty_change": 8000,
+        "amount": 0.0092,
+        "action": "加碼",
+        "weight_prev": 0.27,
+        "weight": 0.29,
+        "unit_qty_prev": 3.1452,
+        "unit_qty": 3.2551,
+        "unit_qty_change": 0.1099,
+        "source": "安聯投信官網",
+        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "4770",
+      "asset_name": "上品綜合工業股份有限公司",
+      "net_amount": 0.2044,
+      "buy_amount": 0.2044,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 70000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 292.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00995A",
+        "name": "主動中信台灣卓越",
+        "qty_prev": 0,
+        "qty": 70000,
+        "qty_change": 70000,
+        "amount": 0.2044,
+        "action": "新增",
+        "weight_prev": null,
+        "weight": 0.48,
+        "unit_qty_prev": 0.0,
+        "unit_qty": 2.6019,
+        "unit_qty_change": 2.6019,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2327",
+      "asset_name": "國巨*",
+      "net_amount": 0.17745,
+      "buy_amount": 0.17745,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 35000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 507.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00993A",
+        "name": "主動安聯台灣",
+        "qty_prev": 251000,
+        "qty": 286000,
+        "qty_change": 35000,
+        "amount": 0.17745,
+        "action": "加碼",
+        "weight_prev": 1.41,
+        "weight": 1.55,
+        "unit_qty_prev": 3.4474,
+        "unit_qty": 3.9281,
+        "unit_qty_change": 0.4807,
+        "source": "安聯投信官網",
+        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
         "prev_date": "2026-10-21",
         "date": "2026-10-22",
         "reason": null
@@ -3052,6 +3138,92 @@
       ]
      },
      {
+      "asset_code": "6147",
+      "asset_name": "頎邦",
+      "net_amount": 0.05075,
+      "buy_amount": 0.05075,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 25000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 203.0,
+        "market": "上櫃",
+        "dataset": "11370"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00993A",
+        "name": "主動安聯台灣",
+        "qty_prev": 174000,
+        "qty": 199000,
+        "qty_change": 25000,
+        "amount": 0.05075,
+        "action": "加碼",
+        "weight_prev": 0.39,
+        "weight": 0.43,
+        "unit_qty_prev": 2.3898,
+        "unit_qty": 2.7332,
+        "unit_qty_change": 0.3434,
+        "source": "安聯投信官網",
+        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2455",
+      "asset_name": "全新",
+      "net_amount": 0.0467,
+      "buy_amount": 0.0467,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 10000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 467.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00993A",
+        "name": "主動安聯台灣",
+        "qty_prev": 242000,
+        "qty": 252000,
+        "qty_change": 10000,
+        "amount": 0.0467,
+        "action": "加碼",
+        "weight_prev": 1.23,
+        "weight": 1.26,
+        "unit_qty_prev": 3.3238,
+        "unit_qty": 3.4611,
+        "unit_qty_change": 0.1373,
+        "source": "安聯投信官網",
+        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
       "asset_code": "2006",
       "asset_name": "東和鋼鐵",
       "net_amount": 0.024232,
@@ -3086,6 +3258,49 @@
         "unit_qty_prev": 5.2054,
         "unit_qty": 5.5625,
         "unit_qty_change": 0.3571,
+        "source": "安聯投信官網",
+        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2603",
+      "asset_name": "長榮海運",
+      "net_amount": 0.0182,
+      "buy_amount": 0.0182,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 7000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 260.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00993A",
+        "name": "主動安聯台灣",
+        "qty_prev": 186000,
+        "qty": 193000,
+        "qty_change": 7000,
+        "amount": 0.0182,
+        "action": "加碼",
+        "weight_prev": 0.5,
+        "weight": 0.54,
+        "unit_qty_prev": 2.5546,
+        "unit_qty": 2.6508,
+        "unit_qty_change": 0.0962,
         "source": "安聯投信官網",
         "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
         "prev_date": "2026-10-21",
@@ -3181,6 +3396,49 @@
       ]
      },
      {
+      "asset_code": "6505",
+      "asset_name": "台塑石化",
+      "net_amount": 0.005325,
+      "buy_amount": 0.005325,
+      "sell_amount": 0.0,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 5000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 106.5,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00993A",
+        "name": "主動安聯台灣",
+        "qty_prev": 478000,
+        "qty": 483000,
+        "qty_change": 5000,
+        "amount": 0.005325,
+        "action": "加碼",
+        "weight_prev": 0.54,
+        "weight": 0.55,
+        "unit_qty_prev": 6.5651,
+        "unit_qty": 6.6338,
+        "unit_qty_change": 0.0687,
+        "source": "安聯投信官網",
+        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
       "asset_code": "8021",
       "asset_name": "尖點",
       "net_amount": 0.001039,
@@ -3224,6 +3482,49 @@
       ]
      },
      {
+      "asset_code": "8210",
+      "asset_name": "勤誠興業",
+      "net_amount": -0.00764,
+      "buy_amount": 0.0,
+      "sell_amount": 0.00764,
+      "buy_etfs": 0,
+      "sell_etfs": 1,
+      "net_shares": -1000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 764.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00995A",
+        "name": "主動中信台灣卓越",
+        "qty_prev": 1000,
+        "qty": 0,
+        "qty_change": -1000,
+        "amount": -0.00764,
+        "action": "刪除",
+        "weight_prev": 0.02,
+        "weight": null,
+        "unit_qty_prev": 0.0372,
+        "unit_qty": 0.0,
+        "unit_qty_change": -0.0372,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
       "asset_code": "2606",
       "asset_name": "裕民",
       "net_amount": -0.010192,
@@ -3258,6 +3559,49 @@
         "unit_qty_prev": 4.3264,
         "unit_qty": 4.1341,
         "unit_qty_change": -0.1923,
+        "source": "安聯投信官網",
+        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2360",
+      "asset_name": "致茂",
+      "net_amount": -0.0198,
+      "buy_amount": 0.0,
+      "sell_amount": 0.0198,
+      "buy_etfs": 0,
+      "sell_etfs": 1,
+      "net_shares": -1000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 1980.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00993A",
+        "name": "主動安聯台灣",
+        "qty_prev": 25000,
+        "qty": 24000,
+        "qty_change": -1000,
+        "amount": -0.0198,
+        "action": "減碼",
+        "weight_prev": 0.52,
+        "weight": 0.51,
+        "unit_qty_prev": 0.3434,
+        "unit_qty": 0.3296,
+        "unit_qty_change": -0.0138,
         "source": "安聯投信官網",
         "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
         "prev_date": "2026-10-21",
@@ -3310,53 +3654,22 @@
       ]
      },
      {
-      "asset_code": "1303",
-      "asset_name": "南亞",
-      "net_amount": null,
-      "buy_amount": null,
-      "sell_amount": null,
-      "buy_etfs": 1,
-      "sell_etfs": 0,
-      "net_shares": 199000,
-      "complete": false,
-      "counts_complete": false,
+      "asset_code": "6669",
+      "asset_name": "緯穎",
+      "net_amount": -0.040314,
+      "buy_amount": 0.0,
+      "sell_amount": 0.040314,
+      "buy_etfs": 0,
+      "sell_etfs": 1,
+      "net_shares": -2191,
+      "complete": true,
+      "counts_complete": true,
       "missing_price_dates": [],
-      "excluded_etfs": [
-       {
-        "code": "00401A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00406A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00980A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00991A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00995A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00999A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       }
-      ],
+      "excluded_etfs": [],
       "prices": [
        {
         "date": "2026-10-22",
-        "close": 301.0,
+        "close": 1840.0,
         "market": "上市",
         "dataset": "11549"
        }
@@ -3365,144 +3678,16 @@
        {
         "code": "00993A",
         "name": "主動安聯台灣",
-        "qty_prev": 1399000,
-        "qty": 1598000,
-        "qty_change": 199000,
-        "amount": 0.59899,
-        "action": "加碼",
-        "weight_prev": 4.66,
-        "weight": 5.15,
-        "unit_qty_prev": 19.2146,
-        "unit_qty": 21.9478,
-        "unit_qty_change": 2.7332,
-        "source": "安聯投信官網",
-        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
-        "prev_date": "2026-10-21",
-        "date": "2026-10-22",
-        "reason": null
-       }
-      ]
-     },
-     {
-      "asset_code": "2059",
-      "asset_name": "川湖",
-      "net_amount": null,
-      "buy_amount": null,
-      "sell_amount": null,
-      "buy_etfs": 1,
-      "sell_etfs": 0,
-      "net_shares": 1000,
-      "complete": false,
-      "counts_complete": false,
-      "missing_price_dates": [],
-      "excluded_etfs": [
-       {
-        "code": "00401A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00406A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00980A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00985A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00991A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00995A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00999A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       }
-      ],
-      "prices": [
-       {
-        "date": "2026-10-22",
-        "close": 9755.0,
-        "market": "上市",
-        "dataset": "11549"
-       }
-      ],
-      "etfs": [
-       {
-        "code": "00993A",
-        "name": "主動安聯台灣",
-        "qty_prev": 23000,
-        "qty": 24000,
-        "qty_change": 1000,
-        "amount": 0.09755,
-        "action": "加碼",
-        "weight_prev": 2.41,
-        "weight": 2.51,
-        "unit_qty_prev": 0.3159,
-        "unit_qty": 0.3296,
-        "unit_qty_change": 0.0137,
-        "source": "安聯投信官網",
-        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
-        "prev_date": "2026-10-21",
-        "date": "2026-10-22",
-        "reason": null
-       }
-      ]
-     },
-     {
-      "asset_code": "2327",
-      "asset_name": "國巨*",
-      "net_amount": null,
-      "buy_amount": null,
-      "sell_amount": null,
-      "buy_etfs": 1,
-      "sell_etfs": 0,
-      "net_shares": 35000,
-      "complete": false,
-      "counts_complete": false,
-      "missing_price_dates": [],
-      "excluded_etfs": [
-       {
-        "code": "00991A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       }
-      ],
-      "prices": [
-       {
-        "date": "2026-10-22",
-        "close": 507.0,
-        "market": "上市",
-        "dataset": "11549"
-       }
-      ],
-      "etfs": [
-       {
-        "code": "00993A",
-        "name": "主動安聯台灣",
-        "qty_prev": 251000,
-        "qty": 286000,
-        "qty_change": 35000,
-        "amount": 0.17745,
-        "action": "加碼",
-        "weight_prev": 1.41,
-        "weight": 1.55,
-        "unit_qty_prev": 3.4474,
-        "unit_qty": 3.9281,
-        "unit_qty_change": 0.4807,
+        "qty_prev": 55191,
+        "qty": 53000,
+        "qty_change": -2191,
+        "amount": -0.040314,
+        "action": "減碼",
+        "weight_prev": 1.08,
+        "weight": 1.04,
+        "unit_qty_prev": 0.758,
+        "unit_qty": 0.7279,
+        "unit_qty_change": -0.0301,
         "source": "安聯投信官網",
         "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
         "prev_date": "2026-10-21",
@@ -3514,52 +3699,16 @@
      {
       "asset_code": "2345",
       "asset_name": "智邦",
-      "net_amount": null,
-      "buy_amount": null,
-      "sell_amount": null,
+      "net_amount": -0.05325,
+      "buy_amount": 0.0,
+      "sell_amount": 0.05325,
       "buy_etfs": 0,
       "sell_etfs": 1,
       "net_shares": -3000,
-      "complete": false,
-      "counts_complete": false,
+      "complete": true,
+      "counts_complete": true,
       "missing_price_dates": [],
-      "excluded_etfs": [
-       {
-        "code": "00401A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00406A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00980A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00985A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00991A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00995A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00999A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       }
-      ],
+      "excluded_etfs": [],
       "prices": [
        {
         "date": "2026-10-22",
@@ -3591,68 +3740,42 @@
       ]
      },
      {
-      "asset_code": "2360",
-      "asset_name": "致茂",
-      "net_amount": null,
-      "buy_amount": null,
-      "sell_amount": null,
+      "asset_code": "2467",
+      "asset_name": "志聖工業",
+      "net_amount": -0.0904,
+      "buy_amount": 0.0,
+      "sell_amount": 0.0904,
       "buy_etfs": 0,
       "sell_etfs": 1,
-      "net_shares": -1000,
-      "complete": false,
-      "counts_complete": false,
+      "net_shares": -20000,
+      "complete": true,
+      "counts_complete": true,
       "missing_price_dates": [],
-      "excluded_etfs": [
-       {
-        "code": "00401A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00406A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00980A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00991A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00995A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       }
-      ],
+      "excluded_etfs": [],
       "prices": [
        {
         "date": "2026-10-22",
-        "close": 1980.0,
+        "close": 452.0,
         "market": "上市",
         "dataset": "11549"
        }
       ],
       "etfs": [
        {
-        "code": "00993A",
-        "name": "主動安聯台灣",
-        "qty_prev": 25000,
-        "qty": 24000,
-        "qty_change": -1000,
-        "amount": -0.0198,
-        "action": "減碼",
-        "weight_prev": 0.52,
-        "weight": 0.51,
-        "unit_qty_prev": 0.3434,
-        "unit_qty": 0.3296,
-        "unit_qty_change": -0.0138,
-        "source": "安聯投信官網",
-        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
+        "code": "00995A",
+        "name": "主動中信台灣卓越",
+        "qty_prev": 20000,
+        "qty": 0,
+        "qty_change": -20000,
+        "amount": -0.0904,
+        "action": "刪除",
+        "weight_prev": 0.22,
+        "weight": null,
+        "unit_qty_prev": 0.7434,
+        "unit_qty": 0.0,
+        "unit_qty_change": -0.7434,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
         "prev_date": "2026-10-21",
         "date": "2026-10-22",
         "reason": null
@@ -3660,391 +3783,213 @@
       ]
      },
      {
-      "asset_code": "2455",
-      "asset_name": "全新",
-      "net_amount": null,
-      "buy_amount": null,
-      "sell_amount": null,
-      "buy_etfs": 1,
-      "sell_etfs": 0,
-      "net_shares": 10000,
-      "complete": false,
-      "counts_complete": false,
-      "missing_price_dates": [],
-      "excluded_etfs": [
-       {
-        "code": "00401A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00995A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       }
-      ],
-      "prices": [
-       {
-        "date": "2026-10-22",
-        "close": 467.0,
-        "market": "上市",
-        "dataset": "11549"
-       }
-      ],
-      "etfs": [
-       {
-        "code": "00993A",
-        "name": "主動安聯台灣",
-        "qty_prev": 242000,
-        "qty": 252000,
-        "qty_change": 10000,
-        "amount": 0.0467,
-        "action": "加碼",
-        "weight_prev": 1.23,
-        "weight": 1.26,
-        "unit_qty_prev": 3.3238,
-        "unit_qty": 3.4611,
-        "unit_qty_change": 0.1373,
-        "source": "安聯投信官網",
-        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
-        "prev_date": "2026-10-21",
-        "date": "2026-10-22",
-        "reason": null
-       }
-      ]
-     },
-     {
-      "asset_code": "3017",
-      "asset_name": "奇鋐",
-      "net_amount": null,
-      "buy_amount": null,
-      "sell_amount": null,
+      "asset_code": "5904",
+      "asset_name": "寶雅國際",
+      "net_amount": -0.259424,
+      "buy_amount": 0.0,
+      "sell_amount": 0.259424,
       "buy_etfs": 0,
       "sell_etfs": 1,
-      "net_shares": -5000,
-      "complete": false,
-      "counts_complete": false,
+      "net_shares": -352000,
+      "complete": true,
+      "counts_complete": true,
       "missing_price_dates": [],
-      "excluded_etfs": [
-       {
-        "code": "00406A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00980A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00985A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00991A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00995A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00999A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       }
-      ],
+      "excluded_etfs": [],
       "prices": [
        {
         "date": "2026-10-22",
-        "close": 3145.0,
-        "market": "上市",
-        "dataset": "11549"
-       }
-      ],
-      "etfs": [
-       {
-        "code": "00993A",
-        "name": "主動安聯台灣",
-        "qty_prev": 120000,
-        "qty": 115000,
-        "qty_change": -5000,
-        "amount": -0.15725,
-        "action": "減碼",
-        "weight_prev": 4.03,
-        "weight": 3.87,
-        "unit_qty_prev": 1.6481,
-        "unit_qty": 1.5795,
-        "unit_qty_change": -0.0686,
-        "source": "安聯投信官網",
-        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
-        "prev_date": "2026-10-21",
-        "date": "2026-10-22",
-        "reason": null
-       }
-      ]
-     },
-     {
-      "asset_code": "3037",
-      "asset_name": "欣興",
-      "net_amount": null,
-      "buy_amount": null,
-      "sell_amount": null,
-      "buy_etfs": 0,
-      "sell_etfs": 1,
-      "net_shares": -4000,
-      "complete": false,
-      "counts_complete": false,
-      "missing_price_dates": [],
-      "excluded_etfs": [
-       {
-        "code": "00401A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00406A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00980A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00985A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00991A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00995A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00999A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       }
-      ],
-      "prices": [
-       {
-        "date": "2026-10-22",
-        "close": 1085.0,
-        "market": "上市",
-        "dataset": "11549"
-       }
-      ],
-      "etfs": [
-       {
-        "code": "00993A",
-        "name": "主動安聯台灣",
-        "qty_prev": 433000,
-        "qty": 429000,
-        "qty_change": -4000,
-        "amount": -0.0434,
-        "action": "減碼",
-        "weight_prev": 4.95,
-        "weight": 4.98,
-        "unit_qty_prev": 5.9471,
-        "unit_qty": 5.8921,
-        "unit_qty_change": -0.055,
-        "source": "安聯投信官網",
-        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
-        "prev_date": "2026-10-21",
-        "date": "2026-10-22",
-        "reason": null
-       }
-      ]
-     },
-     {
-      "asset_code": "3665",
-      "asset_name": "貿聯-KY",
-      "net_amount": null,
-      "buy_amount": null,
-      "sell_amount": null,
-      "buy_etfs": 1,
-      "sell_etfs": 0,
-      "net_shares": 1000,
-      "complete": false,
-      "counts_complete": false,
-      "missing_price_dates": [],
-      "excluded_etfs": [
-       {
-        "code": "00406A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00980A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00985A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00995A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00999A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       }
-      ],
-      "prices": [
-       {
-        "date": "2026-10-22",
-        "close": 1875.0,
-        "market": "上市",
-        "dataset": "11549"
-       }
-      ],
-      "etfs": [
-       {
-        "code": "00993A",
-        "name": "主動安聯台灣",
-        "qty_prev": 30000,
-        "qty": 31000,
-        "qty_change": 1000,
-        "amount": 0.01875,
-        "action": "加碼",
-        "weight_prev": 0.61,
-        "weight": 0.62,
-        "unit_qty_prev": 0.412,
-        "unit_qty": 0.4258,
-        "unit_qty_change": 0.0138,
-        "source": "安聯投信官網",
-        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
-        "prev_date": "2026-10-21",
-        "date": "2026-10-22",
-        "reason": null
-       }
-      ]
-     },
-     {
-      "asset_code": "4904",
-      "asset_name": "遠傳",
-      "net_amount": null,
-      "buy_amount": null,
-      "sell_amount": null,
-      "buy_etfs": 1,
-      "sell_etfs": 0,
-      "net_shares": 8000,
-      "complete": false,
-      "counts_complete": false,
-      "missing_price_dates": [],
-      "excluded_etfs": [
-       {
-        "code": "00401A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00985A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00999A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       }
-      ],
-      "prices": [
-       {
-        "date": "2026-10-22",
-        "close": 115.0,
-        "market": "上市",
-        "dataset": "11549"
-       }
-      ],
-      "etfs": [
-       {
-        "code": "00993A",
-        "name": "主動安聯台灣",
-        "qty_prev": 229000,
-        "qty": 237000,
-        "qty_change": 8000,
-        "amount": 0.0092,
-        "action": "加碼",
-        "weight_prev": 0.27,
-        "weight": 0.29,
-        "unit_qty_prev": 3.1452,
-        "unit_qty": 3.2551,
-        "unit_qty_change": 0.1099,
-        "source": "安聯投信官網",
-        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
-        "prev_date": "2026-10-21",
-        "date": "2026-10-22",
-        "reason": null
-       }
-      ]
-     },
-     {
-      "asset_code": "6147",
-      "asset_name": "頎邦",
-      "net_amount": null,
-      "buy_amount": null,
-      "sell_amount": null,
-      "buy_etfs": 1,
-      "sell_etfs": 0,
-      "net_shares": 25000,
-      "complete": false,
-      "counts_complete": false,
-      "missing_price_dates": [],
-      "excluded_etfs": [
-       {
-        "code": "00401A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00406A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00995A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       }
-      ],
-      "prices": [
-       {
-        "date": "2026-10-22",
-        "close": 203.0,
+        "close": 73.7,
         "market": "上櫃",
         "dataset": "11370"
        }
       ],
       "etfs": [
        {
+        "code": "00980A",
+        "name": "主動野村臺灣優選",
+        "qty_prev": 2060500,
+        "qty": 1708500,
+        "qty_change": -352000,
+        "amount": -0.259424,
+        "action": "減碼",
+        "weight_prev": 0.81,
+        "weight": 0.69,
+        "unit_qty_prev": 26.648,
+        "unit_qty": 22.0813,
+        "unit_qty_change": -4.5667,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "7769",
+      "asset_name": "鴻勁精密",
+      "net_amount": -0.844,
+      "buy_amount": 0.0,
+      "sell_amount": 0.844,
+      "buy_etfs": 0,
+      "sell_etfs": 1,
+      "net_shares": -16000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 5275.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00980A",
+        "name": "主動野村臺灣優選",
+        "qty_prev": 87000,
+        "qty": 71000,
+        "qty_change": -16000,
+        "amount": -0.844,
+        "action": "減碼",
+        "weight_prev": 2.37,
+        "weight": 2.05,
+        "unit_qty_prev": 1.1252,
+        "unit_qty": 0.9176,
+        "unit_qty_change": -0.2076,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "2408",
+      "asset_name": "南亞科技",
+      "net_amount": -1.60632,
+      "buy_amount": 0.0,
+      "sell_amount": 1.60632,
+      "buy_etfs": 0,
+      "sell_etfs": 2,
+      "net_shares": -388000,
+      "complete": true,
+      "counts_complete": true,
+      "missing_price_dates": [],
+      "excluded_etfs": [],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 414.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00985A",
+        "name": "主動野村台灣50",
+        "qty_prev": 1092000,
+        "qty": 833000,
+        "qty_change": -259000,
+        "amount": -1.07226,
+        "action": "減碼",
+        "weight_prev": 1.62,
+        "weight": 1.19,
+        "unit_qty_prev": 7.6188,
+        "unit_qty": 5.8037,
+        "unit_qty_change": -1.8151,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       },
+       {
+        "code": "00980A",
+        "name": "主動野村臺灣優選",
+        "qty_prev": 1096000,
+        "qty": 967000,
+        "qty_change": -129000,
+        "amount": -0.53406,
+        "action": "減碼",
+        "weight_prev": 2.54,
+        "weight": 2.19,
+        "unit_qty_prev": 14.1743,
+        "unit_qty": 12.4979,
+        "unit_qty_change": -1.6764,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "1303",
+      "asset_name": "南亞塑膠工業",
+      "net_amount": null,
+      "buy_amount": null,
+      "sell_amount": null,
+      "buy_etfs": 2,
+      "sell_etfs": 0,
+      "net_shares": 1199000,
+      "complete": false,
+      "counts_complete": false,
+      "missing_price_dates": [],
+      "excluded_etfs": [
+       {
+        "code": "00995A",
+        "date": "2026-10-22",
+        "reason": "持股股數重大跳變，無法排除分割、減資或資料異常，暫不排名"
+       }
+      ],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 301.0,
+        "market": "上市",
+        "dataset": "11549"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 6045000,
+        "qty": 7045000,
+        "qty_change": 1000000,
+        "amount": 3.01,
+        "action": "加碼",
+        "weight_prev": 1.82,
+        "weight": 1.97,
+        "unit_qty_prev": 5.2049,
+        "unit_qty": 5.8452,
+        "unit_qty_change": 0.6403,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       },
+       {
         "code": "00993A",
         "name": "主動安聯台灣",
-        "qty_prev": 174000,
-        "qty": 199000,
-        "qty_change": 25000,
-        "amount": 0.05075,
+        "qty_prev": 1399000,
+        "qty": 1598000,
+        "qty_change": 199000,
+        "amount": 0.59899,
         "action": "加碼",
-        "weight_prev": 0.39,
-        "weight": 0.43,
-        "unit_qty_prev": 2.3898,
-        "unit_qty": 2.7332,
-        "unit_qty_change": 0.3434,
+        "weight_prev": 4.66,
+        "weight": 5.15,
+        "unit_qty_prev": 19.2146,
+        "unit_qty": 21.9478,
+        "unit_qty_change": 2.7332,
         "source": "安聯投信官網",
         "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
         "prev_date": "2026-10-21",
@@ -4055,31 +4000,21 @@
      },
      {
       "asset_code": "6213",
-      "asset_name": "聯茂",
+      "asset_name": "聯茂電子",
       "net_amount": null,
       "buy_amount": null,
       "sell_amount": null,
-      "buy_etfs": 1,
+      "buy_etfs": 2,
       "sell_etfs": 0,
-      "net_shares": 362000,
+      "net_shares": 466000,
       "complete": false,
       "counts_complete": false,
       "missing_price_dates": [],
       "excluded_etfs": [
        {
         "code": "00406A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00980A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00995A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+        "date": "2026-10-22",
+        "reason": "持股股數重大跳變，無法排除分割、減資或資料異常，暫不排名"
        }
       ],
       "prices": [
@@ -4109,6 +4044,74 @@
         "prev_date": "2026-10-21",
         "date": "2026-10-22",
         "reason": null
+       },
+       {
+        "code": "00980A",
+        "name": "主動野村臺灣優選",
+        "qty_prev": 252000,
+        "qty": 356000,
+        "qty_change": 104000,
+        "amount": 0.80808,
+        "action": "加碼",
+        "weight_prev": 1.1,
+        "weight": 1.51,
+        "unit_qty_prev": 3.2591,
+        "unit_qty": 4.6011,
+        "unit_qty_change": 1.342,
+        "source": "野村投信官網",
+        "source_url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
+       }
+      ]
+     },
+     {
+      "asset_code": "6223",
+      "asset_name": "旺矽科技",
+      "net_amount": null,
+      "buy_amount": null,
+      "sell_amount": null,
+      "buy_etfs": 1,
+      "sell_etfs": 0,
+      "net_shares": 55000,
+      "complete": false,
+      "counts_complete": false,
+      "missing_price_dates": [],
+      "excluded_etfs": [
+       {
+        "code": "00980A",
+        "date": "2026-10-22",
+        "reason": "持股股數重大跳變，無法排除分割、減資或資料異常，暫不排名"
+       }
+      ],
+      "prices": [
+       {
+        "date": "2026-10-22",
+        "close": 4890.0,
+        "market": "上櫃",
+        "dataset": "11370"
+       }
+      ],
+      "etfs": [
+       {
+        "code": "00406A",
+        "name": "主動中信台灣收益",
+        "qty_prev": 628000,
+        "qty": 683000,
+        "qty_change": 55000,
+        "amount": 2.6895,
+        "action": "加碼",
+        "weight_prev": 2.95,
+        "weight": 3.1,
+        "unit_qty_prev": 0.5407,
+        "unit_qty": 0.5667,
+        "unit_qty_change": 0.026,
+        "source": "中信投信官網",
+        "source_url": "https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1",
+        "prev_date": "2026-10-21",
+        "date": "2026-10-22",
+        "reason": null
        }
       ]
      },
@@ -4126,29 +4129,9 @@
       "missing_price_dates": [],
       "excluded_etfs": [
        {
-        "code": "00406A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00980A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00991A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
         "code": "00995A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00999A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
+        "date": "2026-10-22",
+        "reason": "持股股數重大跳變，無法排除分割、減資或資料異常，暫不排名"
        }
       ],
       "prices": [
@@ -4173,80 +4156,6 @@
         "unit_qty_prev": 1.8267,
         "unit_qty": 1.7443,
         "unit_qty_change": -0.0824,
-        "source": "安聯投信官網",
-        "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
-        "prev_date": "2026-10-21",
-        "date": "2026-10-22",
-        "reason": null
-       }
-      ]
-     },
-     {
-      "asset_code": "6669",
-      "asset_name": "緯穎",
-      "net_amount": null,
-      "buy_amount": null,
-      "sell_amount": null,
-      "buy_etfs": 0,
-      "sell_etfs": 1,
-      "net_shares": -2191,
-      "complete": false,
-      "counts_complete": false,
-      "missing_price_dates": [],
-      "excluded_etfs": [
-       {
-        "code": "00406A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00980A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00985A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00991A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00995A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       },
-       {
-        "code": "00999A",
-        "date": "2026-10-21",
-        "reason": "代號與名稱尚無法核對台股身分，不以同碼行情估值"
-       }
-      ],
-      "prices": [
-       {
-        "date": "2026-10-22",
-        "close": 1840.0,
-        "market": "上市",
-        "dataset": "11549"
-       }
-      ],
-      "etfs": [
-       {
-        "code": "00993A",
-        "name": "主動安聯台灣",
-        "qty_prev": 55191,
-        "qty": 53000,
-        "qty_change": -2191,
-        "amount": -0.040314,
-        "action": "減碼",
-        "weight_prev": 1.08,
-        "weight": 1.04,
-        "unit_qty_prev": 0.758,
-        "unit_qty": 0.7279,
-        "unit_qty_change": -0.0301,
         "source": "安聯投信官網",
         "source_url": "https://etf.allianzgi.com.tw/etf-info/E0002",
         "prev_date": "2026-10-21",
@@ -10874,9 +10783,9 @@
    "index_name": "臺灣中型100指數",
    "listed_date": "2006-08-31",
    "source_time": "20261022 13:30:45",
-   "nav_source": "投信投顧公會（正式淨值）",
+   "nav_source": "元大投信官網（正式淨值）",
    "nav_date": "2026-10-22",
-   "nav_source_url": "https://www.sitca.org.tw/ROC/Industry/IN2106.aspx?pid=IN2213_02",
+   "nav_source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/0051",
    "aum_source": "元大投信官網",
    "mgmt_fee": null,
    "mgmt_fee_text": "100億(含)以下：0.40%\n逾100億(不含)-300億(含) 以下：0.34%\n逾300億(不含)：0.30%",
@@ -10990,7 +10899,8 @@
    "holdings_date": "2026-10-22",
    "units_change": 0.0,
    "fee_source": "元大投信官網",
-   "beneficiaries_source": "投信投顧公會基金資料彙總表",
+   "beneficiaries_source": "元大投信官網",
+   "beneficiaries_source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/0051",
    "expense": {
     "year": 2025,
     "mgmt": 0.4,
@@ -11070,7 +10980,6 @@
     "net": 0.7,
     "source": "投信投顧公會基金資料彙總表"
    },
-   "beneficiaries_source_url": "https://www.sitca.org.tw/ROC/Industry/IN2201.aspx?pid=IN2221_01",
    "flows": {
     "start": "2026-10-19",
     "end": "2026-10-22",
@@ -11973,9 +11882,9 @@
    "index_name": "MSCI臺灣金融指數",
    "listed_date": "2007-07-16",
    "source_time": "20261022 13:30:45",
-   "nav_source": "投信投顧公會（正式淨值）",
+   "nav_source": "元大投信官網（正式淨值）",
    "nav_date": "2026-10-22",
-   "nav_source_url": "https://www.sitca.org.tw/ROC/Industry/IN2106.aspx?pid=IN2213_02",
+   "nav_source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/0055",
    "aum_source": "元大投信官網",
    "mgmt_fee": null,
    "mgmt_fee_text": "100億(含)以下：0.40%\n逾100億(不含)-300億(含) 以下：0.34%\n逾300億(不含)：0.30%",
@@ -12089,7 +11998,8 @@
    "holdings_date": "2026-10-22",
    "units_change": 0.0,
    "fee_source": "元大投信官網",
-   "beneficiaries_source": "投信投顧公會基金資料彙總表",
+   "beneficiaries_source": "元大投信官網",
+   "beneficiaries_source_url": "https://www.yuantaetfs.com/tradeInfo/pcf/0055",
    "expense": {
     "year": 2025,
     "mgmt": 0.4,
@@ -12169,7 +12079,6 @@
     "net": 2.0,
     "source": "投信投顧公會基金資料彙總表"
    },
-   "beneficiaries_source_url": "https://www.sitca.org.tw/ROC/Industry/IN2201.aspx?pid=IN2221_01",
    "flows": {
     "start": "2026-10-19",
     "end": "2026-10-22",
@@ -89832,7 +89741,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00935&tab=basic",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-23T12:47:51+00:00"
+      "observed_at": "2026-10-23T13:20:08+00:00"
      }
     ],
     "reason_code": null,
@@ -89901,7 +89810,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00935&tab=basic",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-23T12:47:51+00:00"
+        "observed_at": "2026-10-23T13:20:08+00:00"
        }
       ],
       "reason_code": null,
@@ -93251,7 +93160,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-23T12:47:51+00:00"
+      "observed_at": "2026-10-23T13:20:08+00:00"
      }
     ],
     "reason_code": null,
@@ -93320,7 +93229,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-23T12:47:51+00:00"
+        "observed_at": "2026-10-23T13:20:08+00:00"
        }
       ],
       "reason_code": null,
@@ -103659,7 +103568,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00972&tab=basic",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-23T12:47:51+00:00"
+      "observed_at": "2026-10-23T13:20:08+00:00"
      }
     ],
     "reason_code": null,
@@ -103728,7 +103637,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00972&tab=basic",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-23T12:47:51+00:00"
+        "observed_at": "2026-10-23T13:20:08+00:00"
        }
       ],
       "reason_code": null,
@@ -107590,7 +107499,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-23T12:47:51+00:00"
+      "observed_at": "2026-10-23T13:20:08+00:00"
      }
     ],
     "reason_code": null,
@@ -107659,7 +107568,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-23T12:47:51+00:00"
+        "observed_at": "2026-10-23T13:20:08+00:00"
        }
       ],
       "reason_code": null,
@@ -109993,7 +109902,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009812&tab=basic",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-23T12:47:51+00:00"
+      "observed_at": "2026-10-23T13:20:08+00:00"
      }
     ],
     "reason_code": null,
@@ -110062,7 +109971,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009812&tab=basic",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-23T12:47:51+00:00"
+        "observed_at": "2026-10-23T13:20:08+00:00"
        }
       ],
       "reason_code": null,
@@ -120600,7 +120509,7 @@
       "url": "https://etf.allianzgi.com.tw/etf-info/E0001",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-23T12:47:51+00:00"
+      "observed_at": "2026-10-23T13:20:08+00:00"
      }
     ],
     "reason_code": null,
@@ -120669,7 +120578,7 @@
         "url": "https://etf.allianzgi.com.tw/etf-info/E0001",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-23T12:47:51+00:00"
+        "observed_at": "2026-10-23T13:20:08+00:00"
        }
       ],
       "reason_code": null,
@@ -121862,7 +121771,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-23T12:47:51+00:00"
+      "observed_at": "2026-10-23T13:20:08+00:00"
      }
     ],
     "reason_code": null,
@@ -121931,7 +121840,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-23T12:47:51+00:00"
+        "observed_at": "2026-10-23T13:20:08+00:00"
        }
       ],
       "reason_code": null,
@@ -129144,7 +129053,7 @@
       "url": "https://etf.allianzgi.com.tw/etf-info/E0002",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-23T12:47:51+00:00"
+      "observed_at": "2026-10-23T13:20:08+00:00"
      }
     ],
     "reason_code": null,
@@ -129213,7 +129122,7 @@
         "url": "https://etf.allianzgi.com.tw/etf-info/E0002",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-23T12:47:51+00:00"
+        "observed_at": "2026-10-23T13:20:08+00:00"
        }
       ],
       "reason_code": null,
@@ -132130,7 +132039,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-23T12:47:51+00:00"
+      "observed_at": "2026-10-23T13:20:08+00:00"
      }
     ],
     "reason_code": null,
@@ -132199,7 +132108,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-23T12:47:51+00:00"
+        "observed_at": "2026-10-23T13:20:08+00:00"
        }
       ],
       "reason_code": null,
