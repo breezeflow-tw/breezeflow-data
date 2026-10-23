@@ -363,6 +363,10 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
 }
 
 </style>
+<style>
+.research-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}.research-tools button,.research-tools select,.research-form button{background:var(--accent-soft);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:9px 12px;font:inherit;cursor:pointer}.research-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.research-form label{display:flex;flex-direction:column;gap:5px;font-size:13px;color:var(--muted)}.research-form input,.research-form select{min-width:0;width:100%;box-sizing:border-box;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:9px;font:inherit}.research-form button{grid-column:1/-1;background:var(--accent);color:var(--accent-ink);font-weight:600}.research-chart{width:100%;height:auto;display:block;background:var(--bg);border:1px solid var(--line);border-radius:8px}.research-chart text{font-family:var(--f-num);fill:var(--muted)}.research-message{padding:12px;border-left:3px solid var(--band);background:var(--band-soft);font-size:13px;line-height:1.8}.research-legend{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:12px}.research-ledger{max-height:260px;overflow:auto}.research-ledger table{width:100%;font-size:12px}.research-ledger th,.research-ledger td{padding:7px;text-align:right;white-space:nowrap}.research-ledger th:first-child,.research-ledger td:first-child{text-align:left}button:disabled{cursor:not-allowed;opacity:.55}
+@media(max-width:400px){.research-form{grid-template-columns:1fr}}
+</style>
 </head>
 <body id="top">
 <a class="skip" href="#market">跳至 ETF 列表</a>
@@ -701,7 +705,8 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
       detailSection("配息資訊",dividendDetail("下一次除息",d.next_ex)+dividendDetail("最近一次除息",d.last_ex))+
       detailSection("費用",`<dl class="detail-grid">${fees}</dl>`)+
       detailSection("基金資料",`<dl class="detail-grid">${basic}</dl>`)+
-      stats+flowDetail(d)+activeETFDetail(d);
+      stats+flowDetail(d)+activeETFDetail(d)+detailSection("歷史行情與投資模擬",`<div id="research-content"><p class="metric-help">歷史資料目標：近 10 年。上市未滿 10 年者從上市日起算；實際可用期間依資料完整度顯示。</p><div class="research-tools"><button id="research-load" type="button">載入歷史行情與回測條件</button></div></div>`);
+    $("research-load").addEventListener("click",()=>loadResearch(d));
     const product=profileOf(d),intro=`<div class="product-labels">${[product.asset_class,product.management,product.region,product.strategy,product.structure].filter(Boolean).map(v=>`<span class="tag">${esc(v)}</span>`).join("")}</div>
       <p class="metric-help">地域：${detailText(product.region||"待確認")} · 策略：${detailText(product.strategy||"待確認")}<br>交易幣別：${esc(currencyLabel(product.trading_currency))} · 每交易單位：${product.trading_unit?detailNumber(product.trading_unit)+" 受益權單位":"待核對商品規格"}${product.main_code?`<br>同基金主要交易代號：${esc(product.main_code)}；不同交易線不重複加總基金規模。`:""}</p>
       <p class="detail-source">分類出處：${sourceLink(product.source,product.source_url)}${product.data_month?` · 公告月份 ${detailText(product.data_month)}`:""} · 查閱 ${detailText(product.checked_at)}</p>
@@ -710,6 +715,178 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
     const sections=Array.from($("detail-content").querySelectorAll(".detail-section"));
     $("detail-nav").innerHTML=sections.map((section,i)=>{section.id="detail-section-"+i;const label=section.querySelector("h3").textContent;return `<button type="button" data-section="${section.id}">${esc(label.split("｜")[0])}</button>`;}).join("");
     $("detail-content").scrollTop=0;
+  }
+
+  // 十年研究計算核心：不依賴 DOM，不呼叫 AI 或第三方報價。
+  function researchDate(value){
+    if(typeof value!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(value)||!Number.isFinite(Date.parse(value))||new Date(value+"T00:00:00Z").toISOString().slice(0,10)!==value)throw Error("日期格式不正確");
+    return value;
+  }
+  function researchDays(start,end){
+    const out=[];for(let t=Date.parse(researchDate(start));t<=Date.parse(researchDate(end));t+=86400000)out.push(new Date(t).toISOString().slice(0,10));return out;
+  }
+  function researchYears(day,years){
+    const d=new Date(day+"T00:00:00Z"),month=d.getUTCMonth();d.setUTCFullYear(d.getUTCFullYear()-years);if(d.getUTCMonth()!==month)d.setUTCDate(0);return d.toISOString().slice(0,10);
+  }
+  function researchRange(data,start,end){
+    researchDate(start);researchDate(end);
+    if(start>end||start<data.required_start||end>data.as_of)return "請選擇十年目標範圍及上市日之內的日期。";
+    if(!data.listed_date||!data.currency)return "上市日期或交易幣別尚未核實。";
+    const within=d=>d>=start&&d<=end;
+    if(data.issues.some(i=>within(i.date)))return "此期間有待核對的價格、幣別或公司行動。";
+    if(data.unknown_calendar_dates.some(within))return "此期間的交易日曆尚未核實。";
+    if(data.missing_price_dates.some(within))return "此期間有缺漏行情，不能跳過交易日計算。";
+    if(data.missing_action_dates.some(within))return "此期間的配息、分割及無事件紀錄尚未完整核實。";
+    if(!data.ready_ranges.some(r=>r.start<=start&&r.end>=end))return "此期間尚未通過完整度檢查。";
+    if(!data.bars.some(b=>within(b.date)))return "所選期間沒有可交易行情。";
+    return "";
+  }
+  function researchXirr(flows){
+    const first=flows[0].date,last=flows.at(-1).date,span=(Date.parse(last)-Date.parse(first))/86400000;
+    if(span<365)return null;
+    const npv=r=>flows.reduce((sum,f)=>sum+f.amount/Math.pow(1+r,(Date.parse(f.date)-Date.parse(first))/86400000/365),0);
+    let lo=-.999999,hi=1;while(npv(hi)>0&&hi<1e6)hi=hi*2+1;
+    if(!(npv(lo)>0&&npv(hi)<=0))return null;
+    for(let i=0;i<160;i++){const mid=(lo+hi)/2;if(npv(mid)>0)lo=mid;else hi=mid;}return (lo+hi)/2;
+  }
+  function simulateResearch(data,options){
+    const {start,end,mode,dividends}=options,reason=researchRange(data,start,end);if(reason)throw Error(reason);
+    if(!["single","monthly","combined"].includes(mode)||!["cash","reinvest"].includes(dividends))throw Error("未知投入方式");
+    const numeric=(key,min,max)=>{const v=options[key];if(typeof v!=="number"||!Number.isFinite(v)||v<min||v>max)throw Error("金額、費率或扣款日不合理");return v;};
+    const initial=numeric("initial",0,1e10),monthly=numeric("monthly",0,1e9),feeRate=numeric("feeRate",0,.1),minimum=numeric("minimum",0,1e6),payday=numeric("payday",1,31);
+    if(!Number.isInteger(payday)||(mode==="single"?initial<=0:mode==="monthly"?monthly<=0:initial+monthly<=0))throw Error("請輸入有效投入金額與整數扣款日");
+    const bars=data.bars.filter(b=>b.date>=start&&b.date<=end),byDay=new Map(bars.map(b=>[b.date,b])),orders=new Map();
+    const schedule=(day,amount)=>{const bar=bars.find(b=>b.date>=day);if(bar&&amount>0)orders.set(bar.date,(orders.get(bar.date)||0)+amount);};
+    if(mode!=="monthly")schedule(start,initial);
+    if(mode!=="single"){
+      let year=Number(start.slice(0,4)),month=Number(start.slice(5,7));
+      while(`${year}-${String(month).padStart(2,"0")}-01`<=end){
+        const last=new Date(Date.UTC(year,month,0)).getUTCDate(),day=`${year}-${String(month).padStart(2,"0")}-${String(Math.min(payday,last)).padStart(2,"0")}`;
+        if(day>=start&&day<=end)schedule(day,monthly);if(++month===13){month=1;year++;}
+      }
+    }
+    const actions=data.actions.filter(a=>a.date>=start&&a.date<=end),pending=[],ledger=[],curve=[],flows=[];
+    let shares=0,cash=0,dividendCash=0,contributed=0,received=0,fees=0,lastClose=bars[0].close,reinvestPending=false;
+    for(const day of researchDays(start,end)){
+      const events=actions.filter(a=>a.date===day);
+      if(events.length>1)throw Error("同日多項公司行動需另行核對計算順序");
+      for(const action of events){
+        if(action.kind==="split"){
+          const next=shares*action.ratio;if(!Number.isFinite(next)||Math.abs(next-Math.round(next))>1e-8)throw Error("反分割涉及畸零單位處理，此區間暫不支援");
+          shares=Math.round(next);ledger.push({date:day,event:"分割／反分割",shares,cash:0});
+        }else if(action.kind==="dividend"){
+          if(!action.pay_date||!Number.isFinite(action.cash)||action.cash<0)throw Error("配息紀錄不完整");
+          pending.push({date:action.pay_date,amount:shares*action.cash,paid:false});
+        }else throw Error("公司行動尚未支援");
+      }
+      let paid=0;
+      for(const payment of pending)if(!payment.paid&&payment.date<=day){paid+=payment.amount;payment.paid=true;}
+      if(paid){received+=paid;if(dividends==="reinvest"){cash+=paid;reinvestPending=true;}else dividendCash+=paid;ledger.push({date:day,event:"配息入帳",shares:0,cash:paid});}
+      const amount=orders.get(day)||0;if(amount){cash+=amount;contributed+=amount;flows.push({date:day,amount:-amount});}
+      const bar=byDay.get(day);
+      if(bar){
+        if(!Number.isFinite(bar.close)||bar.close<=0)throw Error("行情缺漏");
+        lastClose=bar.close;
+        // 同日投入合併，買整數受益權單位；保留零頭，下次交易可再使用。
+        let quantity=(amount||reinvestPending)?Math.max(0,Math.floor(Math.min(cash/(lastClose*(1+feeRate)),(cash-minimum)/lastClose))):0;
+        reinvestPending=false;
+        const fee=quantity?Math.max(quantity*lastClose*feeRate,minimum):0;
+        if(quantity){cash-=quantity*lastClose+fee;shares+=quantity;fees+=fee;ledger.push({date:day,event:"模擬買入",price:lastClose,shares:quantity,cash:-(quantity*lastClose+fee),fee,contribution:amount});}
+        else if(amount)ledger.push({date:day,event:"投入留存現金",shares:0,cash:amount,contribution:amount});
+      }
+      const receivable=pending.filter(p=>!p.paid).reduce((s,p)=>s+p.amount,0),assets=shares*lastClose+cash+dividendCash+receivable;
+      if(bar)curve.push({date:day,assets,contributed});
+    }
+    if(!contributed)throw Error("此期間沒有符合扣款日的投入，請調整日期");
+    const receivable=pending.filter(p=>!p.paid).reduce((s,p)=>s+p.amount,0),assets=shares*lastClose+cash+dividendCash+receivable;
+    flows.push({date:end,amount:assets});
+    return {contributed,assets,profit:assets-contributed,shares,marketValue:shares*lastClose,cash:cash+dividendCash,receivable,received,fees,xirr:researchXirr(flows),ledger,curve};
+  }
+  function aggregateResearch(data,period){
+    if(period==="day")return data.bars;
+    const groups=new Map();
+    for(const b of data.bars){
+      const d=new Date(b.date+"T00:00:00Z");let first,last;
+      if(period==="week"){d.setUTCDate(d.getUTCDate()-((d.getUTCDay()+6)%7));first=d.toISOString().slice(0,10);d.setUTCDate(d.getUTCDate()+6);last=d.toISOString().slice(0,10);}
+      else {first=b.date.slice(0,7)+"-01";last=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+1,0)).toISOString().slice(0,10);}
+      if(!groups.has(first))groups.set(first,{date:first,end:last,bars:[]});groups.get(first).bars.push(b);
+    }
+    return [...groups.values()].map(g=>{
+      const start=[g.date,data.required_start].sort().at(-1),end=[g.end,data.as_of].sort()[0],b=g.bars;
+      if([...data.missing_price_dates,...data.unknown_calendar_dates].some(d=>d>=start&&d<=end)||data.issues.some(i=>i.date>=start&&i.date<=end))return null;
+      return {date:b[0].date,last_date:b.at(-1).date,open:b[0].open,high:Math.max(...b.map(x=>x.high)),low:Math.min(...b.map(x=>x.low)),close:b.at(-1).close,volume:b.reduce((s,x)=>s+x.volume,0),partial:g.end>data.as_of};
+    }).filter(Boolean);
+  }
+  // 十年研究計算核心結束。
+
+  const researchCache=new Map();
+  async function loadResearch(item){
+    const holder=$("research-content"),button=$("research-load");if(button)button.disabled=true;
+    holder.setAttribute("aria-live","polite");
+    try{
+      let data=researchCache.get(item.code);
+      if(!data){
+        const ir=await fetch("data/research/index.json",{cache:"no-cache"});if(!ir.ok)throw Error("歷史資料尚未發布，請稍後再試。");
+        const index=await ir.json(),entry=index.items?.[item.code];
+        if(index.as_of!==detailDate)throw Error("行情與歷史資料版本不同，請重新整理頁面。");
+        if(!entry||!new RegExp("^"+item.code+"-[a-f0-9]{16}\\.json$").test(entry.file))throw Error("此 ETF 尚無歷史檔案。");
+        const response=await fetch("data/research/"+entry.file);if(!response.ok)throw Error("歷史檔案載入失敗，請稍後再試。");
+        data=await response.json();if(data.code!==item.code||data.as_of!==index.as_of||data.version!==1)throw Error("歷史資料版本不符。");researchCache.set(item.code,data);
+      }
+      if(detailCode!==item.code||!holder.isConnected)return;
+      renderResearch(holder,data);
+    }catch(error){if(holder.isConnected){holder.innerHTML=`<p class="research-message">${esc(error.message)}</p><div class="research-tools"><button type="button" id="research-retry">重新載入</button></div>`;$("research-retry").onclick=()=>loadResearch(item);}}
+  }
+  function researchChart(data,period){
+    const bars=aggregateResearch(data,period).slice(-120);if(!bars.length)return '<p class="research-message">此週期尚無完整價量可繪製。</p>';
+    const width=880,height=350,left=68,right=20,top=24,bottom=240,span=width-left-right;
+    const low=Math.min(...bars.map(b=>b.low)),high=Math.max(...bars.map(b=>b.high)),pad=Math.max((high-low)*.08,high*.002),min=low-pad,max=high+pad;
+    const y=v=>bottom-(v-min)/(max-min)*(bottom-top),x=i=>left+(i+.5)*span/bars.length,body=Math.max(1,Math.min(12,span/bars.length*.65)),vol=Math.max(1,...bars.map(b=>b.volume));
+    let svg=`<svg class="research-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(data.code)} 原始市價 K 線與成交量，${esc(bars[0].date)} 至 ${esc(bars.at(-1).date)}"><title>原始市價，未還原；紅漲綠跌，成交量單位為受益權單位</title>`;
+    for(let i=0;i<5;i++){const v=min+(max-min)*i/4;svg+=`<line x1="${left}" x2="${width-right}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${left-8}" y="${y(v)+5}" text-anchor="end" font-size="13">${fmt(v,2)}</text>`;}
+    bars.forEach((b,i)=>{const color=b.close>=b.open?"var(--up)":"var(--down)";svg+=`<g><title>${esc(b.date)}${b.partial?"（本期未結束）":""}：開 ${b.open} 高 ${b.high} 低 ${b.low} 收 ${b.close}，量 ${b.volume}</title><line x1="${x(i)}" x2="${x(i)}" y1="${y(b.high)}" y2="${y(b.low)}" stroke="${color}"/><rect x="${x(i)-body/2}" y="${Math.min(y(b.open),y(b.close))}" width="${body}" height="${Math.max(1,Math.abs(y(b.open)-y(b.close)))}" fill="${color}"/><rect x="${x(i)-body/2}" y="${308-b.volume/vol*48}" width="${body}" height="${Math.max(1,b.volume/vol*48)}" fill="${color}" opacity=".5"/></g>`;});
+    if(period==="day")for(const [n,color] of [[20,"var(--accent)"],[60,"var(--band)"]]){
+      let path="",connected=false;const full=data.bars;
+      bars.forEach((b,i)=>{const pos=full.findIndex(r=>r.date===b.date),window=full.slice(pos-n+1,pos+1);const valid=pos>=n-1&&window.length===n&&![...data.missing_price_dates,...data.unknown_calendar_dates].some(d=>d>=window[0].date&&d<=b.date)&&!data.actions.some(a=>a.kind==="split"&&a.date>=window[0].date&&a.date<=b.date);
+        if(!valid){connected=false;return;}const avg=window.reduce((s,r)=>s+r.close,0)/n;if(avg<min||avg>max){connected=false;return;}path+=`${connected?"L":"M"}${x(i)},${y(avg)} `;connected=true;});svg+=`<path d="${path}" fill="none" stroke="${color}" stroke-width="2"/>`;
+    }
+    svg+=`<text x="${left}" y="256" font-size="12">成交量（單位）</text><text x="${left}" y="335" font-size="13">${bars[0].date}</text><text x="${width-right}" y="335" text-anchor="end" font-size="13">${bars.at(-1).last_date||bars.at(-1).date}</text></svg>`;return svg;
+  }
+  function renderResearch(holder,data){
+    const latest=data.ready_ranges.at(-1),end=latest?.end||data.as_of,start=latest?.start||data.required_start;
+    holder.innerHTML=`<p class="metric-help">目標近 ${data.target_years} 年：${esc(data.required_start)} 至 ${esc(data.as_of)}<br>實際價量：${esc(data.available_start||"尚未取得")} ～ ${esc(data.available_end||"尚未取得")} · ${data.bars.length} 筆 · ${esc(data.currency||"幣別待確認")}<br>${data.ten_year_complete?"十年資料已通過完整度檢查":"十年歷史尚未補齊；有完整證據的較短期間可個別回測。"}</p>
+      <div class="research-tools"><label for="research-period">K 線週期</label><select id="research-period"><option value="day">日 K</option><option value="week">週 K</option><option value="month">月 K</option></select></div><div id="research-chart"></div>
+      <p class="research-legend"><span>紅漲／綠跌</span><span>青色：20 日均線</span><span>金色：60 日均線</span></p><p class="detail-footnote">每次最多顯示最近 120 根。原始價格未還原，除息、分割可能造成跳動；均線資料不足或跨分割時不繪製。週月僅顯示可核對的彙整期間，本期可能尚未結束。</p>
+      <details class="metric-help"><summary>資料完整度與出處</summary><p>缺行情：${data.missing_price_dates.length} 個交易日 · 日曆待核實：${data.unknown_calendar_dates.length} 日 · 公司行動完整度待核實：${data.missing_action_dates.length} 日 · 其他異常：${data.issues.length} 筆。<br>空白配息清單不代表沒有配息。</p><p>${data.sources.map(s=>`${detailText(s.provider)}${s.data_start?"（"+esc(s.data_start)+"～"+esc(s.data_end)+"）":""} · ${sourceLink(s.dataset,s.dataset_url||s.url)} · ${sourceLink(s.license,s.license_url||s.redistribution_evidence)}`).join("<br>")||"尚無可核對的歷史來源"}</p>${data.actions.length?`<p>${data.actions.map(a=>`${esc(a.date)} ${a.kind==="split"?"分割比例 "+a.ratio:"每單位配息 "+a.cash+"，發放日 "+a.pay_date}`).join("<br>")}</p>`:""}</details>
+      <h4>單筆／定時定額模擬</h4><p class="detail-footnote">金額以 ${esc(data.currency||"該 ETF 交易幣別")} 計價；每次採收盤價、整數單位模擬，未成交零頭留存現金。休市順延，月底不足扣款日則取月底再順延。同日投入合併買入。配息在發放後才能再投入。</p>
+      <form class="research-form" id="research-form"><label>投入方式<select name="mode"><option value="monthly">每月定時定額</option><option value="single">單筆投入</option><option value="combined">單筆＋每月追加</option></select></label><label>配息處理<select name="dividends"><option value="cash">保留現金</option><option value="reinvest">配息再投入</option></select></label><label>開始日期<input name="start" type="date" value="${esc(start)}" min="${esc(data.required_start)}" max="${esc(data.as_of)}" required></label><label>結束日期<input name="end" type="date" value="${esc(end)}" min="${esc(data.required_start)}" max="${esc(data.as_of)}" required></label><label>單筆投入金額<input name="initial" type="number" min="0" max="10000000000" value="0" required></label><label>每月投入金額<input name="monthly" type="number" min="0" max="1000000000" value="5000" required></label><label>每月扣款日<input name="payday" type="number" min="1" max="31" step="1" value="6" required></label><label>買入手續費率（%，自行設定）<input name="feeRate" type="number" min="0" max="10" step="0.0001" value="0" required></label><label>每次最低手續費<input name="minimum" type="number" min="0" max="1000000" step="0.01" value="0" required></label><button type="submit">檢查資料並開始模擬</button></form>
+      <div id="research-result" aria-live="polite"><p class="research-message">${esc(researchRange(data,start,end)||"所選期間資料已可核對，可設定條件開始模擬。")}</p></div><p class="detail-footnote">歷史模擬不代表未來報酬，不構成買賣建議。手續費為輸入條件下的估算，預設 0 表示未計。結果以期末持有資產估值，未扣賣出費稅與個人所得稅，未模擬滑價，不保證能以收盤價成交。上市前資料不替補。</p>`;
+    const chart=holder.querySelector("#research-chart");chart.innerHTML=researchChart(data,"day");holder.querySelector("#research-period").onchange=e=>{chart.innerHTML=researchChart(data,e.target.value);};
+    const form=holder.querySelector("#research-form");
+    form.elements.mode.setAttribute("aria-label","投入方式");form.elements.dividends.setAttribute("aria-label","配息處理");
+    form.insertAdjacentHTML("afterbegin",'<label>回測期間<select name="range"><option value="custom">自訂日期</option><option value="1">近 1 年</option><option value="3">近 3 年</option><option value="5">近 5 年</option><option value="10">近 10 年</option></select></label>');
+    form.elements.range.onchange=()=>{const years=Number(form.elements.range.value);if(years){form.elements.end.value=data.as_of;form.elements.start.value=[researchYears(data.as_of,years),data.required_start].sort().at(-1);}};
+    form.elements.range.setAttribute("aria-label","回測期間");
+    const updateMode=()=>{form.elements.initial.disabled=form.elements.mode.value==="monthly";form.elements.monthly.disabled=form.elements.mode.value==="single";form.elements.payday.disabled=form.elements.mode.value==="single";};
+    form.elements.mode.onchange=updateMode;updateMode();
+    form.elements.start.onchange=form.elements.end.onchange=()=>{form.elements.range.value="custom";};
+    form.onsubmit=e=>{e.preventDefault();const values=new FormData(e.target),options=Object.fromEntries(values);for(const key of ["initial","monthly","payday","feeRate","minimum"])options[key]=Number(form.elements[key].value);options.feeRate/=100;const result=holder.querySelector("#research-result");try{const simulation=simulateResearch(data,options);renderResearchResult(result,simulation);addResearchDownload(result,simulation,data,options);}catch(error){result.innerHTML=`<p class="research-message">${esc(error.message)}</p>`;}};
+  }
+  function renderResearchResult(holder,result){
+    const money=v=>fmt(v,2),points=result.curve,max=Math.max(1,...points.map(p=>Math.max(p.assets,p.contributed))),x=i=>60+i/Math.max(1,points.length-1)*770,y=v=>220-v/max*190;
+    const path=key=>points.map((p,i)=>`${i?"L":"M"}${x(i)},${y(p[key])}`).join(" ");
+    holder.innerHTML=`<dl class="detail-grid">${[["累計投入",result.contributed],["期末總資產",result.assets],["模擬損益",result.profit],["持有市值",result.marketValue],["現金餘額",result.cash],["已除息、待入帳",result.receivable],["累計收到配息",result.received],["買入手續費",result.fees]].map(([label,value])=>detailField(label,money(value))).join("")}${detailField("依投入日期年化報酬（XIRR）",result.xirr===null?"—":fmt(result.xirr*100,2)+"%")}</dl><p class="detail-footnote">總資產＝持有市值＋現金餘額＋待入帳配息；配息已包含在資產內，不重複加總。未滿一年不顯示年化報酬率。</p>
+      <svg class="research-chart" viewBox="0 0 880 265" role="img" aria-label="累計投入本金與總資產"><title>青色為總資產，灰色虛線為累計本金</title><path d="${path("contributed")}" fill="none" stroke="var(--muted)" stroke-dasharray="6 4" stroke-width="2"/><path d="${path("assets")}" fill="none" stroke="var(--accent)" stroke-width="2"/><text x="60" y="18" font-size="13">資產上限 ${money(max)}</text><text x="60" y="250" font-size="13">${esc(points[0].date)}</text><text x="830" y="250" text-anchor="end" font-size="13">${esc(points.at(-1).date)}</text></svg><p class="research-legend">青色：總資產 · 灰色虛線：累計本金</p><details class="metric-help"><summary>查看交易與配息明細（${result.ledger.length} 筆）</summary><div class="research-ledger"><table><thead><tr><th>日期</th><th>事件</th><th>價格</th><th>單位數</th><th>現金變動</th></tr></thead><tbody>${result.ledger.map(r=>`<tr><td>${esc(r.date)}</td><td>${esc(r.event)}</td><td>${r.price?money(r.price):"—"}</td><td>${fmt(r.shares,0)}</td><td>${money(r.cash)}</td></tr>`).join("")}</tbody></table></div></details>`;
+  }
+
+  function addResearchDownload(holder,result,data,options){
+    const box=document.createElement("div");box.className="research-tools";const button=document.createElement("button");button.type="button";button.textContent="下載本次模擬明細 CSV";box.append(button);holder.append(box);
+    button.onclick=()=>{
+      const rows=[["歷史模擬，不代表未來報酬"],["ETF",data.code],["幣別",data.currency],["期間",options.start,options.end],["投入方式",options.mode],["配息方式",options.dividends],["買入費率",options.feeRate],["最低手續費",options.minimum],["未計成本","賣出費稅、個人所得稅及滑價"],["累計投入",result.contributed],["期末總資產（含應收配息）",result.assets],["日期","事件","價格","單位數","現金變動","買入手續費","當日投入"]];
+      for(const r of result.ledger)rows.push([r.date,r.event,r.price??"",r.shares,r.cash,r.fee??"",r.contribution??""]);
+      const csv="\uFEFF"+rows.map(row=>row.map(value=>'"'+String(value).replaceAll('"','""')+'"').join(",")).join("\r\n"),url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+      const link=document.createElement("a");link.href=url;link.download=`${data.code}-simulation-${options.start}-${options.end}.csv`;link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    };
   }
 
   function hashCode(){

@@ -24,6 +24,11 @@ SCHEMA_PATH = Path(__file__).resolve().parent / "schema.sql"
 
 # 資料表 → (分檔欄位或 None, 排序欄位)
 TABLES = {
+    "research_source": (None, "id"),
+    "research_price": ("date", "code"),
+    "research_action": (None, "code, date, kind"),
+    "research_coverage": (None, "code, kind, start, end"),
+    "research_import": (None, "sha256"),
     "etf": (None, "code"),
     "product_profile": (None, "code"),
     "dividend": (None, "code, ex_date"),
@@ -46,11 +51,14 @@ TABLES = {
     "stock_event": (None, "code, date, kind"),
 }
 SPLIT_DIRS = {"daily": "daily", "holding": "holdings", "fund_daily": "fund_daily", "fund_monthly": "fund_monthly",
+              "research_price": "research_prices",
               "exchange_daily": "exchange_daily", "stock_close": "stock_close",
               "holding_list": "holding_lists"}
 
 # 舊資料庫補上新欄位
 MIGRATIONS = {
+    "research_source": {}, "research_price": {}, "research_action": {},
+    "research_coverage": {}, "research_import": {},
     "product_profile": {},  # 新表由 schema.sql 的 CREATE IF NOT EXISTS 建立，不改寫舊日行情。
     "daily": {"nav_official": "REAL", "premium_official": "REAL", "aum": "REAL", "price_check": "TEXT",
               "nav_source": "TEXT", "nav_date": "TEXT", "nav_source_url": "TEXT", "aum_source": "TEXT", "beneficiaries": "INTEGER", "units_change": "REAL"},

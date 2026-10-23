@@ -227,3 +227,26 @@ CREATE TABLE IF NOT EXISTS fund_fetch (
   fetched  TEXT,                  -- 抓取日期
   PRIMARY KEY (report, month)
 );
+-- 十年研究資料：原始價量、公司行動與完整性證據分開保存，不回寫舊行情。
+CREATE TABLE IF NOT EXISTS research_source (
+  id TEXT PRIMARY KEY, metadata_json TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS research_price (
+  code TEXT NOT NULL, date TEXT NOT NULL, market TEXT NOT NULL,
+  open REAL NOT NULL, high REAL NOT NULL, low REAL NOT NULL, close REAL NOT NULL,
+  volume REAL NOT NULL, source_id TEXT NOT NULL,
+  PRIMARY KEY(code, date)
+);
+CREATE TABLE IF NOT EXISTS research_action (
+  code TEXT NOT NULL, date TEXT NOT NULL, kind TEXT NOT NULL,
+  cash REAL, pay_date TEXT, ratio REAL, source_id TEXT NOT NULL,
+  PRIMARY KEY(code, date, kind)
+);
+CREATE TABLE IF NOT EXISTS research_coverage (
+  code TEXT NOT NULL, kind TEXT NOT NULL, start TEXT NOT NULL, end TEXT NOT NULL,
+  trading_days_json TEXT, source_id TEXT NOT NULL,
+  PRIMARY KEY(code, kind, start, end)
+);
+CREATE TABLE IF NOT EXISTS research_import (
+  sha256 TEXT PRIMARY KEY, source_id TEXT NOT NULL, imported_at TEXT NOT NULL
+);
