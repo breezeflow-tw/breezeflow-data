@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'web/index.html'
+      - 'web/discussion-config.json'
+      - 'discussion/**'
       - 'scripts/**'
       - 'tests/**'
       - 'data/etf_meta.csv'
@@ -42,6 +44,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
 
       - name: 測試
         run: |
