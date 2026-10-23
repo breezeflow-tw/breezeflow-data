@@ -1,0 +1,17 @@
+# 建立帳號後複製為 wrangler.toml，再填入 Cloudflare 實際核發的 D1 ID。
+name = "breezeflow-discussion"
+main = "worker.mjs"
+compatibility_date = "2026-10-23"
+workers_dev = true
+
+[vars]
+ALLOWED_ORIGIN = "https://breezeflow-tw.github.io"
+POSTING_ENABLED = "false"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "breezeflow-discussion"
+database_id = "填入實際資料庫 ID"
+
+# TURNSTILE_SECRET、RATE_SECRET、ADMIN_TOKEN 必須透過 Worker Secrets 設定。
+# 不可放在這個檔案、web/、GitHub 公開儲存庫或對話紀錄內。

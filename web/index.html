@@ -65,7 +65,7 @@ h1,h2,h3{font-family:var(--f-display);line-height:1.35;font-weight:600}
 .brand-en{font-size:calc(12px * var(--text-scale));color:var(--muted)}
 .site-nav{display:flex;align-items:center;gap:24px;margin-left:auto;white-space:nowrap}
 .site-nav>a{font-size:calc(14px * var(--text-scale));text-decoration:none;padding-block:8px}
-.site-nav>a:first-child{border-bottom:2px solid var(--accent)}
+.site-nav>a[aria-current="location"]{border-bottom:2px solid var(--accent)}
 .site-nav>a:hover{color:var(--ink)}
 .theme-control{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:calc(12px * var(--text-scale))}
 .theme-control select{padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:4px;min-height:36px}
@@ -149,6 +149,26 @@ tbody tr.is-selected td.code{box-shadow:inset 4px 0 var(--accent)}
 .contact .contact-privacy{font-size:calc(12px * var(--text-scale));margin-top:8px}.contact-action{flex-shrink:0;display:flex;flex-direction:column;gap:8px}
 .contact-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 20px;border:1px solid var(--accent);border-radius:4px;color:var(--accent);text-decoration:none;font-weight:600}
 .contact-link:hover{background:var(--accent-soft)}.contact-action small{font-size:calc(11px * var(--text-scale));color:var(--muted);text-align:center}
+.forum{padding:36px 24px;border-top:1px solid var(--line);scroll-margin-top:80px}
+.forum-heading,.forum-actions,.forum-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.forum-heading h2{font-size:calc(24px * var(--text-scale));margin:4px 0 10px}.forum-kicker{color:var(--accent);font-size:calc(12px * var(--text-scale));letter-spacing:.12em}
+.forum p,.forum summary,.forum label{font-size:calc(13px * var(--text-scale));line-height:1.8}.forum p{color:var(--muted)}
+.forum button{min-height:44px;padding:9px 14px;background:var(--surface);border:1px solid var(--line);border-radius:4px;font:inherit;white-space:normal}
+.forum button:hover{border-color:var(--accent)}.forum button:disabled{cursor:not-allowed;opacity:.55}.forum .forum-primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.forum-notice{border-left:3px solid var(--accent);padding:10px 14px;margin:18px 0;background:var(--row);min-height:44px}
+.forum-layout{display:grid;grid-template-columns:minmax(260px,1fr) minmax(0,2fr);gap:24px;margin-top:24px}.forum-sidebar,.forum-main{min-width:0}
+.forum-sidebar h3,.forum-main h3{font-size:calc(16px * var(--text-scale));margin-bottom:12px}.forum-topics{display:grid;gap:0;border-top:1px solid var(--line)}
+.forum .forum-topic{display:block;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:18px 12px;text-align:left;width:100%;background:var(--bg)}
+.forum .forum-topic[aria-pressed="true"]{background:var(--accent-soft);border-left:3px solid var(--accent)}.forum-topic strong{display:block;margin:8px 0;font-size:calc(15px * var(--text-scale));overflow-wrap:anywhere}
+.forum-meta{font-size:calc(11px * var(--text-scale));color:var(--muted)}.forum-category{color:var(--accent)}.forum-thread,.forum-compose{background:var(--surface);border:1px solid var(--line);padding:24px;margin-bottom:20px}
+.forum-post{padding:20px 0;border-bottom:1px solid var(--line)}.forum-post:first-child{padding-top:0}.forum-post .forum-body{white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ink);margin:12px 0}
+.forum-post h3{overflow-wrap:anywhere;font-size:calc(20px * var(--text-scale))}.forum-post a{font-size:calc(12px * var(--text-scale));color:var(--muted)}
+.forum-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}.forum-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;min-width:0}.forum-field.wide{grid-column:1/-1}
+.forum input:not([type="checkbox"]),.forum select,.forum textarea{width:100%;min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:10px 12px;color:var(--ink);font:inherit;font-size:calc(14px * var(--text-scale))}
+.forum textarea{resize:vertical;min-height:140px;line-height:1.7}.forum-check{display:flex;align-items:flex-start;gap:8px;margin:12px 0}.forum-check input{margin-top:7px;flex-shrink:0}
+.forum-rules{margin-top:20px;border-top:1px solid var(--line);padding-top:14px}.forum-rules p{margin:10px 0}.forum-admin{margin-top:18px}.forum-admin article{border-bottom:1px solid var(--line);padding:16px 0;overflow-wrap:anywhere}.forum-admin .forum-body{white-space:pre-wrap}
+.forum-empty{padding:28px 12px;border-bottom:1px solid var(--line)}.forum-trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}.forum-preview{color:var(--band)!important}
+@media(max-width:850px){.forum-layout{grid-template-columns:1fr}.forum-topics{max-height:340px;overflow:auto}.forum{padding:28px 16px}.forum-thread,.forum-compose{padding:18px}.forum-fields{grid-template-columns:1fr}.forum .forum-actions{align-items:stretch}}
 @media(max-width:700px){.contact{align-items:stretch;flex-direction:column;gap:20px;padding:24px 16px}.contact-action{align-self:flex-start}.site-nav{flex-wrap:wrap}}
 footer{background:var(--surface);padding-block:20px;border-top:1px solid var(--line)}
 .footer-inner{display:flex;justify-content:space-between;align-items:center;gap:24px}
@@ -391,7 +411,7 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
 <a class="skip" href="#market">跳至 ETF 列表</a>
 <header class="site-header"><div class="wrap masthead">
   <a class="brand" href="#top" aria-label="微風流動首頁"><span class="brand-name">微風流動</span><span class="brand-en">Breeze Flow · 台股 ETF 資料庫</span></a>
-  <nav class="site-nav" aria-label="主要導覽"><a href="#market">全市場</a><a href="#sources">資料來源</a><a href="#contact">留言給站長</a>
+  <nav class="site-nav" aria-label="主要導覽"><a href="#market">全市場</a><a href="#discussion">討論板</a><a href="#sources">資料來源</a><a href="#contact">留言給站長</a>
     <label class="theme-control"><span>外觀</span><select id="theme" aria-label="外觀模式"><option value="auto">跟隨系統</option><option value="light">淺色模式</option><option value="dark">深色模式</option></select></label>
     <label class="theme-control text-size-control"><span>字型</span><select id="text-size" aria-label="字型大小"><option value="standard">標準字</option><option value="large">大字</option><option value="extra">特大字</option></select></label>
   </nav>
@@ -480,6 +500,24 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
     <div><h2>讀懂折溢價</h2><p><span class="formula">（市價 − 淨值）÷ 淨值 × 100%</span>正數為溢價，負數為折價。不同市場的交易時段與淨值日期可能不同，請搭配資料出處閱讀。</p></div>
     <div><h2>市價與淨值</h2><p>市價是交易所的成交價格；淨值是每單位基金資產的價值。正式淨值與盤中預估淨值分開標示，缺漏資料以「—」呈現，不自行推估。</p></div>
     <div class="sources" id="sources"><h2>資料來源與更新</h2><p>市價以 Yahoo 股市為主，逐檔與證交所、櫃買中心查核，不一致時採交易所資料。成交量優先使用交易所官方總量。持股動向的股票估值僅採同日交易所官方收盤價。</p><div class="source-tags" id="source-tags"></div><p id="source-note">投信官網資料來源將依本次資料自動列出。</p><details class="source-attributions" id="source-attributions" hidden><summary>交易所開放資料：出處與授權顯名</summary><ul id="attribution-list"></ul></details><p>每個交易日 08:50、18:00（臺北時間）排程更新。</p><div class="downloads"><a href="data/etf.db">下載 SQLite 資料庫</a><a href="data/latest.json">下載 JSON 資料</a></div></div>
+  </section>
+  <section class="forum" id="discussion" aria-labelledby="forum-title">
+    <div class="forum-heading"><div><span class="forum-kicker">公開交流</span><h2 id="forum-title">討論板</h2><p>查核一筆資料、分享研究方法，或提出網站建議。訪客以暱稱發言，送出後公開。</p></div><button type="button" id="forum-open" class="forum-primary">開啟討論板</button></div>
+    <p>免註冊 · 留言由 Cloudflare 儲存與處理 · 訪客暱稱未經身分驗證</p>
+    <p id="forum-status" class="forum-notice" role="status" aria-live="polite">開啟後才連線至討論服務；私人問題請使用下方「留言給站長」。</p>
+    <div id="forum-app" hidden>
+      <p id="forum-preview-banner" class="forum-preview" hidden>本機功能預覽：下方均為測試討論，留言不會送到正式網站。</p>
+      <div class="forum-actions"><p>停留本區時每 30 秒更新；分頁切到背景會暫停。日期均為臺北時間。</p><div class="forum-actions"><button type="button" id="forum-refresh">更新討論</button><button type="button" id="forum-new" class="forum-primary">發起主題</button></div></div>
+      <div class="forum-layout">
+        <aside class="forum-sidebar" aria-label="討論主題"><h3>最新主題</h3><div id="forum-topics" class="forum-topics"></div><button type="button" id="forum-more" hidden>載入較早主題</button></aside>
+        <div class="forum-main">
+          <section id="forum-thread" class="forum-thread" aria-label="主題內容" hidden><div id="forum-posts"></div><div class="forum-actions"><button type="button" id="forum-replies-more" hidden>載入更多回覆</button><button type="button" id="forum-reply">回覆此主題</button></div></section>
+          <form id="forum-form" class="forum-compose" hidden><h3 id="forum-compose-title">發起新主題</h3><div class="forum-fields"><label class="forum-field">暱稱<input id="forum-author" maxlength="24" required autocomplete="nickname" placeholder="例如：資料查核中"></label><label class="forum-field" id="forum-category-field">分類<select id="forum-category"><option>資料查核</option><option>ETF 討論</option><option>網站建議</option><option>其他</option></select></label><label class="forum-field wide" id="forum-title-field">主題<input id="forum-subject" minlength="4" maxlength="80" required placeholder="用一句話說明想討論的事"></label></div><label class="forum-field">內容<textarea id="forum-body" minlength="4" maxlength="2000" required placeholder="資料疑問請附 ETF 代號、資料日期與官方來源；請勿貼個資或帳戶資訊。"></textarea></label><p id="forum-count">0 / 2,000 字</p><label class="forum-trap" aria-hidden="true">網站<input id="forum-website" tabindex="-1" autocomplete="off"></label><label class="forum-check"><input id="forum-consent" type="checkbox" required><span>我知道暱稱與內容將公開，並同意下方討論規則及資料處理說明。</span></label><div id="forum-challenge"></div><p id="forum-form-status" role="status" aria-live="polite"></p><div class="forum-actions"><button class="forum-primary" id="forum-submit" type="submit">公開發表</button><button id="forum-cancel" type="button">取消編輯</button></div><p>發表後無法自行編輯；如需移除，請透過「留言給站長」提供留言編號。</p></form>
+        </div>
+      </div>
+    </div>
+    <details class="forum-rules"><summary>討論規則與資料處理說明</summary><p>這裡供資料查核與研究交流，留言是訪客個人意見，不代表本站立場或投資建議。禁止洗版、冒名、廣告、詐騙、騷擾、違法內容、保證獲利及招攬交易。站長可隱藏留言、鎖定主題或暫停發文。</p><p>暱稱、主題、內容與發表時間會公開，可能被搜尋引擎或其他人保存。請勿填真名、Email、電話、帳號密碼、資產或交易明細。公開資料在站長隱藏後仍可能留在第三方快取；隱藏不等於已從所有備份刪除。</p><p>留言存於 Cloudflare；防機器人驗證及網路傳輸會處理連線資料，可能在境外處理。本站限速紀錄只保存每日變動的連線識別雜湊，48 小時後失效，並在下次發文時清除過期資料。Cloudflare 的服務紀錄依其政策處理。<a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer">Cloudflare 隱私政策</a>。內容移除、勘誤及檢舉請用<a href="#contact">留言給站長</a>。</p></details>
+    <details id="forum-admin" class="forum-admin" hidden><summary>站長管理</summary><form id="forum-admin-login"><label class="forum-field">管理密鑰<input type="password" id="forum-admin-key" autocomplete="off" spellcheck="false" required></label><button type="submit">讀取管理清單</button><button type="button" id="forum-admin-logout">清除密鑰</button><p>密鑰只在本頁記憶體使用，重新整理即清除；不要使用 Cloudflare 帳號密碼。</p></form><div id="forum-admin-list"></div><button type="button" id="forum-admin-more" hidden>載入較早留言</button></details>
   </section>
   <section class="contact" id="contact" aria-labelledby="contact-title">
     <div class="contact-copy"><h2 id="contact-title">留言給站長</h2><p>發現資料有誤、操作遇到問題，或有想看的功能，都可以告訴我們。資料勘誤請附 ETF 代號、資料日期、畫面數值與官方公告連結，方便查核。</p><p class="contact-privacy">免註冊，留言不公開；回覆 Email 可不填。表單由 Google 提供，個資使用說明載於表單內。請勿填寫帳號密碼、交易明細或資產資訊。站長會查看，但不保證逐則回覆，也不提供個別投資建議。</p></div>
@@ -1370,6 +1408,120 @@ td:nth-child(2){background:var(--bg)}.column-hidden{display:none!important}
     $("source-note").textContent="資料未載入，投信官網來源待確認。";
     $("rows").innerHTML=`<tr><td colspan="13" class="empty">暫時無法載入資料。請稍後重新整理頁面再試。</td></tr>`;
   });
+})();
+</script>
+<script>
+// 討論板獨立啟動；行情載入失敗不影響討論，討論失敗也不阻斷行情。
+(function(){
+  const by=id=>document.getElementById(id);
+  // 討論板顯示核心：訪客文字一律跳脫，不接受 HTML、圖片或可執行連結。
+  function forumEscape(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function forumDate(value){if(typeof value!=='string'||!value.trim())return '日期未提供';const d=new Date(value);return Number.isFinite(d.getTime())?new Intl.DateTimeFormat('zh-TW',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(d):'日期未提供';}
+  function forumPost(post,{heading=false}={}){
+    const id=Number.isSafeInteger(post.id)&&post.id>0?post.id:0;
+    return `<article class="forum-post"><div class="forum-meta"><span>${forumEscape(post.author)} · 訪客</span><span>#${id} · ${forumEscape(forumDate(post.created_at))}</span></div>${heading?`<h3>${forumEscape(post.title)}</h3>`:''}<p class="forum-body">${forumEscape(post.body)}</p><a href="#contact" aria-label="向站長檢舉留言 ${id}">檢舉／申請移除 #${id}</a></article>`;
+  }
+  function forumConfig(data,locationHref){
+    if(!data||data.enabled!==true)throw Error('討論板尚未啟用，請稍後再來；目前仍可使用「留言給站長」。');
+    const page=new URL(locationHref),api=new URL(data.apiUrl);
+    const local=['localhost','127.0.0.1'].includes(page.hostname)&&api.origin===page.origin&&data.preview===true;
+    if(!local&&(api.protocol!=='https:'||!data.turnstileSitekey))throw Error('討論服務設定尚未完成。');
+    if(api.username||api.password||api.search||api.hash)throw Error('討論服務網址設定不正確。');
+    return {api:api.href.replace(/\/$/,''),sitekey:data.turnstileSitekey,preview:local};
+  }
+  // 討論板顯示核心結束。
+  const board={config:null,topics:[],next:null,thread:null,replies:[],replyNext:null,compose:null,requestID:null,widget:null,token:'',busy:false,topicBusy:false,sequence:0,visible:false,adminToken:'',adminNext:null,rendered:''};
+  function currentSection(){const hash=['#discussion','#sources','#contact'].includes(location.hash)?location.hash:'#market';document.querySelectorAll('.site-nav>a').forEach(link=>{if(link.getAttribute('href')===hash)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});}
+  currentSection();window.addEventListener('hashchange',currentSection);
+  let turnstileReady=null;
+  function notice(message){by(by('forum-form').hidden?'forum-status':'forum-form-status').textContent=message;}
+  async function api(path,{body,admin=false}={}){
+    const response=await fetch(board.config.api+path,{method:body?'POST':'GET',cache:'no-store',credentials:'omit',signal:AbortSignal.timeout(12000),headers:{...(body?{'Content-Type':'application/json'}:{}),...(admin?{'Authorization':'Bearer '+board.adminToken}:{})},...(body?{body:JSON.stringify(body)}:{})});
+    let result;try{result=await response.json();}catch{throw Error('討論服務回應異常，請稍後再試。');}
+    if(!response.ok){const error=Error(result.error||'討論服務暫時無法使用。');error.status=response.status;throw error;}return result;
+  }
+  function failure(error){notice(error.name==='TimeoutError'||error.name==='AbortError'?'連線逾時；編輯中的內容仍保留，請稍後再試。':error.message||'討論服務暫時無法使用。');}
+  function topicMarkup(){return board.topics.map(p=>`<button type="button" class="forum-topic" data-forum-thread="${p.id}" aria-pressed="${p.id===board.thread?.id}"><span class="forum-meta"><span class="forum-category">${forumEscape(p.category)}</span><span>${Number(p.replies)||0} 則回覆</span></span><strong>${forumEscape(p.title)}</strong><span class="forum-meta">${forumEscape(p.author)} · ${forumEscape(forumDate(p.created_at))}${p.locked?' · 已關閉回覆':''}</span></button>`).join('')||'<p class="forum-empty">目前沒有公開主題。從第一個資料問題開始。</p>';}
+  function renderTopics(){const html=topicMarkup();if(by('forum-topics').innerHTML!==html)by('forum-topics').innerHTML=html;by('forum-more').hidden=!board.next;}
+  async function topics(append=false){
+    if(board.topicBusy)return;board.topicBusy=true;
+    try{const data=await api('/threads'+(append&&board.next?'?before='+board.next:''));const items=data.items.filter(p=>Number.isSafeInteger(p.id)&&p.id>0);board.topics=append?[...board.topics,...items]:items;board.next=data.next;renderTopics();}finally{board.topicBusy=false;}
+  }
+  async function thread(id,append=false){
+    const sequence=++board.sequence;
+    let data;
+    try{data=await api('/threads/'+id+(append&&board.replyNext?'?after='+board.replyNext:''));}
+    catch(error){if(sequence===board.sequence&&error.status===404){board.thread=null;board.rendered='';by('forum-posts').replaceChildren();by('forum-thread').hidden=true;renderTopics();}throw error;}
+    if(sequence!==board.sequence)return;
+    board.thread=data.thread;board.replies=append?[...board.replies,...data.items]:data.items;board.replyNext=data.next;
+    const html=forumPost(data.thread,{heading:true})+(board.replies.map(p=>forumPost(p)).join('')||'<p>尚無回覆。</p>');
+    if(html!==board.rendered){by('forum-posts').innerHTML=html;board.rendered=html;}
+    by('forum-thread').hidden=false;by('forum-replies-more').hidden=!data.next;by('forum-reply').disabled=!!data.thread.locked;by('forum-reply').textContent=data.thread.locked?'主題已關閉回覆':'回覆此主題';renderTopics();
+  }
+  async function challenge(){
+    if(board.config.preview){by('forum-challenge').innerHTML='<p class="forum-preview">本機測試模式：模擬驗證，不會將內容送到正式網站。</p>';board.token='local-preview';return;}
+    if(!turnstileReady)turnstileReady=new Promise((resolve,reject)=>{
+      const script=document.createElement('script');script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';script.async=true;
+      const timer=setTimeout(()=>{turnstileReady=null;reject(Error('防機器人驗證載入逾時，請稍後重試。'));},12000);
+      script.onload=()=>{clearTimeout(timer);resolve();};script.onerror=()=>{clearTimeout(timer);turnstileReady=null;script.remove();reject(Error('無法載入防機器人驗證，請稍後重試。'));};document.head.append(script);
+    });
+    await turnstileReady;
+    if(board.widget!==null){window.turnstile.reset(board.widget);return;}
+    board.widget=window.turnstile.render('#forum-challenge',{sitekey:board.config.sitekey,action:'discussion',theme:document.documentElement.dataset.theme||'auto',size:'compact',callback:token=>{board.token=token;},'expired-callback':()=>{board.token='';},'error-callback':()=>{board.token='';notice('驗證未完成，請重新開啟編輯表單再試。');}});
+  }
+  async function compose(target=null){
+    if(board.busy)return;
+    if(!by('forum-form').hidden&&by('forum-body').value.trim()&&!window.confirm('切換發文對象會清除尚未送出的內容，確定切換？'))return;
+    board.compose=target;board.requestID=crypto.randomUUID();board.token='';by('forum-form').reset();by('forum-form-status').textContent='';by('forum-count').textContent='0 / 2,000 字';
+    by('forum-compose-title').textContent=target?'回覆：'+target.title:'發起新主題';by('forum-title-field').hidden=!!target;by('forum-category-field').hidden=!!target;by('forum-subject').required=!target;
+    by('forum-form').hidden=false;by('forum-form').scrollIntoView({block:'center'});by('forum-author').focus({preventScroll:true});
+    try{await challenge();}catch(error){failure(error);}
+  }
+  by('forum-body').addEventListener('input',()=>{by('forum-count').textContent=by('forum-body').value.length.toLocaleString('zh-TW')+' / 2,000 字';});
+  by('forum-open').onclick=async()=>{
+    by('forum-open').disabled=true;notice('正在連線至討論板…');
+    try{
+      const response=await fetch('discussion-config.json',{cache:'no-store'});if(!response.ok)throw Error('討論服務設定尚未提供。');
+      board.config=forumConfig(await response.json(),location.href);await topics();by('forum-app').hidden=false;by('forum-admin').hidden=false;by('forum-open').hidden=true;by('forum-preview-banner').hidden=!board.config.preview;
+      notice(board.config.preview?'本機功能預覽：留言僅存於本機測試資料庫，正式討論板尚未啟用。':'已連線。留言送出後即公開，請保持理性並附上資料來源。');
+    }catch(error){failure(error);}finally{by('forum-open').disabled=false;}
+  };
+  by('forum-topics').onclick=e=>{const button=e.target.closest('[data-forum-thread]');if(button)thread(Number(button.dataset.forumThread)).catch(failure);};
+  by('forum-more').onclick=()=>topics(true).catch(failure);
+  by('forum-replies-more').onclick=()=>thread(board.thread.id,true).catch(failure);
+  by('forum-refresh').onclick=async()=>{try{await topics();if(board.thread)await thread(board.thread.id);notice('討論已更新。');}catch(error){failure(error);}};
+  by('forum-new').onclick=()=>compose();by('forum-reply').onclick=()=>compose(board.thread);
+  by('forum-cancel').onclick=()=>{if(!board.busy){by('forum-form').hidden=true;by('forum-form').reset();board.token='';if(board.widget!==null)window.turnstile.reset(board.widget);}};
+  by('forum-form').onsubmit=async e=>{
+    e.preventDefault();if(board.busy||!by('forum-form').reportValidity())return;
+    if(!board.token){notice('請先完成防機器人驗證。');return;}
+    board.busy=true;by('forum-submit').disabled=true;by('forum-cancel').disabled=true;
+    const body={request_id:board.requestID,thread_id:board.compose?.id??null,author:by('forum-author').value,title:by('forum-subject').value,category:by('forum-category').value,body:by('forum-body').value,consent:by('forum-consent').checked,website:by('forum-website').value,token:board.token};
+    try{
+      const result=await api('/posts',{body});by('forum-form').reset();by('forum-form').hidden=true;board.requestID=null;notice(board.config.preview?'測試留言 #'+result.id+' 已存於本機。':'留言 #'+result.id+' 已公開。');
+      try{await topics();await thread(result.thread_id);}catch{notice('留言 #'+result.id+' 已送出；畫面更新失敗，請按「更新討論」。');}
+    }catch(error){failure(error);}finally{board.busy=false;by('forum-submit').disabled=false;by('forum-cancel').disabled=false;board.token='';if(board.widget!==null)window.turnstile.reset(board.widget);else if(board.config.preview)board.token='local-preview';}
+  };
+  async function admin(append=false){
+    const result=await api('/admin/posts'+(append&&board.adminNext?'?before='+board.adminNext:''),{admin:true});board.adminNext=result.next;
+    const html=result.items.map(p=>`<article><div class="forum-meta"><span>#${p.id} · ${forumEscape(p.author)} · ${p.hidden?'已隱藏':'公開'}${p.locked?' · 回覆已鎖定':''}</span><span>${forumEscape(forumDate(p.created_at))}</span></div><strong>${forumEscape(p.title||'回覆 #'+p.thread_id)}</strong><p class="forum-body">${forumEscape(p.body)}</p><div class="forum-actions"><button type="button" data-moderate="${p.hidden?'restore':'hide'}" data-id="${p.id}">${p.hidden?'恢復公開':'隱藏留言'}</button>${p.thread_id===null?`<button type="button" data-moderate="${p.locked?'unlock':'lock'}" data-id="${p.id}">${p.locked?'重新開放回覆':'鎖定回覆'}</button>`:''}</div></article>`).join('')||'<p>目前沒有留言。</p>';
+    if(append)by('forum-admin-list').insertAdjacentHTML('beforeend',html);else by('forum-admin-list').innerHTML=html;by('forum-admin-more').hidden=!result.next;
+  }
+  function clearAdmin(){board.adminToken='';by('forum-admin-key').value='';by('forum-admin-list').replaceChildren();by('forum-admin-more').hidden=true;}
+  by('forum-admin-login').onsubmit=async e=>{e.preventDefault();board.adminToken=by('forum-admin-key').value.trim();by('forum-admin-key').value='';try{await admin();notice('管理清單已載入。');}catch(error){clearAdmin();failure(error);}};
+  by('forum-admin-more').onclick=()=>admin(true).catch(failure);
+  by('forum-admin-logout').onclick=()=>{clearAdmin();notice('管理密鑰已清除。');};
+  by('forum-admin-list').onclick=async e=>{
+    const button=e.target.closest('[data-moderate]');if(!button)return;button.disabled=true;
+    try{await api('/admin/moderate',{body:{id:Number(button.dataset.id),operation:button.dataset.moderate},admin:true});await admin();await topics();if(board.thread){try{await thread(board.thread.id);}catch{board.thread=null;by('forum-thread').hidden=true;}}notice('管理操作已完成。');}catch(error){failure(error);}finally{button.disabled=false;}
+  };
+  new IntersectionObserver(entries=>{board.visible=entries[0].isIntersecting;}).observe(by('discussion'));
+  setInterval(async()=>{
+    if(!board.config||by('forum-app').hidden||document.hidden||!board.visible||board.busy||!by('forum-form').hidden||by('discussion').contains(document.activeElement))return;
+    // 較早頁保持原樣；不在背景重畫使用者正在閱讀的長討論。
+    try{if(board.topics.length<=20)await topics();if(board.thread&&board.replies.length<=50)await thread(board.thread.id);}catch(error){failure(error);}
+  },30000);
+  window.addEventListener('pagehide',clearAdmin);
 })();
 </script>
 </body>
