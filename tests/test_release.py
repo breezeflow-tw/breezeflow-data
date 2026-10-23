@@ -124,6 +124,13 @@ class ReleaseTest(unittest.TestCase):
         self.assertEqual(len(self.verified), 1)
         self.assertEqual(len(self.refreshed), 1)
 
+    def test_stock_name_reference_change_refreshes_data(self):
+        self.data(self.a, 21)
+        self.remote_change("data/stock_name_reference.json", '{"items": {}}')
+        self.publish()
+        self.assertEqual(len(self.verified), 1)
+        self.assertEqual(len(self.refreshed), 1)
+
     def test_unrelated_local_change_is_not_committed(self):
         self.data(self.a, 21)
         self.write(self.a, "web/index.html", "未提交程式")
