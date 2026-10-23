@@ -1353,6 +1353,107 @@ class StoreTest(unittest.TestCase):
         self.assertIn("date", pk)
 
 
+class DailyDateTest(unittest.TestCase):
+    """每日行情表每一列只放那一天的數字：MIS 前一營業日淨值的日期判斷、規模與前一營業日淨值對齊。"""
+
+    def db(self, rows):
+        con = sqlite3.connect(":memory:")
+        store.ensure_schema(con)
+        con.executemany("INSERT INTO daily(date, code, price, nav_official, aum, aum_source, nav_prev) VALUES(?, ?, ?, ?, ?, ?, ?)",
+                        rows)
+        return con
+
+    def official(self, con, day, code="0050"):
+        return con.execute("SELECT nav_official, premium_official FROM daily WHERE date=? AND code=?", (day, code)).fetchone()
+
+    def mis(self, day, h, code="0050"):
+        return {code: {"code": code, "date": day, "nav_prev": h, "source_time": "16:59:53"}}
+
+    def clock(self, text):
+        return datetime.fromisoformat(text + "+08:00")
+
+    def test_evening_snapshot_is_previous_day_nav(self):
+        con = self.db([("2026-10-20", "0050", 50.0, None, None, None, None), ("2026-10-21", "0050", 51.0, None, None, None, None)])
+        con.execute("INSERT INTO market_calendar_year(year) VALUES(2026)")
+        f.save_official_nav(con, self.mis("2026-10-21", 50.1), self.clock("2026-10-21T21:30"))  # 21:00 以後不算晚間
+        self.assertEqual(self.official(con, "2026-10-20"), (None, None))
+        f.save_official_nav(con, self.mis("2026-10-21", 50.1), self.clock("2026-10-21T18:20"))
+        nav, premium = self.official(con, "2026-10-20")
+        self.assertEqual(nav, 50.1)
+        self.assertAlmostEqual(premium, (50.0 - 50.1) / 50.1 * 100)
+        f.save_official_nav(con, self.mis("2026-10-21", 49.0), self.clock("2026-10-21T18:20"))  # 只補空白
+        self.assertEqual(self.official(con, "2026-10-20")[0], 50.1)
+
+    def test_evening_snapshot_corrects_pre_distribution_nav(self):
+        """除息前一天投信官網的淨值已先扣掉配息（2026-10-21 元大 0056 實例），除息日晚間改用 MIS 的數字。"""
+        rows = [("2026-10-21", "0056", 58.75, 56.97, None, None, None), ("2026-10-22", "0056", 56.3, None, None, None, None),
+                ("2026-10-21", "00719B", 31.68, 31.6461, None, None, None), ("2026-10-22", "00719B", 31.5, None, None, None, None)]
+        con = self.db(rows)
+        con.executemany("INSERT INTO dividend(code, ex_date, cash, source) VALUES(?, '2026-10-22', ?, '交易所除權息預告')",
+                        [("0056", 1.72), ("00719B", 0.27)])
+        snapshot = {**self.mis("2026-10-22", 58.69, "0056"), **self.mis("2026-10-22", 31.64, "00719B")}
+        f.save_official_nav(con, snapshot, self.clock("2026-10-22T09:25"))  # 不是晚間：不判斷
+        self.assertEqual(self.official(con, "2026-10-21", "0056")[0], 56.97)
+        f.save_official_nav(con, snapshot, self.clock("2026-10-22T18:20"))
+        nav, premium = self.official(con, "2026-10-21", "0056")
+        self.assertEqual(nav, 58.69)
+        self.assertAlmostEqual(premium, (58.75 - 58.69) / 58.69 * 100)
+        self.assertEqual(self.official(con, "2026-10-21", "00719B")[0], 31.6461)  # 差額不是配息：保留投信官網的數字
+
+    def test_next_morning_needs_different_same_day_nav(self):
+        """隔天早上、MIS 日期還沒換：數字可能已換成 MIS 日期當天的淨值。"""
+        rows = [("2026-10-20", c, 50.0, None, None, None, None) for c in ("0050", "00853B", "0056")]
+        rows += [("2026-10-21", "0050", 51.0, 51.2, None, None, None), ("2026-10-21", "00853B", 26.5, 26.3464, None, None, None),
+                 ("2026-10-21", "0056", 41.0, None, None, None, None)]
+        con = self.db(rows)
+        morning = self.clock("2026-10-22T09:25")
+        f.save_official_nav(con, self.mis("2026-10-21", 51.2), morning)  # 已換成 10/21 當天的淨值
+        f.save_official_nav(con, self.mis("2026-10-21", 26.34, "00853B"), morning)  # 無條件捨去，相差不到一分仍可能是同一天
+        f.save_official_nav(con, self.mis("2026-10-21", 40.1, "0056"), morning)  # 本站還沒有 10/21 的正式淨值，無法判斷
+        for code in ("0050", "00853B", "0056"):
+            self.assertEqual(self.official(con, "2026-10-20", code), (None, None))
+        f.save_official_nav(con, self.mis("2026-10-21", 50.1), morning)  # 和 10/21 的正式淨值不同：是 10/20 的淨值
+        self.assertEqual(self.official(con, "2026-10-20")[0], 50.1)
+
+    def test_new_mis_date_rejects_stale_nav(self):
+        """MIS 已換成新日期：晚一天公告淨值的 ETF 還是更早一天的數字（2026-10-23 早上 00703 實例）。"""
+        rows = [("2026-10-21", "00703", 18.5, 18.36, None, None, None), ("2026-10-22", "00703", 17.77, None, None, None, None),
+                ("2026-10-21", "0050", 51.0, 51.2, None, None, None), ("2026-10-22", "0050", 52.0, None, None, None, None)]
+        con = self.db(rows)
+        snapshot = {**self.mis("2026-10-23", 18.36, "00703"), **self.mis("2026-10-23", 51.9)}
+        f.save_official_nav(con, snapshot, self.clock("2026-10-26T09:25"))  # 不是在 MIS 日期當天取得：無法判斷
+        self.assertIsNone(self.official(con, "2026-10-22")[0])
+        f.save_official_nav(con, snapshot, self.clock("2026-10-23T09:25"))
+        self.assertIsNone(self.official(con, "2026-10-22", "00703")[0])  # 等於 10/21 的淨值：可能是舊值，不寫
+        self.assertEqual(self.official(con, "2026-10-22")[0], 51.9)
+
+    def test_align_daily_uses_same_day_values(self):
+        rows = [("2026-10-19", "0050", 49.0, 49.8, None, None, None), ("2026-10-21", "0050", 51.0, None, 999.0, "舊值", 51.2),
+                ("2026-10-21", "0056", 41.0, None, 88.0, "舊值", 41.3)]
+        con = self.db(rows)
+        items = [{"code": "0050", "aum": 123.4, "aum_date": "2026-10-21", "aum_source": "元大投信官網"},
+                 {"code": "0056", "aum": 88.0, "aum_date": "2026-10-20", "aum_source": "元大投信官網"}]
+        cal = f.market_calendar.Calendar({"2026-10-20": {"is_open": False}}, {2026})  # 10/20 休市：前一個交易日是 10/19
+        f.align_daily(con, items, "2026-10-21", cal)
+        got = {c: r for c, *r in con.execute("SELECT code, aum, aum_source, nav_prev FROM daily WHERE date='2026-10-21'")}
+        self.assertEqual(got["0050"], [123.4, "元大投信官網", 49.8])
+        self.assertEqual(got["0056"], [None, None, None])  # 規模是別天的、前一個交易日沒有正式淨值：都留空
+        self.assertEqual([it["nav_prev"] for it in items], [49.8, None])
+        self.assertEqual(items[1]["aum"], 88.0)  # 網站沿用附日期的最新官方規模，只有每日行情表對齊日期
+
+    def test_align_daily_fills_later_official_aum(self):
+        con = self.db([("2026-10-20", "0050", 50.0, None, None, None, None), ("2026-10-20", "0056", 40.0, None, 77.0, "交易所資料推算", None),
+                       ("2026-10-21", "0050", 51.0, None, None, None, None)])
+        con.executemany("INSERT INTO fund_daily(code, date, aum, source, source_url) VALUES(?, ?, ?, ?, ?)",
+                        [("0050", "2026-10-20", 3200.5, "元大投信官網", "https://example.com"),
+                         ("0056", "2026-10-20", 8400.0, "元大投信官網", "https://example.com")])
+        f.align_daily(con, [{"code": "0050", "aum": None}], "2026-10-21", f.market_calendar.Calendar({}, {2026}))
+        got = {(d, c): (a, s) for d, c, a, s in con.execute("SELECT date, code, aum, aum_source FROM daily")}
+        self.assertEqual(got[("2026-10-20", "0050")], (3200.5, "元大投信官網"))  # 之後才公告的同日規模補進空白
+        self.assertEqual(got[("2026-10-20", "0056")], (77.0, "交易所資料推算"))  # 既有數字不改，歷史修正另案處理
+        self.assertEqual(got[("2026-10-21", "0050")], (None, None))
+
+
 class PipelineTest(unittest.TestCase):
     def test_end_to_end_and_rerun(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -1423,6 +1524,10 @@ class PipelineTest(unittest.TestCase):
             db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
             fix = fixtures_without(tmp, "yuanta")
             self.assertEqual(f.main(["--fixtures", str(fix), "--db", str(db), "--out", str(out)]), 0)
+            con = sqlite3.connect(db)  # 前一個交易日（10/15）已保存的正式淨值，用來排除 MIS 還沒更新的舊值
+            con.executemany("INSERT INTO daily(date, code, nav_official) VALUES('2026-10-15', ?, ?)", [("0050", 52.0), ("00757", 110.0)])
+            con.commit()
+            con.close()
 
             morning = Path(tmp) / "morning"
             morning.mkdir()
@@ -1430,19 +1535,23 @@ class PipelineTest(unittest.TestCase):
             for block in nav["a1"]:
                 for row in block["msgArray"]:
                     row.update({"i": "20261019", "j": "08:50:00", "e": "-", "g": "-", "f": "99.99"})
-            nav["a1"][0]["msgArray"][0]["h"] = "52.20"  # 0050 在 10/16 的正式淨值
+            rows = {r["a"]: r for block in nav["a1"] for r in block["msgArray"]}
+            rows["0050"]["h"] = "52.20"  # 0050 在 10/16 的正式淨值
+            rows["00757"]["h"] = "110.00"  # 00757 還是 10/15 的淨值：不能當成 10/16 的
             (morning / "nav.json").write_text(json.dumps(nav), "utf-8")
             twse = json.loads((FIX / "twse.json").read_text("utf-8"))
             for row in twse:
                 row["Date"] = "1151016"
             (morning / "twse.json").write_text(json.dumps(twse), "utf-8")
             (morning / "tpex.json").write_bytes((FIX / "tpex.json").read_bytes())
-            self.assertEqual(f.main(["--fixtures", str(morning), "--db", str(db), "--out", str(out)]), 0)
+            run = ["--fixtures", str(morning), "--db", str(db), "--out", str(out)]
+            self.assertEqual(f.main(run + ["--clock", "2026-10-19T09:25:00"]), 0)
 
             con = sqlite3.connect(db)
-            self.assertEqual(con.execute("SELECT COUNT(DISTINCT date) FROM daily").fetchone()[0], 1)
+            self.assertEqual(con.execute("SELECT COUNT(DISTINCT date) FROM daily WHERE date > '2026-10-15'").fetchone()[0], 1)
+            self.assertIsNone(con.execute("SELECT nav_official FROM daily WHERE code='00757' AND date='2026-10-16'").fetchone()[0])
             nav_est, nav_off, prem_off = con.execute(
-                "SELECT nav, nav_official, premium_official FROM daily WHERE code='0050'").fetchone()
+                "SELECT nav, nav_official, premium_official FROM daily WHERE code='0050' AND date='2026-10-16'").fetchone()
             con.close()
             self.assertEqual(nav_est, 52.25)  # 前一天的預估淨值沒被今天的資料蓋掉
             self.assertEqual(nav_off, 52.20)

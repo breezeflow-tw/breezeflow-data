@@ -575,7 +575,7 @@ def known_markets(db_path: Path) -> dict[str, str]:
 def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | None = None,
             dividends: list[dict] | None = None, diffs: list[dict] | None = None,
             issuer: dict[str, dict] | None = None, fund_dividends: list[dict] | None = None,
-            fund_nav: dict[str, float] | None = None) -> None:
+            fund_nav: dict[str, float] | None = None, clock: datetime | None = None) -> None:
     con = store.open_db(db_path, None)
     try:
         now = datetime.now(TW).isoformat(timespec="seconds")
@@ -630,7 +630,6 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
                  source_time=CASE WHEN excluded.nav IS NOT NULL THEN excluded.source_time ELSE daily.source_time END""",
             [{"nav_date":None, "nav_source_url":None, **it, "date": date} for it in items],
         )
-        save_official_nav(con, nav or {})
         save_issuer_detail(con, issuer or {})
         # 投信投顧公會的當日正式淨值：只補空白，投信官網公告的優先
         con.executemany(
@@ -639,6 +638,7 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
                WHERE date = :date AND code = :code AND nav_official IS NULL""",
             [{"nav": v, "date": date, "code": c} for c, v in (fund_nav or {}).items()],
         )
+        save_official_nav(con, nav or {}, clock)
         con.executemany(
             """INSERT OR REPLACE INTO price_check(date, code, field, yahoo, exchange, checked_at)
                VALUES(:date, :code, :field, :yahoo, :exchange, :now)""",
@@ -690,6 +690,28 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
         con.close()
 
 
+def align_daily(con: sqlite3.Connection, items: list[dict], date: str, cal: market_calendar.Calendar | None) -> None:
+    """每日行情表那一天的列只放那一天的數字（在週申贖附上官方規模與日期之後執行）：
+    - 規模：只放資料日期就是這一天的官方規模，沒有就留空，不把別天或推算的規模寫進來；
+      之後才公告的同一天官方規模（投信官網逐日資料）補進還空著的列
+    - 前一營業日淨值：用本站保存的前一個交易日正式淨值；MIS 的同名欄位隔天早上會先換成當天的淨值、日期欄卻沒變，不直接採用
+    只改寫網站交易日這一列與空白欄，不改既有歷史的數字。"""
+    prev = cal.previous_trading_day(date) if cal else None
+    if prev is None:
+        prev = con.execute("SELECT MAX(date) FROM daily WHERE date < ?", (date,)).fetchone()[0]
+    official = dict(con.execute("SELECT code, nav_official FROM daily WHERE date = ? AND nav_official IS NOT NULL", (prev,))) if prev else {}
+    rows = []
+    for it in items:
+        aum = it.get("aum") if it.get("aum_date") == date else None
+        it["nav_prev"] = official.get(it["code"])
+        rows.append({"code": it["code"], "date": date, "aum": aum, "aum_source": it.get("aum_source") if aum is not None else None,
+                     "nav_prev": it["nav_prev"]})
+    con.executemany("UPDATE daily SET aum = :aum, aum_source = :aum_source, nav_prev = :nav_prev WHERE date = :date AND code = :code",
+                    rows)
+    con.execute("""UPDATE daily SET aum = f.aum, aum_source = f.source FROM fund_daily f
+                   WHERE daily.aum IS NULL AND f.code = daily.code AND f.date = daily.date AND f.aum > 0""")
+
+
 def attach_dividends(con: sqlite3.Connection, items: list[dict], date: str) -> None:
     """每檔附上下一次除息（交易日之後）與最近一次除息（含當天）的日期、金額、發放日。"""
     for it in items:
@@ -733,23 +755,56 @@ def save_issuer_detail(con: sqlite3.Connection, issuer: dict[str, dict]) -> None
         active_holdings.save_list_evidence(con, code, day, r["source"], url, r["holdings"], now)
 
 
-def save_official_nav(con: sqlite3.Connection, nav: dict) -> None:
-    """MIS 的「前一營業日淨值」是投信公告的正式淨值，寫回資料庫中前一個交易日那一列，
-    並用當天收盤價算出正式折溢價。早上 08:50 那次排程主要就是為了補這個。"""
+MIS_TICK = 0.01  # MIS 的淨值多半只到小數兩位、四位小數的淨值無條件捨去（26.3464 顯示 26.34），相差不到一分可能是同一個數字
+
+
+def save_official_nav(con: sqlite3.Connection, nav: dict, clock: datetime | None = None) -> None:
+    """MIS 的「前一營業日淨值」是投信公告的正式淨值，補進前一個交易日那一列的空白，並算出正式折溢價。
+    這個欄位沒有標示淨值日期，要看取得的時間（clock，台灣時間）判斷；2026-10-19～23 共 23 次排程輸出實測：
+    - MIS 日期當天收盤後到晚間（13:30～21:00）：都是前一個交易日的淨值，照常補
+    - 隔天早上、MIS 日期還沒換：部分 ETF 已換成 MIS 日期當天的淨值，日期欄卻沒變
+    - MIS 已換成新日期：晚一天公告淨值的 ETF（海外、債券型居多）還是更早一天的淨值（10/23 早上 00703 等 5 檔）
+    晚間以外只有能排除另一個日期時才補：MIS 日期已有本站保存的正式淨值、而且至少差一分；
+    或 MIS 已換成新日期的當天，和再早一個交易日保存的正式淨值至少差一分。不能確定就不寫，不把日期猜錯的數字補進歷史。
+    除息日晚間另外核對：投信官網在除息前一天公告的淨值可能已先扣掉配息（2026-10-21 元大 0056：官網 56.97、
+    證交所轉載 58.69，相差剛好是 1.72 元配息），已保存的數字加上配息等於 MIS 的數字時，改用 MIS 的數字。"""
+    clock = (clock or datetime.now(TW)).astimezone(TW)
+    cal = market_calendar.load(con)
+
+    def before(day):
+        return cal.previous_trading_day(day) or con.execute("SELECT MAX(date) FROM daily WHERE date < ?", (day,)).fetchone()[0]
+
+    def official(day):
+        return dict(con.execute("SELECT code, nav_official FROM daily WHERE date = ? AND nav_official IS NOT NULL", (day,))) if day else {}
+
     by_date: dict[str, list] = {}
     for n in nav.values():
         if n.get("date") and n.get("nav_prev"):
             by_date.setdefault(n["date"], []).append(n)
     for mis_date, rows in by_date.items():
-        prev = con.execute("SELECT MAX(date) FROM daily WHERE date < ?", (mis_date,)).fetchone()[0]
-        if not prev:
+        target = before(mis_date)
+        if not target:
             continue
+        today = clock.date().isoformat() == mis_date
+        if con.execute("SELECT 1 FROM daily WHERE date = ? LIMIT 1", (mis_date,)).fetchone():
+            evening = today and "13:30" <= clock.strftime("%H:%M") < "21:00"
+            other = official(mis_date)  # 可能已換成 MIS 日期當天的淨值
+        else:
+            evening = False
+            other = official(before(target)) if today else {}  # 可能還是更早一天的淨值
+        rows = [n for n in rows
+                if evening or (n["code"] in other and abs(other[n["code"]] - n["nav_prev"]) > MIS_TICK - 1e-9)]
+        stored, cash = official(target), {}
+        if evening:
+            cash = dict(con.execute("SELECT code, cash FROM dividend WHERE ex_date = ? AND cash > 0", (mis_date,)))
         con.executemany(
-            # 只補空白：投信官網公告的正式淨值優先，不被證交所轉載的數字覆蓋
+            # 只補空白：投信官網公告的正式淨值優先，不被證交所轉載的數字覆蓋；唯一的例外是上面說的除息前一天
             """UPDATE daily SET nav_official = :nav,
                  premium_official = CASE WHEN price IS NOT NULL THEN (price - :nav) / :nav * 100 END
-               WHERE date = :date AND code = :code AND nav_official IS NULL""",
-            [{"nav": n["nav_prev"], "date": prev, "code": n["code"]} for n in rows],
+               WHERE date = :date AND code = :code AND (nav_official IS NULL OR :distribution)""",
+            [{"nav": n["nav_prev"], "date": target, "code": n["code"],
+              "distribution": n["code"] in cash and n["code"] in stored
+              and abs(stored[n["code"]] + cash[n["code"]] - n["nav_prev"]) < MIS_TICK} for n in rows],
         )
 
 
@@ -1002,7 +1057,10 @@ def main(argv=None) -> int:
     ap.add_argument("--db", type=Path, default=DB_PATH)
     ap.add_argument("--out", type=Path, default=OUT_PATH)
     ap.add_argument("--history", type=Path, help="歷史 CSV 資料夾，預設為資料庫旁的 history/")
+    ap.add_argument("--clock", type=datetime.fromisoformat,
+                    help="測試用：判斷交易日與淨值日期時當作現在的時間（ISO 8601，沒寫時區視為台灣時間），預設為現在")
     args = ap.parse_args(argv)
+    clock = (args.clock.replace(tzinfo=args.clock.tzinfo or TW) if args.clock else datetime.now(TW)).astimezone(TW)
     history = args.history or args.db.parent / "history"
     store.open_db(args.db, history).close()  # 資料庫檔不存在時，先從歷史 CSV 重建
 
@@ -1029,7 +1087,7 @@ def main(argv=None) -> int:
         probe_raw = json.loads(probe_path.read_text("utf-8")) if probe_path.exists() else {}
     else:
         probe_raw = fetch_yahoo([PROBE_SYMBOL])
-    date = trade_date(nav, exchange, datetime.now(TW), parse_yahoo(probe_raw).get(PROBE_SYMBOL.split(".")[0]), calendar)
+    date = trade_date(nav, exchange, clock, parse_yahoo(probe_raw).get(PROBE_SYMBOL.split(".")[0]), calendar)
     source = "fixture" if args.fixtures else "live"
     reused = returns.previous(args.out, date, source)
     markets = without_excluded({**known_markets(args.db), **{c: q["market"] for c, q in exchange.items()}})
@@ -1097,7 +1155,8 @@ def main(argv=None) -> int:
     print(f"{sitca.SOURCE}基金淨值：{date} 共 {len(navs)} 檔" if navs else f"{sitca.SOURCE}基金淨值：{date} 尚未公布")
 
     product_profile.attach(items, issuer, fund_info.get("funds"))
-    save_db(items, date, args.db, nav, dividends, diffs, issuer, (fresh.get("dividends") or []) + (old.get("dividends") or []), navs)
+    save_db(items, date, args.db, nav, dividends, diffs, issuer, (fresh.get("dividends") or []) + (old.get("dividends") or []), navs,
+            clock)
     con = sqlite3.connect(args.db)
     try:
         attach_returns(con, items, date, reused, returns.parse_history(history_raw))
@@ -1123,6 +1182,7 @@ def main(argv=None) -> int:
         if backfilled:
             print(f"投信官網歷史申購買回清單回補：{backfilled} 份")
         fund_flows.attach(con, items, date, market_calendar.load(con))
+        align_daily(con, items, date, market_calendar.load(con))
         apply_fund_top(items, load_fund_top(con), date)
         apply_main_line_holdings(items)
         active = active_changes.attach(con, items, date, issuer, parse_closes(raw["twse"], raw["tpex"]))

@@ -36,13 +36,13 @@ CREATE TABLE IF NOT EXISTS daily (
   price        REAL,              -- 收盤價（無收盤價時用即時成交價）
   change_pct   REAL,              -- 漲跌幅（%）
   nav          REAL,              -- 投信預估淨值
-  nav_prev     REAL,              -- 前一營業日淨值
+  nav_prev     REAL,              -- 前一個交易日的正式淨值（本站保存的，不直接用 MIS 的同名欄位）
   premium      REAL,              -- 折溢價（%），正數為溢價
   volume_lots  INTEGER,           -- 成交受益權單位數除以 1000 後取整數；外幣交易線不等於張數
   source_time  TEXT,              -- 淨值資料時間
   nav_official     REAL,          -- 投信公告的正式淨值（隔天才會有）
   premium_official REAL,          -- 收盤價對正式淨值的折溢價（%）
-  aum          REAL,              -- 當天規模（億元）
+  aum          REAL,              -- 當天的官方規模（億元）：只放資料日期就是這一天的數字，沒有就留空
   price_check  TEXT,              -- 市價查核結果：一致 / 已修正 / 未查核 / 交易所
   nav_source   TEXT,              -- 淨值出處
   nav_date     TEXT,              -- 所採用淨值的來源日期，與數值一起保存
