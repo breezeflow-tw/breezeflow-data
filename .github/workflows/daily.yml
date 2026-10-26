@@ -4,7 +4,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'web/index.html'
+      - 'web/**'
+      - '!web/data/**'
       - 'scripts/**'
       - 'tests/**'
       - 'data/etf_meta.csv'
