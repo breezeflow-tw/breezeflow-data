@@ -15,6 +15,7 @@ from contextlib import closing
 import store
 import research_history
 import audit
+import site_data
 
 
 def git(root, *args, check=True):
@@ -112,13 +113,20 @@ def write_manifest(root):
         research_history.export(source, payload["items"], payload["trade_date"], root / "web/data/research")
         with closing(sqlite3.connect(root / "web/data/etf.db")) as target:
             source.backup(target)
-    paths = ("web/index.html", "web/data/latest.json", "web/data/etf.db", "web/data/research/index.json")
+    # 網站列表讀精簡檔、詳情讀單檔完整檔，都由這次驗證過的 latest.json 產生。
+    _, details = site_data.write(payload, root / "web/data")
+    paths = ("web/index.html", "web/data/latest.json", "web/data/summary.json", "web/data/etf.db",
+             "web/data/research/index.json")
+    # 單檔數量多，記一個總雜湊：依檔名排序的「檔名 SHA-256」逐行串起來再算一次。
+    lines = "".join(f"{code}.json {hashlib.sha256((root / 'web/data/etf' / f'{code}.json').read_bytes()).hexdigest()}\n"
+                    for code in sorted(details))
     result = {
         "commit": git(root, "rev-parse", "HEAD").stdout.strip(),
         "built_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "trade_date": payload["trade_date"], "generated_at": payload.get("generated_at"),
         "count": len(payload["items"]),
         "sha256": {path.removeprefix("web/"): hashlib.sha256((root / path).read_bytes()).hexdigest() for path in paths},
+        "etf_detail": {"count": len(details), "sha256": hashlib.sha256(lines.encode("utf-8")).hexdigest()},
     }
     (root / "web/release.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", "utf-8")
     return result

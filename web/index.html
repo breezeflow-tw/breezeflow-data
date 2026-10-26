@@ -548,6 +548,20 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
  .overview-grid .quote-value{font-size:calc(26px * var(--text-scale))}.overview-grid .detail-value{font-size:calc(19px * var(--text-scale))}
  .overview-grid .quote-change{font-size:calc(15px * var(--text-scale))}
 }
+/* 骨架畫面（2026-10-26）：資料到達前先排好版面。全站在「減少動態效果」時已停用動畫，這裡另給靜態底色。 */
+:root{--sk:color-mix(in srgb,var(--ink) 9%,transparent);--sk-hi:color-mix(in srgb,var(--ink) 17%,transparent)}
+.sk{display:inline-block;height:.9em;max-width:100%;border-radius:6px;vertical-align:middle;background:linear-gradient(90deg,var(--sk) 30%,var(--sk-hi) 50%,var(--sk) 70%) 0 0/300% 100%;animation:sk-shine 1.6s ease-in-out infinite}
+.sk-sub{height:.72em}.sk-value{height:1.8em;margin-block:4px}
+@keyframes sk-shine{from{background-position:100% 0}to{background-position:0 0}}
+@media(prefers-reduced-motion:reduce){.sk{background:var(--sk)}}
+.sk-row,.sk-row td{cursor:default}.sk-row:hover td{background:inherit}
+.detail-nav button:disabled{cursor:default}.detail-nav:empty{display:none}
+/* 畫面外的卡片先不排版，手機首屏快很多；不支援的瀏覽器照常全部排版。 */
+.etf-card{content-visibility:auto;contain-intrinsic-size:auto 210px}
+.detail-load-error{margin:24px 0;padding:20px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.detail-load-error p{margin:8px 0 16px;color:var(--muted)}
+.detail-retry{min-height:44px;padding:0 18px;border:1px solid var(--line-strong);border-radius:10px;background:var(--bg);color:var(--ink);font-weight:600;cursor:pointer}
+.detail-retry:hover{border-color:var(--accent);color:var(--accent)}
 </style>
 <style>
 .research-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}.research-tools button,.research-tools select,.research-form button{background:var(--accent-soft);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:9px 12px;font:inherit;cursor:pointer}.research-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.research-form label{display:flex;flex-direction:column;gap:5px;font-size:calc(13px * var(--text-scale));color:var(--muted)}.research-form input,.research-form select{min-width:0;width:100%;box-sizing:border-box;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:9px;font:inherit}.research-form button{grid-column:1/-1;background:var(--accent);color:var(--accent-ink);font-weight:600}.research-chart{width:100%;height:auto;display:block;background:var(--bg);border:1px solid var(--line);border-radius:8px}.research-chart text{font-family:var(--f-num);fill:var(--muted)}.research-message{padding:12px;border-left:3px solid var(--band);background:var(--band-soft);font-size:calc(13px * var(--text-scale));line-height:1.8}.research-legend{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:calc(12px * var(--text-scale))}.research-ledger{max-height:260px;overflow:auto}.research-ledger table{width:100%;font-size:calc(12px * var(--text-scale))}.research-ledger th,.research-ledger td{padding:7px;text-align:right;white-space:nowrap}.research-ledger th:first-child,.research-ledger td:first-child{text-align:left}button:disabled{cursor:not-allowed;opacity:.55}
@@ -585,17 +599,17 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
     <label class="theme-control text-size-control"><span>字型</span><select id="text-size" aria-label="字型大小"><option value="standard">標準字</option><option value="large">大字</option><option value="extra">特大字</option></select></label>
     </div></details>
   </nav>
-  <div class="dateline"><span>收盤行情</span><time class="num" id="h-date">載入中…</time><small id="s-date">網站更新時間 —</small></div>
+  <div class="dateline"><span>收盤行情</span><time class="num" id="h-date"><span class="sk" style="width:5.4em"></span><span class="sr-only">載入中</span></time><small id="s-date">網站更新時間 —</small></div>
 </div></header>
 <main class="wrap">
   <h1 class="sr-only" id="page-title">微風流動 · 台股 ETF 資料庫</h1>
   <p class="banner" id="banner" role="status" hidden></p>
   <div class="market-status" id="market-status" role="status"><strong>正在核對資料狀態…</strong></div>
   <section class="summary" aria-label="全市場摘要">
-    <div class="stat"><span class="stat-title">交易代號</span><span class="v"><span id="s-count">—</span><small>個</small></span></div>
-    <button type="button" class="stat stat-action" data-quick="premium"><span class="stat-title">溢價 &gt; 1%</span><span class="v premium"><span id="s-prem">—</span><small>檔</small></span></button>
-    <button type="button" class="stat stat-action" data-quick="discount"><span class="stat-title">折價 &gt; 1%</span><span class="v discount"><span id="s-disc">—</span><small>檔</small></span></button>
-    <button type="button" class="stat stat-action" data-quick="dividend"><span class="stat-title">即將除息</span><span class="v"><span id="s-div">—</span><small>檔</small></span></button>
+    <div class="stat"><span class="stat-title">交易代號</span><span class="v"><span id="s-count"><span class="sk" style="width:1.8em"></span></span><small>個</small></span></div>
+    <button type="button" class="stat stat-action" data-quick="premium"><span class="stat-title">溢價 &gt; 1%</span><span class="v premium"><span id="s-prem"><span class="sk" style="width:1.8em"></span></span><small>檔</small></span></button>
+    <button type="button" class="stat stat-action" data-quick="discount"><span class="stat-title">折價 &gt; 1%</span><span class="v discount"><span id="s-disc"><span class="sk" style="width:1.8em"></span></span><small>檔</small></span></button>
+    <button type="button" class="stat stat-action" data-quick="dividend"><span class="stat-title">即將除息</span><span class="v"><span id="s-div"><span class="sk" style="width:1.8em"></span></span><small>檔</small></span></button>
   </section>
   <noscript><p class="banner">請啟用 JavaScript 以瀏覽 ETF 列表，或<a href="data/latest.json">下載最新 JSON 資料</a>。</p></noscript>
   <section class="market" id="market" aria-labelledby="market-title" tabindex="-1">
@@ -648,9 +662,9 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
     </section>
     <div class="scope-banner" id="flow-scope" hidden></div>
     <details class="table-controls" id="table-controls"><summary>清單與欄位設定</summary><div class="table-options"><label>欄位<select class="select" id="column-mode"><option value="quote">行情與規模</option><option value="income">配息</option><option value="fees">規模與費用</option><option value="all">全部欄位</option></select></label><label>呈現<select class="select" id="list-mode"><option value="table">表格</option><option value="cards">精簡清單</option></select></label><span>價格保留原交易幣別；規模日期逐筆標示</span></div></details>
-    <div class="etf-cards" id="etf-cards" hidden></div>
+    <div class="etf-cards" id="etf-cards" aria-busy="true" hidden></div>
     <div class="table-help"><span>點選任一列查看詳情 · 欄位可排序</span><span class="legend"><span class="up">＋漲</span><span class="down">−跌</span><span class="premium">溢價</span><span class="discount">折價</span></span></div>
-    <div class="table-box" tabindex="0" role="region" aria-label="ETF 資料表，可上下及左右捲動">
+    <div class="table-box" tabindex="0" role="region" aria-label="ETF 資料表，可上下及左右捲動" aria-busy="true">
       <table aria-label="台股 ETF 行情與配息資料">
         <colgroup><col style="width:100px"><col style="width:190px"><col style="width:100px"><col style="width:90px"><col style="width:90px"><col style="width:130px"><col style="width:110px"><col style="width:120px"><col style="width:110px"><col style="width:100px"><col style="width:90px"><col style="width:100px"><col style="width:90px"></colgroup>
         <thead><tr id="market-head">
@@ -688,11 +702,12 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
   // 歷史資料完整性與使用條件確認前，暫停公開 K 線及共用此資料的投入模擬入口。
   const HISTORY_RESEARCH_ENABLED=false;
   const $=id=>document.getElementById(id);
-  const fmt=(v,d)=>typeof v!=="number"||!Number.isFinite(v)?"—":v.toLocaleString("zh-TW",{minimumFractionDigits:d,maximumFractionDigits:d});
+  // 每次 toLocaleString 都會新建格式器，360 檔逐格呼叫很慢；同一位數共用一個，輸出相同。
+  const fmt=(formats=>(v,d)=>typeof v!=="number"||!Number.isFinite(v)?"—":(formats[d]??=new Intl.NumberFormat("zh-TW",{minimumFractionDigits:d,maximumFractionDigits:d})).format(v))({});
   const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const state={type:"全部",q:"",alert:false,div:false,issuer:"",key:"volume_lots",dir:-1,view:"market",rankPeriod:"1d",rankDirection:"both",activePeriod:"1d",activeMetric:"amount",activeQuery:"",management:"",currency:"",structure:"",region:"",strategy:"",audit:"",aumMode:"latest",quick:"",flowMissing:false,columnMode:"quote",listMode:matchMedia("(max-width:767px)").matches?"cards":"table"};
   const md=s=>s?s.slice(5).replace("-","/"):"—";
-  let DATA=[],returnsInfo={},activeHoldings=null,marketStatus=null,dataFailed=false;
+  let DATA=[],returnsInfo={},activeHoldings=null,marketStatus=null,dataFailed=false,dataSplit=null;
   let researchObserver=null,refreshResearchChart=null;
   $("text-size").value=document.documentElement.dataset.textSize||"standard";
   $("text-size").addEventListener("change",e=>{
@@ -758,8 +773,9 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
     const fields=[['nav','淨值'],['aum','基金規模'],['units','流通單位數'],['holdings','前十大持股／成分']];
     return fields.map(([key,label])=>{
       const rows=items.map(item=>{
-        const value=key==="holdings"?item.holdings_top:item[key];
-        const present=key==="holdings"?Array.isArray(value)&&value.length>0:typeof value==="number"&&Number.isFinite(value)&&value>0;
+        // 列表精簡檔不放前十大成分本身，只帶筆數 holdings_count。
+        const value=key==="holdings"?(Array.isArray(item.holdings_top)?item.holdings_top.length:item.holdings_count):item[key];
+        const present=typeof value==="number"&&Number.isFinite(value)&&value>0;
         const day=dateState(item[key+"_date"],asOf,item[key+"_source"]),source=typeof item[key+"_source"]==="string"&&item[key+"_source"].trim().length>0;
         return {present,day,complete:present&&source&&!["missing","invalid","future"].includes(day.kind)};
       });
@@ -813,6 +829,7 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
   // 商品與口徑核心結束。
   const currencyLabel=c=>({TWD:"新臺幣 TWD",USD:"美元 USD",CNY:"人民幣 CNY"}[c]||"幣別待確認");
   const cellNote=text=>`<small class="cell-note">${esc(text)}</small>`;
+  const skBar=(width,extra="")=>`<span class="sk${extra}" style="width:${width}"></span>`;
   // 表格只標示例外：與行情日相同的日期、新臺幣、投信官網正式淨值、正常的市價查核不逐列重複，口徑寫在表格上方的說明。
   // 日期不同時以提醒色標出；缺值只在有額外說明時（例如同基金交易線）才加註。
   const quietNote=(parts,diff=false)=>{const text=parts.filter(Boolean).join(" · ");return text?`<small class="cell-note${diff?" date-diff":""}">${esc(text)}</small>`:"";};
@@ -832,10 +849,8 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
     table.dataset.columns=flow?"flows":state.columnMode;
     const sets={quote:[0,1,3,4,5,6,7,8],income:[0,1,3,10,11,12],fees:[0,1,2,8,9],all:Array.from({length:13},(_,i)=>i)};
     const visible=sets[state.columnMode]||sets.quote;
-    table.querySelectorAll("#market-head th,#rows tr td,colgroup col").forEach(el=>{
-      const index=Array.from(el.parentElement.children).indexOf(el);
-      el.classList.toggle("column-hidden",!flow&&el.colSpan!==13&&!visible.includes(index));
-    });
+    for(const parent of table.querySelectorAll("#market-head,#rows>tr,colgroup"))
+      Array.from(parent.children).forEach((el,index)=>el.classList.toggle("column-hidden",!flow&&el.colSpan!==13&&!visible.includes(index)));
     table.style.minWidth=flow?"1870px":state.columnMode==="all"?"1600px":state.columnMode==="quote"?"1100px":"900px";
     const cards=state.view==="market"&&state.listMode==="cards";
     document.querySelector(".table-box").hidden=cards||["rankings","active"].includes(state.view);
@@ -844,12 +859,12 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
     $("column-mode").disabled=cards;
     $("table-controls").classList.toggle("cards",cards);
     document.querySelector(".table-help").hidden=cards||["rankings","active"].includes(state.view);
-    const note=state.key==="aum"?"規模只排序新臺幣數值，其他幣別列於後方；可篩選同日規模。":state.key==="price"||state.key==="nav"?`價格只排序 ${state.currency||"TWD"} 數值，其他幣別列於後方。`:`點選任一列查看詳情 · 欄位可排序 · 未另標示者：日期為行情日 ${detailDate||"—"}、淨值為投信官網正式淨值、幣別為新臺幣`;
+    const note=state.key==="aum"?"規模只排序新臺幣數值，其他幣別列於後方；可篩選同日規模。":state.key==="price"||state.key==="nav"?`價格只排序 ${state.currency||"TWD"} 數值，其他幣別列於後方。`:detailDate?`點選任一列查看詳情 · 欄位可排序 · 未另標示者：日期為行情日 ${detailDate}、淨值為投信官網正式淨值、幣別為新臺幣`:"點選任一列查看詳情 · 欄位可排序";
     document.querySelector(".table-help>span").textContent=note;
     syncStickyColumns();
   }
   // 固定名稱欄接在實際代號欄後，避免表格伸展後兩欄重疊。
-  function syncStickyColumns(){const table=document.querySelector("table"),head=[...table.querySelectorAll("thead th")].find(el=>el.getBoundingClientRect().width>0);if(head)table.style.setProperty("--code-width",head.getBoundingClientRect().width+"px");}
+  function syncStickyColumns(){const table=document.querySelector("table");if(table.closest("[hidden]"))return;const head=[...table.querySelectorAll("thead th")].find(el=>el.getBoundingClientRect().width>0);if(head)table.style.setProperty("--code-width",head.getBoundingClientRect().width+"px");}
   new ResizeObserver(syncStickyColumns).observe(document.querySelector("table"));
   function renderCards(rows){
     $("etf-cards").innerHTML=rows.length?rows.map(d=>`<article class="etf-card"><button type="button" class="card-open" data-card-code="${esc(d.code)}" aria-haspopup="dialog" aria-controls="etf-detail"><span class="card-code">${esc(d.code)}</span>${detailText(d.name)} <span class="muted">›</span></button><p class="card-meta">${esc(productLabel(d))}${profileOf(d).trading_currency==="TWD"?"":" · "+esc(currencyLabel(profileOf(d).trading_currency))}</p><dl class="card-values"><div><dt>收盤價</dt><dd>${fmt(d.price,2)}${priceNote(d)}</dd></div><div><dt>市價漲跌幅</dt><dd class="${d.change_pct>0?"up":d.change_pct<0?"down":""}">${signed(d.change_pct,"%")}</dd></div><div><dt>${hasNumber(d.nav)?(String(d.nav_source||"").includes("正式淨值")?"正式":"預估"):""}淨值${hasNumber(d.nav)&&fieldCurrency(d,"nav")!=="TWD"?" · "+esc(fieldCurrency(d,"nav")):""}</dt><dd>${fmt(d.nav,2)}${quietNote([dateNote(d,"nav")],hasNumber(d.nav))}</dd></div><div><dt>規模（億${hasNumber(d.aum)&&fieldCurrency(d,"aum")!=="TWD"?" "+esc(fieldCurrency(d,"aum")):"元"}）</dt><dd>${fmt(d.aum,2)}${quietNote([dateNote(d,"aum")],hasNumber(d.aum))}</dd></div></dl></article>`).join(""):'<p class="empty">沒有符合條件的 ETF，請調整篩選。</p>';
@@ -913,12 +928,16 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
       `<p class="detail-footnote">橫條表示權重幅度，刻度 0–${detailNumber(scale,"%")}；正負值以數字為準。</p>`;
   }
 
-  function renderDetail(d){
+  function detailHeader(d,note){
     researchObserver?.disconnect();refreshResearchChart=null;
     document.documentElement.classList.remove("research-wide");
     $("detail-title").innerHTML=`<span class="detail-code">${detailText(d.code)}</span>${detailText(d.name)}`;
-    $("detail-context").innerHTML=`${detailText(d.issuer)} ／ ${esc(productLabel(d))} ／ ${detailText(d.market)}<time>收盤行情 ${detailText(detailDate)} · 各公告日期見下方</time>`+
+    $("detail-context").innerHTML=`${detailText(d.issuer)} ／ ${esc(productLabel(d))} ／ ${detailText(d.market)}<time>收盤行情 ${detailText(detailDate)} · ${esc(note)}</time>`+
       (detailIsDemo?'<span class="detail-demo">目前顯示的是測試資料，不是實際行情。</span>':"");
+  }
+  function renderDetail(d){
+    detailHeader(d,"各公告日期見下方");
+    $("detail-content").removeAttribute("aria-busy");
     const change=hasNumber(d.change_pct)?`<span class="detail-value quote-change ${d.change_pct>0?"up":d.change_pct<0?"down":""}" title="${esc(d.change_pct)}%" aria-label="漲跌幅 ${esc(fmt(d.change_pct,2))}%">${d.change_pct>0?"+":""}${fmt(d.change_pct,2)}%</span>`:'<span class="detail-source">漲跌幅 —</span>';
     const navLabel=hasNumber(d.nav)?`<span class="detail-badge">${String(d.nav_source??"").includes("正式淨值")?"正式淨值":"預估淨值"}</span>`:"";
     const premium=hasNumber(d.premium)?`<span class="detail-value ${d.premium>0?"premium":d.premium<0?"discount":""}" title="${esc(d.premium)}%">${d.premium>0?"+":""}${fmt(d.premium,2)}%</span>`:"—";
@@ -1199,12 +1218,56 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
     detailPanel.setAttribute("aria-modal",String(!desktopDetail.matches));
     if(desktopDetail.matches)detailPanel.show();else detailPanel.showModal();
   }
+  // 單檔詳情：拆分發布時列表只有精簡資料，打開才讀同一次發布的單檔完整資料；讀到前顯示骨架畫面。
+  const detailItems=new Map(),detailLoads=new Map();
+  function loadDetailItem(code){
+    if(!detailLoads.has(code))detailLoads.set(code,fetch(`data/etf/${encodeURIComponent(code)}.json`,{cache:"no-cache"})
+      .then(r=>{if(!r.ok)throw new Error("http");return r.json();})
+      .then(p=>{
+        // 單檔必須與列表同一次發布，否則數字與日期可能對不上。
+        if(p?.generated_at!==dataSplit.generated_at||p?.item?.code!==code)throw new Error("version");
+        const item=normalizeItem(p.item);detailItems.set(code,item);return item;
+      })
+      .catch(error=>{detailLoads.delete(code);throw error;}));
+    return detailLoads.get(code);
+  }
+  function renderDetailFor(d){
+    const full=dataSplit?detailItems.get(d.code):d;
+    if(full){renderDetail(full);return;}
+    renderDetailLoading(d);
+    loadDetailItem(d.code).then(item=>{if(detailCode===d.code)renderDetail(item);},error=>{if(detailCode===d.code)renderDetailFailed(d,error);});
+  }
+  function renderDetailLoading(d){
+    detailHeader(d,"完整資料讀取中…");
+    $("detail-nav").innerHTML=`<button type="button" disabled tabindex="-1" aria-hidden="true">${skBar("3em")}</button>`.repeat(4);
+    const tile=`<div class="detail-field"><dt>${skBar("8em"," sk-sub")}</dt><dd>${skBar("5em"," sk-value")}<br>${skBar("9em"," sk-sub")}<br>${skBar("7em"," sk-sub")}</dd></div>`;
+    $("detail-content").setAttribute("aria-busy","true");
+    $("detail-content").innerHTML=`<p class="sr-only" role="status">正在讀取 ${esc(d.code)} 的完整資料…</p>`+
+      `<section class="detail-section" aria-hidden="true"><h3>${skBar("3em")}</h3><dl class="detail-grid overview-grid">${tile.repeat(4)}</dl></section>`+
+      `<section class="detail-section" aria-hidden="true"><h3>${skBar("3em")}</h3>${["90%","75%","85%","60%"].map(w=>`<p>${skBar(w," sk-sub")}</p>`).join("")}</section>`;
+    $("detail-content").scrollTop=0;
+  }
+  function renderDetailFailed(d,error){
+    const stale=error?.message==="version";
+    detailHeader(d,"完整資料未載入");
+    $("detail-nav").innerHTML="";
+    $("detail-content").removeAttribute("aria-busy");
+    $("detail-content").innerHTML=`<div class="detail-load-error" role="alert"><strong>${stale?"網站資料已更新":"這檔的完整資料暫時無法讀取"}</strong>`+
+      `<p>${stale?"目前的列表是較早發布的版本；重新整理頁面後，再查看這檔的完整資料。":"列表數字不受影響。請確認網路連線後再試一次。"}</p>`+
+      `<button type="button" class="detail-retry" data-detail-retry="${stale?"reload":"retry"}">${stale?"重新整理頁面":"再試一次"}</button></div>`;
+  }
+  $("detail-content").addEventListener("click",e=>{
+    const button=e.target.closest("[data-detail-retry]");if(!button)return;
+    if(button.dataset.detailRetry==="reload"){location.reload();return;}
+    // 按鈕會被骨架畫面取代，先把焦點移回標題，鍵盤使用者不會跳回頁首。
+    const d=DATA.find(item=>item.code===detailCode);if(d){$("detail-title").focus({preventScroll:true});renderDetailFor(d);}
+  });
   function showDetail(d,trigger){
     if(detailPanel.open&&detailCode===d.code)return;
     const wasOpen=detailPanel.open;
     detailReturnFocus=trigger||detailReturnFocus||document.activeElement;
     detailCode=d.code;
-    renderDetail(d);
+    renderDetailFor(d);
     document.documentElement.classList.add("detail-open");
     markSelectedRow();
     if(!wasOpen)openDetailPanel();
@@ -1332,7 +1395,9 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
       <td class="num ${d.ex_date?(d.ex_upcoming?"ex-next":"ex-past"):""}">${md(d.ex_date)}${d.ex_date?`<span class="ex-note">${d.ex_upcoming?"即將除息":"最近一次"}</span>`:""}</td>
       <td class="num">${fmt(d.ex_cash,3)}${hasNumber(d.ex_cash)?cellNote(profileOf(d).trading_currency==="TWD"?"TWD":"配息幣別請核對原文"):""}</td>
       <td class="num">${md(d.pay_date)}</td></tr>`).join(""):`<tr><td colspan="${state.view==="flows"?12:13}" class="empty">沒有符合條件的 ETF，試試清除搜尋或切回「全部」。</td></tr>`;
-    renderCards(rows);tableLayout();
+    // 卡片只在顯示時產生；切換清單樣式會重新 render()。
+    if(state.view==="market"&&state.listMode==="cards")renderCards(rows);else $("etf-cards").innerHTML="";
+    tableLayout();
     markSelectedRow();
     const valid=rows.filter(d=>formalComparable(d,detailDate));
     const avg=valid.length?valid.reduce((s,d)=>s+d.premium,0)/valid.length:null;
@@ -1482,7 +1547,7 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
   }
   $("active-period").addEventListener("change",e=>{
     state.activePeriod=e.target.value;render();
-    const d=DATA.find(d=>d.code===detailCode);if(d)renderDetail(d);
+    const d=DATA.find(d=>d.code===detailCode);if(d)renderDetailFor(d);
   });
   $("active-metric").addEventListener("change",e=>{state.activeMetric=e.target.value;render();});
   $("active-query").addEventListener("input",e=>{state.activeQuery=e.target.value;render();});
@@ -1543,16 +1608,33 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
   document.querySelectorAll("[data-quick]").forEach(b=>b.onclick=()=>{$("reset-filters").click();state.quick=b.dataset.quick;state.div=state.quick==="dividend";$("only-div").checked=state.div;$("view-market").click();$("market").scrollIntoView({block:"start"});});
   $("detail-nav").addEventListener("click",e=>{const b=e.target.closest("[data-section]");if(b)$(b.dataset.section)?.scrollIntoView({block:"start"});});
 
-  fetch("data/latest.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();}).then(p=>{
+  // 規模、單位數只採投信官網或公會數字；另存週資金流與除息的排序欄位。列表精簡檔與單檔完整檔共用。
+  function normalizeItem(d){const ex=d.next_ex||d.last_ex;
+    return{...d,aum:/投信官網|SITCA/.test(d.aum_source||"")?d.aum:null,units:/投信官網|SITCA/.test(d.units_source||"")?d.units:null,
+      flow_net:d.flows?.net_amount??null,flow_rate:d.flows?.net_rate??null,flow_four:d.flows?.four_week_amount??null,
+      flow_positive:d.flows?.positive_weeks??null,flow_units:d.flows?.units_rate??null,flow_aum:d.flows?.aum_change??null,
+      ex_upcoming:!!d.next_ex,ex_date:ex?ex.ex_date:null,ex_cash:ex?ex.cash:null,pay_date:ex?ex.pay_date:null};}
+  // 骨架畫面：資料到達前先依目前的檢視排好表格列或卡片，避免整頁跳動；讀到資料後由 render() 取代。
+  function paintSkeleton(){
+    const names=["7em","5.5em","8em","6.5em"];
+    $("rows").innerHTML=names.concat(names,names).map(name=>'<tr class="sk-row" aria-hidden="true">'+Array.from({length:13},(_,c)=>
+      `<td class="${c<3?"l":"num"}${c===0?" code":""}">${c===0?skBar("3.6em"):c===1?skBar(name)+"<br>"+skBar("3.2em"," sk-sub"):skBar(c===2?"2.6em":"3.4em")}</td>`).join("")+"</tr>").join("");
+    const value=`<div><dt>${skBar("3.5em"," sk-sub")}</dt><dd>${skBar("4.5em")}</dd></div>`;
+    $("etf-cards").innerHTML=names.map(name=>`<article class="etf-card" aria-hidden="true"><div class="card-open"><span class="card-code">${skBar("4em")}</span>${skBar(name)}</div><p class="card-meta">${skBar("6em"," sk-sub")}</p><dl class="card-values">${value.repeat(4)}</dl></article>`).join("");
+    tableLayout();
+  }
+  // 列表先讀精簡檔（打開詳情才讀單檔）；舊版部署或本機預覽沒有精簡檔時，改讀完整的 latest.json。
+  // no-cache：每次向伺服器確認有沒有更新，沒變就沿用瀏覽器已存的檔案。
+  const getJSON=url=>fetch(url,{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
+  paintSkeleton();
+  getJSON("data/summary.json").then(p=>p?.split?.version===1&&Array.isArray(p.items)?p:Promise.reject(new Error("format")))
+    .catch(()=>getJSON("data/latest.json")).then(p=>{
+    dataSplit=p.split?.version===1?p.split:null;
     detailDate=p.trade_date;detailIsDemo=p.source!=="live";returnsInfo=p.returns_info||{};activeHoldings=p.active_holdings||null;marketStatus=p.market_status||null;
     const message=marketMessage(marketStatus,detailDate);
     $("market-status").classList.toggle("review",message.review);
     $("market-status").innerHTML=`<strong>${esc(message.title)}</strong><span>${esc(message.note)}${marketStatus?.source_url?` · ${sourceLink("交易安排來源",marketStatus.source_url)}`:""}</span>`;
-    DATA=(p.items||[]).map(d=>{const ex=d.next_ex||d.last_ex;
-      return{...d,aum:/投信官網|SITCA/.test(d.aum_source||"")?d.aum:null,units:/投信官網|SITCA/.test(d.units_source||"")?d.units:null,
-        flow_net:d.flows?.net_amount??null,flow_rate:d.flows?.net_rate??null,flow_four:d.flows?.four_week_amount??null,
-        flow_positive:d.flows?.positive_weeks??null,flow_units:d.flows?.units_rate??null,flow_aum:d.flows?.aum_change??null,
-        ex_upcoming:!!d.next_ex,ex_date:ex?ex.ex_date:null,ex_cash:ex?ex.cash:null,pay_date:ex?ex.pay_date:null};});
+    DATA=(p.items||[]).map(normalizeItem);
     for(const id of ["region","strategy"]){const values=[...new Set(DATA.map(d=>profileOf(d)[id]||"待確認"))].sort();$(id).innerHTML=`<option value="">全部${id==="region"?"地域":"策略"}</option>`+values.map(v=>`<option>${esc(v)}</option>`).join("");}
     const issuers={};DATA.forEach(d=>{if(d.issuer)issuers[d.issuer]=(issuers[d.issuer]||0)+1;});
     $("issuer").innerHTML='<option value="">全部投信</option>'+Object.entries(issuers).sort((a,b)=>b[1]-a[1])
@@ -1583,8 +1665,12 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
     $("attribution-list").innerHTML=attributions.map(a=>`<li>${detailText(a.provider)} · ${detailText(String(a.data_date||"").slice(0,4))} 年 · ${sourceLink(a.dataset,a.dataset_url)}<br>資料日期 ${detailText(a.data_date)} · ${sourceLink("官方原始資料",a.source_url)} · ${sourceLink(a.license,a.license_url)}</li>`).join("");
     if(p.source!=="live"){$("banner").hidden=false;$("banner").textContent="目前顯示的是測試資料，不是實際行情。";}
     chips();render();syncDetailHash();
+    document.querySelector(".table-box").removeAttribute("aria-busy");$("etf-cards").removeAttribute("aria-busy");
   }).catch(()=>{
     dataFailed=true;
+    document.querySelector(".table-box").removeAttribute("aria-busy");$("etf-cards").removeAttribute("aria-busy");
+    for(const id of ["s-count","s-prem","s-disc","s-div"])$(id).textContent="—";
+    $("etf-cards").innerHTML='<p class="empty">暫時無法載入資料。請稍後重新整理頁面再試。</p>';
     $("market-status").classList.add("review");
     $("market-status").textContent="資料載入失敗；畫面無法確認最新行情，請稍後重新整理。";
     renderQuality([]);

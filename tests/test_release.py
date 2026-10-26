@@ -181,6 +181,11 @@ class ReleaseTest(unittest.TestCase):
         self.assertEqual(result["commit"], self.run_git(self.a, "rev-parse", "HEAD"))
         for name, digest in result["sha256"].items():
             self.assertEqual(hashlib.sha256((self.a / "web" / name).read_bytes()).hexdigest(), digest)
+        self.assertIn("data/summary.json", result["sha256"])
+        detail = self.a / "web/data/etf/0050.json"
+        self.assertEqual(json.loads(detail.read_text("utf-8"))["item"], self.payload["items"][0])
+        lines = f"0050.json {hashlib.sha256(detail.read_bytes()).hexdigest()}\n"
+        self.assertEqual(result["etf_detail"], {"count": 1, "sha256": hashlib.sha256(lines.encode("utf-8")).hexdigest()})
         with closing(sqlite3.connect(self.a / "web/data/etf.db")) as con:
             self.assertEqual(con.execute("SELECT code FROM etf").fetchone()[0], "0050")
 

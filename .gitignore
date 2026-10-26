@@ -7,3 +7,6 @@ web/data/etf.db
 web/release.json
 # 十年研究資料在發布時由已提交的歷史重建。
 web/data/research/
+# 網站列表精簡檔與單檔完整檔在發布時由 latest.json 產生。
+web/data/summary.json
+web/data/etf/
