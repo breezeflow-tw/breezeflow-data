@@ -474,7 +474,9 @@ def trade_date(nav: dict, quotes: dict, now: datetime, probe: dict | None = None
                calendar: market_calendar.Calendar | None = None) -> str:
     """取 Yahoo、交易所收盤行情及 MIS 市價中最新的已收盤日期。
     交易所與 MIS 各採最多檔的日期，避免單一異常值推進整站日期。
-    MIS 時間戳另外須通過官方開休市日曆；所有來源排除未來及當日 14:00 前的資料。"""
+    MIS 時間戳另外須通過官方開休市日曆；所有來源排除未來及當日 14:00 前的資料。
+    Yahoo 在臨時休市日也會有一根成交量 0 的日線（2026-10-23 沒有交易，全部 ETF 都是這樣），
+    成交量 0 或官方日曆休市的日子不當成交易日。"""
     local = now.astimezone(TW)
     today = local.strftime("%Y-%m-%d")
 
@@ -484,7 +486,8 @@ def trade_date(nav: dict, quotes: dict, now: datetime, probe: dict | None = None
     def majority(days):
         return max(set(days), key=lambda day: (days.count(day), day))
 
-    closed = [d for d in probe or {} if completed(d)]
+    closed = [d for d, bar in (probe or {}).items() if completed(d) and (bar or {}).get("volume_lots") != 0
+              and (calendar is None or calendar.is_open(d) is not False)]
     candidates = [max(closed)] if closed else []
     dates = [v["date"] for v in quotes.values() if completed(v.get("date"))]
     if dates:

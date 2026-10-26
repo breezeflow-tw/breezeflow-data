@@ -94,6 +94,18 @@ def no_future_dates(ctx):
     return checked, bad
 
 
+@check("J3", "網站交易日真的有交易（官方日曆不是休市、成交量不是全部 0）", BLOCK)
+def trade_date_traded(ctx):
+    """2026-10-23 沒有交易，Yahoo 卻有一根成交量 0 的日線，網站把那天當成交易日、358 檔全部顯示持平。"""
+    volumes = [it.get("volume_lots") for it in ctx.items if it.get("volume_lots") is not None]
+    bad = []
+    if ctx.cal.is_open(ctx.trade_date) is False:
+        bad.append((ctx.trade_date, "官方日曆休市"))
+    if len(volumes) >= 10 and not any(volumes):
+        bad.append((ctx.trade_date, f"{len(volumes)} 檔成交量全部是 0"))
+    return 1, bad
+
+
 @check("P1", "收盤價＝交易所官方收盤價", BLOCK)
 def close_matches(ctx):
     rows = ctx.rows("""SELECT d.date, d.code, d.price, e.close FROM daily d
