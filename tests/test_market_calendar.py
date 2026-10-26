@@ -64,7 +64,7 @@ class CalendarTest(unittest.TestCase):
             store.dump(con, Path(tmp) / "history")
             con.close()
             con = store.open_db(Path(tmp) / "b.db", Path(tmp) / "history")
-            cal = mc.load(con)
+            cal = mc.load(con, include_announcements=False)
             self.assertEqual((cal.years, len(cal.entries)), ({2026}, 26))
             self.assertTrue(cal.is_open("2026-12-25"))
             self.assertEqual(con.execute("SELECT entries, fetched_at FROM market_calendar_year").fetchone(),
@@ -74,6 +74,30 @@ class CalendarTest(unittest.TestCase):
 
 
 class CalendarFlowTest(unittest.TestCase):
+    def test_announced_closure_is_persistent_and_changes_baseline(self):
+        con = sqlite3.connect(":memory:")
+        self.addCleanup(con.close)
+        store.ensure_schema(con)
+        mc.save(con, ENTRIES, "2026-10-26")
+        mc.save_announcements(con)
+        cal = mc.load(con)
+        self.assertFalse(cal.is_open("2026-10-23"))
+        self.assertEqual(cal.previous_trading_day("2026-10-27"), "2026-10-22")
+        self.assertEqual(cal.entries["2026-10-23"]["reason_code"], "announced_closed")
+        self.assertIn("staticFiles/news", con.execute("SELECT source_url FROM market_calendar WHERE date='2026-10-23'").fetchone()[0])
+        # 只知道一則公告，不能當成已取得整年日曆。
+        isolated = mc.Calendar(mc.announcements(), set())
+        self.assertFalse(isolated.is_open("2026-10-23"))
+        self.assertIsNone(isolated.is_open("2026-10-22"))
+        snapshots = rows(skip=("2026-10-23",))
+        # 合成樣本不保留休市日原先的單位增加。
+        for day, item in snapshots.items():
+            if day > "2026-10-23":
+                item["units"] -= 1_000_000
+                item["aum"] -= 0.1
+        result = f.week(snapshots, date(2026,10,26), date(2026,10,30), (), cal)
+        self.assertEqual((result["baseline"], result["net_amount"]), ("2026-10-22", 0.4))
+
     def test_week_across_holiday(self):
         # 10/26 補假：期初是 10/23，只比較 10/27～10/30 四個交易日
         r = f.week(rows(), date(2026, 10, 26), date(2026, 10, 30), (), CAL)

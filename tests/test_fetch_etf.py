@@ -78,7 +78,7 @@ class ParseTest(unittest.TestCase):
         TW = timezone(timedelta(hours=8))
         evening, morning = datetime(2026, 10, 19, 18, 23, tzinfo=TW), datetime(2026, 10, 20, 9, 20, tzinfo=TW)
         stale = {"0050": {"date": "2026-10-16"}, "0056": {"date": "2026-10-16"}, "00679B": {"date": "2026-10-19"}}
-        probe = {"2026-10-16": {}, "2026-10-19": {}}
+        probe = {"2026-10-16": {"volume_lots": 100}, "2026-10-19": {"volume_lots": 100}}
         # 傍晚：證交所開放資料還停在上週五，Yahoo 已有當天收盤
         self.assertEqual(f.trade_date({}, stale, evening, probe), "2026-10-19")
         # 隔天開盤後才跑：Yahoo 當天的盤中日線不算，用前一個交易日
@@ -107,7 +107,7 @@ class ParseTest(unittest.TestCase):
     def test_mis_intraday_future_and_invalid_dates_are_not_candidates(self):
         now = datetime(2026, 10, 22, 13, 0, tzinfo=f.TW)
         calendar = f.market_calendar.Calendar({}, {2026})
-        probe = {"2026-10-21": {}, "2026-10-22": {}, "2026-10-23": {}, "invalid": {}}
+        probe = {day: {"volume_lots": 100} for day in ("2026-10-21", "2026-10-22", "2026-10-23", "invalid")}
         for day in ("2026-10-22", "2026-10-23", "2026-02-30", "20261021", None):
             with self.subTest(day=day):
                 nav = {"0050": {"date": day, "price": 20}}
@@ -121,7 +121,7 @@ class ParseTest(unittest.TestCase):
                                 ("2026-10-23", None, 20), ("2026-10-23", calendar, None)):
             with self.subTest(day=day, calendar=cal, price=price):
                 nav = {"0050": {"date": day, "price": price}}
-                self.assertEqual(f.trade_date(nav, {}, now, {"2026-10-22": {}}, cal), "2026-10-22")
+                self.assertEqual(f.trade_date(nav, {}, now, {"2026-10-22": {"volume_lots": 100}}, cal), "2026-10-22")
 
     def test_mis_uses_majority_date(self):
         now = datetime(2026, 10, 22, 18, 0, tzinfo=f.TW)
@@ -129,6 +129,17 @@ class ParseTest(unittest.TestCase):
                "00999": {"date": "2026-10-22", "price": 40}}
         self.assertEqual(f.trade_date(nav, {}, now, {"2026-10-20": {}}, f.market_calendar.Calendar({}, {2026})),
                          "2026-10-21")
+
+    def test_zero_volume_or_closed_probe_day_is_not_trade_date(self):
+        """2026-10-23 沒有交易，Yahoo 仍有一根成交量 0 的日線；10/26 是官方休市日。都不能當成交易日。"""
+        calendar = f.market_calendar.Calendar({"2026-10-26": {"is_open": False}}, {2026})
+        exchange = {"0050": {"date": "2026-10-22"}, "0056": {"date": "2026-10-22"}}
+        probe = {"2026-10-22": {"volume_lots": 30000}, "2026-10-23": {"volume_lots": 0}}
+        self.assertEqual(f.trade_date({}, exchange, datetime(2026, 10, 26, 9, 30, tzinfo=f.TW), probe, calendar), "2026-10-22")
+        probe["2026-10-26"] = {"volume_lots": 1}
+        self.assertEqual(f.trade_date({}, exchange, datetime(2026, 10, 27, 9, 30, tzinfo=f.TW), probe, calendar), "2026-10-22")
+        probe["2026-10-27"] = {"volume_lots": 25000}
+        self.assertEqual(f.trade_date({}, exchange, datetime(2026, 10, 27, 18, 0, tzinfo=f.TW), probe, calendar), "2026-10-27")
 
     def test_missing_dates_do_not_become_today(self):
         with self.assertRaisesRegex(ValueError, "無法確認已收盤"):

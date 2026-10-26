@@ -73,6 +73,8 @@ class AuditTest(unittest.TestCase):
             "P1": dict(edit=lambda con: con.execute("UPDATE daily SET price = 52.4 WHERE code = '0050' AND date = '2026-10-22'")),
             "J1": dict(items_edit=lambda items: items[0].update(nav=999.0)),  # 寫成 NaN
             "J2": dict(items_edit=lambda items: items[1].update(nav_date="2026-10-23")),
+            # 2026-10-23 沒有交易的那種輸出：全部 ETF 成交量 0
+            "J3": dict(items_edit=lambda items: items.extend({"code": f"00{900 + i}", "volume_lots": 0} for i in range(10))),
         }
         for key, kwargs in cases.items():
             with self.subTest(key), tempfile.TemporaryDirectory() as tmp:

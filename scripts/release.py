@@ -14,6 +14,7 @@ from contextlib import closing
 
 import store
 import research_history
+import audit
 
 
 def git(root, *args, check=True):
@@ -39,6 +40,14 @@ def validate_data(root):
     history_days = [date.fromisoformat(path.stem) for path in (root / "data/history/daily").glob("*.csv")]
     if history_days and published_day < max(history_days):
         raise ValueError(f"交易日期 {published_day} 早於已保存行情 {max(history_days)}，停止發布。")
+    # 從將要提交的 CSV 重建；不能使用抓取中或過期的 SQLite 作為發布證據。
+    with closing(sqlite3.connect(":memory:")) as con:
+        store.ensure_schema(con)
+        store.load(con, root / "data/history")
+        results = audit.run(audit.Context(con, payload, json.dumps(payload), [payload["trade_date"]]))
+    blocked = [r["key"] for r in results if r["level"] == audit.BLOCK and (r["failed"] or r["error"])]
+    if blocked:
+        raise ValueError("資料查核阻擋發布：" + "、".join(blocked))
     return payload
 
 
@@ -80,7 +89,7 @@ def publish_data(root, *, verify_fn=verify, refresh_fn=refresh, attempts=3):
                 git(root, "rebase", "--abort", check=False)
                 raise RuntimeError("資料與遠端有實際衝突，已停止；不選擇覆蓋任一版本。")
             verify_fn(root)
-            if any(path.startswith(("scripts/", "data/research-imports/")) or path in ("data/etf_meta.csv", "data/product_overrides.json", "data/product_reference.json", "data/stock_name_reference.json") for path in changed):
+            if any(path.startswith(("scripts/", "data/research-imports/")) or path in ("data/etf_meta.csv", "data/product_overrides.json", "data/product_reference.json", "data/stock_name_reference.json", "data/market_closures.json") for path in changed):
                 refresh_fn(root)
                 commit_data(root)
             baseline = remote

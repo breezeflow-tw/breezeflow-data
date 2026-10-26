@@ -77,6 +77,26 @@ class ReleaseTest(unittest.TestCase):
         self.assertEqual(self.run_git(self.a, "show", "--pretty=", "--name-only", "HEAD"), "web/data/latest.json")
         self.assertEqual(self.verified, [])
 
+    def test_audit_blocks_closed_day_before_commit(self):
+        self.payload["trade_date"] = "2026-10-23"
+        self.data(self.a, 21)
+        before = self.run_git(self.remote, "rev-parse", "main")
+        with self.assertRaisesRegex(ValueError, "J3"):
+            self.publish()
+        self.assertEqual(self.run_git(self.remote, "rev-parse", "main"), before)
+
+    def test_audit_blocks_all_missing_volume(self):
+        payload = dict(self.payload, count=20, items=[{"code": f"TEST{i}", "price": 20} for i in range(20)])
+        self.write(self.a, "web/data/latest.json", json.dumps(payload))
+        with self.assertRaisesRegex(ValueError, "J3"):
+            release.validate_data(self.a)
+
+    def test_audit_reads_csv_not_stale_local_database(self):
+        self.write(self.a, "data/history/daily/2026-10-16.csv", "code,date,price\n0050,2026-10-16,20\n")
+        self.write(self.a, "data/history/exchange_daily/2026-10-16.csv", "code,date,close,dataset,market,source_url,first_observed_at,observed_at\n0050,2026-10-16,30,測試,上市,https://example.test,2026-10-16,2026-10-16\n")
+        with self.assertRaisesRegex(ValueError, "P1"):
+            release.validate_data(self.a)
+
     def test_remote_frontend_and_local_data_both_survive(self):
         self.data(self.a, 21)
         self.remote_change()

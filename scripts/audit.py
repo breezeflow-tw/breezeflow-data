@@ -22,6 +22,7 @@ from pathlib import Path
 
 import market_calendar
 import store
+import market_status
 
 ROOT = Path(__file__).resolve().parent.parent
 TW = timezone(timedelta(hours=8))
@@ -92,6 +93,18 @@ def no_future_dates(ctx):
             if month > ctx.trade_date[:7]:
                 bad.append((it["code"], "beneficiaries_month", month))
     return checked, bad
+
+
+@check("J3", "網站交易日真的有交易（官方日曆不是休市、成交量不是全部 0）", BLOCK)
+def trade_date_traded(ctx):
+    """2026-10-23 沒有交易，Yahoo 卻有一根成交量 0 的日線，網站把那天當成交易日、358 檔全部顯示持平。"""
+    volumes = [it.get("volume_lots") for it in ctx.items if it.get("volume_lots") is not None]
+    bad = []
+    if ctx.cal.is_open(ctx.trade_date) is False:
+        bad.append((ctx.trade_date, "官方日曆休市"))
+    if len(ctx.items) >= 10 and not any(market_status.positive(v) for v in volumes):
+        bad.append((ctx.trade_date, "全市場樣本沒有可驗證的正成交量（零或缺值）"))
+    return 1, bad
 
 
 @check("P1", "收盤價＝交易所官方收盤價", BLOCK)

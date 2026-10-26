@@ -18,6 +18,23 @@ test('整頁內嵌 JavaScript 可正常解析',()=>{
   for(const script of scripts)assert.doesNotThrow(()=>new vm.Script(script));
 });
 
+test('資料端判定行情異常時不把整頁零值當成持平，也不產生週月榜',()=>{
+  for(const period of ['1d','1w','1m']){
+    const r=context.rankReturns([item('0050',0)],period,{data_status:'invalid',daily_returns_reason:'官方休市日'});
+    assert.equal(r.valid,0);assert.equal(r.flat,0);assert.equal(r.missing,1);assert.equal(r.blocked,'官方休市日');
+  }
+  assert.equal(context.rankReturns([item('0050',0)],'1d',{data_status:'current',session:'closed'}).flat,1);
+});
+
+test('休市狀態帶資料產生日期，不以使用者開啟網頁的日期假稱今日休市',()=>{
+  const ctx=vm.createContext({});vm.runInContext(html.match(/  function marketMessage\([\s\S]*?  \/\/ 市場狀態文字結束。/)[0],ctx);
+  const status={version:1,trade_date:'2026-10-22',as_of:'2026-10-26',session:'closed',reason:'補假',data_status:'current'};
+  assert.match(ctx.marketMessage(status,'2026-10-22').title,/2026-10-26 休市.*2026-10-22/);
+  assert.equal(ctx.marketMessage(status,'2026-10-27').review,true);
+  assert.match(ctx.marketMessage(null,'2026-10-22').note,/尚未提供/);
+  assert.match(ctx.marketMessage({...status,data_status:'delayed',expected_trade_date:'2026-10-27'},'2026-10-22').note,/尚未取得/);
+});
+
 test('正榜由高到低、負榜由最負到較負，各取十檔',()=>{
   const result=rank(Array.from({length:31},(_,i)=>item(String(i).padStart(4,'0'),i-15)));
   assert.deepEqual(values(result.positive),[15,14,13,12,11,10,9,8,7,6]);
