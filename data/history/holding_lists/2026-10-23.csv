@@ -1,0 +1,5 @@
+code,date,source,source_url,rows,stock_rows,missing_qty,weight_sum,complete,date_basis,first_observed_at,observed_at
+009813,2026-10-23,貝萊德投信官網,https://www.blackrock.com/tw/products/345655/fund/1480664180144.ajax?fileType=csv&fileName=009813_holdings&dataType=fund,52,0,0,99.71,1,,2026-10-26T09:36:01+08:00,2026-10-26T09:36:01+08:00
+009826,2026-10-23,貝萊德投信官網,https://www.blackrock.com/tw/products/351824/fund/1480664180144.ajax?fileType=csv&fileName=009826_holdings&dataType=fund,1520,243,0,99.43,1,,2026-10-26T09:36:01+08:00,2026-10-26T09:36:01+08:00
+00985D,2026-10-23,貝萊德投信官網,https://www.blackrock.com/tw/products/349339/fund/1480664180144.ajax?fileType=csv&fileName=00985D_holdings&dataType=fund,189,0,0,99.3,1,,2026-10-26T09:36:01+08:00,2026-10-26T09:36:01+08:00
+00991B,2026-10-23,貝萊德投信官網,https://www.blackrock.com/tw/products/351827/fund/1480664180144.ajax?fileType=csv&fileName=00991B_holdings&dataType=fund,377,0,0,99.9,1,,2026-10-26T09:36:01+08:00,2026-10-26T09:36:01+08:00
