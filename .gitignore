@@ -7,3 +7,8 @@ web/data/etf.db
 web/release.json
 # 十年研究資料在發布時由已提交的歷史重建。
 web/data/research/
+# 討論板部署設定、密鑰及本機測試資料不可公開。
+discussion/wrangler.toml
+discussion/.dev.vars*
+discussion/.wrangler/
+discussion/*.db*
