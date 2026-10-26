@@ -14,9 +14,10 @@
 | `scripts/schema.sql` | 資料庫結構（`etf`、`daily`、`dividend`、`price_check`、`holding`） |
 | `scripts/store.py` | 資料保存：歷史資料存成 `data/history/` 的 CSV，執行時重建 SQLite |
 | `scripts/audit.py` | 資料查核（唯讀、不連網路）：交叉核對網站數字與原始來源；「阻擋」項目不符時結束代碼為 1，「提醒」項目列出例子交給人工確認 |
+| `scripts/site_data.py` | 發布時把 `latest.json` 拆成網站列表用的 `web/data/summary.json` 與單檔完整的 `web/data/etf/<代號>.json`（不提交） |
 | `scripts/issuers/` | 各投信官網的抓取模組（一家一個檔案） |
 | `data/history/` | **資料庫本體**（CSV，依日期分檔）。`data/etf.db` 是執行時產生的，不提交 |
-| `web/index.html` | 網站（單一檔案，讀 `web/data/latest.json`） |
+| `web/index.html` | 網站（單一檔案）：先讀 `web/data/summary.json`，打開詳情才讀 `web/data/etf/<代號>.json`；沒有精簡檔時改讀 `latest.json` |
 | `web/vendor/` | 固定版本的第三方程式與授權全文（`licenses/`）；清單、來源與雜湊值見 `docs/third-party.md` |
 | `web/icons/`、`web/favicon.svg`、`web/og.png`、`web/manifest.webmanifest` | 網站圖示、分享預覽圖、加到主畫面設定；原稿在 `docs/brand/` |
 | `tests/` | 離線測試；`tests/fixtures/` 是測試用假資料 |
@@ -44,7 +45,13 @@
 
 ## 網站資料格式（`web/data/latest.json`）
 
-網站只讀這一個檔案。欄位沒有資料時一律是 `null`，畫面請顯示「—」，**不可自行估算或補值**。
+`latest.json` 是資料合約與完整下載檔。欄位沒有資料時一律是 `null`，畫面請顯示「—」，**不可自行估算或補值**。
+
+網站實際讀的是發布時由 `latest.json` 產生的兩種檔案（`scripts/site_data.py`，由 `scripts/release.py manifest` 呼叫，不提交）：
+
+- `web/data/summary.json`：列表精簡檔。最上層與 `latest.json` 相同，另加 `split`（`version`、`generated_at`、`trade_date`、`detail`）；`items[]` 拿掉只有單檔詳情用到的大欄位（清單在 `site_data.DETAIL_ONLY`、`DETAIL_ONLY_NESTED`，例如 `holdings_top`、`monthly`、`sitca_monthly`、各 `*_source_url`、`flows.weeks`、`product` 的出處連結、`returns.total`），另加 `holdings_count`（前十大筆數）。其餘欄位，包括日後新增的，都保留。
+- `web/data/etf/<代號>.json`：單檔完整資料 `{version, generated_at, trade_date, item}`，`item` 與 `latest.json` 的同一筆相同。網站打開詳情時才讀，`generated_at` 與列表不同就請使用者重新整理，不混用兩次發布。
+- 網站列表要用到 `DETAIL_ONLY` 裡的欄位時，先把它從清單移除。沒有 `summary.json` 時（舊部署、本機預覽），網站改讀完整的 `latest.json`。
 
 最上層：`generated_at`（產生時間）、`trade_date`（交易日）、`source`（`live` 或 `fixture`）、`has_nav`、`price_check`（市價查核統計）、`returns_info`（區間報酬的出處 `source` 與各區間起始日 `starts`）、`active_changes`（主動式 ETF 持股異動的台股彙總，見下）、`active_holdings`（主動式 ETF 持股資金動向，見下）、`attributions`（顯名資訊，見下）、`count`、`items`（每檔 ETF 一筆）。
 
@@ -91,8 +98,9 @@
 
 ```bash
 python scripts/fetch_etf.py --fixtures tests/fixtures --db /tmp/test.db --out web/data/latest.json
+python scripts/site_data.py          # 選用：產生列表精簡檔與單檔，預覽拆分後的載入方式
 python -m http.server -d web 8000   # 開 http://localhost:8000
-git checkout -- web/data/latest.json
+git checkout -- web/data/latest.json && rm -rf web/data/summary.json web/data/etf
 ```
 
 ## 開發規則

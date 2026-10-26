@@ -41,6 +41,13 @@ test('持股空陣列不算有資料；月持股與月規模分開統計',()=>{
   assert.equal(r[3].present,1);assert.equal(r[3].complete,1);assert.equal(r[3].monthly,1);
   assert.equal(r[1].monthly,1);assert.equal(r[1].earlier,0);
 });
+test('列表精簡檔只帶持股筆數，統計結果與完整資料相同',()=>{
+  const base={holdings_date:'2026-10-19',holdings_source:'投信官網'};
+  const full=coverage([{...base,holdings_top:[{asset_name:'甲'},{asset_name:'乙'}]},{...base,holdings_top:[]},{...base,holdings_top:null}]);
+  const slim=coverage([{...base,holdings_count:2},{...base,holdings_count:0},{...base,holdings_count:0}]);
+  assert.deepEqual(JSON.parse(JSON.stringify(slim[3])),JSON.parse(JSON.stringify(full[3])));
+  assert.equal(slim[3].present,1);assert.equal(slim[3].complete,1);
+});
 test('空資料及篩選集合可正常統計，不修改輸入',()=>{
   assert.ok(Array.from(coverage([])).every(r=>r.present===0&&r.complete===0));
   const items=[{nav:20,nav_date:'2026-10-19',nav_source:'投信'}],before=JSON.stringify(items);
