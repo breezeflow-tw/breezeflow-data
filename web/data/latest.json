@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-26T21:40:21+08:00",
+ "generated_at": "2026-10-27T06:15:45+08:00",
  "trade_date": "2026-10-22",
  "source": "live",
  "has_nav": true,
@@ -1225,7 +1225,7 @@
       "date_basis": "持股列 navDate／effectiveDate",
       "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-26T21:40:17+08:00"
+      "observed_at": "2026-10-27T06:15:44+08:00"
      },
      {
       "code": "00405A",
@@ -1253,7 +1253,7 @@
       "date_basis": "基金資產頁明示「資料日期」",
       "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-26T21:40:17+08:00"
+      "observed_at": "2026-10-27T06:15:44+08:00"
      },
      {
       "code": "00406A",
@@ -1281,7 +1281,7 @@
       "date_basis": "申購買回清單明示「淨值日期」",
       "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-26T21:40:17+08:00"
+      "observed_at": "2026-10-27T06:15:44+08:00"
      },
      {
       "code": "00407A",
@@ -1309,7 +1309,7 @@
       "date_basis": "淨值欄名明示資料日期",
       "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-26T21:40:17+08:00"
+      "observed_at": "2026-10-27T06:15:44+08:00"
      },
      {
       "code": "00980A",
@@ -1337,7 +1337,7 @@
       "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
       "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-26T21:40:17+08:00"
+      "observed_at": "2026-10-27T06:15:44+08:00"
      },
      {
       "code": "00984A",
@@ -1365,7 +1365,7 @@
       "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
       "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-26T21:40:17+08:00"
+      "observed_at": "2026-10-27T06:15:44+08:00"
      },
      {
       "code": "00985A",
@@ -1393,7 +1393,7 @@
       "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
       "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-26T21:40:17+08:00"
+      "observed_at": "2026-10-27T06:15:44+08:00"
      },
      {
       "code": "00991A",
@@ -1421,7 +1421,7 @@
       "date_basis": "資產明細回傳日期與查詢的正式淨值日期一致",
       "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-26T21:40:17+08:00"
+      "observed_at": "2026-10-27T06:15:44+08:00"
      },
      {
       "code": "00993A",
@@ -1449,7 +1449,7 @@
       "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
       "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-26T21:40:17+08:00"
+      "observed_at": "2026-10-27T06:15:44+08:00"
      },
      {
       "code": "00995A",
@@ -1477,7 +1477,7 @@
       "date_basis": "申購買回清單明示「淨值日期」",
       "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-26T21:40:17+08:00"
+      "observed_at": "2026-10-27T06:15:44+08:00"
      },
      {
       "code": "00999A",
@@ -1505,7 +1505,7 @@
       "date_basis": "清單另列 CPcfdate；持股依淨值日期 CNavDt 保存",
       "unverified_rows": 0,
       "first_observed_at": "2026-10-22T18:29:58+08:00",
-      "observed_at": "2026-10-26T21:40:17+08:00"
+      "observed_at": "2026-10-27T06:15:44+08:00"
      }
     ],
     "stocks": [
@@ -89825,7 +89825,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00935&tab=basic",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-26T13:40:19+00:00"
+      "observed_at": "2026-10-26T22:15:44+00:00"
      }
     ],
     "reason_code": null,
@@ -89894,7 +89894,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00935&tab=basic",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-26T13:40:19+00:00"
+        "observed_at": "2026-10-26T22:15:44+00:00"
        }
       ],
       "reason_code": null,
@@ -93244,7 +93244,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-26T13:40:19+00:00"
+      "observed_at": "2026-10-26T22:15:44+00:00"
      }
     ],
     "reason_code": null,
@@ -93313,7 +93313,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00944&tab=basic",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-26T13:40:19+00:00"
+        "observed_at": "2026-10-26T22:15:44+00:00"
        }
       ],
       "reason_code": null,
@@ -103652,7 +103652,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00972&tab=basic",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-26T13:40:19+00:00"
+      "observed_at": "2026-10-26T22:15:44+00:00"
      }
     ],
     "reason_code": null,
@@ -103721,7 +103721,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00972&tab=basic",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-26T13:40:19+00:00"
+        "observed_at": "2026-10-26T22:15:44+00:00"
        }
       ],
       "reason_code": null,
@@ -107583,7 +107583,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-26T13:40:19+00:00"
+      "observed_at": "2026-10-26T22:15:44+00:00"
      }
     ],
     "reason_code": null,
@@ -107652,7 +107652,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-26T13:40:19+00:00"
+        "observed_at": "2026-10-26T22:15:44+00:00"
        }
       ],
       "reason_code": null,
@@ -109986,7 +109986,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009812&tab=basic",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-26T13:40:19+00:00"
+      "observed_at": "2026-10-26T22:15:44+00:00"
      }
     ],
     "reason_code": null,
@@ -110055,7 +110055,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009812&tab=basic",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-26T13:40:19+00:00"
+        "observed_at": "2026-10-26T22:15:44+00:00"
        }
       ],
       "reason_code": null,
@@ -120593,7 +120593,7 @@
       "url": "https://etf.allianzgi.com.tw/etf-info/E0001",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-26T13:40:19+00:00"
+      "observed_at": "2026-10-26T22:15:44+00:00"
      }
     ],
     "reason_code": null,
@@ -120662,7 +120662,7 @@
         "url": "https://etf.allianzgi.com.tw/etf-info/E0001",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-26T13:40:19+00:00"
+        "observed_at": "2026-10-26T22:15:44+00:00"
        }
       ],
       "reason_code": null,
@@ -121855,7 +121855,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-26T13:40:19+00:00"
+      "observed_at": "2026-10-26T22:15:44+00:00"
      }
     ],
     "reason_code": null,
@@ -121924,7 +121924,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00985A&tab=basic",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-26T13:40:19+00:00"
+        "observed_at": "2026-10-26T22:15:44+00:00"
        }
       ],
       "reason_code": null,
@@ -129137,7 +129137,7 @@
       "url": "https://etf.allianzgi.com.tw/etf-info/E0002",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-26T13:40:19+00:00"
+      "observed_at": "2026-10-26T22:15:44+00:00"
      }
     ],
     "reason_code": null,
@@ -129206,7 +129206,7 @@
         "url": "https://etf.allianzgi.com.tw/etf-info/E0002",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-26T13:40:19+00:00"
+        "observed_at": "2026-10-26T22:15:44+00:00"
        }
       ],
       "reason_code": null,
@@ -132123,7 +132123,7 @@
       "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
       "announced": "2026-10-27",
       "first_observed_at": "2026-10-22T10:29:59+00:00",
-      "observed_at": "2026-10-26T13:40:19+00:00"
+      "observed_at": "2026-10-26T22:15:44+00:00"
      }
     ],
     "reason_code": null,
@@ -132192,7 +132192,7 @@
         "url": "https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00999A&tab=basic",
         "announced": "2026-10-27",
         "first_observed_at": "2026-10-22T10:29:59+00:00",
-        "observed_at": "2026-10-26T13:40:19+00:00"
+        "observed_at": "2026-10-26T22:15:44+00:00"
        }
       ],
       "reason_code": null,
@@ -132455,11 +132455,11 @@
  ],
  "market_status": {
   "version": 1,
-  "as_of": "2026-10-26",
+  "as_of": "2026-10-27",
   "trade_date": "2026-10-22",
-  "session": "closed",
-  "reason_code": "scheduled_closed",
-  "reason": "臺灣光復暨金門古寧頭大捷紀念日",
+  "session": "scheduled_open",
+  "reason_code": "scheduled_open",
+  "reason": "依官方日曆預定開市",
   "source_url": "https://openapi.twse.com.tw/v1/holidaySchedule/holidaySchedule",
   "expected_trade_date": "2026-10-22",
   "data_status": "current",
