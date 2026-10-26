@@ -29,6 +29,8 @@ import sitca
 import store
 import fund_flows
 import market_calendar
+import market_status
+import history_corrections
 import official_quotes
 import product_profile
 import nav_provenance
@@ -486,10 +488,11 @@ def trade_date(nav: dict, quotes: dict, now: datetime, probe: dict | None = None
     def majority(days):
         return max(set(days), key=lambda day: (days.count(day), day))
 
-    closed = [d for d, bar in (probe or {}).items() if completed(d) and (bar or {}).get("volume_lots") != 0
+    closed = [d for d, bar in (probe or {}).items() if completed(d) and market_status.positive((bar or {}).get("volume_lots"))
               and (calendar is None or calendar.is_open(d) is not False)]
     candidates = [max(closed)] if closed else []
-    dates = [v["date"] for v in quotes.values() if completed(v.get("date"))]
+    dates = [v["date"] for v in quotes.values() if completed(v.get("date"))
+             and (calendar is None or calendar.is_open(v["date"]) is not False)]
     if dates:
         candidates.append(majority(dates))
     dates = [v["date"] for v in nav.values() if completed(v.get("date")) and v.get("price") is not None
@@ -976,15 +979,17 @@ def attach_returns(con: sqlite3.Connection, items: list[dict], date: str, reused
 
 
 def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, has_nav: bool = True,
-              active: dict | None = None, attributions: list[dict] | None = None, holdings_flow: dict | None = None) -> None:
+              active: dict | None = None, attributions: list[dict] | None = None, holdings_flow: dict | None = None,
+              calendar: market_calendar.Calendar | None = None) -> None:
     """網站讀的唯一檔案。區間報酬的起始日與出處放在最上層 returns_info，各檔數字在 items[].returns。"""
     checks: dict[str, int] = {}
     for it in items:
         check = it.get("price_check") or ("狀態未提供" if it.get("price") is not None else "無市價")
         checks[check] = checks.get(check, 0) + 1
     out.parent.mkdir(parents=True, exist_ok=True)
+    generated_at = datetime.now(TW)
     payload = {
-        "generated_at": datetime.now(TW).isoformat(timespec="seconds"),
+        "generated_at": generated_at.isoformat(timespec="seconds"),
         "trade_date": date,
         "source": source,
         "has_nav": has_nav,
@@ -996,6 +1001,7 @@ def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, h
         "count": len(items),
         "items": items,
     }
+    payload["market_status"] = market_status.build(items, date, generated_at, calendar or market_calendar.Calendar({}, set()))
     out.write_text(json.dumps(payload, ensure_ascii=False, indent=1), "utf-8")
 
 
@@ -1007,6 +1013,8 @@ def main(argv=None) -> int:
     ap.add_argument("--history", type=Path, help="歷史 CSV 資料夾，預設為資料庫旁的 history/")
     args = ap.parse_args(argv)
     history = args.history or args.db.parent / "history"
+    if not args.fixtures:
+        history_corrections.apply(history, args.db)
     store.open_db(args.db, history).close()  # 資料庫檔不存在時，先從歷史 CSV 重建
 
     raw = load_sources(args.fixtures)
@@ -1120,6 +1128,7 @@ def main(argv=None) -> int:
             market_calendar.save(con, fresh_days, datetime.now(TW).isoformat(timespec="seconds"))
         else:
             print(f"警告：{market_calendar.SOURCE}沒有抓到，週申贖沿用資料庫裡的日曆。", file=sys.stderr)
+        market_calendar.save_announcements(con)
         fund_flows.save(con, issuer, monthly)
         fund_flows.save_history(con, issuer)
         backfilled = sum(len(r.get("history") or []) for r in issuer.values())
@@ -1153,7 +1162,7 @@ def main(argv=None) -> int:
     finally:
         con.close()
     save_json(items, date, source, args.out, has_nav=any(it["nav"] is not None for it in items), active=active,
-              attributions=official_quotes.attributions(official), holdings_flow=holdings_flow)
+              attributions=official_quotes.attributions(official), holdings_flow=holdings_flow, calendar=calendar)
     flagged = sum(1 for it in items if it["premium"] is not None and abs(it["premium"]) >= 1)
     checks = {k: sum(1 for it in items if it["price_check"] == k) for k in ("一致", "已修正", "未查核", "交易所")}
     print(f"{date}：共 {len(items)} 檔 ETF，折溢價超過 ±1% 有 {flagged} 檔，除息預告 {len(dividends)} 筆 → {args.out}")

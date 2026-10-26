@@ -11,6 +11,7 @@ on:
       - 'data/product_overrides.json'
       - 'data/product_reference.json'
       - 'data/stock_name_reference.json'
+      - 'data/market_closures.json'
       - 'data/research-imports/**'
       - '.github/workflows/daily.yml'
   schedule:

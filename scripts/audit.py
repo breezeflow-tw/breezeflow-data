@@ -22,6 +22,7 @@ from pathlib import Path
 
 import market_calendar
 import store
+import market_status
 
 ROOT = Path(__file__).resolve().parent.parent
 TW = timezone(timedelta(hours=8))
@@ -101,8 +102,8 @@ def trade_date_traded(ctx):
     bad = []
     if ctx.cal.is_open(ctx.trade_date) is False:
         bad.append((ctx.trade_date, "官方日曆休市"))
-    if len(volumes) >= 10 and not any(volumes):
-        bad.append((ctx.trade_date, f"{len(volumes)} 檔成交量全部是 0"))
+    if len(ctx.items) >= 10 and not any(market_status.positive(v) for v in volumes):
+        bad.append((ctx.trade_date, "全市場樣本沒有可驗證的正成交量（零或缺值）"))
     return 1, bad
 
 

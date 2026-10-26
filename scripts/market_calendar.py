@@ -5,18 +5,40 @@
 - 表上沒有列出的平日是交易日，週六、週日休市
 - 只認得官方表涵蓋的年度（每次抓到的年度都存進資料庫）；其他年份一律「未知」，
   不能把沒有資料的日子當成休市
-- 颱風等臨時休市不在年度表內：表上是交易日、但交易所沒有資料的日子算「缺資料」，不是休市
+- 臨時休市依已核對官方公告補入；沒有公告、只有來源缺資料時，不推斷休市
 """
 from __future__ import annotations
 
 import re
+import json
 import sqlite3
 from datetime import date, timedelta
+from pathlib import Path
 
 SOURCE = "證交所有價證券集中交易市場開（休）市日期"
 URL = "https://openapi.twse.com.tw/v1/holidaySchedule/holidaySchedule"
 OPEN_MARKS = ("開始交易", "最後交易")  # 名稱有這些字的日子當天有交易
 LOOKBACK = 31  # 往前找前一個交易日最多幾天
+ANNOUNCEMENTS = Path(__file__).resolve().parents[1] / "data/market_closures.json"
+
+
+def announcements(path: Path = ANNOUNCEMENTS) -> dict[str, dict]:
+    """僅使用已核對官方公告的臨時休市；不以來源缺資料推斷。"""
+    if not path.exists():
+        return {}
+    result = {}
+    for day, entry in json.loads(path.read_text("utf-8")).items():
+        date.fromisoformat(day)
+        if not entry.get("source_url", "").startswith("https://www.twse.com.tw/") or not entry.get("checked_at"):
+            raise ValueError(f"臨時休市 {day} 缺少已核對的官方公告")
+        result[day] = {**entry, "is_open": False, "reason_code": "announced_closed"}
+    return result
+
+
+def save_announcements(con: sqlite3.Connection) -> None:
+    for day, entry in announcements().items():
+        con.execute("INSERT OR REPLACE INTO market_calendar(date,is_open,name,description,source_url,fetched_at) "
+                    "VALUES(?,0,?,?,?,?)", (day, entry["name"], entry["description"], entry["source_url"], entry["checked_at"]))
 
 
 def roc_date(value) -> str | None:
@@ -58,10 +80,10 @@ class Calendar:
     def is_open(self, day: str) -> bool | None:
         """有交易 True、休市 False；官方表沒涵蓋那一年時 None。"""
         d = date.fromisoformat(day)
-        if d.year not in self.years:
-            return None
         if day in self.entries:
             return self.entries[day]["is_open"]
+        if d.year not in self.years:
+            return None
         return d.weekday() < 5
 
     def trading_days(self, start: str, end: str) -> list[str] | None:
@@ -90,11 +112,13 @@ class Calendar:
         return None
 
 
-def load(con: sqlite3.Connection) -> Calendar:
+def load(con: sqlite3.Connection, *, include_announcements: bool = True) -> Calendar:
     try:
-        entries = {d: {"is_open": bool(o), "name": n, "description": t}
-                   for d, o, n, t in con.execute("SELECT date, is_open, name, description FROM market_calendar")}
+        entries = {d: {"is_open": bool(o), "name": n, "description": t, "source_url": u}
+                   for d, o, n, t, u in con.execute("SELECT date, is_open, name, description, source_url FROM market_calendar")}
         years = {y for (y,) in con.execute("SELECT year FROM market_calendar_year")}
     except sqlite3.OperationalError:
-        return Calendar({}, set())
+        entries, years = {}, set()
+    if include_announcements:
+        entries.update(announcements())
     return Calendar(entries, years)
