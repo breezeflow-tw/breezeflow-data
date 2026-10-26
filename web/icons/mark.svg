@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="微風流動">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#a3b4ff"/>
+      <stop offset="1" stop-color="#64c0f0"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="#0d1218"/>
+  <g fill="none" stroke="url(#g)" stroke-linecap="round">
+    <path d="M13 23.5c5.5-5 10.5-5 16 0s10.5 5 16 0c2-1.8 4-2.8 6-3" stroke-width="4.6"/>
+    <path d="M13 34c5.5-5 10.5-5 16 0s10.5 5 16 0" stroke-width="4.6" opacity=".82"/>
+    <path d="M13 44.5c5.5-5 10.5-5 16 0c2.7 2.4 5.3 3.6 8 3.6" stroke-width="4.6" opacity=".62"/>
+  </g>
+</svg>

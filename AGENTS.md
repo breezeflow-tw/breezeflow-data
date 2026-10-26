@@ -17,6 +17,8 @@
 | `scripts/issuers/` | 各投信官網的抓取模組（一家一個檔案） |
 | `data/history/` | **資料庫本體**（CSV，依日期分檔）。`data/etf.db` 是執行時產生的，不提交 |
 | `web/index.html` | 網站（單一檔案，讀 `web/data/latest.json`） |
+| `web/vendor/` | 固定版本的第三方程式與授權全文（`licenses/`）；清單、來源與雜湊值見 `docs/third-party.md` |
+| `web/icons/`、`web/favicon.svg`、`web/og.png`、`web/manifest.webmanifest` | 網站圖示、分享預覽圖、加到主畫面設定；原稿在 `docs/brand/` |
 | `tests/` | 離線測試；`tests/fixtures/` 是測試用假資料 |
 | `data/etf_meta.csv` | 人工補充資料（類型修正、費用率、規模） |
 | `data/product_overrides.json` | 有官方來源與查閱日的商品地域、策略及交易線補充；未知值不得補猜 |
@@ -99,6 +101,11 @@ git checkout -- web/data/latest.json
 - 改程式就要補測試。執行測試：`python -m unittest discover -s tests -v`
 - 測試只用 `tests/fixtures/` 的假資料，不連網路。
 - 網站維持單一 `web/index.html`，不引入建置工具；顏色用 CSS 變數，深淺色模式都要能看。
+- 第三方程式（外掛）規則（擁有者 2026-10-26 同意加外掛）：
+  - 只放在 `web/vendor/`，檔名帶版本號；不從 CDN 即時載入。
+  - 只用 MIT、Apache-2.0、ISC、BSD 這類寬鬆授權；授權全文放 `web/vendor/licenses/`，版本、來源、SHA-256、核對日期記在 `docs/third-party.md`。
+  - 外掛沒載入時網站照常可用（例如搜尋退回完全比對）；數字、表格不依賴外掛。
+  - 首頁一打開就載入的外掛要小；大型外掛（例如圖表庫）只在打開該區塊時才載入。新增或升級時在 PR 寫明用途與檔案大小。
 - 程式註解、文件、網頁文字使用**繁體中文**。
 
 ## Git 規則（避免互相覆蓋）
@@ -115,7 +122,7 @@ git checkout -- web/data/latest.json
 | 負責範圍 | 主要檔案 |
 |---|---|
 | 資料抓取、投信接入、資料庫 | `scripts/`、`tests/` |
-| 網站介面、圖表、手機版 | `web/index.html` |
+| 網站介面、圖表、手機版 | `web/index.html`、`web/vendor/`、`web/icons/` |
 
 要跨範圍修改時，先在 PR 說明中註明。
 
