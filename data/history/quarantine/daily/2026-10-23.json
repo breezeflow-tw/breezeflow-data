@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-23",
+  "reason": "官方全日休市；原始行情將無交易日誤列為 360 筆持平資料",
+  "source_url": "https://www.twse.com.tw/staticFiles/news/news/tsecnews/8a8216d6a0fa351b01a1638507940202.pdf",
+  "original_sha256": "f283ae1c96a6d5120115d7847ba8bf73aacc30fa038b986d365c14b857d33814",
+  "rows": 360,
+  "note": "只隔離 daily 行情，不移除 holdings、holding_lists 或 fund_daily 公告。"
+}
