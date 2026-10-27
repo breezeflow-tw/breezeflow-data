@@ -16,8 +16,8 @@ on:
       - 'data/research-imports/**'
       - '.github/workflows/daily.yml'
   schedule:
-    # GitHub 排程用 UTC（台灣時間減 8 小時），週一到週五
-    - cron: "50 0 * * 1-5"   # 台灣 08:50：補上前一交易日的正式淨值
+    # GitHub 排程用 UTC（台灣時間減 8 小時）。早上週一到週六（週六補上週五證交所的官方收盤行情），傍晚週一到週五
+    - cron: "50 0 * * 1-6"   # 台灣 08:50：補上前一交易日證交所的官方收盤行情與正式淨值
     - cron: "0 10 * * 1-5"   # 台灣 18:00：當天收盤價、預估淨值與折溢價
   workflow_dispatch:
 

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
-"""抓取台股全市場 ETF 的市價、預估淨值、折溢價與成交量，寫入 SQLite 並輸出網頁用的 JSON。
+"""抓取台股全市場 ETF 的官方收盤行情、淨值、折溢價與成交量，寫入 SQLite 並輸出網頁用的 JSON。
 
+收盤價、漲跌幅、成交量只用證交所、櫃買中心 OpenAPI 的收盤行情（政府資料開放平臺資料集 11549、11370），
+先逐筆保存到 exchange_daily（記錄端點與取得時間），網站交易日那天沒有官方收盤價就留空、寫明原因。
 只用 Python 標準函式庫，GitHub Actions 上不需安裝套件。
 
 用法：
@@ -61,14 +63,11 @@ SOURCES = {
     "calendar": market_calendar.URL,
 }
 
-# 市價與成交量的主要來源；上市代號加 .TW，上櫃加 .TWO
-YAHOO_CHART = "https://{host}/v8/finance/chart/{symbol}?range=10d&interval=1d"
-PROBE_SYMBOL = "0050.TW"  # 用來確認最新交易日：成交最活絡的 ETF，每個交易日都有日線
 # 擁有者指示不收錄的代號：網站不顯示、資料庫不保存，資料來源出現時一律略過
 EXCLUDED = {"00847B"}  # 中信美國市政債：2026-10 起交易所沒有行情、中信官網也不再列出
-# 每個交易日抓一次五年日線（含配息紀錄）計算區間報酬，同一份資料也拿來比對收盤價
-YAHOO_HISTORY = "https://{host}/v8/finance/chart/{symbol}?period1={start}&period2={end}&interval=1d&events=div"
-YAHOO_HOSTS = ("query1.finance.yahoo.com", "query2.finance.yahoo.com")
+# 收盤價的出處標示，以及當天還沒有官方收盤價時的說明（證交所的開放資料隔天清晨才更新）
+PRICE_SOURCES = {"上市": "證交所收盤行情", "上櫃": "櫃買中心收盤行情"}
+PRICE_PENDING = {"上市": "證交所的官方收盤行情還沒公布（通常隔天清晨更新）", "上櫃": "櫃買中心的官方收盤行情還沒公布"}
 
 # 已接入的投信官網；淨值、規模、費用、成分股以這裡的資料為主
 ISSUER_MODULES = {"yuanta": yuanta, "uni": uni, "capital": capital, "fuhhwa": fuhhwa, "kgi": kgi, "fubon": fubon,
@@ -98,37 +97,6 @@ def http_get_json(url: str, retries: int = 4, first_delay: float = 2) -> object:
             time.sleep(delay)
             delay *= 2
     raise AssertionError("unreachable")
-
-
-def fetch_yahoo(symbols: list[str], since: datetime | None = None) -> dict[str, object]:
-    """逐檔抓 Yahoo 股市日線；給 since 時抓從那天起的完整日線與配息紀錄。
-    前 10 檔全部失敗就放棄（多半是被擋），避免白跑幾百次。"""
-    def url(host, symbol):
-        if since is None:
-            return YAHOO_CHART.format(host=host, symbol=symbol)
-        return YAHOO_HISTORY.format(host=host, symbol=symbol, start=int(since.timestamp()),
-                                    end=int(datetime.now(TW).timestamp()) + 86400)
-
-    def one(symbol):
-        for host in YAHOO_HOSTS:
-            try:
-                return symbol, http_get_json(url(host, symbol), retries=1, first_delay=1)
-            except RuntimeError:
-                continue
-        return symbol, None
-
-    result = {}
-    with ThreadPoolExecutor(max_workers=4) as pool:
-        head = dict(pool.map(one, symbols[:10]))
-        if symbols and not any(head.values()):
-            print("警告：Yahoo 股市連不上，本次市價與成交量改用交易所資料。", file=sys.stderr)
-            return {}
-        result.update(head)
-        result.update(pool.map(one, symbols[10:]))
-    missing = [s for s, v in result.items() if v is None]
-    if missing:
-        print(f"警告：Yahoo 有 {len(missing)} 檔沒抓到：{', '.join(missing[:10])}", file=sys.stderr)
-    return {s: v for s, v in result.items() if v is not None}
 
 
 def load_sources(fixtures: Path | None) -> dict[str, object]:
@@ -249,58 +217,46 @@ def parse_quotes(rows, market: str) -> dict[str, dict]:
     return result
 
 
-def parse_yahoo(payloads: dict[str, object]) -> dict[str, dict[str, dict]]:
-    """Yahoo 日線 → {代號: {日期: {close, change_pct, volume_lots}}}。成交量單位是股，換算成張。"""
-    result = {}
-    for symbol, payload in payloads.items():
-        try:
-            chart = payload["chart"]["result"][0]
-            stamps = chart.get("timestamp") or []
-            quote = chart["indicators"]["quote"][0]
-        except (KeyError, IndexError, TypeError):
-            continue
-        days, prev = {}, None
-        for ts, close, vol in zip(stamps, quote.get("close") or [], quote.get("volume") or []):
-            if close is None:
-                continue
-            date = datetime.fromtimestamp(ts, TW).strftime("%Y-%m-%d")
-            days[date] = {
-                "close": round(close, 4),
-                "change_pct": (close - prev) / prev * 100 if prev else None,
-                "volume_lots": round(vol / 1000) if vol is not None else None,
-            }
-            prev = close
-        result[symbol.split(".")[0]] = days
-    return result
-
-
-def reconcile(yahoo: dict, exchange: dict, date: str) -> tuple[dict, list[dict]]:
-    """收盤價以 Yahoo 為主、交易所為查核，不一致時採用交易所並記錄差異。
-    成交量一律用交易所的官方總量：實測 Yahoo 的成交量系統性偏低約 1～8%，屬於統計範圍不同，不算錯誤。"""
-    quotes, diffs = {}, []
-    for code in sorted(set(yahoo) | set(exchange)):
-        y = yahoo.get(code, {}).get(date)
-        e = exchange.get(code, {})
-        e_ok = e.get("close") is not None and e.get("date") in (None, date)
-        q = {k: e.get(k) for k in ("name", "market", "units", "date")}
-        if y and e_ok:
-            price_bad = abs(y["close"] - e["close"]) > 0.005
-            if price_bad:
-                diffs.append({"code": code, "field": "close", "yahoo": y["close"], "exchange": e["close"]})
-            src = e if price_bad else y
-            q.update(close=src["close"], change_pct=src["change_pct"] if src["change_pct"] is not None else e["change_pct"],
-                     volume_lots=e["volume_lots"] if e["volume_lots"] is not None else y["volume_lots"],
-                     check="已修正" if price_bad else "一致")
-        elif y:
-            q.update(close=y["close"], change_pct=y["change_pct"], volume_lots=y["volume_lots"], check="未查核")
-        elif e_ok:
-            q.update(close=e["close"], change_pct=e["change_pct"], volume_lots=e["volume_lots"], check="交易所")
+def official_prices(con: sqlite3.Connection, exchange: dict, date: str) -> dict[str, dict]:
+    """網站交易日那天的官方收盤行情（exchange_daily 逐筆保存的交易所原值）：收盤價、漲跌幅、成交量（張）與出處。
+    名稱、市場、發行單位數沿用這次抓到的交易所資料（日期不同也可以用）。沒有官方收盤價時 close 為 None，note 寫明原因：
+    交易所還沒公布那天的資料（證交所隔天清晨才更新）、當天沒有成交，或交易所資料沒有列出這檔。"""
+    rows, captured = {}, set()
+    # 除息、除權日交易所的漲跌價差不是相對參考價的漲跌（證交所記 0、櫃買中心空白）：用前一個官方收盤價與配息紀錄辨認
+    prev_close = dict(con.execute(
+        "SELECT e.code, e.close FROM exchange_daily e WHERE e.close > 0 AND e.date = "
+        "(SELECT MAX(x.date) FROM exchange_daily x WHERE x.code = e.code AND x.date < ? AND x.close > 0)", (date,)))
+    paid = {c for (c,) in con.execute("SELECT code FROM dividend WHERE ex_date = ?", (date,))}
+    for code, market, name, close, change, volume in con.execute(
+            "SELECT code, market, name, close, change, volume_shares FROM exchange_daily WHERE date = ?", (date,)):
+        rows[code] = {"market": market, "name": name, "close": close if close is not None and close > 0 else None,
+                      "change": change, "volume": volume}
+        captured.add(market)
+    quotes = {}
+    for code in sorted(set(exchange) | set(rows)):
+        e, o = exchange.get(code, {}), rows.get(code)
+        market = (o or {}).get("market") or e.get("market")
+        q = {"name": e.get("name") or (o or {}).get("name"), "market": market, "units": e.get("units"), "date": date,
+             "close": None, "change_pct": None, "volume_lots": None, "check": None, "source": None, "note": None,
+             "change_note": None}
+        if o:
+            q["volume_lots"] = round(o["volume"] / 1000) if o["volume"] is not None else None
+        if o and o["close"] is not None:
+            change, before = o["change"], prev_close.get(code)
+            if change is None or (change == 0 and (code in paid or (before and abs(o["close"] - before) > 1e-9))):
+                change = None
+                q["change_note"] = "除息、除權日交易所沒有提供相對參考價的漲跌，不用前一天收盤價自行推算"
+            base = o["close"] - change if change is not None else None
+            q.update(close=o["close"], change_pct=change / base * 100 if base else None, check="交易所",
+                     source=PRICE_SOURCES.get(market))
+        elif o:
+            q["note"] = "當天沒有成交"
+        elif market in PRICE_PENDING and market not in captured:
+            q["note"] = PRICE_PENDING[market]
         else:
-            # 交易所資料停在別天時（開放資料隔天才更新），成交量也不能拿來用
-            q.update(close=None, change_pct=None, volume_lots=e.get("volume_lots") if e.get("date") in (None, date) else None,
-                     check=None)
+            q["note"] = "交易所收盤行情沒有列出這檔"
         quotes[code] = q
-    return quotes, diffs
+    return quotes
 
 
 def parse_closes(twse_rows, tpex_rows) -> dict[str, tuple[str, float]]:
@@ -472,13 +428,11 @@ def purge_excluded(con: sqlite3.Connection) -> None:
     con.commit()
 
 
-def trade_date(nav: dict, quotes: dict, now: datetime, probe: dict | None = None,
-               calendar: market_calendar.Calendar | None = None) -> str:
-    """取 Yahoo、交易所收盤行情及 MIS 市價中最新的已收盤日期。
+def trade_date(nav: dict, quotes: dict, now: datetime, calendar: market_calendar.Calendar | None = None) -> str:
+    """取交易所收盤行情及 MIS 市價中最新的已收盤日期。
     交易所與 MIS 各採最多檔的日期，避免單一異常值推進整站日期。
-    MIS 時間戳另外須通過官方開休市日曆；所有來源排除未來及當日 14:00 前的資料。
-    Yahoo 在臨時休市日也會有一根成交量 0 的日線（2026-10-23 沒有交易，全部 ETF 都是這樣），
-    成交量 0 或官方日曆休市的日子不當成交易日。"""
+    MIS 時間戳須通過官方開休市日曆，交易所資料的日期也不能是官方日曆的休市日（例如 2026-10-23 颱風臨時休市）；
+    所有來源排除未來及當日 14:00 前的資料。"""
     local = now.astimezone(TW)
     today = local.strftime("%Y-%m-%d")
 
@@ -488,9 +442,7 @@ def trade_date(nav: dict, quotes: dict, now: datetime, probe: dict | None = None
     def majority(days):
         return max(set(days), key=lambda day: (days.count(day), day))
 
-    closed = [d for d, bar in (probe or {}).items() if completed(d) and market_status.positive((bar or {}).get("volume_lots"))
-              and (calendar is None or calendar.is_open(d) is not False)]
-    candidates = [max(closed)] if closed else []
+    candidates = []
     dates = [v["date"] for v in quotes.values() if completed(v.get("date"))
              and (calendar is None or calendar.is_open(v["date"]) is not False)]
     if dates:
@@ -516,10 +468,9 @@ def merge(nav: dict, quotes: dict, meta: dict, date: str, fund: dict | None = No
         m = meta.get(code, {})
         name = n["name"] or q.get("name", "")
         fd = (fund or {}).get(code, {})
-        price = q.get("close") if q.get("close") is not None else n["price"]
-        premium = n["premium"]
-        if premium is None and price and n["nav"]:
-            premium = (price - n["nav"]) / n["nav"] * 100
+        # 收盤價只用交易所的官方收盤行情；MIS 的市價不補，折溢價也只用官方收盤價計算
+        price = q.get("close")
+        premium = (price - n["nav"]) / n["nav"] * 100 if price and n["nav"] else None
         units = fd.get("units") or q.get("units")
         value = n["nav"] or n["nav_prev"] or price
         # 規模（億元）＝ 發行單位數 × 淨值；人工資料優先
@@ -539,6 +490,10 @@ def merge(nav: dict, quotes: dict, meta: dict, date: str, fund: dict | None = No
             "premium": round(premium, 4) if premium is not None else None,
             "volume_lots": q.get("volume_lots"),
             "price_check": q.get("check"),
+            "price_source": q.get("source"),
+            "price_date": date if price is not None else None,
+            "price_note": None if price is not None else q.get("note") or "交易所收盤行情沒有列出這檔",
+            "change_note": q.get("change_note") if price is not None else None,
             "fee": num(m.get("fee")),
             "aum": aum,
             "units": units,
@@ -563,24 +518,10 @@ def known_dividend_codes(db_path: Path, source: str) -> set[str]:
         con.close()
 
 
-def known_markets(db_path: Path) -> dict[str, str]:
-    """資料庫記得的上市 / 上櫃別，交易所資料缺漏時用來決定 Yahoo 代號。"""
-    if not db_path.exists():
-        return {}
-    con = sqlite3.connect(db_path)
-    try:
-        return {c: m for c, m in con.execute("SELECT code, market FROM etf WHERE market IS NOT NULL")}
-    except sqlite3.OperationalError:
-        return {}
-    finally:
-        con.close()
-
-
 # ---------- 儲存 ----------
 
 def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | None = None,
-            dividends: list[dict] | None = None, diffs: list[dict] | None = None,
-            issuer: dict[str, dict] | None = None, fund_dividends: list[dict] | None = None,
+            dividends: list[dict] | None = None, issuer: dict[str, dict] | None = None, fund_dividends: list[dict] | None = None,
             fund_nav: dict[str, float] | None = None) -> None:
     con = store.open_db(db_path, None)
     try:
@@ -644,11 +585,6 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
                  premium_official = CASE WHEN price IS NOT NULL THEN (price - :nav) / :nav * 100 END
                WHERE date = :date AND code = :code AND nav_official IS NULL""",
             [{"nav": v, "date": date, "code": c} for c, v in (fund_nav or {}).items()],
-        )
-        con.executemany(
-            """INSERT OR REPLACE INTO price_check(date, code, field, yahoo, exchange, checked_at)
-               VALUES(:date, :code, :field, :yahoo, :exchange, :now)""",
-            [{**d, "date": date, "now": now} for d in diffs or []],
         )
         # 交易所除權息預告：只補投信官網、投信投顧公會還沒有的資料，不覆蓋投信公告
         con.executemany(
@@ -968,20 +904,10 @@ def apply_fund_top(items: list[dict], top: dict[str, tuple[str, list[dict]]], as
         it["holdings_date"] = month
 
 
-def attach_returns(con: sqlite3.Connection, items: list[dict], date: str, reused: dict, history: dict) -> None:
-    """每檔附上區間報酬。含息報酬要和資料庫的配息紀錄核對，所以在投信資料寫入資料庫之後才算。"""
-    known: dict[str, list] = {}
-    for code, ex_date, cash in con.execute("SELECT code, ex_date, cash FROM dividend"):
-        known.setdefault(code, []).append((ex_date, cash))
-    for it in items:
-        it["returns"] = reused.get(it["code"]) if reused else returns.compute(
-            history.get(it["code"]), date, it["price"], known.get(it["code"], []))
-
-
 def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, has_nav: bool = True,
               active: dict | None = None, attributions: list[dict] | None = None, holdings_flow: dict | None = None,
-              calendar: market_calendar.Calendar | None = None) -> None:
-    """網站讀的唯一檔案。區間報酬的起始日與出處放在最上層 returns_info，各檔數字在 items[].returns。"""
+              calendar: market_calendar.Calendar | None = None, returns_info: dict | None = None) -> None:
+    """網站讀的唯一檔案。區間報酬的出處、起始日與官方歷史起點放在最上層 returns_info，各檔數字在 items[].returns。"""
     checks: dict[str, int] = {}
     for it in items:
         check = it.get("price_check") or ("狀態未提供" if it.get("price") is not None else "無市價")
@@ -994,7 +920,7 @@ def save_json(items: list[dict], date: str, source: str, out: Path = OUT_PATH, h
         "source": source,
         "has_nav": has_nav,
         "price_check": checks,
-        "returns_info": {"source": returns.SOURCE, "starts": returns.start_dates(date)},
+        "returns_info": returns_info or {"source": returns.SOURCE, "starts": returns.start_dates(date), "history_from": {}},
         "active_changes": active,
         "attributions": attributions or [],
         "active_holdings": holdings_flow,
@@ -1021,48 +947,36 @@ def main(argv=None) -> int:
     nav = without_excluded(parse_nav(raw["nav"]))
     exchange = without_excluded({**parse_quotes(raw["tpex"], "上櫃"), **parse_quotes(raw["twse"], "上市")})
 
+    # 交易所收盤行情先逐筆保存（端點、資料日期、取得時間），收盤價一律從保存的官方原值取
+    official = [q for q in official_quotes.parse(raw["twse"], raw["tpex"]) if q["code"] not in EXCLUDED]
+    now = datetime.now(TW).isoformat(timespec="seconds")
     # 判定 MIS 日期與回補歷史清單都使用同一份官方開休市日曆。
     con = sqlite3.connect(args.db)
     try:
         stored = market_calendar.load(con)
         attempted = fund_flows.backfill_done(con)
+        official_quotes.save(con, official, now)
+        con.commit()
     finally:
         con.close()
     fresh_days = market_calendar.parse(raw["calendar"])
     calendar = market_calendar.Calendar({**stored.entries, **fresh_days}, stored.years | {int(d[:4]) for d in fresh_days})
     backfill = {"calendar": calendar, "attempted": attempted}
 
-    # 市價與成交量：Yahoo 股市為主，交易所為查核。
-    # 區間報酬：這個交易日還沒算過時抓五年日線（同一份資料也拿來比對收盤價），算過就沿用上次的結果
-    # Yahoo 日線、交易所收盤行情、MIS 市價的日期一起比較，避免單一來源延遲使日期倒退。
-    if args.fixtures:
-        probe_path = args.fixtures / "yahoo.json"
-        probe_raw = json.loads(probe_path.read_text("utf-8")) if probe_path.exists() else {}
-    else:
-        probe_raw = fetch_yahoo([PROBE_SYMBOL])
-    date = trade_date(nav, exchange, datetime.now(TW), parse_yahoo(probe_raw).get(PROBE_SYMBOL.split(".")[0]), calendar)
+    # 交易所收盤行情與 MIS 市價的日期一起比較，避免單一來源延遲使日期倒退；
+    # 收盤價、漲跌幅、成交量只用那天的官方收盤行情，還沒公布就留空並寫明原因
+    date = trade_date(nav, exchange, datetime.now(TW), calendar)
     source = "fixture" if args.fixtures else "live"
-    reused = returns.previous(args.out, date, source)
-    markets = without_excluded({**known_markets(args.db), **{c: q["market"] for c, q in exchange.items()}})
-    symbols = [f"{c}.TWO" if markets.get(c) == "上櫃" else f"{c}.TW" for c in sorted(set(nav) | set(exchange) | set(markets))]
-    history_raw = {}
-    if args.fixtures:
-        load = lambda name: json.loads((args.fixtures / name).read_text("utf-8")) if (args.fixtures / name).exists() else {}
-        yahoo_raw = load("yahoo.json")
-        history_raw = {} if reused else load("yahoo_history.json")
-    elif reused:
-        yahoo_raw = fetch_yahoo(symbols)
-    else:
-        since = datetime.fromisoformat(date).replace(tzinfo=TW) - timedelta(days=returns.HISTORY_DAYS)
-        yahoo_raw = history_raw = fetch_yahoo(symbols, since)
-    yahoo = parse_yahoo(yahoo_raw)
-
-    if not nav and not exchange and not yahoo:
+    if not nav and not exchange:
         print("錯誤：所有來源都沒有資料，可能是網路被擋或來源格式改變。", file=sys.stderr)
         return 1
     if not nav:
         print("警告：沒有淨值資料，本次只更新價格與成交量。", file=sys.stderr)
-    quotes, diffs = reconcile(yahoo, exchange, date)
+    con = sqlite3.connect(args.db)
+    try:
+        quotes = official_prices(con, exchange, date)
+    finally:
+        con.close()
     items = merge(nav, quotes, load_meta(), date, parse_fund(raw["fund"]))
     dividends = [d for d in parse_dividends(raw["div_twse"], raw["div_tpex"]) if d["code"] not in EXCLUDED]
 
@@ -1108,10 +1022,10 @@ def main(argv=None) -> int:
     print(f"{sitca.SOURCE}基金淨值：{date} 共 {len(navs)} 檔" if navs else f"{sitca.SOURCE}基金淨值：{date} 尚未公布")
 
     product_profile.attach(items, issuer, fund_info.get("funds"))
-    save_db(items, date, args.db, nav, dividends, diffs, issuer, (fresh.get("dividends") or []) + (old.get("dividends") or []), navs)
+    save_db(items, date, args.db, nav, dividends, issuer, (fresh.get("dividends") or []) + (old.get("dividends") or []), navs)
     con = sqlite3.connect(args.db)
     try:
-        attach_returns(con, items, date, reused, returns.parse_history(history_raw))
+        returns_info = returns.attach(con, items, date, calendar)
         if fresh:
             save_fund_info(con, fresh, today.isoformat())
             save_fund_month(con, fresh.get("summary") or {})
@@ -1138,9 +1052,6 @@ def main(argv=None) -> int:
         apply_fund_top(items, load_fund_top(con), date)
         apply_main_line_holdings(items)
         active = active_changes.attach(con, items, date, issuer, parse_closes(raw["twse"], raw["tpex"]))
-        official = [q for q in official_quotes.parse(raw["twse"], raw["tpex"]) if q["code"] not in EXCLUDED]
-        now = datetime.now(TW).isoformat(timespec="seconds")
-        official_quotes.save(con, official, now)
         # 主動式 ETF 持股資金動向：先增量保存持有股票的官方收盤價與除權預告，再估值
         stocks = official_quotes.parse_stocks(raw["twse"], raw["tpex"], active_holdings.held_stocks(con))
         official_quotes.save_stocks(con, stocks, now)
@@ -1161,13 +1072,20 @@ def main(argv=None) -> int:
         store.dump(con, history)
     finally:
         con.close()
+    # 顯名：這次抓到的原值，加上網站交易日實際採用的收盤行情（可能是先前保存的）
+    used = [{"market": it["market"], "date": date} for it in items if it["price"] is not None and it.get("market")]
     save_json(items, date, source, args.out, has_nav=any(it["nav"] is not None for it in items), active=active,
-              attributions=official_quotes.attributions(official), holdings_flow=holdings_flow, calendar=calendar)
+              attributions=official_quotes.attributions(official + used), holdings_flow=holdings_flow,
+              calendar=calendar, returns_info=returns_info)
     flagged = sum(1 for it in items if it["premium"] is not None and abs(it["premium"]) >= 1)
-    checks = {k: sum(1 for it in items if it["price_check"] == k) for k in ("一致", "已修正", "未查核", "交易所")}
+    notes: dict[str, int] = {}
+    for it in items:
+        if it["price"] is None:
+            notes[it["price_note"]] = notes.get(it["price_note"], 0) + 1
     print(f"{date}：共 {len(items)} 檔 ETF，折溢價超過 ±1% 有 {flagged} 檔，除息預告 {len(dividends)} 筆 → {args.out}")
-    print("市價查核：" + "、".join(f"{k} {v} 檔" for k, v in checks.items()))
-    print(f"區間報酬：{sum(1 for it in items if it.get('returns'))} 檔" + ("（沿用本交易日先前的計算）" if reused else ""))
+    print(f"官方收盤價：{sum(1 for it in items if it['price'] is not None)} 檔" + "".join(f"；{k} {v} 檔" for k, v in notes.items()))
+    print(f"區間報酬：{sum(1 for it in items if it.get('returns'))} 檔有期末官方收盤價（官方歷史起點："
+          + "、".join(f"{m} {d}" for m, d in (returns_info.get("history_from") or {}).items()) + "）")
     return 0
 
 
