@@ -562,6 +562,17 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
 .detail-load-error p{margin:8px 0 16px;color:var(--muted)}
 .detail-retry{min-height:44px;padding:0 18px;border:1px solid var(--line-strong);border-radius:10px;background:var(--bg);color:var(--ink);font-weight:600;cursor:pointer}
 .detail-retry:hover{border-color:var(--accent);color:var(--accent)}
+/* 概覽四格（2026-10-27）：四格同一套字級——標題 13、數字 26（手機 22）、單位與補充 13、日期出處 12。 */
+.overview-grid>.metric-tile{display:flex;flex-direction:column;min-width:0;padding:14px 16px;border-radius:12px;background:var(--bg)}
+.overview-grid .metric-tile dt{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:0 0 6px;font-size:calc(13px * var(--text-scale));font-weight:500;line-height:1.4;color:var(--muted)}
+.overview-grid .metric-tile dd{margin:0;display:flex;flex-direction:column;white-space:normal}
+.metric-value{display:block;white-space:nowrap;font-family:var(--f-num);font-variant-numeric:tabular-nums lining-nums;font-size:calc(26px * var(--text-scale));font-weight:600;line-height:1.2;letter-spacing:-.01em;color:var(--ink)}
+.metric-unit{flex-shrink:0;font-family:var(--f-num);font-size:calc(12px * var(--text-scale));font-weight:600;letter-spacing:.02em;color:var(--muted)}
+.metric-sub{display:flex;align-items:center;height:calc(26px * var(--text-scale));margin-top:2px;font-family:var(--f-num);font-size:calc(13px * var(--text-scale));font-weight:600;line-height:1.6}
+.metric-sub .muted{font-family:var(--f-body);font-weight:400}
+.metric-sub .detail-badge{margin-left:0;padding:1px 7px;font-family:var(--f-body);font-size:calc(12px * var(--text-scale));font-weight:500;line-height:1.5}
+.overview-grid .metric-tile .detail-source{margin-top:6px;font-size:calc(12px * var(--text-scale));line-height:1.6;text-wrap:pretty}
+@media(max-width:767px){.overview-grid>.metric-tile{padding:12px}.metric-value{font-size:calc(22px * var(--text-scale))}}
 </style>
 <style>
 .research-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}.research-tools button,.research-tools select,.research-form button{background:var(--accent-soft);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:9px 12px;font:inherit;cursor:pointer}.research-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}.research-form label{display:flex;flex-direction:column;gap:5px;font-size:calc(13px * var(--text-scale));color:var(--muted)}.research-form input,.research-form select{min-width:0;width:100%;box-sizing:border-box;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:9px;font:inherit}.research-form button{grid-column:1/-1;background:var(--accent);color:var(--accent-ink);font-weight:600}.research-chart{width:100%;height:auto;display:block;background:var(--bg);border:1px solid var(--line);border-radius:8px}.research-chart text{font-family:var(--f-num);fill:var(--muted)}.research-message{padding:12px;border-left:3px solid var(--band);background:var(--band-soft);font-size:calc(13px * var(--text-scale));line-height:1.8}.research-legend{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:calc(12px * var(--text-scale))}.research-ledger{max-height:260px;overflow:auto}.research-ledger table{width:100%;font-size:calc(12px * var(--text-scale))}.research-ledger th,.research-ledger td{padding:7px;text-align:right;white-space:nowrap}.research-ledger th:first-child,.research-ledger td:first-child{text-align:left}button:disabled{cursor:not-allowed;opacity:.55}
@@ -742,6 +753,10 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
   const detailField=(label,value,{note="",wide=false}={})=>`<div class="detail-field${wide?" wide":""}"><dt>${label}</dt><dd>${value}${note}</dd></div>`;
   const detailMetric=(v,unit="")=>`<span class="detail-value">${detailNumber(v,unit)}</span>`;
   const detailSection=(title,body)=>`<section class="detail-section"><h3>${title}</h3>${body}</section>`;
+  // 概覽四格同一套排版：標題列（右側小字單位）、數字、補充一行、日期與出處。單位放在標題列，數字再大也不換行。
+  const metricTile=(label,value,{unit="",sub="",meta=""}={})=>`<div class="detail-field metric-tile"><dt><span>${label}</span>${unit&&value!=="—"?`<span class="metric-unit">${esc(unit)}</span>`:""}</dt><dd><span class="metric-value">${value}</span><span class="metric-sub">${sub}</span>${meta}</dd></div>`;
+  const currencyCode=c=>["TWD","USD","CNY"].includes(c)?c:"幣別待確認";
+  const PRICE_STATUS_TEXT={"一致":"查核一致","已修正":"已改採交易所收盤價","交易所":"交易所收盤價","未查核":"未查核","狀態未提供":"查核狀態未提供","無市價":"無市價"};
   const signed=(v,unit="",digits=2)=>hasNumber(v)?`${v>0?"+":""}${fmt(v,digits)}${unit}`:"—";
   const trustedHosts=["yuantaetfs.com","yuantaetf.com","fsit.com.tw","capitalfund.com.tw","ezmoney.com.tw","fhtrust.com.tw","kgifund.com.tw","cathaysite.com.tw","sitca.org.tw","ctbcinvestments.com.tw","ctbcinvestments.com","nomurafunds.com.tw","am.jpmorgan.com","blackrock.com","allianzgi.com.tw","twse.com.tw","tpex.org.tw","data.gov.tw","abfunds.com.tw","ftft.com.tw","jkoam.com"];
   function sourceLink(label,url){
@@ -784,7 +799,7 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
     });
   }
   // 日期與完整度結束。
-  const provenance=(label,url,day,value)=>{if(value===null)return `<small class="detail-source">尚未取得官方數值與對應日期。</small>`;const status=dateState(day,detailDate,label);return `<small class="detail-source">資料日：${detailText(day)} <span class="date-note ${["future","missing","invalid"].includes(status.kind)?"review":""}">（${status.label}）</span><br>出處：${sourceLink(label,url)}</small>`;};
+  const provenance=(label,url,day,value)=>{if(value===null)return `<small class="detail-source">尚未取得官方數值與對應日期。</small>`;const status=dateState(day,detailDate,label);const note=status.kind==="current"?"":` · <span class="date-note ${["future","missing","invalid"].includes(status.kind)?"review":"date-diff"}">${status.label}</span>`;return `<small class="detail-source">${detailText(day)}${note}<br>出處：${sourceLink(label,url)}</small>`;};
 
   // 商品與口徑核心：未知狀態不補成一致，費率文字不猜成分段。
   function profileOf(d){return d.product||{};}
@@ -938,13 +953,18 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
   function renderDetail(d){
     detailHeader(d,"各公告日期見下方");
     $("detail-content").removeAttribute("aria-busy");
-    const change=hasNumber(d.change_pct)?`<span class="detail-value quote-change ${d.change_pct>0?"up":d.change_pct<0?"down":""}" title="${esc(d.change_pct)}%" aria-label="漲跌幅 ${esc(fmt(d.change_pct,2))}%">${d.change_pct>0?"+":""}${fmt(d.change_pct,2)}%</span>`:'<span class="detail-source">漲跌幅 —</span>';
-    const navLabel=hasNumber(d.nav)?`<span class="detail-badge">${String(d.nav_source??"").includes("正式淨值")?"正式淨值":"預估淨值"}</span>`:"";
-    const premium=hasNumber(d.premium)?`<span class="detail-value ${d.premium>0?"premium":d.premium<0?"discount":""}" title="${esc(d.premium)}%">${d.premium>0?"+":""}${fmt(d.premium,2)}%</span>`:"—";
-    const aum=detailField(`基金規模${hasNumber(d.aum)?`（${currencyLabel(profileOf(d).aum_currency)} 億）`:""}`,`<span class="detail-value" title="${detailText(d.aum)}">${fmt(d.aum,2)}</span>`,{note:provenance(d.aum_source,d.aum_source_url,d.aum_date,d.aum??null)});
-    const price=detailField(`收盤價（${currencyLabel(profileOf(d).trading_currency)}／單位）`,`<span class="detail-value quote-value">${fmt(d.price,2)}</span>`+change,{note:`<small class="detail-source">${detailText(detailDate)} · ${detailText(priceStatus(d))}${d.price_check==="已修正"?"<br>已改採交易所收盤價。":""}${[d.last_ex?.ex_date,d.next_ex?.ex_date].includes(detailDate)?"<br>當日除息；價格漲跌不含配息。":""}</small>`})+
-      detailField(`每單位基金淨值${hasNumber(d.nav)?`（${currencyLabel(profileOf(d).nav_currency)}）`:""}`,detailMetric(d.nav)+navLabel,{note:provenance(d.nav_source,d.nav_source_url,d.nav_date,d.nav??null)})+
-      aum+detailField("市價相對淨值折溢價（%）",premium,{note:`<small class="detail-source">行情 ${detailText(detailDate)} ／ 淨值 ${detailText(d.nav_date)}<br>${detailText(premiumNote(d,detailDate)+(formalComparable(d,detailDate)?"；海外市場仍須注意時差。":"；不納入同日正式淨值平均。"))}</small>`});
+    const p=profileOf(d),exDay=[d.last_ex?.ex_date,d.next_ex?.ex_date].includes(detailDate);
+    const change=hasNumber(d.change_pct)?`<span class="${d.change_pct>0?"up":d.change_pct<0?"down":""}" aria-label="漲跌幅 ${esc(fmt(d.change_pct,2))}%">${d.change_pct>0?"+":""}${fmt(d.change_pct,2)}%</span>`:'<span class="muted">漲跌幅 —</span>';
+    const tone=hasNumber(d.premium)?(d.premium>0?"premium":d.premium<0?"discount":""):"";
+    const price=metricTile("收盤價",fmt(d.price,2),{unit:currencyCode(p.trading_currency),sub:change,
+        meta:`<small class="detail-source">${detailText(detailDate)} · ${esc(PRICE_STATUS_TEXT[priceStatus(d)]||priceStatus(d))}${exDay?"<br>當日除息；漲跌不含配息":""}</small>`})+
+      metricTile("每單位淨值",detailNumber(d.nav),{unit:currencyCode(p.nav_currency),
+        sub:hasNumber(d.nav)?`<span class="detail-badge">${String(d.nav_source??"").includes("正式淨值")?"正式淨值":"預估淨值"}</span>`:"",
+        meta:provenance(String(d.nav_source??"").replace(/（[^（）]*淨值）$/,"")||d.nav_source,d.nav_source_url,d.nav_date,d.nav??null)})+
+      metricTile("基金規模",fmt(d.aum,2),{unit:"億 "+currencyCode(p.aum_currency),meta:provenance(d.aum_source,d.aum_source_url,d.aum_date,d.aum??null)})+
+      metricTile("折溢價",hasNumber(d.premium)?`<span class="${tone}">${d.premium>0?"+":""}${fmt(d.premium,2)}%</span>`:"—",
+        {sub:tone?`<span class="${tone}">${tone==="premium"?"溢價":"折價"}</span>`:hasNumber(d.premium)?"平價":"",
+         meta:`<small class="detail-source">${d.nav_date===detailDate?detailText(detailDate):`行情 ${detailText(detailDate)} · 淨值 ${detailText(d.nav_date)}`}<br>${detailText(premiumNote(d,detailDate)+(formalComparable(d,detailDate)?"；海外市場須留意時差":"；不納入同日正式淨值平均"))}</small>`});
     const values=detailField("成交量（約千單位）",detailMetric(d.volume_lots),{note:`<small class="detail-source">行情 ${detailText(detailDate)}</small>`})+
       detailField(`前一營業日淨值${hasNumber(d.nav_prev)?`（${currencyLabel(profileOf(d).nav_currency)}）`:""}`,detailMetric(d.nav_prev),{note:'<small class="detail-source">來源未提供獨立日期，不以日曆日回推。</small>'})+
       detailField("流通受益權單位數（單位）",detailMetric(d.units),{note:provenance(d.units_source,d.units_source_url,d.units_date,d.units??null)})+
@@ -1240,7 +1260,7 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
   function renderDetailLoading(d){
     detailHeader(d,"完整資料讀取中…");
     $("detail-nav").innerHTML=`<button type="button" disabled tabindex="-1" aria-hidden="true">${skBar("3em")}</button>`.repeat(4);
-    const tile=`<div class="detail-field"><dt>${skBar("8em"," sk-sub")}</dt><dd>${skBar("5em"," sk-value")}<br>${skBar("9em"," sk-sub")}<br>${skBar("7em"," sk-sub")}</dd></div>`;
+    const tile=`<div class="detail-field metric-tile"><dt>${skBar("4em"," sk-sub")}</dt><dd><span class="metric-value">${skBar("3.2em")}</span><span class="metric-sub">${skBar("3em"," sk-sub")}</span><small class="detail-source">${skBar("8em"," sk-sub")}<br>${skBar("6em"," sk-sub")}</small></dd></div>`;
     $("detail-content").setAttribute("aria-busy","true");
     $("detail-content").innerHTML=`<p class="sr-only" role="status">正在讀取 ${esc(d.code)} 的完整資料…</p>`+
       `<section class="detail-section" aria-hidden="true"><h3>${skBar("3em")}</h3><dl class="detail-grid overview-grid">${tile.repeat(4)}</dl></section>`+
