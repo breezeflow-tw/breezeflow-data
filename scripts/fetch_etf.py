@@ -553,7 +553,9 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
               "expense_json": json.dumps(it["expense"], ensure_ascii=False) if it.get("expense") else None}
              for it in items],
         )
-        # 同一天重跑會更新當天資料；這次沒抓到的欄位（例如 MIS 暫時連不上時的淨值）保留原值
+        # 同一天重跑會更新當天資料；這次沒抓到的欄位（例如 MIS 暫時連不上時的淨值）保留原值。
+        # 收盤價、漲跌幅、成交量與收盤價狀態每次都由 exchange_daily 的官方收盤行情重算，一律以這次為準：
+        # 沒有官方收盤價就清空，不留下別的來源寫過的舊值（例如停用 Yahoo 前同一天寫入的價格）；折溢價跟著清空。
         con.executemany(
             """INSERT INTO daily(date, code, price, change_pct, nav, nav_prev, premium, volume_lots, source_time, aum,
                                  price_check, nav_source, aum_source, beneficiaries, units_change, nav_date, nav_source_url)
@@ -566,14 +568,14 @@ def save_db(items: list[dict], date: str, db_path: Path = DB_PATH, nav: dict | N
                  nav_source_url=CASE WHEN excluded.nav IS NOT NULL THEN excluded.nav_source_url ELSE daily.nav_source_url END,
                  aum_source=COALESCE(excluded.aum_source, daily.aum_source),
                  beneficiaries=COALESCE(excluded.beneficiaries, daily.beneficiaries),
-                 price_check=COALESCE(excluded.price_check, daily.price_check),
+                 price_check=excluded.price_check,
                  aum=COALESCE(excluded.aum, daily.aum),
-                 price=COALESCE(excluded.price, daily.price),
-                 change_pct=COALESCE(excluded.change_pct, daily.change_pct),
+                 price=excluded.price,
+                 change_pct=excluded.change_pct,
                  nav=COALESCE(excluded.nav, daily.nav),
                  nav_prev=COALESCE(excluded.nav_prev, daily.nav_prev),
-                 premium=COALESCE(excluded.premium, daily.premium),
-                 volume_lots=COALESCE(excluded.volume_lots, daily.volume_lots),
+                 premium=CASE WHEN excluded.price IS NULL THEN NULL ELSE COALESCE(excluded.premium, daily.premium) END,
+                 volume_lots=excluded.volume_lots,
                  source_time=CASE WHEN excluded.nav IS NOT NULL THEN excluded.source_time ELSE daily.source_time END""",
             [{"nav_date":None, "nav_source_url":None, **it, "date": date} for it in items],
         )
