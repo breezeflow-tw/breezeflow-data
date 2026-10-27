@@ -1466,6 +1466,27 @@ class PipelineTest(unittest.TestCase):
             self.assertEqual(con.execute("SELECT price, price_check FROM daily WHERE code = '0050'").fetchone(), (52.35, "交易所"))
             con.close()
 
+    def test_rerun_clears_price_from_other_sources(self):
+        """停用 Yahoo 當天：同一天先前寫入的非官方價格，在官方收盤價還沒有時要清空，不能沿用。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
+            args = ["--fixtures", str(FIX), "--db", str(db), "--out", str(out)]
+            self.assertEqual(f.main(args), 0)
+            con = sqlite3.connect(db)
+            con.execute("UPDATE daily SET price = 99, change_pct = 1, volume_lots = 5, premium = 3, price_check = '一致' "
+                        "WHERE code = '00631L'")
+            con.commit()
+            con.close()
+            self.assertEqual(f.main(args), 0)
+            items = {i["code"]: i for i in json.loads(out.read_text("utf-8"))["items"]}
+            self.assertEqual({k: items["00631L"][k] for k in ("price", "change_pct", "premium", "price_check", "price_note")},
+                             {"price": None, "change_pct": None, "premium": None, "price_check": "無市價", "price_note": "當天沒有成交"})
+            self.assertEqual(items["0050"]["price"], 52.35)  # 有官方收盤價的照常
+            con = sqlite3.connect(db)
+            self.assertEqual(con.execute("SELECT price, change_pct, premium, price_check FROM daily WHERE code = '00631L'").fetchone(),
+                             (None, None, None, "無市價"))
+            con.close()
+
     def test_size_and_dividends_in_output(self):
         with tempfile.TemporaryDirectory() as tmp:
             db, out = Path(tmp) / "etf.db", Path(tmp) / "latest.json"
