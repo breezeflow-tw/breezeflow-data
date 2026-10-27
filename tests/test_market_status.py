@@ -44,11 +44,13 @@ class StatusTest(unittest.TestCase):
         result = self.build("2027-01-04T18:00:00+08:00")
         self.assertEqual((result["session"], result["data_status"]), ("unknown", "unconfirmed"))
 
-    def test_probe_requires_positive_finite_volume(self):
-        for volume in (None, 0, -1, float("nan"), float("inf"), True):
-            with self.subTest(volume=volume), self.assertRaises(ValueError):
-                fetch.trade_date({}, {}, datetime.fromisoformat("2026-10-22T18:00:00+08:00"),
-                                 {"2026-10-22": {"volume_lots": volume}}, self.cal)
+    def test_announced_closed_day_is_never_trade_date(self):
+        """臨時休市公告日（2026-10-23）即使交易所或 MIS 出現那天的資料，也不能當成交易日。"""
+        now = datetime.fromisoformat("2026-10-26T18:00:00+08:00")
+        with self.assertRaises(ValueError):
+            fetch.trade_date({}, {"0050": {"date": "2026-10-23"}}, now, self.cal)
+        quotes = {"0050": {"date": "2026-10-23"}, "0056": {"date": "2026-10-23"}, "00679B": {"date": "2026-10-22"}}
+        self.assertEqual(fetch.trade_date({"0050": {"date": "2026-10-23", "price": 20}}, quotes, now, self.cal), "2026-10-22")
 
 
 class CorrectionTest(unittest.TestCase):

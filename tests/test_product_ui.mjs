@@ -23,6 +23,13 @@ test('預估淨值已有日期時不再宣稱日期待確認',()=>{
   assert.equal(context.premiumNote({nav:null},'2026-10-21'),'尚未取得淨值');
 });
 
+test('沒有官方收盤價時，折溢價寫明是收盤價還沒公布，不誤報成淨值口徑問題',()=>{
+  const d={nav:10,nav_date:'2026-10-27',nav_source:'測試投信官網（正式淨值）',price:null,premium:null,
+    price_note:'證交所的官方收盤行情還沒公布（通常隔天清晨更新）'};
+  assert.equal(context.premiumNote(d,'2026-10-27'),'尚未取得官方收盤價');
+  assert.equal(context.premiumNote({...d,premium_reason:'市價與淨值幣別不同'},'2026-10-27'),'市價與淨值幣別不同');
+});
+
 test('固定、上限、分段及原文四種語意分開',()=>{
   assert.equal(context.feeDisplay({mgmt_fee_text:'每年基金淨資產價值之 1%'}).label,'1%');
   assert.equal(context.feeDisplay({mgmt_fee_text:'最高為 1.00%'}).label,'最高 1%');

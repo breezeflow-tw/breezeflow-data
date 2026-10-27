@@ -419,7 +419,7 @@ body{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 .dateline time{font-weight:600;font-size:calc(15px * var(--text-scale))}
 
 /* 狀態列與摘要數字：細、穩、不搶表格 */
-.market-status{padding:8px 24px;background:var(--bg)}.market-status strong{font-weight:600}
+.market-status{padding:8px 24px;background:var(--bg)}.market-status strong{font-weight:600}.market-status .price-pending{color:var(--band)}
 .summary{padding:14px 24px}
 .stat{padding-inline:20px;gap:2px}.stat-title{font-size:calc(12px * var(--text-scale))}
 .stat .v{font-size:calc(24px * var(--text-scale));font-weight:600;letter-spacing:-.01em;line-height:1.2}
@@ -636,7 +636,7 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
         <label>商品結構<select class="select" id="structure"><option value="">全部</option><option>一般</option><option>槓桿</option><option>反向</option><option>待確認</option></select></label>
         <label>投資地域<select class="select" id="region"><option value="">全部地域</option></select></label>
         <label>策略／主題<select class="select" id="strategy"><option value="">全部策略</option></select></label>
-        <label>市價核對<select class="select" id="audit-state"><option value="">全部狀態</option><option>一致</option><option>已修正</option><option>未查核</option><option>交易所</option><option>狀態未提供</option><option>無市價</option></select></label>
+        <label>收盤價<select class="select" id="audit-state"><option value="">全部</option><option value="交易所">有官方收盤價</option><option value="無市價">尚無收盤價</option></select></label>
         <label>規模比較<select class="select" id="aum-mode"><option value="latest">最近可用（日期可能不同）</option><option value="same">限與行情同日、新臺幣規模</option></select></label>
         <label>發行投信<select class="select" id="issuer"><option value="">全部投信</option></select></label>
         <label class="toggle"><input type="checkbox" id="only-div">只看即將除息</label>
@@ -646,7 +646,7 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
       <p class="filter-hint">地域依官方商品資料與公會申報整理；「跨國（公告範圍）」表示可投資範圍，詳細國別請見商品資料。策略為本站依官方定位整理，非買賣建議。</p>
     </div>
     <p class="filter-active" id="filter-active" hidden></p>
-    <details class="quality-panel" id="data-quality"><summary>資料查核<span id="quality-summary">載入中…</span></summary><div class="dropdown"><div class="quality-check">全市場市價：<span class="check-count" id="s-check">—</span><p class="checkline" id="checkline">等待資料載入</p></div><div id="quality-content"></div></div></details>
+    <details class="quality-panel" id="data-quality"><summary>資料查核<span id="quality-summary">載入中…</span></summary><div class="dropdown"><div class="quality-check">全市場收盤價：<span class="check-count" id="s-check">—</span><p class="checkline" id="checkline">等待資料載入</p></div><div id="quality-content"></div></div></details>
     <div class="view-switch" role="group" aria-label="資料檢視"><button type="button" id="view-market" aria-pressed="true">行情</button><button type="button" id="view-flows" aria-pressed="false">週資金流</button><button type="button" id="view-rankings" aria-pressed="false" aria-controls="rankings">報酬排行榜</button><button type="button" id="view-active" aria-pressed="false" aria-controls="active-holdings">主動式持股</button><p class="view-note" id="view-note">點選 ETF 可查看數字解釋、官方資料與前十大持股／成分。</p></div>
     <section class="active-holdings" id="active-holdings" aria-labelledby="active-title" hidden>
       <div class="active-intro"><div><div class="active-kicker">主動式 ETF · 台股股票部位</div><h2 id="active-title">持股資金動向</h2><p>比較投信公告的完整持股，查看個股淨增減估值與同步增減持檔數。金額為本站估算；點選長條展開各 ETF 的公告明細。</p></div></div>
@@ -669,7 +669,7 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
       </div></div>
       <div class="rank-meta" id="rank-meta" role="status" aria-live="polite">資料載入中…</div>
       <div class="rank-grid" id="rank-grid"></div>
-      <p class="rank-method">僅比較市價漲跌幅，不含配息。日排行採行情漲跌幅；週／月排行＝（期末收盤價 ÷ 期初收盤價 − 1）× 100%，採 Yahoo 股市分割還原日線，期末使用本站查核後收盤價。近一週／近一月為滾動區間，非本週／本月累計。未取得資料者不列入；持平不列入正負榜，少於 10 檔不補位。同值依 ETF 代號排序。不同商品類型及交易幣別未作調整，可用上方篩選縮小比較範圍。</p>
+      <p class="rank-method">僅比較市價漲跌幅，不含配息。日排行採行情漲跌幅；週／月排行＝（期末收盤價 ÷ 期初收盤價 − 1）× 100%，只用證交所、櫃買中心逐日保存的官方收盤價，不回補更早的歷史；期初早於保存起點或期間缺資料時不列入。近一週／近一月為滾動區間，非本週／本月累計。未取得資料者不列入；持平不列入正負榜，少於 10 檔不補位。同值依 ETF 代號排序。不同商品類型及交易幣別未作調整，可用上方篩選縮小比較範圍。</p>
     </section>
     <div class="scope-banner" id="flow-scope" hidden></div>
     <details class="table-controls" id="table-controls"><summary>清單與欄位設定</summary><div class="table-options"><label>欄位<select class="select" id="column-mode"><option value="quote">行情與規模</option><option value="income">配息</option><option value="fees">規模與費用</option><option value="all">全部欄位</option></select></label><label>呈現<select class="select" id="list-mode"><option value="table">表格</option><option value="cards">精簡清單</option></select></label><span>價格保留原交易幣別；規模日期逐筆標示</span></div></details>
@@ -694,7 +694,7 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
   <section class="notes" aria-label="資料閱讀說明">
     <div><h2>讀懂折溢價</h2><p><span class="formula">（市價 − 淨值）÷ 淨值 × 100%</span>正數為溢價，負數為折價。不同市場的交易時段與淨值日期可能不同，請搭配資料出處閱讀。</p></div>
     <div><h2>市價與淨值</h2><p>市價是交易所的成交價格；淨值是每單位基金資產的價值。正式淨值與盤中預估淨值分開標示，缺漏資料以「—」呈現，不自行推估。</p></div>
-    <div class="sources" id="sources"><h2>資料來源與更新</h2><p>市價以 Yahoo 股市為主，逐檔與證交所、櫃買中心查核，不一致時採交易所資料。成交量優先使用交易所官方總量。持股動向的股票估值僅採同日交易所官方收盤價。</p><div class="source-tags" id="source-tags"></div><p id="source-note">投信官網資料來源將依本次資料自動列出。</p><details class="source-attributions" id="source-attributions" hidden><summary>交易所開放資料：出處與授權顯名</summary><ul id="attribution-list"></ul></details><p>每個交易日 08:50、18:00（臺北時間）排程更新。</p><div class="downloads"><a href="data/etf.db">下載 SQLite 資料庫</a><a href="data/latest.json">下載 JSON 資料</a></div></div>
+    <div class="sources" id="sources"><h2>資料來源與更新</h2><p>收盤價、漲跌幅與成交量只用證交所、櫃買中心的官方收盤行情（政府資料開放平臺）。證交所的資料通常隔天清晨才更新，傍晚的更新先不顯示上市 ETF 的收盤價與折溢價，隔天 08:50 補上。持股動向的股票估值也只用同日交易所官方收盤價。</p><div class="source-tags" id="source-tags"></div><p id="source-note">投信官網資料來源將依本次資料自動列出。</p><details class="source-attributions" id="source-attributions" hidden><summary>交易所開放資料：出處與授權顯名</summary><ul id="attribution-list"></ul></details><p>每個交易日 08:50、18:00（臺北時間）排程更新。</p><div class="downloads"><a href="data/etf.db">下載 SQLite 資料庫</a><a href="data/latest.json">下載 JSON 資料</a></div></div>
   </section>
   <section class="contact" id="contact" aria-labelledby="contact-title">
     <div class="contact-copy"><h2 id="contact-title">留言給站長</h2><p>發現資料有誤、操作遇到問題，或有想看的功能，都可以告訴我們。資料勘誤請附 ETF 代號、資料日期、畫面數值與官方公告連結，方便查核。</p><p class="contact-privacy">免註冊，留言不公開；回覆 Email 可不填。表單由 Google 提供，個資使用說明載於表單內。請勿填寫帳號密碼、交易明細或資產資訊。站長會查看，但不保證逐則回覆，也不提供個別投資建議。</p></div>
@@ -757,6 +757,10 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
   const metricTile=(label,value,{unit="",sub="",meta=""}={})=>`<div class="detail-field metric-tile"><dt><span>${label}</span>${unit&&value!=="—"?`<span class="metric-unit">${esc(unit)}</span>`:""}</dt><dd><span class="metric-value">${value}</span><span class="metric-sub">${sub}</span>${meta}</dd></div>`;
   const currencyCode=c=>["TWD","USD","CNY"].includes(c)?c:"幣別待確認";
   const PRICE_STATUS_TEXT={"一致":"查核一致","已修正":"已改採交易所收盤價","交易所":"交易所收盤價","未查核":"未查核","狀態未提供":"查核狀態未提供","無市價":"無市價"};
+  // 收盤價狀態的顯示名稱（資料值仍是「交易所」「無市價」，篩選與統計照用）
+  const PRICE_STATUS_LABEL={"交易所":"有官方收盤價","無市價":"尚無收盤價"};
+  // 沒有收盤價時，表格只放短說明，完整原因放在滑過提示與詳情
+  const PRICE_NOTE_SHORT=[[/還沒公布/,"官方收盤價尚未公布"],[/沒有成交/,"當天沒有成交"],[/沒有列出/,"交易所未列出"]];
   const signed=(v,unit="",digits=2)=>hasNumber(v)?`${v>0?"+":""}${fmt(v,digits)}${unit}`:"—";
   const trustedHosts=["yuantaetfs.com","yuantaetf.com","fsit.com.tw","capitalfund.com.tw","ezmoney.com.tw","fhtrust.com.tw","kgifund.com.tw","cathaysite.com.tw","sitca.org.tw","ctbcinvestments.com.tw","ctbcinvestments.com","nomurafunds.com.tw","am.jpmorgan.com","blackrock.com","allianzgi.com.tw","twse.com.tw","tpex.org.tw","data.gov.tw","abfunds.com.tw","ftft.com.tw","jkoam.com"];
   function sourceLink(label,url){
@@ -835,6 +839,7 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
   }
   function premiumNote(d,day){
     if(d.premium_reason)return d.premium_reason;
+    if(d.price==null&&d.price_note)return "尚未取得官方收盤價";
     if(typeof d.nav!=="number"||!Number.isFinite(d.nav))return "尚未取得淨值";
     if(!d.nav_date)return "淨值日期待確認";
     if(formalComparable(d,day))return "同日正式淨值";
@@ -849,7 +854,9 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
   // 日期不同時以提醒色標出；缺值只在有額外說明時（例如同基金交易線）才加註。
   const quietNote=(parts,diff=false)=>{const text=parts.filter(Boolean).join(" · ");return text?`<small class="cell-note${diff?" date-diff":""}">${esc(text)}</small>`:"";};
   function dateNote(d,key){const stamp=fieldStamp(d,key);return hasNumber(d[key])?(stamp===detailDate?"":stamp):(stamp==="尚未取得官方數值"?"":stamp);}
-  function priceNote(d){const cur=profileOf(d).trading_currency,status=priceStatus(d);return quietNote([cur==="TWD"?null:cur||"幣別待確認",["一致","交易所","已修正"].includes(status)?null:status]);}
+  function priceNote(d){const cur=profileOf(d).trading_currency,status=priceStatus(d);
+    if(!hasNumber(d.price)&&d.price_note)return `<small class="cell-note" title="${esc(d.price_note)}">${esc((PRICE_NOTE_SHORT.find(([re])=>re.test(d.price_note))||[null,d.price_note])[1])}</small>`;
+    return quietNote([cur==="TWD"?null:cur||"幣別待確認",["一致","交易所","已修正"].includes(status)?null:status]);}
   function navLine(d){
     if(!hasNumber(d.nav))return quietNote([dateNote(d,"nav")]);
     const src=String(d.nav_source||""),kind=src.includes("正式淨值")?"正式":"預估";
@@ -889,8 +896,8 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
     if(dataFailed){$("quality-summary").textContent="資料載入失敗";$("quality-content").innerHTML='<p class="quality-note">本次無法取得資料，請稍後重新整理。</p>';return;}
     const weeks=items.filter(d=>hasNumber(d.flows?.net_amount)).length,full=items.filter(d=>hasNumber(d.flows?.four_week_amount)).length;
     const checks=quoteCounts(items),r=rankReturns(items,state.rankPeriod,marketStatus);
-    $("quality-summary").textContent=state.view==="flows"?`可估算 ${weeks} / ${items.length} · 近4週齊備 ${full}`:state.view==="rankings"?`可比較 ${r.valid} / ${items.length} · 未納入 ${r.missing}`:`有核對依據 ${(checks["一致"]||0)+(checks["已修正"]||0)+(checks["交易所"]||0)} / ${items.length} · 展開明細`;
-    $("quality-content").innerHTML=`<p class="quality-note">${Object.entries(checks).map(([label,n])=>`${esc(label)} ${n}`).join(" · ")} · 合計 ${items.length} 個交易代號</p><dl class="quality-grid">${fieldCoverage(items,detailDate).map(f=>`<div><dt>${f.label}</dt><dd>有數值 <strong>${f.present} / ${items.length}</strong><br>數值、日期、來源齊備 <strong>${f.complete} / ${items.length}</strong><br>較早日公告 ${f.earlier} 檔 · 月公告 ${f.monthly} 檔</dd></div>`).join("")}</dl><p class="quality-note">依目前篩選範圍統計，缺資料不當作零。日期與來源齊備只代表欄位已提供，不保證數值無誤或公告已是最新；月公告與日行情更新頻率不同。點選 ETF 可核對原始公告。本週及近4週數字須有足夠的可比官方日資料；休市與特殊事件尚未完整確認時維持待核對。</p>`;
+    $("quality-summary").textContent=state.view==="flows"?`可估算 ${weeks} / ${items.length} · 近4週齊備 ${full}`:state.view==="rankings"?`可比較 ${r.valid} / ${items.length} · 未納入 ${r.missing}`:`官方收盤價 ${(checks["一致"]||0)+(checks["已修正"]||0)+(checks["交易所"]||0)} / ${items.length} · 展開明細`;
+    $("quality-content").innerHTML=`<p class="quality-note">${Object.entries(checks).map(([label,n])=>`${esc(PRICE_STATUS_LABEL[label]||label)} ${n}`).join(" · ")} · 合計 ${items.length} 個交易代號</p><dl class="quality-grid">${fieldCoverage(items,detailDate).map(f=>`<div><dt>${f.label}</dt><dd>有數值 <strong>${f.present} / ${items.length}</strong><br>數值、日期、來源齊備 <strong>${f.complete} / ${items.length}</strong><br>較早日公告 ${f.earlier} 檔 · 月公告 ${f.monthly} 檔</dd></div>`).join("")}</dl><p class="quality-note">依目前篩選範圍統計，缺資料不當作零。日期與來源齊備只代表欄位已提供，不保證數值無誤或公告已是最新；月公告與日行情更新頻率不同。點選 ETF 可核對原始公告。本週及近4週數字須有足夠的可比官方日資料；休市與特殊事件尚未完整確認時維持待核對。</p>`;
   }
   function flowDetail(d){
     const f=d.flows||{},raw=d.monthly;
@@ -957,14 +964,14 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
     const change=hasNumber(d.change_pct)?`<span class="${d.change_pct>0?"up":d.change_pct<0?"down":""}" aria-label="漲跌幅 ${esc(fmt(d.change_pct,2))}%">${d.change_pct>0?"+":""}${fmt(d.change_pct,2)}%</span>`:'<span class="muted">漲跌幅 —</span>';
     const tone=hasNumber(d.premium)?(d.premium>0?"premium":d.premium<0?"discount":""):"";
     const price=metricTile("收盤價",fmt(d.price,2),{unit:currencyCode(p.trading_currency),sub:change,
-        meta:`<small class="detail-source">${detailText(detailDate)} · ${esc(PRICE_STATUS_TEXT[priceStatus(d)]||priceStatus(d))}${exDay?"<br>當日除息；漲跌不含配息":""}</small>`})+
+        meta:`<small class="detail-source">${hasNumber(d.price)?`${detailText(d.price_date||detailDate)} · ${esc(d.price_source||PRICE_STATUS_TEXT[priceStatus(d)]||priceStatus(d))}`:esc(d.price_note||"尚未取得收盤價")}${d.change_note?"<br>除息、除權日：交易所未提供漲跌，不自行推算":exDay&&hasNumber(d.change_pct)?"<br>當日除息；漲跌不含配息":""}</small>`})+
       metricTile("每單位淨值",detailNumber(d.nav),{unit:currencyCode(p.nav_currency),
         sub:hasNumber(d.nav)?`<span class="detail-badge">${String(d.nav_source??"").includes("正式淨值")?"正式淨值":"預估淨值"}</span>`:"",
         meta:provenance(String(d.nav_source??"").replace(/（[^（）]*淨值）$/,"")||d.nav_source,d.nav_source_url,d.nav_date,d.nav??null)})+
       metricTile("基金規模",fmt(d.aum,2),{unit:"億 "+currencyCode(p.aum_currency),meta:provenance(d.aum_source,d.aum_source_url,d.aum_date,d.aum??null)})+
       metricTile("折溢價",hasNumber(d.premium)?`<span class="${tone}">${d.premium>0?"+":""}${fmt(d.premium,2)}%</span>`:"—",
         {sub:tone?`<span class="${tone}">${tone==="premium"?"溢價":"折價"}</span>`:hasNumber(d.premium)?"平價":"",
-         meta:`<small class="detail-source">${d.nav_date===detailDate?detailText(detailDate):`行情 ${detailText(detailDate)} · 淨值 ${detailText(d.nav_date)}`}<br>${detailText(premiumNote(d,detailDate)+(formalComparable(d,detailDate)?"；海外市場須留意時差":"；不納入同日正式淨值平均"))}</small>`});
+         meta:`<small class="detail-source">${d.nav_date===detailDate?detailText(detailDate):`行情 ${detailText(detailDate)} · 淨值 ${detailText(d.nav_date)}`}<br>${detailText(premiumNote(d,detailDate)+(!hasNumber(d.premium)?"":formalComparable(d,detailDate)?"；海外市場須留意時差":"；不納入同日正式淨值平均"))}</small>`});
     const values=detailField("成交量（約千單位）",detailMetric(d.volume_lots),{note:`<small class="detail-source">行情 ${detailText(detailDate)}</small>`})+
       detailField(`前一營業日淨值${hasNumber(d.nav_prev)?`（${currencyLabel(profileOf(d).nav_currency)}）`:""}`,detailMetric(d.nav_prev),{note:'<small class="detail-source">來源未提供獨立日期，不以日曆日回推。</small>'})+
       detailField("流通受益權單位數（單位）",detailMetric(d.units),{note:provenance(d.units_source,d.units_source_url,d.units_date,d.units??null)})+
@@ -1405,7 +1412,7 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
       <td class="l code"><button type="button" class="detail-trigger" aria-haspopup="dialog" aria-controls="etf-detail" aria-label="查看 ${esc(d.code)} ${esc(d.name)} 的 ETF 詳細資訊">${esc(d.code)}</button></td>
       <td class="l"><div class="name">${detailText(d.name)}</div><div class="issuer">${detailText(d.issuer)}${d.market?" · "+esc(d.market):""}</div></td>
       <td class="l"><span class="tag">${esc(profileOf(d).asset_class||"待確認")}</span>${profileOf(d).management==="被動式"?"":cellNote(profileOf(d).management||"管理方式待確認")}</td>
-      <td class="num">${d.price_check==="已修正"?`<span class="fixed" title="Yahoo 股市與交易所數字不一致，已採用交易所資料">${fmt(d.price,2)}<span class="ex-note">已修正</span></span>`:fmt(d.price,2)}${priceNote(d)}</td>
+      <td class="num">${fmt(d.price,2)}${priceNote(d)}</td>
       <td class="num ${d.change_pct>0?"up":d.change_pct<0?"down":""}">${d.change_pct==null?"—":(d.change_pct>0?"+":"")+fmt(d.change_pct,2)+"%"}</td>
       <td class="num" title="${esc(d.nav_source||"")}">${fmt(d.nav,2)}${hasNumber(d.nav)&&fieldCurrency(d,"nav")!=="TWD"?` <span class="unit-label">${esc(fieldCurrency(d,"nav"))}</span>`:""}${navLine(d)}</td>
       <td class="num">${pdCell(d.premium)}${premiumNote(d,detailDate)==="同日正式淨值"?"":cellNote(premiumNote(d,detailDate))}</td>
@@ -1423,7 +1430,7 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
     const avg=valid.length?valid.reduce((s,d)=>s+d.premium,0)/valid.length:null;
     $("result-count").textContent=`${rows.length.toLocaleString("zh-TW")} / ${DATA.length.toLocaleString("zh-TW")} 個交易代號${state.fuzzy?" · 沒有完全相符，列出相近名稱":""}`;
     $("view-note").textContent=state.view==="rankings"?"依目前篩選結果排行 · 點選長條查看 ETF 詳情 · 市價漲跌幅，不含配息":state.view==="flows"?`週資料截至 ${detailDate||"—"}；目前篩選中 ${rows.filter(d=>hasNumber(d.flow_net)).length} / ${rows.length} 檔可估算。近4週包含本週；缺值不代表零流入。`:"點選 ETF 可查看數字解釋、官方資料與前十大持股／成分。";
-    const selected=[state.type!=="全部"?state.type:null,state.issuer,state.management,state.currency,state.structure,state.region,state.strategy,state.audit,state.aumMode==="same"?"同日新臺幣規模":null,state.div?"即將除息":null,state.alert?"折溢價超過 ±1%":null,state.quick==="premium"?"溢價 > 1%":state.quick==="discount"?"折價 > 1%":null].filter(Boolean);
+    const selected=[state.type!=="全部"?state.type:null,state.issuer,state.management,state.currency,state.structure,state.region,state.strategy,PRICE_STATUS_LABEL[state.audit]||state.audit,state.aumMode==="same"?"同日新臺幣規模":null,state.div?"即將除息":null,state.alert?"折溢價超過 ±1%":null,state.quick==="premium"?"溢價 > 1%":state.quick==="discount"?"折價 > 1%":null].filter(Boolean);
     const filterCount=selected.length;$("filter-active").hidden=!filterCount;$("filter-active").textContent=selected.join(" · ")+"（篩選可清除）";
     $("filter-toggle").textContent=filterCount?`篩選 (${filterCount})`:"篩選";
     $("s-avg").textContent=avg==null?"—":(avg>=0?"+":"")+fmt(avg,2)+`%（${valid.length} 個代號）`;
@@ -1581,7 +1588,9 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
     const ranked=rankReturns(items,state.rankPeriod,marketStatus),day=detailDate||"—",start=returnsInfo.starts?.[state.rankPeriod];
     const range=state.rankPeriod==="1d"?`交易日 ${day}，相對前一交易日收盤`:
       `基準日 ${start||"待確認"} → ${day}（基準日非交易日時，採當日或之前最近收盤）`;
-    $("rank-meta").innerHTML=`<strong>${esc(range)}</strong><br>${detailIsDemo?"測試資料 · ":""}目前篩選 ${items.length} 檔 · 可比較 ${ranked.valid} 檔 · 缺資料 ${ranked.missing} 檔 · 持平 ${ranked.flat} 檔。兩榜使用相同比例尺。`;
+    const historyFrom=Object.values(returnsInfo.history_from||{}).filter(Boolean).sort()[0];
+    $("rank-meta").innerHTML=`<strong>${esc(range)}</strong><br>${detailIsDemo?"測試資料 · ":""}目前篩選 ${items.length} 檔 · 可比較 ${ranked.valid} 檔 · 缺資料 ${ranked.missing} 檔 · 持平 ${ranked.flat} 檔。兩榜使用相同比例尺。`+
+      (state.rankPeriod!=="1d"&&historyFrom?`<br>官方收盤價自 ${esc(historyFrom)} 起逐日保存，期初早於這天的不列入。`:"");
     const directions=state.rankDirection==="both"?["positive","negative"]:[state.rankDirection];
     $("rank-grid").classList.toggle("single",directions.length===1);
     $("rank-grid").innerHTML=directions.map(direction=>{
@@ -1655,6 +1664,9 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
     $("market-status").classList.toggle("review",message.review);
     $("market-status").innerHTML=`<strong>${esc(message.title)}</strong><span>${esc(message.note)}${marketStatus?.source_url?` · ${sourceLink("交易安排來源",marketStatus.source_url)}`:""}</span>`;
     DATA=(p.items||[]).map(normalizeItem);
+    // 證交所的官方收盤行情隔天清晨才公布：傍晚的更新先說明收盤價為何留空、何時補上
+    const pending=DATA.filter(d=>!hasNumber(d.price)&&/還沒公布/.test(d.price_note||"")).length;
+    if(pending)$("market-status").insertAdjacentHTML("beforeend",`<span class="price-pending">${fmt(pending,0)} 檔的官方收盤價還沒公布（證交所通常隔天清晨公布），收盤價、漲跌與折溢價在隔天 08:50 的更新補上</span>`);
     for(const id of ["region","strategy"]){const values=[...new Set(DATA.map(d=>profileOf(d)[id]||"待確認"))].sort();$(id).innerHTML=`<option value="">全部${id==="region"?"地域":"策略"}</option>`+values.map(v=>`<option>${esc(v)}</option>`).join("");}
     const issuers={};DATA.forEach(d=>{if(d.issuer)issuers[d.issuer]=(issuers[d.issuer]||0)+1;});
     $("issuer").innerHTML='<option value="">全部投信</option>'+Object.entries(issuers).sort((a,b)=>b[1]-a[1])
@@ -1675,8 +1687,8 @@ tbody tr.is-selected td.code{box-shadow:inset 3px 0 var(--accent)}
     const pc=quoteCounts(DATA);
     const labels=[["一致","一致"],["已修正","修正"],["未查核","未查核"],["交易所","直接採交易所"],["狀態未提供","狀態未提供"],["無市價","無市價"]];
     const parts=labels.filter(([k])=>hasNumber(pc?.[k])).map(([k,t])=>`${t} ${fmt(pc[k],0)}`);
-    $("s-check").textContent=hasNumber(pc?.["一致"])?`${fmt(pc["一致"],0)} 檔一致`:"待確認";
-    $("checkline").innerHTML=Object.entries(pc).map(([label,n])=>`<button type="button" data-check="${esc(label)}">${esc(label)} ${n}</button>`).join(" · ");
+    $("s-check").textContent=hasNumber(pc?.["交易所"])?`${fmt(pc["交易所"],0)} 檔有交易所官方收盤價`:"待確認";
+    $("checkline").innerHTML=Object.entries(pc).map(([label,n])=>`<button type="button" data-check="${esc(label)}">${esc(PRICE_STATUS_LABEL[label]||label)} ${n}</button>`).join(" · ");
     const official=[...new Set(DATA.filter(d=>d.issuer&&[d.nav_source,d.aum_source].some(s=>String(s||"").includes("官網"))).map(d=>d.issuer))].sort((a,b)=>a.localeCompare(b,"zh-TW"));
     $("source-tags").innerHTML=official.map(name=>`<span>${esc(name)}</span>`).join("");
     $("source-note").textContent=`基金規模、單位數與持股採投信公告或公會資料，逐欄顯示日期及來源。週申贖為本站依投信正式日資料估算；公會申購買回為月統計，不拆成週資料。本次有 ${official.length} 家投信官網資料；未取得者顯示「—」。`;
