@@ -6522,6 +6522,78 @@ code,date,asset_code,asset_name,kind,weight,qty,source,source_url
 00717,2026-10-27,WFC Z,WELLS FARGO & COMPANY 4.75 PERP Z,股票,0.9672,29442.0,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00717
 00717,2026-10-27,WHR A,WHIRLPOOL CORP 8.5 2029/2/15 A,股票,0.0173,337.0,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00717
 00717,2026-10-27,WTFCN,WINTRUST FINANCIAL CORP 7.875 PERP F,股票,0.0597,1187.0,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00717
+00719B,2026-10-27,912810FB9,US TREASURY N/B 6.125% 11/15/2027,債券,3.01,9387766.58,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,912810FE3,US TREASURY N/B 5.5% 08/15/2028,債券,2.1,6557282.45,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,912810FF0,US TREASURY N/B 5.25% 11/15/2028,債券,2.99,9307004.99,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,9128283F5,US TREASURY N/B 2.25% 11/15/2027,債券,0.16,493345.32,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,9128283W8,US TREASURY N/B 2.75% 02/15/2028,債券,0.13,392758.83,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,9128284N7,US TREASURY N/B 2.875% 05/15/2028,債券,0.09,295851.57,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,9128284V9,US TREASURY N/B 2.875% 08/15/2028,債券,0.09,292230.47,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,9128285M8,US TREASURY N/B 3.125% 11/15/2028,債券,0.09,294807.07,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CBP5,US TREASURY N/B 1.125% 02/29/2028,債券,0.09,286982.15,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CCH2,US TREASURY N/B 1.25% 06/30/2028,債券,0.15,474479.45,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CDF5,US TREASURY N/B 1.375% 10/31/2028,債券,0.3,942934.78,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CDP3,US TREASURY N/B 1.375% 12/31/2028,債券,0.3,935186.82,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CDW8,US TREASURY N/B 1.75% 01/31/2029,債券,0.06,188010.53,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CES6,US TREASURY N/B 2.75% 05/31/2029,債券,0.31,962168.92,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CEV9,US TREASURY N/B 3.25% 06/30/2029,債券,1.25,3889266.3,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CFJ5,US TREASURY N/B 3.125% 08/31/2029,債券,0.09,288271.6,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CFU0,US TREASURY N/B 4.125% 10/31/2027,債券,0.65,2031585.25,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CFZ9,US TREASURY N/B 3.875% 11/30/2027,債券,0.97,3024791.87,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CGC9,US TREASURY N/B 3.875% 12/31/2027,債券,1.35,4217797.2,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CGH8,US TREASURY N/B 3.5% 01/31/2028,債券,0.89,2784872.96,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CGP0,US TREASURY N/B 4% 02/29/2028,債券,1.6,4990247.3,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CGT2,US TREASURY N/B 3.625% 03/31/2028,債券,0.95,2965826.31,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CHA2,US TREASURY N/B 3.5% 04/30/2028,債券,0.32,1000144.35,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CHE4,US TREASURY N/B 3.625% 05/31/2028,債券,1.6,4992837.44,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CHK0,US TREASURY N/B 4% 06/30/2028,債券,2.89,9016492.84,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CHQ7,US TREASURY N/B 4.125% 07/31/2028,債券,1.28,4000373.61,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CHX2,US TREASURY N/B 4.375% 08/31/2028,債券,0.92,2852276.38,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CJA0,US TREASURY N/B 4.625% 09/30/2028,債券,1.99,6208495.19,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CJF9,US TREASURY N/B 4.875% 10/31/2028,債券,1.47,4578090.01,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CJN2,US TREASURY N/B 4.375% 11/30/2028,債券,1.62,5052151.64,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CJR3,US TREASURY N/B 3.75% 12/31/2028,債券,1.27,3966100.52,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CJW2,US TREASURY N/B 4% 01/31/2029,債券,1.27,3973383.13,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CKP5,US TREASURY N/B 4.625% 04/30/2029,債券,2.62,8154171.14,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CKT7,US TREASURY N/B 4.5% 05/31/2029,債券,2.6,8091915.94,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CKX8,US TREASURY N/B 4.25% 06/30/2029,債券,1.6,5002691.88,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CLC3,US TREASURY N/B 4% 07/31/2029,債券,0.22,692498.3,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CLK5,US TREASURY N/B 3.625% 08/31/2029,債券,0.09,292449.43,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CLQ2,US TREASURY N/B 3.875% 10/15/2027,債券,0.32,995477.68,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CLX7,US TREASURY N/B 4.125% 11/15/2027,債券,2.28,7098416.76,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CMB4,US TREASURY N/B 4% 12/15/2027,債券,2.59,8065532.79,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CMF5,US TREASURY N/B 4.25% 01/15/2028,債券,3.23,10076341.69,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CMN8,US TREASURY N/B 4.25% 02/15/2028,債券,2.9,9034025.09,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CMS7,US TREASURY N/B 3.875% 03/15/2028,債券,3.19,9944075.81,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CMW8,US TREASURY N/B 3.75% 04/15/2028,債券,1.59,4942243.28,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CND9,US TREASURY N/B 3.75% 05/15/2028,債券,2.9,9027437.14,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CNH0,US TREASURY N/B 3.875% 06/15/2028,債券,3.21,10014414.63,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CNM9,US TREASURY N/B 3.875% 07/15/2028,債券,1.6,4986531.93,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CNU1,US TREASURY N/B 3.625% 08/15/2028,債券,1.43,4448251.5,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CNY3,US TREASURY N/B 3.375% 09/15/2028,債券,1.26,3919160.91,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CPC9,US TREASURY N/B 3.5% 10/15/2028,債券,1.88,5869218.72,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CPE5,US TREASURY N/B 3.5% 10/31/2027,債券,0.32,1006722.48,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CPK1,US TREASURY N/B 3.5% 11/15/2028,債券,1.27,3966277.17,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CPL9,US TREASURY N/B 3.375% 11/30/2027,債券,1.28,4003765.35,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CPP0,US TREASURY N/B 3.5% 12/15/2028,債券,1.9,5926521.52,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CPS4,US TREASURY N/B 3.375% 12/31/2027,債券,0.64,1993729.61,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CPT2,US TREASURY N/B 3.5% 01/15/2029,債券,1.58,4917314.87,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CQA2,US TREASURY N/B 3.5% 02/15/2029,債券,1.26,3918152.17,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CQB0,US TREASURY N/B 3.375% 02/29/2028,債券,0.63,1978080.54,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CQE4,US TREASURY N/B 3.5% 03/15/2029,債券,1.57,4879381.04,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CQH7,US TREASURY N/B 3.875% 03/31/2028,債券,1.27,3968641.8,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CQJ3,US TREASURY N/B 3.875% 04/15/2029,債券,1.89,5882678.57,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CQL8,US TREASURY N/B 3.75% 04/30/2028,債券,1.61,5025033.97,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CQR5,US TREASURY N/B 3.875% 05/15/2029,債券,1.92,5975971.44,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CQS3,US TREASURY N/B 4% 05/31/2028,債券,1.94,6034376.24,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CQV6,US TREASURY N/B 4.125% 06/15/2029,債券,1.7,5294722.39,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CQY0,US TREASURY N/B 4.125% 06/30/2028,債券,0.97,3012462.62,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CQZ7,US TREASURY N/B 4.125% 07/15/2029,債券,1.28,3979422.52,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CRB9,US TREASURY N/B 4.25% 07/31/2028,債券,1.93,6014561.78,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CRG8,US TREASURY N/B 4.25% 08/15/2029,債券,2.07,6463636.18,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CRH6,US TREASURY N/B 4.125% 08/31/2028,債券,2.01,6275438.16,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CRL7,US TREASURY N/B 4.375% 09/15/2029,債券,1.28,3975162.29,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
+00719B,2026-10-27,91282CRP8,US TREASURY N/B 4.75% 09/30/2028,債券,1.61,5019245.73,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00719B
 00720B,2026-10-27,AL0387517,RTX CORP 3.75% 11/01/2046,債券,0.02,974437.75,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00720B
 00720B,2026-10-27,AL3175356,AT&T INC 4.5% 03/09/2048,債券,0.33,13173210.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00720B
 00720B,2026-10-27,AL3175471,AT&T INC 4.55% 03/09/2049,債券,0.46,18514395.41,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00720B
@@ -12188,7 +12260,7 @@ code,date,asset_code,asset_name,kind,weight,qty,source,source_url
 00770,2026-10-27,ZETA.US,Zeta Global Holdings Corp,股票,0.03,1982.0,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=BH
 00770,2026-10-27,ZM.US,ZOOM VIDEO COMMUNICATIONS-A,股票,0.12,2332.0,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=BH
 00770,2026-10-27,ZS.US,"ZSCALER, INC. CMN",股票,0.13,926.0,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=BH
-00771,2026-10-27,ALL B,ALL 7.48182,股票,1.34,3478.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
+00771,2026-10-27,ALL B,ALL 7.4895,股票,1.34,3478.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
 00771,2026-10-27,ALL H,ALL 5.1 PERP,股票,2.2,8000.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
 00771,2026-10-27,ALL I,ALL 4 3/4 PERP,股票,0.53,2087.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
 00771,2026-10-27,ALL J,ALL 7 3/8 PERP,股票,1.61,4174.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
@@ -12199,7 +12271,7 @@ code,date,asset_code,asset_name,kind,weight,qty,source,source_url
 00771,2026-10-27,BHFAO,BHF 6 3/4 PERP,股票,0.55,2800.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
 00771,2026-10-27,BHFAP,BHF 6.6 PERP,股票,0.57,2957.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
 00771,2026-10-27,BOH B,BOH 8 PERP,股票,0.44,1148.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
-00771,2026-10-27,C N,C 10.4746,股票,6.35,15623.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
+00771,2026-10-27,C N,C 10.6936,股票,6.35,15623.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
 00771,2026-10-27,C R,C 6 1/4 PERP,股票,1.97,5565.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
 00771,2026-10-27,CFG E,CFG 5 PERP,股票,0.81,3131.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
 00771,2026-10-27,CFG H,CFG 7 3/8 PERP,股票,1.05,2783.0,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00771
