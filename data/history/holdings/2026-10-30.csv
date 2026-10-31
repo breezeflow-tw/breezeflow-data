@@ -3001,6 +3001,8 @@ code,date,asset_code,asset_name,kind,weight,qty,source,source_url
 00645,2026-10-30,9987 JP,SUZUKEN CO LTD,股票,0.0386,1600.0,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00645
 00645,2026-10-30,9989 JP,SUNDRUG CO LTD,股票,0.0291,1000.0,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00645
 00645,2026-10-30,9997 JP,BELLUNA CO LTD,股票,0.0008,100.0,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00645
+00650L,2026-10-30,HSI202611,202611 恆生指數期貨,期貨,199.74,638.0,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF03&qDate=2026%2F10%2F30
+00651R,2026-10-30,HSI202611,202611 恆生指數期貨,期貨,-100.96,-38.0,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF04&qDate=2026%2F10%2F30
 00655L,2026-10-30,80907786,中國信託華盈貨幣市場基金,基金,,9031629.0,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=82
 00655L,2026-10-30,SCN-202611,SGX FTSE CHINA A50,期貨,197.04,7871.0,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=82
 00656R,2026-10-30,SCN-202611,SGX FTSE CHINA A50,期貨,99.7,-325.0,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=83
