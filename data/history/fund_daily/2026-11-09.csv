@@ -44,9 +44,9 @@ code,date,nav,aum,units,units_change,currency,source,source_url,observed_at,anno
 00648R,2026-11-09,4.02,5.26,130688000.0,0.0,TWD,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00648R,2026-11-10T17:33:51+00:00,,2026-11-10T17:33:51+00:00
 00650L,2026-11-09,16.21,16.1,99338000.0,-1500000.0,TWD,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF03&qDate=2026%2F11%2F09,2026-11-09T20:26:52+00:00,,2026-11-09T20:26:52+00:00
 00651R,2026-11-09,5.37,1.73,32192000.0,0.0,TWD,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF04&qDate=2026%2F11%2F09,2026-11-09T20:26:52+00:00,,2026-11-09T20:26:52+00:00
-00652,2026-11-09,36.14,21.33,59035000.0,-500000.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00652,2026-11-10T17:33:51+00:00,,2026-11-10T17:33:51+00:00
-00653L,2026-11-09,49.69,5.67,11403000.0,-500000.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00653L,2026-11-10T17:33:51+00:00,,2026-11-10T17:33:51+00:00
-00654R,2026-11-09,6.58,1.28,19466000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00654R,2026-11-10T17:33:51+00:00,,2026-11-10T17:33:51+00:00
+00652,2026-11-09,36.14,21.33,59035000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00652,2026-11-11T17:47:44+00:00,,2026-11-10T17:33:51+00:00
+00653L,2026-11-09,49.69,5.67,11403000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00653L,2026-11-11T17:47:44+00:00,,2026-11-10T17:33:51+00:00
+00654R,2026-11-09,6.58,1.28,19466000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00654R,2026-11-11T17:47:44+00:00,,2026-11-10T17:33:51+00:00
 00655L,2026-11-09,27.17,17.11,62958000.0,0.0,TWD,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=82,2026-11-09T20:26:52+00:00,,2026-11-09T20:26:52+00:00
 00656R,2026-11-09,6.66,1.36,20357000.0,0.0,TWD,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=83,2026-11-09T20:26:52+00:00,,2026-11-09T20:26:52+00:00
 00657,2026-11-09,70.18,4.99,7059000.0,0.0,TWD,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=84,2026-11-09T20:26:52+00:00,,2026-11-09T20:26:52+00:00

@@ -43,9 +43,9 @@ code,date,source,source_url,rows,stock_rows,missing_qty,weight_sum,complete,date
 00648R,2026-11-09,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00648R,1,0,0,104.05,1,,2026-11-11T01:33:51+08:00,2026-11-11T01:33:51+08:00
 00650L,2026-11-09,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF03&qDate=2026%2F11%2F09,1,0,0,199.44,1,資產明細回傳日期與查詢的正式淨值日期一致,2026-11-10T04:26:51+08:00,2026-11-10T04:26:51+08:00
 00651R,2026-11-09,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF04&qDate=2026%2F11%2F09,1,0,0,-100.95,1,資產明細回傳日期與查詢的正式淨值日期一致,2026-11-10T04:26:51+08:00,2026-11-10T04:26:51+08:00
-00652,2026-11-09,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00652,51,0,0,99.9507,1,基金資產頁明示「資料日期」,2026-11-11T01:33:51+08:00,2026-11-11T01:33:51+08:00
-00653L,2026-11-09,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00653L,2,0,0,199.4611,1,基金資產頁明示「資料日期」,2026-11-11T01:33:51+08:00,2026-11-11T01:33:51+08:00
-00654R,2026-11-09,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00654R,1,0,0,100.1476,1,基金資產頁明示「資料日期」,2026-11-11T01:33:51+08:00,2026-11-11T01:33:51+08:00
+00652,2026-11-09,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00652,51,0,0,99.9507,1,基金資產頁明示「資料日期」,2026-11-11T01:33:51+08:00,2026-11-12T01:47:44+08:00
+00653L,2026-11-09,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00653L,2,0,0,199.4611,1,基金資產頁明示「資料日期」,2026-11-11T01:33:51+08:00,2026-11-12T01:47:44+08:00
+00654R,2026-11-09,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00654R,1,0,0,100.1476,1,基金資產頁明示「資料日期」,2026-11-11T01:33:51+08:00,2026-11-12T01:47:44+08:00
 00655L,2026-11-09,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=82,2,0,0,197.23,1,,2026-11-10T04:26:51+08:00,2026-11-10T04:26:51+08:00
 00656R,2026-11-09,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=83,1,0,0,100.34,1,,2026-11-10T04:26:51+08:00,2026-11-10T04:26:51+08:00
 00657,2026-11-09,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=84,226,0,0,100.23,1,,2026-11-10T04:26:51+08:00,2026-11-10T04:26:51+08:00
