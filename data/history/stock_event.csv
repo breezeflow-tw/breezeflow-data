@@ -3,9 +3,10 @@ code,date,kind,stock_dividend_ratio,subscription_ratio,source,source_url,first_o
 2025,2026-10-28,權,,0.23166845,證交所除權除息預告,https://openapi.twse.com.tw/v1/exchangeReport/TWT48U_ALL,2026-10-21T00:05:20+08:00,2026-10-30T18:35:47+08:00
 2063,2026-10-28,除權息,0.09999999,,櫃買中心除權除息預告,https://www.tpex.org.tw/openapi/v1/tpex_exright_prepost,2026-10-21T00:05:20+08:00,2026-11-07T14:38:14+08:00
 2414,2026-11-06,權,,0.12365842,證交所除權除息預告,https://openapi.twse.com.tw/v1/exchangeReport/TWT48U_ALL,2026-10-23T09:29:36+08:00,2026-11-11T01:25:16+08:00
+2646,2026-12-07,權,,0.09970967,證交所除權除息預告,https://openapi.twse.com.tw/v1/exchangeReport/TWT48U_ALL,2026-11-13T01:50:23+08:00,2026-11-13T01:50:23+08:00
 3691,2026-10-27,除權,,0.10883356,櫃買中心除權除息預告,https://www.tpex.org.tw/openapi/v1/tpex_exright_prepost,2026-10-21T00:05:20+08:00,2026-11-06T01:47:12+08:00
-4562,2026-11-20,權,,0.14906449,證交所除權除息預告,https://openapi.twse.com.tw/v1/exchangeReport/TWT48U_ALL,2026-11-07T14:38:14+08:00,2026-11-12T01:37:48+08:00
-5434,2026-11-18,權,,0.01288606,證交所除權除息預告,https://openapi.twse.com.tw/v1/exchangeReport/TWT48U_ALL,2026-11-05T09:48:30+08:00,2026-11-12T01:37:48+08:00
-5475,2026-11-16,除權,,0.09439378,櫃買中心除權除息預告,https://www.tpex.org.tw/openapi/v1/tpex_exright_prepost,2026-11-06T01:47:12+08:00,2026-11-12T01:37:48+08:00
-6924,2026-11-19,權,,0.07903413,證交所除權除息預告,https://openapi.twse.com.tw/v1/exchangeReport/TWT48U_ALL,2026-11-07T01:04:16+08:00,2026-11-12T01:37:48+08:00
-8390,2026-11-11,除權,,0.08323265,櫃買中心除權除息預告,https://www.tpex.org.tw/openapi/v1/tpex_exright_prepost,2026-10-29T18:34:44+08:00,2026-11-12T01:37:48+08:00
+4562,2026-11-20,權,,0.14906449,證交所除權除息預告,https://openapi.twse.com.tw/v1/exchangeReport/TWT48U_ALL,2026-11-07T14:38:14+08:00,2026-11-13T01:50:23+08:00
+5434,2026-11-18,權,,0.01288606,證交所除權除息預告,https://openapi.twse.com.tw/v1/exchangeReport/TWT48U_ALL,2026-11-05T09:48:30+08:00,2026-11-13T01:50:23+08:00
+5475,2026-11-16,除權,,0.09439378,櫃買中心除權除息預告,https://www.tpex.org.tw/openapi/v1/tpex_exright_prepost,2026-11-06T01:47:12+08:00,2026-11-13T01:50:23+08:00
+6924,2026-11-19,權,,0.07903413,證交所除權除息預告,https://openapi.twse.com.tw/v1/exchangeReport/TWT48U_ALL,2026-11-07T01:04:16+08:00,2026-11-13T01:50:23+08:00
+8390,2026-11-11,除權,,0.08323265,櫃買中心除權除息預告,https://www.tpex.org.tw/openapi/v1/tpex_exright_prepost,2026-10-29T18:34:44+08:00,2026-11-13T01:50:23+08:00
