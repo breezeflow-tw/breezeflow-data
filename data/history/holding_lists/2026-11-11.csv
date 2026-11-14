@@ -165,7 +165,7 @@ code,date,source,source_url,rows,stock_rows,missing_qty,weight_sum,complete,date
 00922,2026-11-11,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=DO,50,49,0,100.05,1,,2026-11-12T01:47:44+08:00,2026-11-12T01:47:44+08:00
 00923,2026-11-11,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/365/buyback,51,50,0,100.1204,1,,2026-11-12T01:47:44+08:00,2026-11-12T01:47:44+08:00
 00924,2026-11-11,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF20&qDate=2026%2F11%2F11,147,0,0,99.969,1,資產明細回傳日期與查詢的正式淨值日期一致,2026-11-13T01:58:12+08:00,2026-11-13T01:58:12+08:00
-00926,2026-11-11,凱基投信官網,https://www.kgifund.com.tw/Fund/RedemptionList?fundNo=J016,56,0,0,99.89,1,淨值欄名明示資料日期,2026-11-13T01:58:12+08:00,2026-11-14T01:34:11+08:00
+00926,2026-11-11,凱基投信官網,https://www.kgifund.com.tw/Fund/RedemptionList?fundNo=J016,56,0,0,99.89,1,淨值欄名明示資料日期,2026-11-13T01:58:12+08:00,2026-11-14T15:11:33+08:00
 00927,2026-11-11,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/366/buyback,31,30,0,100.0008,1,,2026-11-12T01:47:44+08:00,2026-11-12T01:47:44+08:00
 00928,2026-11-11,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,31,30,0,99.35,1,申購買回清單明示「淨值日期」,2026-11-12T01:47:44+08:00,2026-11-12T01:47:44+08:00
 00929,2026-11-11,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF21&qDate=2026%2F11%2F11,51,50,0,99.458,1,資產明細回傳日期與查詢的正式淨值日期一致,2026-11-12T01:47:44+08:00,2026-11-12T01:47:44+08:00
