@@ -222,10 +222,10 @@ code,date,nav,aum,units,units_change,currency,source,source_url,observed_at,anno
 00950B,2026-11-20,13.8589,574.98,4148809000.0,-1000000.0,TWD,凱基投信官網,https://www.kgifund.com.tw/Fund/RedemptionList?fundNo=J019,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
 00952,2026-11-20,12.52,,,,TWD,凱基投信官網,https://www.kgifund.com.tw/Fund/RedemptionList?fundNo=J020,2026-11-21T07:50:10+00:00,,2026-11-20T18:19:54+00:00
 00953B,2026-11-20,9.6098,423.86,4410675000.0,-15000000.0,TWD,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/389/buyback,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
-00954,2026-11-20,12.4,19.0,153247000.0,0.0,TWD,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
-00955,2026-11-20,15.25,68.1,446431000.0,0.0,TWD,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
-00956,2026-11-20,13.05,4.32,33130000.0,0.0,TWD,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
-00960,2026-11-20,20.42,12.25,59995000.0,-500000.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00960&tab=basic,2026-11-23T21:58:04+00:00,2026-11-24,2026-11-20T18:19:54+00:00
+00954,2026-11-20,12.4,19.0,153247000.0,500000.0,TWD,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,2026-11-24T10:34:29+00:00,,2026-11-23T08:23:27+00:00
+00955,2026-11-20,15.25,68.1,446431000.0,0.0,TWD,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,2026-11-24T10:34:29+00:00,,2026-11-23T08:23:27+00:00
+00956,2026-11-20,13.05,4.32,33130000.0,500000.0,TWD,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,2026-11-24T10:34:29+00:00,,2026-11-23T08:23:27+00:00
+00960,2026-11-20,20.42,12.25,59995000.0,-500000.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00960&tab=basic,2026-11-24T10:34:29+00:00,2026-11-25,2026-11-20T18:19:54+00:00
 00963,2026-11-20,11.85,15.22,128433000.0,0.0,TWD,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
 00964,2026-11-20,12.59,12.98,103124000.0,0.0,TWD,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
 00965,2026-11-20,20.68,77.96,376992000.0,-2000000.0,TWD,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00965,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
@@ -234,7 +234,7 @@ code,date,nav,aum,units,units_change,currency,source,source_url,observed_at,anno
 00968B,2026-11-20,9.0233,74.35,824011000.0,-2000000.0,TWD,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00968B,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
 00969B,2026-11-20,8.3408,9.23,110633000.0,-2000000.0,TWD,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00969B,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
 00971,2026-11-20,16.06,7.9,49177000.0,0.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00971&tab=basic,2026-11-23T21:58:04+00:00,2026-11-24,2026-11-20T18:19:54+00:00
-00972,2026-11-20,21.75,2.87,13172000.0,0.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00972&tab=basic,2026-11-23T21:58:04+00:00,2026-11-24,2026-11-20T18:19:54+00:00
+00972,2026-11-20,21.75,2.87,13172000.0,0.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00972&tab=basic,2026-11-24T10:34:29+00:00,2026-11-23,2026-11-20T18:19:54+00:00
 009800,2026-11-20,11.47,36.06,314391000.0,0.0,TWD,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
 009801,2026-11-20,9.48,8.64,91119000.0,-1000000.0,TWD,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
 009802,2026-11-20,15.09,74.87,495995000.0,-6000000.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=009802,2026-11-23T08:23:27+00:00,,2026-11-20T18:19:54+00:00
@@ -242,7 +242,7 @@ code,date,nav,aum,units,units_change,currency,source,source_url,observed_at,anno
 00980A,2026-11-20,15.61,133.31,854230000.0,-3500000.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00980A&tab=basic,2026-11-23T08:23:27+00:00,2026-11-23,2026-11-20T18:19:54+00:00
 00980T,2026-11-20,10.99,8.18,74418000.0,0.0,TWD,凱基投信官網,https://www.kgifund.com.tw/Fund/RedemptionList?fundNo=J021,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
 009811,2026-11-20,12.04,27.15,225450000.0,,TWD,統一投信官網,https://www.ezmoney.com.tw/ETF/Fund/Info?fundCode=50YTW,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
-009812,2026-11-20,12.02,10.98,91382000.0,0.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009812&tab=basic,2026-11-23T21:58:04+00:00,2026-11-24,2026-11-20T18:19:54+00:00
+009812,2026-11-20,12.02,10.98,91382000.0,0.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009812&tab=basic,2026-11-24T10:34:29+00:00,2026-11-23,2026-11-20T18:19:54+00:00
 009813,2026-11-20,10.3,30.12,292324000.0,0.0,TWD,貝萊德投信官網,https://www.blackrock.com/tw/products/345655/blackrock-ishares-s-p-500-top-50-etf,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
 009814,2026-11-20,10.55,16.05,152076000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=009814,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
 009816,2026-11-20,12.62,,,,TWD,凱基投信官網,https://www.kgifund.com.tw/Fund/RedemptionList?fundNo=J023,2026-11-21T07:50:10+00:00,,2026-11-20T18:19:54+00:00
@@ -256,7 +256,7 @@ code,date,nav,aum,units,units_change,currency,source,source_url,observed_at,anno
 009823,2026-11-20,9.71,31.0,319317000.0,-1500000.0,TWD,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/501/buyback,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
 009824,2026-11-20,8.41,37.61,447347000.0,-1000000.0,TWD,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/503/buyback,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
 009826,2026-11-20,9.3,83.5,897804000.0,10000000.0,TWD,貝萊德投信官網,https://www.blackrock.com/tw/products/351824/blackrock-ishares-global-all-cap-etf,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
-009828,2026-11-20,5.86,87.9,1501045000.0,0.0,TWD,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
+009828,2026-11-20,5.86,87.9,1501045000.0,129000000.0,TWD,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,2026-11-24T10:34:29+00:00,,2026-11-23T08:23:27+00:00
 00982A,2026-11-20,13.88,338.51,2439436000.0,-8000000.0,TWD,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/399/buyback,2026-11-23T08:23:27+00:00,,2026-11-20T18:19:54+00:00
 00982D,2026-11-20,9.612,6.37,66229000.0,-2000000.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00982D,2026-11-23T21:58:04+00:00,,2026-11-23T08:23:27+00:00
 009833,2026-11-20,9.67,4.41,45543000.0,-5000000.0,TWD,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009833&tab=basic,2026-11-23T08:23:27+00:00,2026-11-23,2026-11-20T18:19:54+00:00
