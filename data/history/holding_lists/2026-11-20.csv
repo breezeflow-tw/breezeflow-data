@@ -219,10 +219,10 @@ code,date,source,source_url,rows,stock_rows,missing_qty,weight_sum,complete,date
 00949,2026-11-20,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF22&qDate=2026%2F11%2F20,31,0,0,98.946,1,資產明細回傳日期與查詢的正式淨值日期一致,2026-11-21T02:19:54+08:00,2026-11-24T05:58:04+08:00
 00950B,2026-11-20,凱基投信官網,https://www.kgifund.com.tw/Fund/RedemptionList?fundNo=J019,229,0,0,98.0,1,淨值欄名明示資料日期,2026-11-23T16:23:27+08:00,2026-11-24T05:58:04+08:00
 00953B,2026-11-20,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/389/buyback,361,0,0,100.5144,1,,2026-11-23T16:23:27+08:00,2026-11-24T05:58:04+08:00
-00954,2026-11-20,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,50,0,0,98.44,1,申購買回清單明示「淨值日期」,2026-11-24T05:58:04+08:00,2026-11-24T18:34:29+08:00
-00955,2026-11-20,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,50,0,0,97.02,1,申購買回清單明示「淨值日期」,2026-11-24T05:58:04+08:00,2026-11-24T18:34:29+08:00
-00956,2026-11-20,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,51,0,0,98.7,1,申購買回清單明示「淨值日期」,2026-11-24T05:58:04+08:00,2026-11-24T18:34:29+08:00
-00960,2026-11-20,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00960&tab=basic,40,5,0,98.45,1,清單另列 CPcfdate；持股依淨值日期 CNavDt 保存,2026-11-24T05:58:04+08:00,2026-11-24T18:34:29+08:00
+00954,2026-11-20,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,50,0,0,98.44,1,申購買回清單明示「淨值日期」,2026-11-24T05:58:04+08:00,2026-11-25T04:34:08+08:00
+00955,2026-11-20,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,50,0,0,97.02,1,申購買回清單明示「淨值日期」,2026-11-24T05:58:04+08:00,2026-11-25T04:34:08+08:00
+00956,2026-11-20,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,51,0,0,98.7,1,申購買回清單明示「淨值日期」,2026-11-24T05:58:04+08:00,2026-11-25T04:34:08+08:00
+00960,2026-11-20,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=00960&tab=basic,40,5,0,98.45,1,清單另列 CPcfdate；持股依淨值日期 CNavDt 保存,2026-11-24T05:58:04+08:00,2026-11-25T04:34:08+08:00
 00963,2026-11-20,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,50,0,0,98.87,1,申購買回清單明示「淨值日期」,2026-11-24T05:58:04+08:00,2026-11-24T05:58:04+08:00
 00964,2026-11-20,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,61,20,0,98.03,1,申購買回清單明示「淨值日期」,2026-11-24T05:58:04+08:00,2026-11-24T05:58:04+08:00
 00965,2026-11-20,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00965,52,4,0,99.98,1,,2026-11-23T16:23:27+08:00,2026-11-24T05:58:04+08:00
@@ -252,7 +252,7 @@ code,date,source,source_url,rows,stock_rows,missing_qty,weight_sum,complete,date
 009823,2026-11-20,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/501/buyback,504,0,0,99.9625,1,,2026-11-23T16:23:27+08:00,2026-11-24T05:58:04+08:00
 009824,2026-11-20,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/503/buyback,52,0,0,100.2452,1,,2026-11-23T16:23:27+08:00,2026-11-24T05:58:04+08:00
 009826,2026-11-20,貝萊德投信官網,https://www.blackrock.com/tw/products/351824/fund/1480664180144.ajax?fileType=csv&fileName=009826_holdings&dataType=fund,1514,243,0,99.08,1,,2026-11-23T16:23:27+08:00,2026-11-24T05:58:04+08:00
-009828,2026-11-20,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,30,17,0,98.75,1,申購買回清單明示「淨值日期」,2026-11-24T05:58:04+08:00,2026-11-24T18:34:29+08:00
+009828,2026-11-20,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1,30,17,0,98.75,1,申購買回清單明示「淨值日期」,2026-11-24T05:58:04+08:00,2026-11-25T04:34:08+08:00
 00982A,2026-11-20,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/399/buyback,63,63,0,102.5633,1,,2026-11-21T02:19:54+08:00,2026-11-23T16:23:27+08:00
 00982D,2026-11-20,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00982D,65,0,0,105.7219,1,基金資產頁明示「資料日期」,2026-11-23T16:23:27+08:00,2026-11-24T05:58:04+08:00
 009833,2026-11-20,野村投信官網,https://www.nomurafunds.com.tw/ETFWEB/product-description?fundNo=009833&tab=basic,31,0,0,98.52,1,清單另列 CPcfdate；持股依淨值日期 CNavDt 保存,2026-11-21T02:19:54+08:00,2026-11-23T16:23:27+08:00
