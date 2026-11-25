@@ -42,9 +42,9 @@ code,date,nav,aum,units,units_change,currency,source,source_url,observed_at,anno
 00648R,2026-11-23,4.19,5.35,127688000.0,0.0,TWD,元大投信官網,https://www.yuantaetfs.com/tradeInfo/pcf/00648R,2026-11-24T20:34:09+00:00,,2026-11-24T10:34:29+00:00
 00650L,2026-11-23,13.49,13.4,99338000.0,0.0,TWD,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF03&qDate=2026%2F11%2F23,2026-11-23T21:58:04+00:00,,2026-11-23T21:58:04+00:00
 00651R,2026-11-23,5.87,1.89,32192000.0,0.0,TWD,復華投信官網,https://www.fhtrust.com.tw/api/assets?fundID=ETF04&qDate=2026%2F11%2F23,2026-11-23T21:58:04+00:00,,2026-11-23T21:58:04+00:00
-00652,2026-11-23,37.03,20.19,54535000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00652,2026-11-25T09:18:59+00:00,,2026-11-24T10:34:29+00:00
-00653L,2026-11-23,50.7,5.27,10403000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00653L,2026-11-25T09:18:59+00:00,,2026-11-24T10:34:29+00:00
-00654R,2026-11-23,6.5,1.2,18466000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00654R,2026-11-25T09:18:59+00:00,,2026-11-24T10:34:29+00:00
+00652,2026-11-23,37.03,20.19,54535000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00652,2026-11-25T19:48:18+00:00,,2026-11-24T10:34:29+00:00
+00653L,2026-11-23,50.7,5.27,10403000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00653L,2026-11-25T19:48:18+00:00,,2026-11-24T10:34:29+00:00
+00654R,2026-11-23,6.5,1.2,18466000.0,0.0,TWD,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00654R,2026-11-25T19:48:18+00:00,,2026-11-24T10:34:29+00:00
 00655L,2026-11-23,26.06,16.41,62958000.0,0.0,TWD,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=82,2026-11-23T21:58:04+00:00,,2026-11-23T21:58:04+00:00
 00656R,2026-11-23,6.79,1.38,20357000.0,0.0,TWD,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=83,2026-11-23T21:58:04+00:00,,2026-11-23T21:58:04+00:00
 00657,2026-11-23,67.29,4.79,7059000.0,0.0,TWD,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=84,2026-11-23T21:58:04+00:00,,2026-11-23T21:58:04+00:00
