@@ -10823,6 +10823,36 @@ code,date,asset_code,asset_name,kind,weight,qty,source,source_url
 00900,2026-11-26,6409,旭隼,股票,1.3621,424000.0,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00900
 00900,2026-11-26,6548,長科*,股票,0.7535,3081000.0,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00900
 00900,2026-11-26,8069,元太,股票,2.0982,3965000.0,富邦投信官網,https://websys.fsit.com.tw/FubonETF/Fund/Assets.aspx?stkId=00900
+00902,2026-11-26,002074 C2,國軒高科,股票,1.57,341349.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,002340 C2,格林美,股票,1.88,1584500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,002460 C2,贛鋒鋰業,股票,1.92,269319.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,002466 C2,天齊鋰業,股票,2.38,341202.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,002709 C2,天賜材料,股票,2.17,430211.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,002812 C2,恩捷股份,股票,1.62,183153.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,002850 C2,科達利,股票,1.99,63300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,003670 KP,浦項未來M有限公司,股票,2.08,11300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,006400 KP,三星電管,股票,9.72,20620.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,051910 KP,LG化學有限公司,股票,3.72,15850.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,086520 KQ,Ecopro有限公司,股票,2.51,34884.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,247540 KQ,EcoPro BM有限公司,股票,1.84,20200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,300014 C2,億緯鋰能,股票,4.4,459897.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,300037 C2,新宙邦,股票,1.14,116000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,300207 C2,欣旺達,股票,1.46,448500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,300390 C2,天華新能,股票,1.26,187600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,300450 C2,先導智能,股票,2.04,363759.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,300750 C2,寧德時代,股票,9.18,198162.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,300919 C2,中偉股份,股票,0.84,131315.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,301358 C2,湖南裕能新能源電池材料股份有,股票,1.32,153500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,373220 KP,LG新能源有限公司,股票,5.61,16500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,5801 JP,古河電氣工業有限公司,股票,3.75,237700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,603659 C1,璞泰來,股票,1.26,325841.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,603799 C1,華友鈷業,股票,3.53,511282.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,605117 C1,寧波德業科技股份有限公司,股票,2.9,174718.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,6762 JP,TDK公司,股票,9.21,438800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,ALB US,雅保公司,股票,5.02,40750.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,ENS US,EnerSys,股票,2.38,12300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,GNRC US,基內瑞克控股公司,股票,6.22,20150.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00902,2026-11-26,SQM US,智利化工礦業公司,股票,3.57,49350.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
 00909,2026-11-26,8698.JP,MONEX GROUP INC,股票,1.4,468700.0,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=DD
 00909,2026-11-26,9449.JP,GMO INTERNET GROUP INC,股票,3.61,201900.0,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=DD
 00909,2026-11-26,AMD.US,ADV MICRO DEVICES,股票,6.12,17185.0,國泰投信官網,https://www.cathaysite.com.tw/ETF/purchase?code=DD
@@ -12396,6 +12426,207 @@ code,date,asset_code,asset_name,kind,weight,qty,source,source_url
 00953B,2026-11-26,USU9874PAA31,AIR 6 3/4 03/15/29,債券,0.2932,3660000.0,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/389/buyback
 00953B,2026-11-26,USX9816MAA81,VSTJET 9 1/2 06/01/28,債券,0.6732,8150000.0,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/389/buyback
 00953B,2026-11-26,XS2616621244,KEDRIM 6 1/2 09/01/29,債券,0.3141,3989000.0,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/389/buyback
+00954,2026-11-26,167A JP,Ryoyo Ryosan Holdings Inc,股票,0.51,15800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,268A JP,理學控股公司,股票,0.37,26200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,2737 JP,Tomen Devices Corp,股票,0.19,800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,2760 JP,東京威力科創股份有限公司,股票,0.23,5800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,285A JP,鎧俠控股公司,股票,11.03,131300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,3132 JP,麥克尼卡控股公司,股票,1.32,43200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,3321 JP,Mitachi Co Ltd,股票,0.02,1100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,3436 JP,勝高公司,股票,2.48,122500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,3445 JP,艾爾斯半導體有限公司,股票,0.18,4400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,429A JP,科盛德光罩公司,股票,0.47,17900.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6055 JP,日本材料有限公司,股票,0.38,23900.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6146 JP,Disco Corp,股票,7.45,16300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6227 JP,AIMECHATEC Ltd,股票,0.15,3500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6235 JP,光馳有限公司,股票,0.21,10300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6264 JP,Marumae有限公司,股票,0.07,5100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6266 JP,Tazmo有限公司,股票,0.08,3500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6315 JP,Towa Corp,股票,0.52,22500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6323 JP,樂華公司,股票,1.05,35400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6337 JP,TESEC Corp,股票,0.02,900.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6387 JP,莎姆克股份有限公司,股票,0.08,1400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6525 JP,Kokusai Electric Corp,股票,4.27,82500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6526 JP,索思未來科技公司,股票,1.01,63200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6590 JP,芝浦MECHATRONICS公司,股票,0.59,23400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6613 JP,QD Laser Inc,股票,0.23,14100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6616 JP,特瑞仕半導體有限公司,股票,0.03,2200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6627 JP,Tera Probe公司,股票,0.06,4600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6677 JP,SK電子有限公司,股票,0.05,2100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6707 JP,Sanken電氣有限公司,股票,0.4,7300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6723 JP,瑞薩電子公司,股票,8.26,313400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6728 JP,Ulvac Inc,股票,1.21,17800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6730 JP,AXELL公司,股票,0.03,1700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6770 JP,阿爾卑斯阿爾派有限公司,股票,1.41,66700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6832 JP,青井電子股份有限公司,股票,0.02,1100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6855 JP,日本電子材料公司,股票,0.27,4600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6857 JP,愛德萬測試,股票,16.81,62600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6871 JP,Micronics Japan Co Ltd,股票,1.1,11800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6875 JP,Megachips Corp,股票,0.37,4200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6920 JP,雷瑟科先進技術股份有限公司,股票,8.3,25100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6927 JP,Helios Techno Holding Co Ltd,股票,0.03,3800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6928 JP,益能達有限公司,股票,0.03,1000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6929 JP,日本CERAMIC 有限公司,股票,0.22,6300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6941 JP,山一電機有限公司,股票,0.52,7000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6947 JP,圖研公司,股票,0.3,5300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,6963 JP,羅姆有限公司,股票,3.55,122400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,7433 JP,伯東有限公司,股票,0.19,11600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,7717 JP,V技術有限公司,股票,0.12,2700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,7725 JP,Inter Action公司,股票,0.04,2600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,7729 JP,東京精密有限公司,股票,1.75,14500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,7735 JP,斯克林集團有限公司,股票,5.02,65600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00954,2026-11-26,8035 JP,東京威力科創有限公司,股票,15.63,183400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,167A JP,Ryoyo Ryosan Holdings Inc,股票,0.3,33800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,2760 JP,東京威力科創股份有限公司,股票,0.14,13200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,2768 JP,雙日控股,股票,2.2,153800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,2784 JP,Alfresa Holdings Corp,股票,0.93,135200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,2801 JP,龜甲萬公司,股票,3.16,570900.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,2874 JP,Yokorei有限公司,股票,0.19,34800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,3036 JP,Alconix公司,股票,0.18,21800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,3064 JP,MonotaRO Co Ltd,股票,1.4,188200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,3107 JP,大和紡績有限公司,股票,0.69,63300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,3132 JP,麥克尼卡控股公司,股票,0.77,91400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,3151 JP,Vital KSK Holdings Inc,股票,0.12,27500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,3153 JP,八洲電機有限公司,股票,0.1,13600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,3156 JP,雷斯塔公司,股票,0.17,14800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,3360 JP,Ship Healthcare Holdings Inc,股票,0.42,56800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,4088 JP,Air Water Inc,股票,1.3,140200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,5715 JP,古河機械金屬有限公司,股票,0.13,16400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,7130 JP,Yamae Group Holdings Co Ltd,股票,0.12,15600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,7433 JP,伯東有限公司,股票,0.12,27100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,7459 JP,Medipal Holdings Corp,股票,1.44,149500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,7476 JP,As One Corp,股票,0.36,47600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,7609 JP,大都電子股份有限公司,股票,0.12,12100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,7826 JP,古谷金屬有限公司,股票,0.28,12600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8001 JP,伊藤忠商事,股票,15.98,2344100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8002 JP,丸紅股份有限公司,股票,11.02,815200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8012 JP,長瀨產業有限公司,股票,0.96,287400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8015 JP,豐田通商公司,股票,9.02,524300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8020 JP,兼松公司,股票,0.86,125700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8031 JP,三井物產,股票,11.8,857600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8051 JP,山善公司,股票,0.21,38100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8053 JP,住友商事,股票,10.34,2255800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8058 JP,三菱商事,股票,13.55,895700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8059 JP,第一實業有限公司,股票,0.15,15600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8060 JP,日本佳能市場行銷公司,股票,0.87,69200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8061 JP,西華產業,股票,0.15,19300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8074 JP,Yuasa Trading Co Ltd,股票,0.2,11000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8078 JP,阪和興業有限公司,股票,0.63,128400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8098 JP,稻田產業有限公司,股票,0.43,34800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8117 JP,中央自動車工業有限公司,股票,0.21,35700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8129 JP,東邦控股有限公司,股票,0.57,48000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8151 JP,東陽公司,股票,0.1,18600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8154 JP,加賀電子有限公司,股票,0.44,31200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,8159 JP,立花ELETECH有限公司,股票,0.16,12500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,9824 JP,泉州電業有限公司,股票,0.18,9600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,9830 JP,TRUSCO中山公司,股票,0.24,33200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,9832 JP,Autobacs Seven Co Ltd,股票,0.22,48400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,9869 JP,加藤產業有限公司,股票,0.37,18200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,9934 JP,因幡電機產業有限公司,股票,0.57,76200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,9960 JP,Totech Corp,股票,0.25,20000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,9962 JP,三住集團公司,股票,2.22,216500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00955,2026-11-26,9987 JP,Suzuken Co Ltd/Aichi Japan,股票,0.78,88800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,JTI-202612,東證指數,期貨,1.73,1.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,1605 JP,國際石油開發帝石公司,股票,2.37,15600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,1802 JP,大林組公司,股票,1.51,10100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,1808 JP,長谷工公司,股票,0.61,5100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,1925 JP,大和房屋工業有限公司,股票,2.3,21200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,1928 JP,積水房屋有限公司,股票,2.37,14600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,2768 JP,雙日控股,股票,1.55,7000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,2914 JP,日本煙草公司,股票,2.46,9600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,3092 JP,ZOZO公司,股票,1.77,30700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,3289 JP,東急不動產控股公司,股票,0.6,10800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,3405 JP,可樂麗有限公司,股票,0.74,9000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,3861 JP,王子控股,股票,1.71,44400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,4042 JP,東曹公司,股票,0.56,5000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,4183 JP,三井化學,股票,0.89,11900.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,4188 JP,三菱化學控股公司,股票,0.86,18300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,4208 JP,宇部公司,股票,0.95,6400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,4502 JP,武田藥品有限公司,股票,3.93,11700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,4503 JP,山之內製藥公司,股票,3.11,23100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,4523 JP,衛采製藥有限公司,股票,1.96,7600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,5019 JP,出光興產有限公司,股票,0.77,13900.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,5108 JP,普利司通,股票,3.19,15900.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,5201 JP,AGC公司,股票,0.68,3200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,5401 JP,新日本製鐵公司,股票,3.55,112600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,5406 JP,神戶製鋼所,股票,1.35,15400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,5411 JP,JFE控股,股票,2.61,31300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,6305 JP,日立建機有限公司,股票,1.17,5300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,6471 JP,日本精工,股票,0.33,8200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,6472 JP,NTN,股票,0.34,23800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,6473 JP,光洋精工,股票,0.49,5600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,6724 JP,精工愛普生公司,股票,0.44,3500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,6770 JP,阿爾卑斯阿爾派有限公司,股票,0.46,5100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,6902 JP,日本電裝,股票,2.74,30600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,7202 JP,五十鈴自動車有限公司,股票,1.2,12800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,7261 JP,馬自達汽車公司,股票,2.33,47100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,7267 JP,本田汽車,股票,5.08,62500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,7270 JP,速霸陸公司,股票,2.77,22000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,7272 JP,山葉發動機有限公司,股票,2.7,32900.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,7751 JP,佳能,股票,3.12,13500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,8252 JP,丸井集團有限公司,股票,0.92,6800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,8253 JP,Credit Saison有限公司,股票,0.78,3600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,8304 JP,青空銀行有限公司,股票,0.73,5300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,8309 JP,三井住友信託控股公司,股票,2.17,28700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,8316 JP,三井住友金融集團公司,股票,2.76,20000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,8601 JP,大和證券,股票,1.15,14700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,8604 JP,野村控股,股票,3.42,53000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,8725 JP,MS&AD保險集團控股公司,股票,3.45,13900.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,8750 JP,第一生命控股公司,股票,3.27,40600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,8795 JP,T&D控股,股票,2.32,10500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,9101 JP,日本郵船股份有限公司,股票,3.31,10700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,9107 JP,川崎汽船,股票,4.05,28500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00956,2026-11-26,9434 JP,SoftBank Corp,股票,3.11,285900.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,005830 KP,DB保險有限公司,股票,1.54,5160.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,005940 KP,NH Investment & Securities Co Ltd,股票,1.71,42540.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,017800 KP,現代電梯,股票,4.44,39440.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,1088 HK,中國神華能源股份有限公司,股票,1.92,149800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,1102,亞洲水泥,股票,1.62,666100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,1171 HK,兗礦能源集團股份有限公司,股票,1.91,591500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,1308 HK,海豐國際控股有限公司,股票,2.1,168000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,1336 HK,新華保險,股票,1.7,161400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,148 HK,建滔集團,股票,1.85,167500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,1919 HK,中遠海控,股票,2.62,498700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,2146 JP,UT集團有限公司,股票,1.86,510700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,2347,聯強國際,股票,1.6,298800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,2357,華碩電腦,股票,2.03,34600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,2385,群光電子,股票,1.72,254500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,2393,億光電子工業,股票,2.22,497300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,2451,創見資訊,股票,1.51,86700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,2489,瑞軒科技,股票,1.81,880700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,2542,興富發建設,股票,2.85,1038000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,2603,長榮海運,股票,2.36,126100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,2855,統一綜合證券,股票,2.15,645100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,288 HK,萬洲國際,股票,2.27,1090000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,3014,聯陽半導體,股票,1.94,212900.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,3034,聯詠科技,股票,1.44,43800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,316 HK,東方海外（國際）有限公司,股票,2.05,43900.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,3260,威剛科技,股票,1.39,71944.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,3702,大聯大控股,股票,1.36,236500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,3988 HK,中國銀行,股票,2.0,1023600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,3998 HK,波司登,股票,2.52,1842000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,4716 JP,甲骨文日本分公司,股票,2.98,19600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,551 HK,裕元集團,股票,2.41,585500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,6121,新普科技,股票,1.41,66800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,6481 JP,THK有限公司,股票,1.36,20900.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,8081,致新科技,股票,1.89,113800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,857 HK,中國石油股份,股票,1.94,638400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,902 HK,華能國際電力股份,股票,2.61,1426000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,939 HK,建設銀行,股票,1.98,610600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,9744 JP,明達科集團控股公司,股票,1.84,36700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,991 HK,大唐發電,股票,2.29,3310000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,998 HK,中信銀行,股票,1.95,779700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,AGL AU,AGL Energy Ltd,股票,1.72,117080.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,BEN AU,Bendigo & Adelaide Bank Ltd,股票,1.61,97620.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,BJY AU,巴倫喬伊集團有限公司,股票,2.1,151830.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,BOQ AU,昆士蘭銀行,股票,1.75,152840.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,CD SP,康福德高企業有限公司,股票,1.64,718500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,FR SP,益資源集團,股票,1.73,339600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,HVN AU,Harvey Norman控股有限公司,股票,1.58,243730.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,MTS AU,Metcash Ltd,股票,1.95,363780.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,NHC AU,New Hope Corp Ltd,股票,1.83,228900.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,WDS AU,伍德賽德能源集團有限公司,股票,1.84,36970.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+00964,2026-11-26,YZJSGD SP,揚子江船業控股有限公司,股票,1.58,200700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
 00966B,2026-11-26,US00206RMZ28,T 6.05 08/15/56,債券,1.83,1000000.0,統一投信官網,https://www.ezmoney.com.tw/ETF/Fund/Info?fundCode=47YTW
 00966B,2026-11-26,US00206RND07,T 5.55 11/01/45,債券,0.14,80000.0,統一投信官網,https://www.ezmoney.com.tw/ETF/Fund/Info?fundCode=47YTW
 00966B,2026-11-26,US00206RNE89,T 5.7 11/01/54,債券,1.54,880000.0,統一投信官網,https://www.ezmoney.com.tw/ETF/Fund/Info?fundCode=47YTW
@@ -14953,6 +15184,36 @@ code,date,asset_code,asset_name,kind,weight,qty,source,source_url
 009826,2026-11-26,ZS,ZSCALER,股票,0.03,294.0,貝萊德投信官網,https://www.blackrock.com/tw/products/351824/fund/1480664180144.ajax?fileType=csv&fileName=009826_holdings&dataType=fund
 009826,2026-11-26,ZTS,ZOETIS INC CLASS A,股票,0.03,1006.0,貝萊德投信官網,https://www.blackrock.com/tw/products/351824/fund/1480664180144.ajax?fileType=csv&fileName=009826_holdings&dataType=fund
 009826,2026-11-26,ZURN,ZURICH INSURANCE GROUP AG,股票,0.11,394.0,貝萊德投信官網,https://www.blackrock.com/tw/products/351824/fund/1480664180144.ajax?fileType=csv&fileName=009826_holdings&dataType=fund
+009828,2026-11-26,000150 KP,斗山有限公司,股票,2.26,19400.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,007660 KP,IsuPetasys Co Ltd,股票,1.8,126700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,1802,台灣玻璃工業,股票,1.27,2390000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,1815,富喬工業,股票,1.05,1099950.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,222800 KQ,SIMMTECH Co Ltd,股票,1.32,58800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,2313,華通電腦,股票,3.55,2374000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,2368,金像電子,股票,7.08,800000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,2383,台光電子材料,股票,9.36,287700.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,3037,欣興電子,股票,9.79,1712600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,3044,健鼎科技,股票,4.43,1003000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,3110 JP,日東紡織,股票,1.48,366600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,3131,弘塑科技,股票,0.61,45500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,3189,景碩科技,股票,3.52,746000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,353200 KP,大德電子股份有限公司,股票,1.2,78800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,4062 JP,Ibiden Co Ltd,股票,6.99,811100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,4626 JP,太陽控股有限公司,股票,1.6,189600.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,4958,臻鼎科技控股,股票,5.89,1862000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,4966 JP,上村工業有限公司,股票,0.7,26200.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,5016 JP,JX金屬公司,股票,4.72,1393300.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,5706 JP,三井金屬礦業有限公司,股票,2.67,1301100.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,5714 JP,同和控股有限公司,股票,1.92,142000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,6191,精成科技,股票,0.43,669000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,6213,聯茂電子,股票,1.9,498800.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,6274,台燿科技,股票,4.17,591000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,6278,台灣表面黏著科技,股票,0.89,575000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,6787 JP,名幸電子股份有限公司,股票,1.54,94500.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,6988 JP,日東電工公司,股票,10.61,1583000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,8039,台虹科技,股票,0.52,389000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,8046,南亞電路板,股票,3.7,570000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
+009828,2026-11-26,8358,金居開發,股票,1.1,462000.0,中信投信官網,https://www.ctbcinvestments.com.tw/Product/List?Kind=2&ProductEtfNo=1
 00982A,2026-11-26,1785,光洋科,股票,0.4997,2429000.0,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/399/buyback
 00982A,2026-11-26,2059,川湖,股票,2.7749,151000.0,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/399/buyback
 00982A,2026-11-26,2327,國巨*,股票,0.3191,366000.0,群益投信官網,https://www.capitalfund.com.tw/etf/product/detail/399/buyback
